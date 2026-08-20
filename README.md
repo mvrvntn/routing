@@ -24,7 +24,7 @@
 - [🧠 Архитектура и принципы работы](#-архитектура-и-принципы-работы)
 - [📱 Профили для Happ и INCY](#-профили-для-happ-и-incy)
 - [💻 Профили для Mihomo и Sing-box](#-профили-для-mihomo-и-sing-box)
-- [🔌 Интеграция с панелью Remnawave](#-интеграция-с-панелью-remnawave)
+- [🔌 Интеграция с панелями управления](#-интеграция-с-панелями-управления)
 - [📂 Структура репозитория](#-структура-репозитория)
 - [🛠 Локальная сборка и разработка](#-локальная-сборка-и-разработка)
 - [⚙️ Автоматизация CI/CD (GitHub Actions)](#️-автоматизация-cicd-github-actions)
@@ -132,13 +132,21 @@
 
 ---
 
-## 🔌 Интеграция с панелью Remnawave
+## 🔌 Интеграция с панелями управления
 
-Для автоматической передачи правил маршрутизации в клиентские подписки используется сервис [Remnawave-Routing-update](https://github.com/lifeindarkside/Remnawave-Routing-update).
+### 1. Remnawave
 
-### Настройка на сервере Remnawave:
+#### А. Нативный Autorouting для INCY (Рекомендуемый)
+В панели Remnawave перейдите в **Settings** ➔ **Subscription Settings / Response Rules**:
+1. Создайте правило ответа для INCY (`User-Agent` содержит `incy`).
+2. Укажите заголовок ответа:
+   ```http
+   autorouting: https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.JSON
+   ```
+> 🚀 Клиенты INCY автоматически подключат автообновляемый профиль `koridor` с иконкой облака ☁️ и будут обновлять его раз в 24 часа.
 
-Добавьте сервис в `docker-compose.yml` панели управления:
+#### Б. Автообновление диплинков Happ через `remnawave-routing-update`
+Добавьте сервис в `docker-compose.yml` панели:
 
 ```yaml
 services:
@@ -157,15 +165,18 @@ services:
       - CHECK_INTERVAL=300
 ```
 
-> **Для пользователей INCY:** Замените `HAPP/DEFAULT.DEEPLINK` на `INCY/DEFAULT.DEEPLINK`.
-
 Запустите контейнер:
 ```bash
 docker compose up -d remnawave-routing-update
-docker logs -f remnawave-routing-update
 ```
 
-При каждом обновлении подписки клиентское приложение получит HTTP-заголовок `routing: happ://routing/onadd/...` и автоматически применит свежий роутинг.
+---
+
+### 2. Marzban & Marzneshin
+
+Подробные инструкции и шаблоны модификации скриптов подписки для Marzban и Marzneshin находятся в директории [`ADDON_AUTOROUTING/`](ADDON_AUTOROUTING/):
+* [`ADDON_AUTOROUTING/Marzban/`](ADDON_AUTOROUTING/Marzban/) — инъекция заголовков `routing` / `autorouting` через кастомный `subscription.py`.
+* [`ADDON_AUTOROUTING/Marzneshin/`](ADDON_AUTOROUTING/Marzneshin/) — передача правил в подписки Marzneshin.
 
 ---
 
