@@ -1,0 +1,76 @@
+name: Validate & Lint Routing Configs
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    paths:
+      - "data/**"
+      - "geoip/**"
+      - "HAPP/**"
+      - "INCY/**"
+      - "MIHOMO/**"
+      - ".github/**"
+
+jobs:
+  validate:
+    name: Validate JSON, YAML and Geodata
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Run Integrity & Syntax Test
+        run: |
+          python3 -c "
+          import glob, json, yaml, sys
+
+          errors = []
+
+          # 1. Validate JSON
+          for p in glob.glob('HAPP/*.JSON') + glob.glob('INCY/*.JSON'):
+              try:
+                  with open(p, 'r', encoding='utf-8') as f:
+                      json.load(f)
+              except Exception as e:
+                  errors.append(f'JSON error in {p}: {e}')
+
+          # 2. Validate YAML
+          for p in glob.glob('MIHOMO/*.yaml') + glob.glob('.github/**/*.yml', recursive=True):
+              try:
+                  with open(p, 'r', encoding='utf-8') as f:
+                      yaml.safe_load(f)
+              except Exception as e:
+                  errors.append(f'YAML error in {p}: {e}')
+
+          # 3. Validate data domain lists
+          for p in glob.glob('data/*'):
+              try:
+                  with open(p, 'r', encoding='utf-8') as f:
+                      lines = [l.strip() for l in f if l.strip() and not l.strip().startswith('#')]
+                      if len(lines) == 0:
+                          errors.append(f'Data list empty: {p}')
+              except Exception as e:
+                  errors.append(f'Data file read error in {p}: {e}')
+
+          if errors:
+              print(f'❌ Validation failed with {len(errors)} errors:')
+              for err in errors:
+                  print(' -', err)
+              sys.exit(1)
+          else:
+              print('✅ ALL ROUTING, JSON, YAML, AND DOMAIN DATA FILES PASSED VALIDATION PERFECTLY!')
+          "

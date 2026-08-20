@@ -273,42 +273,42 @@ jobs:
           update_json_and_deeplink "INCY" "WHITELIST"
           update_json_and_deeplink "INCY" "JSONSUB"
 
-          python3 -c "
-import json, base64
+          python3 -c '
+          import json, base64
 
-def get_b64(path):
-    with open(path, 'r', encoding='utf-8') as f:
-        d = json.load(f)
-    compact = json.dumps(d, separators=(',', ':'), ensure_ascii=False)
-    return base64.b64encode(compact.encode('utf-8')).decode('utf-8')
+          def get_b64(path):
+              with open(path, "r", encoding="utf-8") as f:
+                  d = json.load(f)
+              compact = json.dumps(d, separators=(",", ":"), ensure_ascii=False)
+              return base64.b64encode(compact.encode("utf-8")).decode("utf-8")
 
-b64_default = get_b64('HAPP/DEFAULT.JSON')
-b64_whitelist = get_b64('HAPP/WHITELIST.JSON')
-b64_jsonsub = get_b64('HAPP/JSONSUB.JSON')
+          b64_default = get_b64("HAPP/DEFAULT.JSON")
+          b64_whitelist = get_b64("HAPP/WHITELIST.JSON")
+          b64_jsonsub = get_b64("HAPP/JSONSUB.JSON")
 
-with open('README.md', 'r', encoding='utf-8') as f:
-    lines = f.readlines()
+          with open("README.md", "r", encoding="utf-8") as f:
+              lines = f.readlines()
 
-new_lines = []
-for l in lines:
-    if '| **DEFAULT** | [⚡ Установить koridor DEFAULT]' in l:
-        new_lines.append(f'| **DEFAULT** | [⚡ Установить koridor DEFAULT](happ://routing/onadd/{b64_default}) | [HAPP/DEFAULT.JSON](HAPP/DEFAULT.JSON) |\n')
-    elif '| **WHITELIST** | [⚡ Установить koridor WHITELIST]' in l:
-        new_lines.append(f'| **WHITELIST** | [⚡ Установить koridor WHITELIST](happ://routing/onadd/{b64_whitelist}) | [HAPP/WHITELIST.JSON](HAPP/WHITELIST.JSON) |\n')
-    elif '| **JSONSUB** | [⚡ Установить koridor JSON]' in l:
-        new_lines.append(f'| **JSONSUB** | [⚡ Установить koridor JSON](happ://routing/onadd/{b64_jsonsub}) | [HAPP/JSONSUB.JSON](HAPP/JSONSUB.JSON) |\n')
-    elif '| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting]' in l:
-        new_lines.append(f'| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/${{ github.repository }}/refs/heads/main/INCY/DEFAULT.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_default}) | [INCY/DEFAULT.JSON](INCY/DEFAULT.JSON) |\n')
-    elif '| **WHITELIST** | [☁️ Подключить Autorouting]' in l:
-        new_lines.append(f'| **WHITELIST** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/${{ github.repository }}/refs/heads/main/INCY/WHITELIST.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_whitelist}) | [INCY/WHITELIST.JSON](INCY/WHITELIST.JSON) |\n')
-    elif '| **JSONSUB** | [☁️ Подключить Autorouting]' in l:
-        new_lines.append(f'| **JSONSUB** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/${{ github.repository }}/refs/heads/main/INCY/JSONSUB.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_jsonsub}) | [INCY/JSONSUB.JSON](INCY/JSONSUB.JSON) |\n')
-    else:
-        new_lines.append(l)
+          new_lines = []
+          for l in lines:
+              if "| **DEFAULT** | [⚡ Установить koridor DEFAULT]" in l:
+                  new_lines.append(f"| **DEFAULT** | [⚡ Установить koridor DEFAULT](happ://routing/onadd/{b64_default}) | [HAPP/DEFAULT.JSON](HAPP/DEFAULT.JSON) |\n")
+              elif "| **WHITELIST** | [⚡ Установить koridor WHITELIST]" in l:
+                  new_lines.append(f"| **WHITELIST** | [⚡ Установить koridor WHITELIST](happ://routing/onadd/{b64_whitelist}) | [HAPP/WHITELIST.JSON](HAPP/WHITELIST.JSON) |\n")
+              elif "| **JSONSUB** | [⚡ Установить koridor JSON]" in l:
+                  new_lines.append(f"| **JSONSUB** | [⚡ Установить koridor JSON](happ://routing/onadd/{b64_jsonsub}) | [HAPP/JSONSUB.JSON](HAPP/JSONSUB.JSON) |\n")
+              elif "| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting]" in l:
+                  new_lines.append(f"| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_default}) | [INCY/DEFAULT.JSON](INCY/DEFAULT.JSON) |\n")
+              elif "| **WHITELIST** | [☁️ Подключить Autorouting]" in l:
+                  new_lines.append(f"| **WHITELIST** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/WHITELIST.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_whitelist}) | [INCY/WHITELIST.JSON](INCY/WHITELIST.JSON) |\n")
+              elif "| **JSONSUB** | [☁️ Подключить Autorouting]" in l:
+                  new_lines.append(f"| **JSONSUB** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/JSONSUB.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_jsonsub}) | [INCY/JSONSUB.JSON](INCY/JSONSUB.JSON) |\n")
+              else:
+                  new_lines.append(l)
 
-with open('README.md', 'w', encoding='utf-8') as f:
-    f.writelines(new_lines)
-"
+          with open("README.md", "w", encoding="utf-8") as f:
+              f.writelines(new_lines)
+          '
 
       # --- 6. PUSH RELEASE BRANCH & PUBLISH GITHUB RELEASE ---
       - name: Push to release branch

@@ -11,7 +11,7 @@ body:
     id: domain
     attributes:
       label: Домен или маска (FQDN)
-      description: Пример: `sub.domain.ru`, `domain.com`
+      description: "Пример: sub.domain.ru, domain.com"
       placeholder: example.com
     validations:
       required: true
