@@ -34,11 +34,17 @@ domain:xn--c1avg
 domain:xn--j1amh
 domain:xn--e1a4c
 
-# Russian Brand gTLDs
+# Russian Brand gTLDs (Official ICANN Delegated)
 domain:yandex
 domain:vk
 domain:mail
 domain:sber
+domain:vtb
+domain:alfabank
+domain:gazprom
+domain:kaspersky
+domain:rzd
+
 
 
 # -----------------------------------------------------------
