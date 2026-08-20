@@ -80,3 +80,43 @@ domain:autobahn.db.com
 domain:mizuhogroup.com
 domain:ubs.com
 domain:ru.ccb.com
+
+# -----------------------------------------------------------
+# Heavy Gaming Launchers & CDN Updates (Direct for Low Ping & Bandwidth Saving)
+# -----------------------------------------------------------
+
+# Blizzard / Battle.net (WoW, Diablo, Overwatch, CoD)
+domain:battle.net
+domain:blizzard.com
+domain:bnetcmsus-a.akamaihd.net
+domain:blizzard.gcdn.co
+
+# HoYoverse (Genshin Impact, Honkai Star Rail, Zenless Zone Zero)
+domain:hoyoverse.com
+domain:hoyoverse.net
+domain:hoyolab.com
+domain:mihoyo.com
+domain:starrails.com
+domain:zenlesszonezero.com
+domain:yuanshen.com
+
+# Wargaming & Lesta Games (World of Tanks, Tanks Blitz, World of Warships)
+domain:wargaming.net
+domain:worldoftanks.eu
+domain:worldofwarships.eu
+domain:wows.eu
+domain:lesta.games
+domain:tanki.su
+
+# Ubisoft & Rockstar Games (Rainbow Six, GTA Online, RDR2)
+domain:ubisoft.com
+domain:ubi.com
+domain:ubisoftconnect.com
+domain:rockstargames.com
+domain:rsg.sc
+
+# Sony PlayStation Network (PSN Store & Updates)
+domain:playstation.com
+domain:playstation.net
+domain:sonyentertainmentnetwork.com
+
