@@ -383,6 +383,38 @@ rule-providers:
     path: ./ruleset/category-ads.mrs
     proxy: ⚡️ Авто
     interval: 86400
+  ai:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/ai.mrs
+    path: ./ruleset/ai.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+  discord:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/discord.mrs
+    path: ./ruleset/discord.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+  google-deepmind:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/google-deepmind.mrs
+    path: ./ruleset/google-deepmind.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+  category-geoblock-ru:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-geoblock-ru.mrs
+    path: ./ruleset/category-geoblock-ru.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
   torrent-clients:
     type: http
     behavior: classical
@@ -395,7 +427,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/koridor/custom-category/release/mihomo/games.yaml
+    url: https://raw.githubusercontent.com/mvrvntn/routing/release/mihomo/games.yaml
     path: ./ruleset/games.yaml
     proxy: ⚡️ Авто
     interval: 86400
@@ -403,7 +435,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/koridor/custom-category/release/mihomo/ru-apps.yaml
+    url: https://raw.githubusercontent.com/mvrvntn/routing/release/mihomo/ru-apps.yaml
     path: ./ruleset/ru-apps.yaml
     proxy: ⚡️ Авто
     interval: 86400
@@ -424,6 +456,9 @@ rules:
 
   # --- Сервисы через PROXY ---
   - RULE-SET,google-play,PROXY
+  - RULE-SET,google-deepmind,PROXY
+  - RULE-SET,ai,PROXY
+  - RULE-SET,category-geoblock-ru,PROXY
   - RULE-SET,twitch-ads,PROXY                      # домены Twitch Ads — через PROXY (фикс качества)
   - RULE-SET,youtube,📺 Youtube
   - RULE-SET,telegram,PROXY
@@ -451,6 +486,7 @@ rules:
   - RULE-SET,torrent-clients,DIRECT                # торрент-клиенты по процессу
 
   # --- Приложения по имени процесса ---
+  - RULE-SET,discord,💬 Discord.exe
   - PROCESS-NAME-REGEX,discord,💬 Discord.exe
   - PROCESS-NAME-REGEX,vesktop,💬 Discord.exe
 
