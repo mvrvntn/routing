@@ -1,2 +1,9 @@
 /ADDON_AUTOROUTING/Marzneshin/__pycache__
 /ADDON_AUTOROUTING/Marzban/__pycache__
+__pycache__/
+*.pyc
+scratch/
+scratch_*/
+*.tmp
+.DS_Store
+Thumbs.db
