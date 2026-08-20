@@ -20,9 +20,7 @@
   "RouteOrder": "block-proxy-direct",
   "DirectSites": [],
   "DirectIp": [],
-  "ProxySites": [
-    "geosite:category-geoblock-ru"
-  ],
+  "ProxySites": [],
   "ProxyIp": [],
   "BlockSites": [],
   "BlockIp": [],
