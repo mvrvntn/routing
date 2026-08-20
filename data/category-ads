@@ -1,4 +1,4 @@
-# VK & Mail.ru Ads
+# Russian Ads & Trackers (VK, Mail.ru, Yandex, MyTarget)
 domain:ad.mail.ru
 domain:alt-ad.mail.ru
 domain:mdata.yandex.ru
@@ -9,3 +9,53 @@ domain:ad.vk.com
 domain:top-fwz1.mail.ru
 domain:matchid.adfox.yandex.ru
 domain:extmaps-analytics.yandex.net
+domain:mytarget.com
+domain:target.my.com
+domain:stat-api.my.com
+domain:tns-counter.ru
+domain:counter.yadro.ru
+domain:adriver.ru
+domain:counter.rambler.ru
+
+# Major Mobile In-App Ad Networks (Games & Apps)
+domain:admob.com
+domain:doubleclick.net
+domain:googlesyndication.com
+domain:googleadservices.com
+domain:applovin.com
+domain:applvn.com
+domain:unityads.unity3d.com
+domain:ironsrc.com
+domain:vungle.com
+domain:inmobi.com
+domain:mintegral.com
+domain:chartboost.com
+domain:adcolony.com
+domain:fyber.com
+domain:tapjoy.com
+
+# Web Banner & Native Ad Networks
+domain:criteo.com
+domain:criteo.net
+domain:taboola.com
+domain:outbrain.com
+domain:smartadserver.com
+domain:popads.net
+domain:propellerads.com
+domain:exoclick.com
+domain:juicyads.com
+domain:trafficjunky.com
+
+# OEM & Device Telemetry Ads (Xiaomi, Samsung, Oppo)
+domain:ad.intl.xiaomi.com
+domain:ad.xiaomi.com
+domain:api.ad.intl.xiaomi.com
+domain:data.mistat.intl.xiaomi.com
+domain:adx.ads.oppomobile.com
+domain:ads.samsung.com
+
+# User Tracking & Analytics SDKs
+domain:adjust.com
+domain:appsflyer.com
+domain:branch.io
+domain:amplitude.com
