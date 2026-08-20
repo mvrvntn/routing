@@ -45,9 +45,13 @@
     "geosite:twitch-ads",
     "geosite:youtube",
     "geosite:discord",
-    "geosite:telegram"
+    "geosite:telegram",
+    "geosite:category-geoblock-ru"
   ],
-  "ProxyIp": [],
+  "ProxyIp": [
+    "geoip:antifilter",
+    "geoip:refilter"
+  ],
   "BlockSites": [
     "geosite:win-spy",
     "geosite:torrent",

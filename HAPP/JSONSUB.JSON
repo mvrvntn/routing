@@ -20,8 +20,13 @@
   "RouteOrder": "block-proxy-direct",
   "DirectSites": [],
   "DirectIp": [],
-  "ProxySites": [],
-  "ProxyIp": [],
+  "ProxySites": [
+    "geosite:category-geoblock-ru"
+  ],
+  "ProxyIp": [
+    "geoip:antifilter",
+    "geoip:refilter"
+  ],
   "BlockSites": [],
   "BlockIp": [],
   "DomainStrategy": "IPIfNonMatch",
