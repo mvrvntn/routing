@@ -1,5 +1,9 @@
 domain:twitch.tv
 domain:ttvnw.net
+domain:tmi.twitch.tv
+domain:irc.chat.twitch.tv
+domain:pubsub-edge.twitch.tv
+
 
 domain:ext-twitch.tv
 domain:jtvnw.net
