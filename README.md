@@ -49,11 +49,11 @@
 
 ### 📊 Таблица профилей маршрутизации
 
-| Профиль | Описание и режим работы | RAM | Happ | INCY (Autorouting URL) |
+| Профиль | Режим работы | RAM | Happ | INCY |
 | :--- | :--- | :--- | :--- | :--- |
-| **DEFAULT**<br>*(Рекомендуемый)* | **Split Tunneling:** RU/банки/игры напрямую, YouTube/Discord/AI через прокси, реклама заблокирована | `~3–5 МБ` | [⚡ Ссылка](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON](HAPP/DEFAULT.JSON) | `https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.JSON` |
-| **WHITELIST** | **Строгий режим:** напрямую только доверенные сервисы из белых списков РФ (Госуслуги, СБП, банки) | `~2 МБ` | [⚡ Ссылка](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | `https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/WHITELIST.JSON` |
-| **JSONSUB** | **Base DNS:** базовый профиль с настройками DNS для ручного создания правил | `~1 МБ` | [⚡ Ссылка](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON](HAPP/JSONSUB.JSON) | `https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/JSONSUB.JSON` |
+| **DEFAULT**<br>*(Рекомендуемый)* | **Split Tunneling:** RU/банки напрямую, AI/Discord/YouTube через VPN | `~3–5 МБ` | [⚡ Deeplink](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ Deeplink](INCY/DEFAULT.DEEPLINK)<br>[📄 JSON](INCY/DEFAULT.JSON) |
+| **WHITELIST** | **Строгий режим:** напрямую только реестр ЦБ РФ, Госуслуги, СБП | `~2 МБ` | [⚡ Deeplink](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ Deeplink](INCY/WHITELIST.DEEPLINK)<br>[📄 JSON](INCY/WHITELIST.JSON) |
+| **JSONSUB** | **Base DNS:** базовый профиль для ручной настройки правил | `~1 МБ` | [⚡ Deeplink](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ Deeplink](INCY/JSONSUB.DEEPLINK)<br>[📄 JSON](INCY/JSONSUB.JSON) |
 
 ---
 
@@ -64,12 +64,12 @@
 2. В приложении **Happ** откройте: **Настройки** ➔ **Правила маршрутизации** ➔ **Импортировать из буфера обмена**.
 
 #### 2. Для приложения INCY (iOS, Android, Desktop)
-1. Скопируйте URL для автообновления:
-   ```text
-   https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.JSON
-   ```
-2. В приложении **INCY** откройте: **Маршрутизация** ➔ **+** ➔ **Добавить по ссылке (Autorouting)** ➔ вставьте скопированный URL.
-   *(Профиль получит иконку облака ☁️ и будет автоматически обновляться каждые 24 часа).*
+* **Вариант А (Autorouting с автообновлением раз в 24ч — Рекомендуется):**
+  1. Откройте [`INCY/DEFAULT.AUTOROUTING`](INCY/DEFAULT.AUTOROUTING) и скопируйте ссылку `incy://autorouting/...` (или чистый URL JSON-манифеста).
+  2. В приложении **INCY** откройте: **Маршрутизация** ➔ **+** ➔ **Добавить по ссылке (Autorouting)** ➔ вставьте скопированную ссылку.
+* **Вариант Б (Одноразовый импорт):**
+  1. Откройте [`INCY/DEFAULT.DEEPLINK`](INCY/DEFAULT.DEEPLINK) и скопируйте строку `incy://routing/...`.
+  2. В приложении **INCY** откройте: **Маршрутизация** ➔ **Импортировать из буфера обмена**.
 
 ---
 
