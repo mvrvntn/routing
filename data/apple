@@ -105,3 +105,10 @@ domain:ocsp.digicert.cn
 domain:ocsp.digicert.com
 domain:push.apple.com
 domain:identity.apple.com
+domain:apple.com
+domain:cdn-apple.com
+domain:aaplimg.com
+domain:apple-cloudkit.com
+domain:apple-livephotoskit.com
+domain:apple-mapkit.com
+domain:mzstatic.com
