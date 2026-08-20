@@ -203,8 +203,8 @@ jobs:
 
           cp -f geosite.dat release/
           cp -f geoip.dat release/
-          sha256sum release/geosite.dat > release/geosite.dat.sha256
-          sha256sum release/geoip.dat > release/geoip.dat.sha256
+          sha256sum release/geosite.dat | awk '{print $1}' > release/geosite.dat.sha256
+          sha256sum release/geoip.dat | awk '{print $1}' > release/geoip.dat.sha256
 
           if [ -d /tmp/mihomo_rules ]; then
             cp -a /tmp/mihomo_rules/. release/mihomo/ 2>/dev/null || true
@@ -253,6 +253,11 @@ jobs:
 
             local b64="$(jq -c . "$json_file" | base64 -w 0)"
             printf '%s://routing/onadd/%s\n' "$scheme" "$b64" > "$deeplink_file"
+
+            if [ "$folder" = "INCY" ]; then
+              local autorouting_file="${folder}/${name}.AUTOROUTING"
+              printf 'incy://autorouting/onadd/https://raw.githubusercontent.com/%s/refs/heads/main/INCY/%s.JSON\n' "${{ github.repository }}" "$name" > "$autorouting_file"
+            fi
           }
 
           update_json_and_deeplink "HAPP" "DEFAULT"
@@ -308,6 +313,8 @@ jobs:
           set -euo pipefail
           ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geosite.dat" || true
           ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geosite.dat.sha256" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat.sha256" || true
           ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@${{ env.DAILY_TAG }}/release/geosite.dat" || true
           ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@${{ env.DAILY_TAG }}/release/geoip.dat" || true
 
