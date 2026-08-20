@@ -8,16 +8,38 @@ domain:ip.sb
 domain:showip.net
 
 # -----------------------------------------------------------
-# Russian Top Level Domains (Covers 100% of *.ru, *.su, *.by, *.рф, *.бел)
+# Russian, Regional & Cyrillic Top-Level Domains (TLDs & Geo-TLDs)
 # -----------------------------------------------------------
+
+# National & Union ccTLDs
 domain:ru
 domain:su
 domain:by
+domain:kz
 domain:xn--p1ai
 domain:xn--90ais
+domain:xn--80ao21a
+
+# Russian Regional Geo-TLDs (Tatarstan, Moscow)
+domain:tatar
+domain:moscow
+domain:xn--80adxhks
+
+# Russian Cyrillic gTLDs (.рус, .онлайн, .сайт, .дети, .орг, .ком)
+domain:xn--p1acf
+domain:xn--80asehdb
+domain:xn--80aswg
+domain:xn--d1acj3b
+domain:xn--c1avg
+domain:xn--j1amh
+domain:xn--e1a4c
+
+# Russian Brand gTLDs
 domain:yandex
 domain:vk
 domain:mail
+domain:sber
+
 
 # -----------------------------------------------------------
 # Russian Ecosystems on non-.RU domains (.com, .net, .org, .cc)
