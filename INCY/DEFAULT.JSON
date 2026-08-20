@@ -48,10 +48,7 @@
     "geosite:telegram",
     "geosite:category-geoblock-ru"
   ],
-  "ProxyIp": [
-    "geoip:antifilter",
-    "geoip:refilter"
-  ],
+  "ProxyIp": [],
   "BlockSites": [
     "geosite:win-spy",
     "geosite:torrent",

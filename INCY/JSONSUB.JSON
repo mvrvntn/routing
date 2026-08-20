@@ -23,10 +23,7 @@
   "ProxySites": [
     "geosite:category-geoblock-ru"
   ],
-  "ProxyIp": [
-    "geoip:antifilter",
-    "geoip:refilter"
-  ],
+  "ProxyIp": [],
   "BlockSites": [],
   "BlockIp": [],
   "DomainStrategy": "IPIfNonMatch",
