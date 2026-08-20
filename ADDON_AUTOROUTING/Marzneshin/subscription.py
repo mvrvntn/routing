@@ -6,35 +6,35 @@ import time as _time
 from collections import defaultdict
 
 
-# ─── RoscomVPN Routing Resolver ─────────────────────────────────────────────────
+# ─── koridor Routing Resolver ─────────────────────────────────────────────────
 # Fetches .DEEPLINK content from GitHub with 10-min TTL cache, 30s negative
 # cache on failure, and thread-safe locking. No blocking HEAD on every request.
 #
 # Override via env vars:
-#   ROSCOMVPN_ROUTING_SOURCE  = default | jsonsub | whitelist | custom
-#   ROSCOMVPN_ROUTING_CUSTOM  = <your happ:// URL>
+#   KORIDOR_ROUTING_SOURCE  = default | jsonsub | whitelist | custom
+#   KORIDOR_ROUTING_CUSTOM  = <your happ:// URL>
 # ─────────────────────────────────────────────────────────────────────────────────
 
-_ROSCOMVPN_URLS = {
-    "default": "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/DEFAULT.DEEPLINK",
-    "jsonsub": "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/JSONSUB.DEEPLINK",
-    "whitelist": "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/HAPP/WHITELIST.DEEPLINK",
+_KORIDOR_URLS = {
+    "default": "https://raw.githubusercontent.com/mvrvntn/routing/main/HAPP/DEFAULT.DEEPLINK",
+    "jsonsub": "https://raw.githubusercontent.com/mvrvntn/routing/main/HAPP/JSONSUB.DEEPLINK",
+    "whitelist": "https://raw.githubusercontent.com/mvrvntn/routing/main/HAPP/WHITELIST.DEEPLINK",
 }
 
 
-class _RoscomVPNResolver:
+class _KoridorResolver:
     def __init__(self, default_source: str):
         self._lock = threading.Lock()
         self._value = ""
         self._fetched_at = 0.0
         self._last_fail = 0.0
-        self._source = os.environ.get("ROSCOMVPN_ROUTING_SOURCE", default_source).strip().lower()
-        self._custom = os.environ.get("ROSCOMVPN_ROUTING_CUSTOM", "").strip()
+        self._source = os.environ.get("KORIDOR_ROUTING_SOURCE", default_source).strip().lower()
+        self._custom = os.environ.get("KORIDOR_ROUTING_CUSTOM", "").strip()
 
     def get(self) -> str:
         if self._source == "custom":
             return self._custom
-        url = _ROSCOMVPN_URLS.get(self._source)
+        url = _KORIDOR_URLS.get(self._source)
         if not url:
             return self._custom
         now = _time.monotonic()
@@ -57,7 +57,7 @@ class _RoscomVPNResolver:
         return self._value
 
 
-roscomvpn_resolver = _RoscomVPNResolver("default")
+koridor_resolver = _KoridorResolver("default")
 
 from fastapi import APIRouter
 from fastapi import Header, HTTPException, Path, Request, Response
@@ -147,8 +147,8 @@ def user_subscription(
         ),
     }
     
-    # RoscomVPN: cached routing deeplink (no blocking HEAD per request)
-    _routing = roscomvpn_resolver.get()
+    # koridor: cached routing deeplink (no blocking HEAD per request)
+    _routing = koridor_resolver.get()
     if _routing:
         response_headers["routing"] = _routing
         response_headers["routing-enable"] = "true"
@@ -258,8 +258,8 @@ def user_subscription_with_client_type(
         ),
     }
     
-    # RoscomVPN: cached routing deeplink (no blocking HEAD per request)
-    _routing = roscomvpn_resolver.get()
+    # koridor: cached routing deeplink (no blocking HEAD per request)
+    _routing = koridor_resolver.get()
     if _routing:
         response_headers["routing"] = _routing
         response_headers["routing-enable"] = "true"

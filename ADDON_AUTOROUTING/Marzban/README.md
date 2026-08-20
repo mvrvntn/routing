@@ -1,4 +1,4 @@
-# 🚀 RoscomVPN routing для Marzban
+# 🚀 koridor routing для Marzban
 
 Один `subscription.py` для **любых** подписок (JSON и Non-JSON). Тип роутинга выбирается через переменную окружения.
 
@@ -8,7 +8,7 @@
 
 ```bash
 curl -fLo /var/lib/marzban/subscription.py \
-  https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/ADDON_AUTOROUTING/Marzban/subscription.py
+  https://raw.githubusercontent.com/mvrvntn/routing/main/ADDON_AUTOROUTING/Marzban/subscription.py
 ```
 
 **2.** Прилинкуйте файл в `docker-compose.yml` панели (`/opt/marzban/docker-compose.yml`):
@@ -25,8 +25,8 @@ services:
 
 ```yaml
     environment:
-      ROSCOMVPN_ROUTING_SOURCE: "default"   # default | jsonsub | whitelist | custom
-      # ROSCOMVPN_ROUTING_CUSTOM: "happ://..."  # только при source=custom
+      KORIDOR_ROUTING_SOURCE: "default"   # default | jsonsub | whitelist | custom
+      # KORIDOR_ROUTING_CUSTOM: "happ://..."  # только при source=custom
 ```
 
 | Значение | Что отдаётся клиенту |
@@ -34,7 +34,7 @@ services:
 | `default` | Полный профиль: RU/BY direct, YouTube/Telegram/GitHub через прокси, реклама блокируется **(по умолчанию)** |
 | `jsonsub` | Минимальный профиль для JSON-подписок: только DNS + кастомные geoip/geosite |
 | `whitelist` | Direct только для сервисов и IP из белых списков РФ; всё остальное через прокси |
-| `custom` | Ваша произвольная ссылка из `ROSCOMVPN_ROUTING_CUSTOM` |
+| `custom` | Ваша произвольная ссылка из `KORIDOR_ROUTING_CUSTOM` |
 
 **4.** Перезагрузите Marzban:
 
@@ -42,12 +42,12 @@ services:
 marzban restart
 ```
 
-Готово! Happ-клиенты при следующей синхронизации подписки получат RoscomVPN-роутинг в заголовке `Routing:`.
+Готово! Happ-клиенты при следующей синхронизации подписки получат koridor-роутинг в заголовке `Routing:`.
 
 ## Как это работает
 
 - `subscription.py` монтируется поверх оригинального файла Marzban.
-- При отдаче подписки он подтягивает содержимое `.DEEPLINK`-файла из [roscomvpn-routing](https://github.com/hydraponique/roscomvpn-routing) с **кешем 10 минут** — никаких блокирующих запросов на каждый ответ.
+- При отдаче подписки он подтягивает содержимое `.DEEPLINK`-файла из [koridor-routing](https://github.com/mvrvntn/routing) с **кешем 10 минут** — никаких блокирующих запросов на каждый ответ.
 - Если GitHub недоступен — отдаётся последний успешный ответ. Если кеш пуст — заголовок просто не ставится (ничего не ломается).
 
 ## Обновление
@@ -56,6 +56,6 @@ marzban restart
 
 ```bash
 curl -fLo /var/lib/marzban/subscription.py \
-  https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/main/ADDON_AUTOROUTING/Marzban/subscription.py
+  https://raw.githubusercontent.com/mvrvntn/routing/main/ADDON_AUTOROUTING/Marzban/subscription.py
 marzban restart
 ```
