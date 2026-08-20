@@ -6,6 +6,10 @@ domain:habr.com
 domain:habrastorage.org
 domain:onlinesim.io
 
+# Discord & AI Services
+include:discord
+include:ai
+
 # Зарубежные сайты, которые ограничивают функционал для российских IP
 
 # Adobe
