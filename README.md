@@ -7,6 +7,7 @@
 > ⚡ **Хирургическая фильтрация:** Весь зарубежный интернет по умолчанию идет через VPN (`GlobalProxy: true`), российские сервисы и банки — напрямую (`direct`), а мобильные клиенты на iOS не вылетают по лимиту памяти (потребление RAM всего **3–5 МБ**).
 
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
+[![Validate Configs](https://github.com/mvrvntn/routing/actions/workflows/validate-pr.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/validate-pr.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
 [![jsDelivr CDN](https://data.jsdelivr.com/v1/package/gh/mvrvntn/routing@release/badge)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -173,15 +174,19 @@ docker logs -f remnawave-routing-update
 ```
 mvrvntn/routing/
 ├── .github/
+│   ├── ISSUE_TEMPLATE/              # Интерактивные формы Issue (домены, багрепорты)
+│   ├── PULL_REQUEST_TEMPLATE.md     # Чек-лист для Pull Request
 │   └── workflows/
-│       └── update-configs.yml       # Единый автономный CI/CD пайплайн сборщика
-├── data/                            # Исходные списки доменов (23 категории)
+│       ├── update-configs.yml       # Единый автономный CI/CD пайплайн сборщика
+│       └── validate-pr.yml          # Автоматический линтер и валидатор PR
+├── data/                            # Исходные списки доменов (25 категорий)
 │   ├── ai                           # OpenAI, Claude, Perplexity, Cursor, Grok, Copilot
 │   ├── google-deepmind              # Gemini, AI Studio, Generative Language API, Antigravity
 │   ├── google-play                  # Google Play Services, Firebase, OTA updates
 │   ├── discord                      # Voice Gateways, Media CDN, Discord WebSockets
 │   ├── youtube                      # YouTube, Googlevideo CDN, ytimg
 │   ├── telegram                     # Telegram Web, CDN, t.me
+│   ├── category-geoblock-ru         # Зарубежные сервисы, блокирующие пользователей из РФ
 │   ├── category-ru                  # Зона .RU/.РФ, VK, Яндекс, Mail.ru, сервисы РФ
 │   ├── whitelist                    # Банки РФ (реестр ЦБ), Госуслуги, СБП, Налоговая
 │   ├── twitch                       # Twitch Video Stream (direct)
@@ -196,11 +201,11 @@ mvrvntn/routing/
 │   ├── WHITELIST.JSON & .DEEPLINK
 │   └── JSONSUB.JSON & .DEEPLINK
 ├── INCY/                            # Конфигурации и диплинки для INCY
-│   ├── DEFAULT.JSON & .DEEPLINK
-│   ├── WHITELIST.JSON & .DEEPLINK
-│   └── JSONSUB.JSON & .DEEPLINK
+│   ├── DEFAULT.JSON & .AUTOROUTING & .DEEPLINK
+│   ├── WHITELIST.JSON & .AUTOROUTING & .DEEPLINK
+│   └── JSONSUB.JSON & .AUTOROUTING & .DEEPLINK
 ├── MIHOMO/                          # Шаблоны для Mihomo / Clash Meta
-└── ADDON_AUTOROUTING/               # Документация интеграций с панелями
+└── ADDON_AUTOROUTING/               # Документация интеграций с панелями (Remnawave, Marzban, etc.)
 ```
 
 ---
