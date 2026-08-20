@@ -1,5 +1,5 @@
 {
-  "Name": "koridor Whitelist",
+  "Name": "koridor (Whitelist)",
   "GlobalProxy": "true",
   "UseChunkFiles": "true",
   "RemoteDns": "8.8.8.8",
