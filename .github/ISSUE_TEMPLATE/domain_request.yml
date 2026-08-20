@@ -1,0 +1,37 @@
+name: 🌐 Запрос на добавление / изменение домена
+description: Предложить добавить домен в category-ru, ai, games или другую категорию
+title: "[Domain Request]: "
+labels: ["domains", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо за вклад в улучшение правил маршрутизации!
+  - type: input
+    id: domain
+    attributes:
+      label: Домен или маска (FQDN)
+      description: Пример: `sub.domain.ru`, `domain.com`
+      placeholder: example.com
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Целевая категория
+      options:
+        - "category-ru (Прямой доступ в РФ / Direct)"
+        - "ai (Нейросети / Proxy)"
+        - "discord (Discord / Proxy)"
+        - "category-ads (Блокировка рекламы)"
+        - "Другая категория"
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Обоснование / Проблема
+      description: Почему ресурс должен идти через данный маршрут?
+      placeholder: "Сервис заблокирован в РФ / сервис блокирует иностранные IP..."
+    validations:
+      required: true

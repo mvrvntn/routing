@@ -1,0 +1,47 @@
+name: 🐛 Сообщить об ошибке
+description: Сообщить о неработающем маршруте, проблеме с клиентом или сбоем в сборке
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Пожалуйста, предоставьте подробную информацию об ошибке.
+  - type: dropdown
+    id: client
+    attributes:
+      label: Используемый клиент / система
+      options:
+        - "Happ (iOS / Android / Windows / macOS)"
+        - "INCY"
+        - "Mihomo / Clash Meta"
+        - "Sing-box"
+        - "Remnawave Node"
+        - "Другое"
+    validations:
+      required: true
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Используемый профиль
+      options:
+        - "DEFAULT"
+        - "WHITELIST"
+        - "JSONSUB"
+        - "Кастомный"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Описание проблемы
+      description: Что происходит не так?
+      placeholder: "При попытке открыть сайт X трафик идет не туда / ошибка ядра..."
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Логи клиента / ядра
+      description: Прикрепите фрагмент логов (без личных данных и паролей)
+      render: shell
