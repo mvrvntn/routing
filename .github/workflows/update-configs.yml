@@ -18,10 +18,15 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build Geodata & Routing Configs
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       CURL: "curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused"
 
