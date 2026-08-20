@@ -10,9 +10,9 @@
   "DomesticDNSType": "DoH",
   "DomesticDNSDomain": "https://77.88.8.8/dns-query",
   "DomesticDNSIP": "77.88.8.8",
-  "Geoipurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat",
-  "Geositeurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geosite.dat",
-  "LastUpdated": "0",
+  "Geoipurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@202608201852/release/geoip.dat",
+  "Geositeurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@202608201852/release/geosite.dat",
+  "LastUpdated": "1787252023",
   "DnsHosts": {
     "lkfl2.nalog.ru": "213.24.64.175",
     "lknpd.nalog.ru": "213.24.64.181"
