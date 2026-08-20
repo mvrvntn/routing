@@ -2,14 +2,14 @@
 
 # 🚀 koridor Routing
 
-**Высокопроизводительный, оптимизированный по памяти репозиторий маршрутизации для [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box) и [Remnawave](https://remnawave.com).**
+**Высокопроизводительный, оптимизированный по памяти репозиторий маршрутизации для [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box) и [Remnawave](https://docs.rw).**
 
 > ⚡ **Хирургическая фильтрация:** Весь зарубежный интернет по умолчанию идет через VPN (`GlobalProxy: true`), российские сервисы и банки — напрямую (`direct`), а мобильные клиенты на iOS не вылетают по лимиту памяти (потребление RAM всего **3–5 МБ**).
 
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
 [![Validate Configs](https://github.com/mvrvntn/routing/actions/workflows/validate-pr.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/validate-pr.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
-[![jsDelivr CDN](https://data.jsdelivr.com/v1/package/gh/mvrvntn/routing@release/badge)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
+[![jsDelivr CDN](https://img.shields.io/badge/jsDelivr-CDN-orange.svg)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 **Целевой регион:** 🇷🇺 Россия + 🇧🇾 Беларусь
