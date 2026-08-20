@@ -258,7 +258,7 @@ for f in ['HAPP', 'INCY']:
       "geosite:google-deepmind",
       "geosite:ai"
     ],
-    "outboundTag": "FI1-ONEDASH"
+    "outboundTag": "<ВАШ_ВЫДЕЛЕННЫЙ_УЗЕЛ>"
   }
   ```
 
