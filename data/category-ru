@@ -1,0 +1,106 @@
+# Direct for checkers
+
+domain:ipify.org
+domain:checkip.amazonaws.com
+domain:ifconfig.me
+
+domain:ipapi.is
+domain:iplocate.io
+domain:ip.sb
+
+domain:2ip.ru
+
+# custom ru only
+
+domain:mangalib.me
+domain:animego.me
+domain:showip.net
+domain:avtoto.ru
+domain:tilda.cc
+domain:kinescope.io
+domain:kinescopecdn.net
+domain:redheadsound.studio
+
+# VTB
+
+domain:vtbglobalperspectives.com
+domain:vtb-direct.com
+
+# Sberbank / Sber
+
+domain:sber.world
+domain:sber.ws
+domain:sbercoin.com
+
+# -----------------------------------------------------------
+# CBR Official Bank Website (10.03.2026 Snapshot)
+# -----------------------------------------------------------
+
+# ООО "СПЕЦСТРОЙБАНК" (Рег. № 236)
+domain:ssb.msk.ru
+# АО "Великие Луки банк" (Рег. № 598)
+domain:vlb100.ru
+# АО НКБ "СЛАВЯНБАНК" (Рег. № 804)
+domain:slavbank.ru
+# АО "ПЕРВОУРАЛЬСКБАНК" (Рег. № 965)
+domain:prvbank.ru
+domain:pvubank.com
+# Банк ВТБ (ПАО) (Рег. № 1000)
+domain:vtb-grants.fut.ru
+# ООО "Костромаселькомбанк" (Рег. № 1115)
+domain:selkombank.ru
+# "Братский АНКБ" АО (Рег. № 1144)
+domain:ankb.ru
+# АО комбанк "Арзамас" (Рег. № 1281)
+domain:bank-arzamas.ru
+# АО БАНК "Ермак" (Рег. № 1809)
+domain:bankermak.ru
+# АО АКБ "Алеф-Банк" (Рег. № 2119)
+domain:alefbank.com
+# АКБ "Форштадт" (АО) (Рег. № 2208)
+domain:forshtadt.ru
+# ПАО "БАНК УРАЛСИБ" (Рег. № 2275)
+domain:bfa.ru
+# АО "Банк ДОМ.РФ" (Рег. № 2312)
+domain:rkbank.ru
+# ООО КБ "МВС Банк" (Рег. № 2407)
+domain:mvs-bank.ru
+# АО "Банк Кредит Свисс (Москва)" (Рег. № 2494)
+domain:bank-credit-suisse-moscow.ru
+# "ЗИРААТ БАНК (МОСКВА)" (АО) (Рег. № 2559)
+domain:ziraatbank.ru
+# КБ "Дж.П. Морган Банк Интернешнл" (ООО) (Рег. № 2629)
+domain:jpmorgan.ru
+# АКБ "НООСФЕРА" (АО) (Рег. № 2650)
+domain:noosferabank.ru
+# ООО "НКО "Вестерн Юнион ДП Восток" (Рег. № 2726)
+domain:westernunion.ru
+# АО "Таганрогбанк" (Рег. № 3136)
+domain:tagbank.ru
+# РНКО "Платежный Центр" (ООО) (Рег. № 3166)
+domain:korona.com
+# ПАО Банк ЗЕНИТ (Рег. № 3255)
+domain:credit-zenit.ru
+domain:zenit-card.ru
+# ООО "Дойче Банк" (Рег. № 3328)
+domain:autobahn.db.com
+# АО "КОММЕРЦБАНК (ЕВРАЗИЯ)" (Рег. № 3333)
+domain:commerzbank.ru
+# АО "Мидзухо Банк (Москва)" (Рег. № 3337)
+domain:mizuhogroup.com
+# "Банк "МБА-МОСКВА" ООО (Рег. № 3395)
+domain:ibamoscow.ru
+# ООО "Ю Би Эс Банк" (Рег. № 3463)
+domain:ubs.com
+# АО "СМБСР Банк" (Рег. № 3494)
+domain:smbcr-bank.ru
+# ООО НКО "ЮМани" (Рег. № 3510)
+domain:yoobusiness.ru
+# ООО "Чайна Констракшн Банк" (Рег. № 3515)
+domain:ru.ccb.com
+# АО "Банк 131" (Рег. № 3538)
+domain:bank131.com
+# РНКО АЗИЯПЭЙ ООО (Рег. № 3544)
+domain:asia-pay.ru
+# РНКО Люминис (АО) (Рег. № 3551)
+domain:rncoluminis.ru

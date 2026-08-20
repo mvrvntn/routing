@@ -1,366 +1,348 @@
-name: Update Routing Configs
+name: Build & Update Routing
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"
   push:
     branches:
       - main
-    paths-ignore:
-      - "README.md"
-      - ".gitignore"
-      - "LICENSE"
-  repository_dispatch:
-    types: [update-routing-configs]
+    paths:
+      - "data/**"
+      - "geoip/**"
+      - "HAPP/**"
+      - "INCY/**"
+      - "MIHOMO/**"
+      - ".github/workflows/update-configs.yml"
 
 permissions:
   contents: write
 
 jobs:
-  update:
+  build:
+    name: Build Geodata & Routing Configs
     runs-on: ubuntu-latest
-    outputs:
-      happ_default: ${{ steps.deeplinks.outputs.happ_default }}
-      happ_whitelist: ${{ steps.deeplinks.outputs.happ_whitelist }}
-      happ_json: ${{ steps.deeplinks.outputs.happ_json }}
-      incy_default: ${{ steps.deeplinks.outputs.incy_default }}
-      incy_whitelist: ${{ steps.deeplinks.outputs.incy_whitelist }}
-      incy_json: ${{ steps.deeplinks.outputs.incy_json }}
+    env:
+      CURL: "curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused"
 
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Update HAPP configs
-        shell: bash
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+          cache: false
+
+      - name: Generate build tag
+        run: |
+          DAILY_TAG=$(date -u +%Y%m%d%H%M)
+          echo "DAILY_TAG=$DAILY_TAG" >> "$GITHUB_ENV"
+
+      # --- 1. BUILD GEOSITE.DAT ---
+      - name: Checkout geosite builder
+        uses: actions/checkout@v4
+        with:
+          repository: v2fly/domain-list-community
+          path: community
+          fetch-depth: 1
+
+      - name: Build geosite.dat
         run: |
           set -euo pipefail
-          export TZ=UTC
+          rm -rf community/data /tmp/geosite_out
+          mkdir -p community/data /tmp/geosite_out
 
-          GEOIP_REPO="hydraponique/roscomvpn-geoip"
-          GEOSITE_REPO="hydraponique/roscomvpn-geosite"
+          cp -a ./data/. community/data/
 
-          latest_tag() {
-            git ls-remote --tags "https://github.com/${1}.git" \
-              | awk '{print $2}' \
-              | sed -E 's@refs/tags/@@; s@\^\{\}@@' \
-              | grep -E '^[0-9]{12}$' \
-              | sort -r \
-              | head -n 1
-          }
+          pushd community >/dev/null
+          go run ./ -outputdir=/tmp/geosite_out
+          popd >/dev/null
 
-          epoch_to_tag_utc() {
-            local e="${1:-0}"
-            if [[ "$e" =~ ^[0-9]+$ ]] && (( e > 0 )); then
-              date -u -d "@$e" +%Y%m%d%H%M
-            else
-              printf '000000000000'
-            fi
-          }
+          test -s /tmp/geosite_out/dlc.dat
+          cp -f /tmp/geosite_out/dlc.dat ./geosite.dat
 
-          current_epoch="$(jq -r '.LastUpdated // empty' HAPP/DEFAULT.JSON 2>/dev/null || true)"
-          [[ "$current_epoch" =~ ^[0-9]+$ ]] || current_epoch="0"
-          current_tag="$(epoch_to_tag_utc "$current_epoch")"
+      # --- 2. BUILD GEOIP.DAT ---
+      - name: Checkout geoip builder
+        uses: actions/checkout@v4
+        with:
+          repository: Loyalsoldier/geoip
+          path: geoip_src
+          fetch-depth: 1
 
-          geoip_tag="$(latest_tag "$GEOIP_REPO")"
-          geosite_tag="$(latest_tag "$GEOSITE_REPO")"
-          [[ -n "$geoip_tag" && -n "$geosite_tag" ]]
+      - name: Overlay custom files over geoip
+        run: |
+          set -euo pipefail
+          cp -f ./geoip/*.json geoip_src/ 2>/dev/null || true
+          cp -f ./geoip/*.txt  geoip_src/ 2>/dev/null || true
+          cp -f ./geoip/*.py   geoip_src/ 2>/dev/null || true
 
-          max_tag="$(printf "%s\n%s\n" "$geoip_tag" "$geosite_tag" | sort -r | head -n 1)"
+      - name: Download IP lists and Geobases
+        working-directory: geoip_src
+        run: |
+          set -euo pipefail
+          mkdir -p geolite2
 
-          if [[ "$current_tag" < "$max_tag" ]]; then
-            now_epoch="$(date -u +%s)"
-            geoip_url="https://cdn.jsdelivr.net/gh/${GEOIP_REPO}@${geoip_tag}/release/geoip.dat"
-            geosite_url="https://cdn.jsdelivr.net/gh/${GEOSITE_REPO}@${geosite_tag}/release/geosite.dat"
+          ${{ env.CURL }} -o whitelist.txt https://raw.githubusercontent.com/escapingworm/russia-whitelist/refs/heads/main/ru-whitelist-cidr.txt || touch whitelist.txt
+          ${{ env.CURL }} -o antifilterdownloadcommunity.txt https://community.antifilter.download/list/community.lst || touch antifilterdownloadcommunity.txt
+          ${{ env.CURL }} -o refilter.txt https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/ipsum.lst || touch refilter.txt
+          ${{ env.CURL }} -o refiltercommunity.txt https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community_ips.lst || touch refiltercommunity.txt
+          ${{ env.CURL }} -o antifilternetwork.txt https://antifilter.network/download/ip.lst || touch antifilternetwork.txt
+          ${{ env.CURL }} -o cdn.lst https://raw.githubusercontent.com/mansourjabin/cdn-ip-database/refs/heads/main/data/cdn.lst || touch cdn.lst
+          ${{ env.CURL }} -o merged.sum https://raw.githubusercontent.com/PentiumB/CDN-RuleSet/refs/heads/main/release/merged.sum || touch merged.sum
 
-            curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused -I "$geoip_url" >/dev/null
-            curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused -I "$geosite_url" >/dev/null
+          ${{ env.CURL }} -o geolite_ru.lst https://raw.githubusercontent.com/hydraponique/countrydb/refs/heads/main/output/geolite2-geo-whois-asn-country-ipv4/ru.lst || touch geolite_ru.lst
+          ${{ env.CURL }} -o geolite_by.lst https://raw.githubusercontent.com/hydraponique/countrydb/refs/heads/main/output/geolite2-geo-whois-asn-country-ipv4/by.lst || touch geolite_by.lst
+          ${{ env.CURL }} -o ipinfo_ru.lst https://raw.githubusercontent.com/Davoyan/ipinfo/refs/heads/main/geo/geoip/ru.lst || touch ipinfo_ru.lst
+          ${{ env.CURL }} -o ipinfo_by.lst https://raw.githubusercontent.com/Davoyan/ipinfo/refs/heads/main/geo/geoip/by.lst || touch ipinfo_by.lst
+          ${{ env.CURL }} -o dbip_ru.lst https://raw.githubusercontent.com/hydraponique/countrydb/refs/heads/main/output/dbip-country-ipv4/ru.lst || touch dbip_ru.lst
+          ${{ env.CURL }} -o dbip_by.lst https://raw.githubusercontent.com/hydraponique/countrydb/refs/heads/main/output/dbip-country-ipv4/by.lst || touch dbip_by.lst
 
-            tmp="$(mktemp)"
-            jq \
-              --arg ts "$now_epoch" \
-              --arg geoip "$geoip_url" \
-              --arg geosite "$geosite_url" \
-              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
-              HAPP/DEFAULT.JSON > "$tmp"
-            mv "$tmp" HAPP/DEFAULT.JSON
-            tmp="$(mktemp)"
-            jq \
-              --arg ts "$now_epoch" \
-              --arg geoip "$geoip_url" \
-              --arg geosite "$geosite_url" \
-              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
-              HAPP/WHITELIST.JSON > "$tmp"
-            mv "$tmp" HAPP/WHITELIST.JSON
-            tmp="$(mktemp)"
-            jq \
-              --arg ts "$now_epoch" \
-              --arg geoip "$geoip_url" \
-              --arg geosite "$geosite_url" \
-              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
-              HAPP/JSONSUB.JSON > "$tmp"
-            mv "$tmp" HAPP/JSONSUB.JSON
+          ${{ env.CURL }} -o /tmp/GeoLite2-ASN-CSV.zip https://dl.netsyms.net/dbs/geolite2/GeoLite2-ASN-CSV.zip || true
+          if [ -f /tmp/GeoLite2-ASN-CSV.zip ]; then
+            unzip -o -j /tmp/GeoLite2-ASN-CSV.zip '*/GeoLite2-ASN-Blocks-*.csv' -d ./geolite2 || true
           fi
 
-          default_b64="$(jq -c . HAPP/DEFAULT.JSON | base64 -w 0)"
-          whitelist_b64="$(jq -c . HAPP/WHITELIST.JSON | base64 -w 0)"
-          jsonsub_b64="$(jq -c . HAPP/JSONSUB.JSON | base64 -w 0)"
-
-          printf 'happ://routing/onadd/%s\n' "$default_b64" > HAPP/DEFAULT.DEEPLINK
-          printf 'happ://routing/onadd/%s\n' "$whitelist_b64" > HAPP/WHITELIST.DEEPLINK
-          printf 'happ://routing/onadd/%s\n' "$jsonsub_b64" > HAPP/JSONSUB.DEEPLINK
-          
-      - name: Update INCY configs
-        shell: bash
+      - name: Build geoip.dat
+        working-directory: geoip_src
         run: |
           set -euo pipefail
-          export TZ=UTC
+          go mod download
+          go build -o geoip_builder
+          rm -rf output
+          ./geoip_builder convert -c config.json
+          test -s output/dat/geoip.dat
+          cp -f output/dat/geoip.dat ../geoip.dat
 
-          GEOIP_REPO="hydraponique/roscomvpn-geoip"
-          GEOSITE_REPO="hydraponique/roscomvpn-geosite"
-
-          latest_tag() {
-            git ls-remote --tags "https://github.com/${1}.git" \
-              | awk '{print $2}' \
-              | sed -E 's@refs/tags/@@; s@\^\{\}@@' \
-              | grep -E '^[0-9]{12}$' \
-              | sort -r \
-              | head -n 1
-          }
-
-          epoch_to_tag_utc() {
-            local e="${1:-0}"
-            if [[ "$e" =~ ^[0-9]+$ ]] && (( e > 0 )); then
-              date -u -d "@$e" +%Y%m%d%H%M
-            else
-              printf '000000000000'
-            fi
-          }
-
-          current_epoch="$(jq -r '.LastUpdated // empty' INCY/DEFAULT.JSON 2>/dev/null || true)"
-          [[ "$current_epoch" =~ ^[0-9]+$ ]] || current_epoch="0"
-          current_tag="$(epoch_to_tag_utc "$current_epoch")"
-
-          geoip_tag="$(latest_tag "$GEOIP_REPO")"
-          geosite_tag="$(latest_tag "$GEOSITE_REPO")"
-          [[ -n "$geoip_tag" && -n "$geosite_tag" ]]
-
-          max_tag="$(printf "%s\n%s\n" "$geoip_tag" "$geosite_tag" | sort -r | head -n 1)"
-
-          if [[ "$current_tag" < "$max_tag" ]]; then
-            now_epoch="$(date -u +%s)"
-            geoip_url="https://cdn.jsdelivr.net/gh/${GEOIP_REPO}/release/geoip.dat"
-            geosite_url="https://cdn.jsdelivr.net/gh/${GEOSITE_REPO}/release/geosite.dat"
-
-            curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused -I "$geoip_url" >/dev/null
-            curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused -I "$geosite_url" >/dev/null
-
-            tmp="$(mktemp)"
-            jq \
-              --arg ts "$now_epoch" \
-              --arg geoip "$geoip_url" \
-              --arg geosite "$geosite_url" \
-              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
-              INCY/DEFAULT.JSON > "$tmp"
-            mv "$tmp" INCY/DEFAULT.JSON
-            tmp="$(mktemp)"
-            jq \
-              --arg ts "$now_epoch" \
-              --arg geoip "$geoip_url" \
-              --arg geosite "$geosite_url" \
-              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
-              INCY/WHITELIST.JSON > "$tmp"
-            mv "$tmp" INCY/WHITELIST.JSON
-            tmp="$(mktemp)"
-            jq \
-              --arg ts "$now_epoch" \
-              --arg geoip "$geoip_url" \
-              --arg geosite "$geosite_url" \
-              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
-              INCY/JSONSUB.JSON > "$tmp"
-            mv "$tmp" INCY/JSONSUB.JSON
+      # --- 3. CONVERT RULESETS (MIHOMO & SING-BOX) ---
+      - name: Install Mihomo & sing-box
+        run: |
+          set -euo pipefail
+          ARCH=$(dpkg --print-architecture)
+          LATEST_URL=$(${{ env.CURL }} https://api.github.com/repos/MetaCubeX/mihomo/releases/latest \
+            | grep -oP '"browser_download_url":\s*"\K[^"]*mihomo-linux-'"$ARCH"'-[^"]*\.deb(?=")' \
+            | head -n1 || true)
+          if [ -n "$LATEST_URL" ]; then
+            ${{ env.CURL }} -o /tmp/mihomo.deb "$LATEST_URL"
+            sudo dpkg -i /tmp/mihomo.deb || sudo apt-get install -f -y
+            rm -f /tmp/mihomo.deb
           fi
 
-          default_b64="$(jq -c . INCY/DEFAULT.JSON | base64 -w 0)"
-          whitelist_b64="$(jq -c . INCY/WHITELIST.JSON | base64 -w 0)"
-          jsonsub_b64="$(jq -c . INCY/JSONSUB.JSON | base64 -w 0)"
+          ${{ env.CURL }} https://sing-box.app/install.sh | sudo -E sh -s -- --version 1.12.12 || true
 
-          printf 'incy://routing/onadd/%s\n' "$default_b64" > INCY/DEFAULT.DEEPLINK
-          printf 'incy://routing/onadd/%s\n' "$whitelist_b64" > INCY/WHITELIST.DEEPLINK
-          printf 'incy://routing/onadd/%s\n' "$jsonsub_b64" > INCY/JSONSUB.DEEPLINK
-
-      - name: Commit and push changes
-        shell: bash
+      - name: Build .mrs & .srs
         run: |
           set -euo pipefail
-          export TZ=UTC
+          mkdir -p /tmp/mihomo_rules /tmp/singbox_rules
 
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if command -v mihomo &>/dev/null; then
+            for f in ./data/*; do
+              [ -f "$f" ] || continue
+              name=$(basename "$f")
+              tmp="$(mktemp)"
+              awk '
+                function trim(s){ sub(/^[ \t]+/,"",s); sub(/[ \t]+$/,"",s); return s }
+                {
+                  gsub(/\r/,"")
+                  s=trim($0)
+                  sub(/[ \t]*#.*/, "", s)
+                  if (s ~ /^full:/) { sub(/^full:/, "", s); if (s != "") print s; next }
+                  if (s ~ /^domain:/) { sub(/^domain:/, "", s); sub(/^\./, "", s); if (s != "") print "+." s; next }
+                  if (s ~ /^keyword:/) { sub(/^keyword:/, "", s); sub(/^\./, "", s); if (s != "") print "+." s ".*"; next }
+                  if (s != "" && s !~ /^[a-z0-9_-]+:/) { sub(/^\./, "", s); print "+." s }
+                }
+              ' "$f" > "$tmp"
+              mihomo convert-ruleset domain text "$tmp" "/tmp/mihomo_rules/${name}.mrs" 2>/dev/null || true
+              rm -f "$tmp"
+            done
+          fi
+
+          if command -v sing-box &>/dev/null; then
+            for f in ./data/*; do
+              [ -f "$f" ] || continue
+              name=$(basename "$f")
+              tmp_json="$(mktemp)"
+              awk '
+                function trim(s){ sub(/^[ \t]+/,"",s); sub(/[ \t]+$/,"",s); return s }
+                {
+                  gsub(/\r/,"")
+                  s=trim($0)
+                  sub(/[ \t]*#.*/, "", s)
+                  if (s ~ /^full:/)   { v=trim(substr(s,6)); sub(/^\./,"",v); if(v!="") print "domain\t"  v; next }
+                  if (s ~ /^domain:/) { v=trim(substr(s,8)); sub(/^\./,"",v); if(v!="") print "suffix\t"  v; next }
+                  if (s ~ /^keyword:/){ v=trim(substr(s,9));                   if(v!="") print "keyword\t" v; next }
+                  if (s ~ /^regexp:/) { v=trim(substr(s,8));                   if(v!="") print "regex\t"   v; next }
+                  if (s != "" && s !~ /^[a-z0-9_-]+:/) { sub(/^\./,"",s); print "suffix\t" s }
+                }
+              ' "$f" | jq -Rn '
+                def add($k; $v): .rules[0][$k] = ((.rules[0][$k] // []) + [$v]);
+                reduce (inputs | split("\t")) as $it ({"version":3,"rules":[{}]};
+                  if   $it[0]=="domain"  then add("domain";         $it[1])
+                  elif $it[0]=="suffix"  then add("domain_suffix";  $it[1])
+                  elif $it[0]=="keyword" then add("domain_keyword"; $it[1])
+                  elif $it[0]=="regex"   then add("domain_regex";   $it[1])
+                  else . end
+                )
+                | .rules[0] |= with_entries(select(.value | length > 0))
+                | if (.rules[0] | length) == 0 then .rules = [] else . end
+              ' > "$tmp_json"
+              sing-box rule-set compile --output "/tmp/singbox_rules/${name}.srs" "$tmp_json" 2>/dev/null || true
+              rm -f "$tmp_json"
+            done
+          fi
+
+      # --- 4. PREPARE RELEASE DIR & PACKAGES ---
+      - name: Prepare release files
+        run: |
+          set -euo pipefail
+          rm -rf release
+          mkdir -p release/mihomo release/sing-box release/text
+
+          cp -f geosite.dat release/
+          cp -f geoip.dat release/
+          sha256sum release/geosite.dat > release/geosite.dat.sha256
+          sha256sum release/geoip.dat > release/geoip.dat.sha256
+
+          if [ -d /tmp/mihomo_rules ]; then
+            cp -a /tmp/mihomo_rules/. release/mihomo/ 2>/dev/null || true
+            if [ -d geoip_src/output/mrs ]; then
+              cp -a geoip_src/output/mrs/. release/mihomo/ 2>/dev/null || true
+            fi
+            tar -czf release/mihomo.tar.gz -C release mihomo
+          fi
+
+          if [ -d /tmp/singbox_rules ]; then
+            cp -a /tmp/singbox_rules/. release/sing-box/ 2>/dev/null || true
+            if [ -d geoip_src/output/srs ]; then
+              cp -a geoip_src/output/srs/. release/sing-box/ 2>/dev/null || true
+            fi
+            tar -czf release/sing-box.tar.gz -C release sing-box
+          fi
+
+          if [ -d geoip_src/output/text ]; then
+            cp -a geoip_src/output/text/. release/text/ 2>/dev/null || true
+            tar -czf release/text.tar.gz -C release text
+          fi
+
+      # --- 5. UPDATE HAPP & INCY MANIFESTS ---
+      - name: Update HAPP and INCY manifests & Deeplinks
+        run: |
+          set -euo pipefail
+          now_epoch="$(date -u +%s)"
+          geoip_url="https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.DAILY_TAG }}/release/geoip.dat"
+          geosite_url="https://cdn.jsdelivr.net/gh/${{ github.repository }}@${{ env.DAILY_TAG }}/release/geosite.dat"
+
+          update_json_and_deeplink() {
+            local folder="$1"
+            local name="$2"
+            local json_file="${folder}/${name}.JSON"
+            local deeplink_file="${folder}/${name}.DEEPLINK"
+            local scheme="$(echo "$folder" | tr '[:upper:]' '[:lower:]')"
+
+            local tmp="$(mktemp)"
+            jq \
+              --arg ts "$now_epoch" \
+              --arg geoip "$geoip_url" \
+              --arg geosite "$geosite_url" \
+              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
+              "$json_file" > "$tmp"
+            mv "$tmp" "$json_file"
+
+            local b64="$(jq -c . "$json_file" | base64 -w 0)"
+            printf '%s://routing/onadd/%s\n' "$scheme" "$b64" > "$deeplink_file"
+          }
+
+          update_json_and_deeplink "HAPP" "DEFAULT"
+          update_json_and_deeplink "HAPP" "WHITELIST"
+          update_json_and_deeplink "HAPP" "JSONSUB"
+
+          update_json_and_deeplink "INCY" "DEFAULT"
+          update_json_and_deeplink "INCY" "WHITELIST"
+          update_json_and_deeplink "INCY" "JSONSUB"
+
+      # --- 6. PUSH RELEASE BRANCH & PUBLISH GITHUB RELEASE ---
+      - name: Push to release branch
+        run: |
+          set -euo pipefail
+          cd release
+          git init
           git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b release
+          git add -A
+          git commit -m "Release ${{ env.DAILY_TAG }}"
+          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
+          git push -f -u origin release
+          cd ..
 
-          git add HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON HAPP/DEFAULT.DEEPLINK HAPP/WHITELIST.DEEPLINK HAPP/JSONSUB.DEEPLINK INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON INCY/DEFAULT.DEEPLINK INCY/WHITELIST.DEEPLINK INCY/JSONSUB.DEEPLINK
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.DAILY_TAG }}
+          name: "Routing Release ${{ env.DAILY_TAG }}"
+          prerelease: false
+          draft: false
+          files: |
+            release/*.dat
+            release/*.dat.sha256
+            release/*.tar.gz
 
-          if git diff --cached --quiet; then
-            exit 0
-          fi
-
-          git commit -m "$(date -u +%Y%m%d%H%M)"
-          git push
-
-      - name: Export deeplinks
-        id: deeplinks
-        shell: bash
-        run: |
-          echo "happ_default=$(tr -d '\n\r' < HAPP/DEFAULT.DEEPLINK)" >> "$GITHUB_OUTPUT"
-          echo "happ_whitelist=$(tr -d '\n\r' < HAPP/WHITELIST.DEEPLINK)" >> "$GITHUB_OUTPUT"
-          echo "happ_json=$(tr -d '\n\r' < HAPP/JSONSUB.DEEPLINK)" >> "$GITHUB_OUTPUT"
-          echo "incy_default=$(tr -d '\n\r' < INCY/DEFAULT.DEEPLINK)" >> "$GITHUB_OUTPUT"
-          echo "incy_whitelist=$(tr -d '\n\r' < INCY/WHITELIST.DEEPLINK)" >> "$GITHUB_OUTPUT"
-          echo "incy_json=$(tr -d '\n\r' < INCY/JSONSUB.DEEPLINK)" >> "$GITHUB_OUTPUT"
-
-  deploy:
-    needs: update
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy to servers
-        shell: bash
+      # --- 7. COMMIT UPDATED MANIFESTS TO MAIN ---
+      - name: Commit and push changes to main
         run: |
           set -euo pipefail
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add HAPP/ INCY/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update routing configs and deeplinks ${{ env.DAILY_TAG }} [skip ci]"
+            git push origin main
+          fi
 
-          HAPP_DEFAULT="${{ needs.update.outputs.happ_default }}"
-          HAPP_WHITELIST="${{ needs.update.outputs.happ_whitelist }}"
-          HAPP_JSON="${{ needs.update.outputs.happ_json }}"
-          INCY_DEFAULT="${{ needs.update.outputs.incy_default }}"
-          INCY_WHITELIST="${{ needs.update.outputs.incy_whitelist }}"
-          INCY_JSON="${{ needs.update.outputs.incy_json }}"
+      # --- 8. PURGE CDN CACHE ---
+      - name: Purge jsDelivr CDN
+        run: |
+          set -euo pipefail
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geosite.dat" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@${{ env.DAILY_TAG }}/release/geosite.dat" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@${{ env.DAILY_TAG }}/release/geoip.dat" || true
+
+      # --- 9. OPTIONAL DEPLOY TO SERVERS ---
+      - name: Deploy to servers (if configured)
+        if: env.DEPLOY_SERVERS != '' && env.DEPLOY_SSH_KEY != ''
+        env:
+          DEPLOY_SERVERS: ${{ secrets.DEPLOY_SERVERS }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          HAPP_DEFAULT="$(tr -d '\n\r' < HAPP/DEFAULT.DEEPLINK)"
+          INCY_DEFAULT="$(tr -d '\n\r' < INCY/DEFAULT.DEEPLINK)"
 
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/deploy_key
+          echo "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-
           SSH_OPTS="-o StrictHostKeyChecking=no -o ConnectTimeout=10 -i ~/.ssh/deploy_key"
 
-          IFS=',' read -ra SERVERS <<< "${{ secrets.DEPLOY_SERVERS }}"
-
-          TOTAL=${#SERVERS[@]}
-          FAIL_COUNT=0
-
-          for i in "${!SERVERS[@]}"; do
-            SRV_NUM=$((i + 1))
-            SERVER="$(echo "${SERVERS[$i]}" | xargs)"
-
-            set +e
-            RESULT=$(ssh $SSH_OPTS "$SERVER" bash -s -- \
-              "$HAPP_DEFAULT" "$HAPP_WHITELIST" "$HAPP_JSON" \
-              "$INCY_DEFAULT" "$INCY_WHITELIST" "$INCY_JSON" 2>&1 <<'REMOTE_SCRIPT'
-              set -euo pipefail
-
-              HAPP_DEFAULT="$1"; HAPP_WHITELIST="$2"; HAPP_JSON="$3"
-              INCY_DEFAULT="$4"; INCY_WHITELIST="$5"; INCY_JSON="$6"
-
-              ACTIONS=""
-
-              # --- Geofiles ---
-              if [ -d /opt/remnanode ]; then
-                TARGET=/opt/remnanode
-              elif [ -d /opt/remnawave/node ]; then
-                TARGET=/opt/remnawave/node
-              else
-                TARGET=""
-              fi
-
-              if [ -n "$TARGET" ]; then
-                NEED_RESTART=false
-
-                REMOTE_GEOIP_SHA=$(sudo curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused "https://github.com/hydraponique/roscomvpn-geoip/releases/latest/download/geoip.dat.sha256" | awk '{print $1}')
-                REMOTE_GEOSITE_SHA=$(sudo curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused "https://github.com/hydraponique/roscomvpn-geosite/releases/latest/download/geosite.dat.sha256" | awk '{print $1}')
-
-                if [ -f "$TARGET/geoip.dat" ]; then
-                  LOCAL_GEOIP_SHA=$(sudo sha256sum "$TARGET/geoip.dat" | awk '{print $1}')
-                else
-                  LOCAL_GEOIP_SHA=""
+          IFS=',' read -ra SERVERS <<< "$DEPLOY_SERVERS"
+          for SERVER in "${SERVERS[@]}"; do
+            SRV=$(echo "$SERVER" | xargs)
+            [ -n "$SRV" ] || continue
+            echo "Updating node on $SRV..."
+            ssh $SSH_OPTS "$SRV" bash -s -- "$HAPP_DEFAULT" "$INCY_DEFAULT" <<'REMOTE_SCRIPT' || true
+              set -e
+              # Update remnanode geofiles if present
+              for T in /opt/remnanode /opt/remnawave/node; do
+                if [ -d "$T" ]; then
+                  curl -fsSL -o "$T/geoip.dat" "https://github.com/${{ github.repository }}/releases/latest/download/geoip.dat" || true
+                  curl -fsSL -o "$T/geosite.dat" "https://github.com/${{ github.repository }}/releases/latest/download/geosite.dat" || true
+                  chmod 777 "$T"/*.dat 2>/dev/null || true
+                  (cd "$T" && docker compose restart 2>/dev/null || true)
                 fi
-
-                if [ -f "$TARGET/geosite.dat" ]; then
-                  LOCAL_GEOSITE_SHA=$(sudo sha256sum "$TARGET/geosite.dat" | awk '{print $1}')
-                else
-                  LOCAL_GEOSITE_SHA=""
-                fi
-
-                if [ "$REMOTE_GEOIP_SHA" != "$LOCAL_GEOIP_SHA" ]; then
-                  sudo curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused -o "$TARGET/geoip.dat" "https://github.com/hydraponique/roscomvpn-geoip/releases/latest/download/geoip.dat"
-                  sudo chmod 777 "$TARGET/geoip.dat"
-                  NEED_RESTART=true
-                  ACTIONS="${ACTIONS}geoip.dat "
-                fi
-
-                if [ "$REMOTE_GEOSITE_SHA" != "$LOCAL_GEOSITE_SHA" ]; then
-                  sudo curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused -o "$TARGET/geosite.dat" "https://github.com/hydraponique/roscomvpn-geosite/releases/latest/download/geosite.dat"
-                  sudo chmod 777 "$TARGET/geosite.dat"
-                  NEED_RESTART=true
-                  ACTIONS="${ACTIONS}geosite.dat "
-                fi
-
-                if [ "$NEED_RESTART" = true ]; then
-                  cd "$TARGET"
-                  sudo docker compose down && sudo docker compose up -d
-                  cd /
-                fi
-              fi
-
-              # --- Nginx ---
-              if [ -f /etc/nginx/sites-available/default ] && [ -f /etc/nginx/sites-available/incy.conf ]; then
-                update_config() {
-                  local FILE="$1" DEF="$2" WL="$3" JS="$4"
-                  local TMP=$(mktemp)
-                  awk -v def="$DEF" -v wl="$WL" -v js="$JS" '
-                    /location = \/[[:space:]]*$/ { loc="default" }
-                    /location = \/whitelist/ { loc="whitelist" }
-                    /location = \/json/ { loc="json" }
-                    /rewrite \// {
-                      if (loc == "default") { sub(/rewrite \/.*redirect;/, "rewrite / " def " redirect;"); loc="" }
-                      else if (loc == "whitelist") { sub(/rewrite \/.*redirect;/, "rewrite / " wl " redirect;"); loc="" }
-                      else if (loc == "json") { sub(/rewrite \/.*redirect;/, "rewrite / " js " redirect;"); loc="" }
-                    }
-                    { print }
-                  ' "$FILE" > "$TMP"
-                  sudo mv "$TMP" "$FILE"
-                  sudo chmod 644 "$FILE"
-                }
-
-                update_config /etc/nginx/sites-available/default "$HAPP_DEFAULT" "$HAPP_WHITELIST" "$HAPP_JSON"
-                update_config /etc/nginx/sites-available/incy.conf "$INCY_DEFAULT" "$INCY_WHITELIST" "$INCY_JSON"
-
-                sudo nginx -t && sudo service nginx restart
-                ACTIONS="${ACTIONS}nginx "
-              fi
-
-              # --- Result ---
-              if [ -z "$ACTIONS" ]; then
-                echo "up to date"
-              else
-                echo "updated ${ACTIONS% }"
-              fi
+              done
           REMOTE_SCRIPT
-            )
-            ssh_exit=$?
-            set -e
-
-            RESULT=$(echo "$RESULT" | tail -1)
-
-            if [ $ssh_exit -ne 0 ]; then
-              echo "SRV${SRV_NUM} - FAIL (connection error)"
-              FAIL_COUNT=$((FAIL_COUNT + 1))
-            elif echo "$RESULT" | grep -q "^updated"; then
-              FILES=$(echo "$RESULT" | sed 's/^updated //')
-              echo "SRV${SRV_NUM} - OK (updated $FILES)"
-            else
-              echo "SRV${SRV_NUM} - OK (up to date)"
-            fi
           done
-
           rm -f ~/.ssh/deploy_key
-
-          if [ $FAIL_COUNT -gt 0 ]; then
-            echo "Failed: $FAIL_COUNT/$TOTAL servers"
-            exit 1
-          fi

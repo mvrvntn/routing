@@ -1,0 +1,53 @@
+# OpenAI & ChatGPT
+domain:openai.com
+domain:chatgpt.com
+domain:chat.openai.com
+domain:auth0.openai.com
+domain:cdn.oaistatic.com
+domain:oaistatic.com
+domain:oaiusercontent.com
+domain:api.openai.com
+domain:platform.openai.com
+domain:files.oaiusercontent.com
+domain:production-openaicom-storage.azureedge.net
+domain:sentry.io
+
+# Anthropic & Claude
+domain:anthropic.com
+domain:claude.ai
+domain:claude.usercontent.com
+domain:servd-anthropic-website.b-cdn.net
+
+# Perplexity AI
+domain:perplexity.ai
+domain:pplx.ai
+domain:labs.perplexity.ai
+
+# Cursor & Anysphere
+domain:cursor.com
+domain:cursor.sh
+domain:anysphere.co
+domain:anysphere.com
+
+# Midjourney
+domain:midjourney.com
+domain:cdn.midjourney.com
+
+# xAI & Grok
+domain:x.ai
+domain:grok.com
+
+# Microsoft Copilot
+domain:copilot.microsoft.com
+domain:edgeservices.bing.com
+domain:sydney.bing.com
+
+# Cohere & Mistral
+domain:cohere.ai
+domain:cohere.com
+domain:mistral.ai
+
+# Hugging Face
+domain:huggingface.co
+domain:hf.co
+domain:hf.space

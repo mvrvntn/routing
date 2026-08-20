@@ -1,0 +1,24 @@
+# Discord Main
+domain:discord.com
+domain:discord.gg
+domain:discord.gift
+domain:discord.media
+domain:discord.new
+domain:discord.store
+domain:discord.tools
+domain:discordapp.com
+domain:discordapp.net
+domain:discordmerch.com
+domain:discordpartygames.com
+domain:discordsays.com
+domain:discordstatus.com
+
+# Discord Voice & Gateway & CDN
+domain:gateway.discord.gg
+domain:status.discord.com
+domain:cdn.discordapp.com
+domain:media.discordapp.net
+domain:router.discordapp.net
+domain:images-ext-1.discordapp.net
+domain:images-ext-2.discordapp.net
+domain:discord-attachments-uploads-prd.storage.googleapis.com
