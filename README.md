@@ -98,7 +98,7 @@
 1. Создайте правило ответа для INCY (`User-Agent` содержит `incy`).
 2. Укажите заголовок ответа:
    ```http
-   autorouting: https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.JSON
+   autorouting: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
    ```
 
 #### Б. Автообновление диплинков Happ через `remnawave-routing-update`
