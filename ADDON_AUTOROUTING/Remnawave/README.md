@@ -13,7 +13,7 @@
 2. Создайте или отредактируйте правило для INCY (условие: заголовок `User-Agent` содержит `incy`).
 3. Добавьте HTTP-заголовок ответа:
    ```http
-   autorouting: https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.JSON
+   autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
    ```
 4. Сохраните правило.
 
