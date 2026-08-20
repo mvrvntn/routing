@@ -1019,3 +1019,48 @@ domain:zerossl.com
 domain:zetalliance.org
 domain:zf.com
 domain:zoosk.com
+
+# -----------------------------------------------------------
+# 2026 Productivity, Dev, Design & Media Services (Geoblocked in RU)
+# -----------------------------------------------------------
+
+# Notion
+domain:notion.so
+domain:notion.site
+domain:notion.com
+
+# Figma
+domain:figma.com
+domain:figmacdn.com
+
+# Slack & Miro
+domain:slack.com
+domain:slack-edge.com
+domain:slack-msgs.com
+domain:miro.com
+domain:miro-apps.com
+
+# Atlassian (Jira & Trello)
+domain:atlassian.com
+domain:atlassian.net
+domain:jira.com
+domain:trello.com
+
+# Developer Tools (Docker & JetBrains)
+domain:docker.com
+domain:docker.io
+domain:jetbrains.com
+domain:jetbrains.space
+
+# Streaming & Music (Spotify & Netflix)
+domain:spotify.com
+domain:scdn.co
+domain:spotifycdn.com
+domain:netflix.com
+domain:nflxvideo.net
+domain:nflximg.net
+
+# Canva
+domain:canva.com
+domain:canva.me
+

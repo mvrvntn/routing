@@ -229,3 +229,73 @@ domain:bank131.com
 domain:asia-pay.ru
 # РНКО Люминис (АО) (Рег. № 3551)
 domain:rncoluminis.ru
+
+# -----------------------------------------------------------
+# 2026 Modern Russian Services, Telecoms & Bank Rebrandings
+# -----------------------------------------------------------
+
+# T-Bank (former Tinkoff)
+domain:tbank.ru
+domain:t-bank.ru
+domain:t-static.ru
+domain:tinkoff.ru
+domain:tinkoff.com
+domain:tinkoffinsurance.ru
+domain:tinkoffblack.ru
+
+# Major Russian Banks & Payments (SBP / Mir / Alfa / Sber / VTB)
+domain:sberbank.ru
+domain:sber.ru
+domain:sberbank.com
+domain:sberprime.ru
+domain:alfabank.ru
+domain:alfabank.com
+domain:alfa-bank.ru
+domain:vtb.ru
+domain:vtb.com
+domain:gazprombank.ru
+domain:gpb.ru
+domain:raiffeisen.ru
+domain:psbank.ru
+domain:rshb.ru
+domain:sovcombank.ru
+domain:open.ru
+domain:mkb.ru
+domain:yoomoney.ru
+domain:pay.yandex.ru
+domain:nspk.ru
+domain:sbp.nspk.ru
+domain:mironline.ru
+domain:mir-pay.ru
+domain:wbpay.ru
+domain:wb-bank.ru
+
+# Russian App Stores & Maps
+domain:rustore.ru
+domain:rustore.cc
+domain:2gis.ru
+domain:2gis.com
+domain:2gis.net
+domain:2gis.media
+
+# Russian Telecom Operators (T2, MTS, MegaFon, Beeline, Rostelecom)
+domain:t2.ru
+domain:tele2.ru
+domain:mts.ru
+domain:mtsbank.ru
+domain:megafon.ru
+domain:beeline.ru
+domain:rt.ru
+domain:rostelecom.ru
+domain:yota.ru
+
+# Government & Tax
+domain:gosuslugi.ru
+domain:gu-st.ru
+domain:nalog.gov.ru
+domain:nalog.ru
+domain:cbr.ru
+domain:customs.gov.ru
+domain:pfr.gov.ru
+domain:sfr.gov.ru
+
