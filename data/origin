@@ -8,7 +8,6 @@ domain:origin.tv
 
 domain:cloudsync-prod.s3.amazonaws.com
 domain:origin-a.akamaihd.net
-domain:rtm.tnt-ea.com
 domain:ssl-lvlt.cdn.ea.com
 
 # EA

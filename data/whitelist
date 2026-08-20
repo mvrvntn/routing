@@ -250,7 +250,6 @@ domain:jx5.ru
 domain:kaspersky.com
 domain:kaspersky.ru
 domain:kazanexpress.ru
-domain:kinopoisk-ru.clstorage.net
 domain:kinopoisk.ru
 domain:kommersant.ru
 domain:kp.ru
@@ -420,7 +419,6 @@ domain:ya.ru
 domain:yads.tech
 domain:yandex
 domain:yandex-bank.net
-domain:yandex-images.clstorage.net
 domain:yandex-team.ru
 domain:yandex.aero
 domain:yandex.az
@@ -484,4 +482,4 @@ domain:dbankcloud.ru
 # T-Bank (former Tinkoff)
 domain:tbank.ru
 domain:t-bank.ru
-domain:t-static.ru
+domain:t-static.ru

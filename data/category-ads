@@ -7,7 +7,6 @@ domain:an.yandex.ru
 domain:ads.vk.com
 domain:ad.vk.com
 domain:top-fwz1.mail.ru
-domain:matchid.adfox.yandex.ru
 domain:extmaps-analytics.yandex.net
 domain:mytarget.com
 domain:target.my.com
@@ -49,7 +48,6 @@ domain:trafficjunky.com
 # OEM & Device Telemetry Ads (Xiaomi, Samsung, Oppo)
 domain:ad.intl.xiaomi.com
 domain:ad.xiaomi.com
-domain:api.ad.intl.xiaomi.com
 domain:data.mistat.intl.xiaomi.com
 domain:adx.ads.oppomobile.com
 domain:ads.samsung.com

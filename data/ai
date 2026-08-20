@@ -1,14 +1,8 @@
 # OpenAI & ChatGPT
 domain:openai.com
 domain:chatgpt.com
-domain:chat.openai.com
-domain:auth0.openai.com
-domain:cdn.oaistatic.com
 domain:oaistatic.com
 domain:oaiusercontent.com
-domain:api.openai.com
-domain:platform.openai.com
-domain:files.oaiusercontent.com
 domain:production-openaicom-storage.azureedge.net
 domain:sentry.io
 
@@ -21,7 +15,6 @@ domain:servd-anthropic-website.b-cdn.net
 # Perplexity AI
 domain:perplexity.ai
 domain:pplx.ai
-domain:labs.perplexity.ai
 
 # Cursor & Anysphere
 domain:cursor.com
@@ -31,7 +24,6 @@ domain:anysphere.com
 
 # Midjourney
 domain:midjourney.com
-domain:cdn.midjourney.com
 
 # xAI & Grok
 domain:x.ai
