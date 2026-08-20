@@ -384,10 +384,14 @@ jobs:
               # Update remnanode geofiles if present
               for T in /opt/remnanode /opt/remnawave/node; do
                 if [ -d "$T" ]; then
-                  curl -fsSL -o "$T/geoip.dat" "https://github.com/${{ github.repository }}/releases/latest/download/geoip.dat" || true
-                  curl -fsSL -o "$T/geosite.dat" "https://github.com/${{ github.repository }}/releases/latest/download/geosite.dat" || true
-                  chmod 777 "$T"/*.dat 2>/dev/null || true
-                  (cd "$T" && docker compose restart 2>/dev/null || true)
+                  curl -fsSL --retry 3 -o "$T/geoip.dat" "https://cdn.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat" || \
+                  curl -fsSL --retry 3 -o "$T/geoip.dat" "https://raw.githubusercontent.com/${{ github.repository }}/release/geoip.dat" || true
+                  
+                  curl -fsSL --retry 3 -o "$T/geosite.dat" "https://cdn.jsdelivr.net/gh/${{ github.repository }}@release/geosite.dat" || \
+                  curl -fsSL --retry 3 -o "$T/geosite.dat" "https://raw.githubusercontent.com/${{ github.repository }}/release/geosite.dat" || true
+                  
+                  chmod 644 "$T"/*.dat 2>/dev/null || true
+                  (cd "$T" && (docker compose restart || docker-compose restart) 2>/dev/null || true)
                 fi
               done
           REMOTE_SCRIPT
