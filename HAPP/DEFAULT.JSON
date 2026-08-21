@@ -40,11 +40,9 @@
   "ProxySites": [
     "geosite:google-play",
     "geosite:google-deepmind",
-    "geosite:ai",
     "geosite:github",
     "geosite:twitch-ads",
     "geosite:youtube",
-    "geosite:discord",
     "geosite:telegram",
     "geosite:category-geoblock-ru"
   ],
