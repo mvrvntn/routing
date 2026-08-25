@@ -96,14 +96,12 @@ domain:dell.com
 domain:dellcdn.com
 
 # Designer + Copilot (Microsoft)
-domain:copilot.microsoft.com
 domain:designer.microsoft.com
 
 # Dyson
 keyword:dyson.
 
 # ElevenLabs + ElevenReader
-domain:elevenlabs.io
 domain:elevenreader.io
 
 # Fitbit
@@ -113,72 +111,30 @@ domain:fitbit.google.com
 domain:fitbitvestibuleshim-pa.googleapis.com
 
 # Google DeepMind (Gemini)
-domain:deepmind.com
-domain:deepmind.google
 
 # Google DeepMind - Google Generative Language API
-domain:geller-pa.googleapis.com
-domain:generativelanguage.googleapis.com
-domain:proactivebackend-pa.googleapis.com
-domain:robinfrontend-pa.googleapis.com
 
 # Google DeepMind - Google AI Studio
-domain:ai.google.dev
-domain:generativeai.google
-domain:makersuite.google.com
-domain:ai.studio
-domain:aistudio.google.com
-domain:bard.google.com
-domain:gemini.google
-domain:gemini.google.com
 
 # Google DeepMind - Gemini Code Assist
-domain:cloudaicompanion.googleapis.com
-domain:cloudcode-pa.googleapis.com
-domain:daily-cloudcode-pa.googleapis.com
 
 # Google DeepMind - NotebookLM
-domain:notebooklm-pa.googleapis.com
-domain:notebooklm.googleapis.com
-domain:notebooklm.google
-domain:notebooklm.google.com
 
 # Google DeepMind - Jules
-domain:jules.google
-domain:jules.google.com
 
 # Google DeepMind - Google AI Labs
-domain:labs.google
-domain:labs.google.com
-domain:aisandbox-pa.googleapis.com
 
 # Google DeepMind - Android Studio Gemini Code Assist
-domain:aida.googleapis.com
 
 # Google DeepMind - Opal
-domain:opal.google
-domain:opal.google.com
 
 # Google DeepMind - Antigravity
-domain:antigravity-pa.googleapis.com
-domain:antigravity.googleapis.com
-domain:antigravity.google
-domain:antigravity-unleash.goog
 
 # Google DeepMind - Other
-domain:clients6.google.com
-domain:aitestkitchen.withgoogle.com
-domain:apis.google.com
-domain:assistant-s3-pa.googleapis.com
-domain:developerprofiles-pa.googleapis.com
-domain:lookerstudio.google.com
-domain:o.pki.goog
-domain:suggestqueries.google.com
 
 # Grok
 keyword:grok.com
 domain:grok.x.com
-domain:x.ai
 
 # Guilded
 domain:guilded.gg
@@ -251,8 +207,6 @@ domain:zendesk.de
 # OpenAI / ChatGPT
 keyword:chatgpt.com
 domain:chat.com
-domain:oaistatic.com
-domain:oaiusercontent.com
 keyword:openai.
 domain:sora.com
 domain:ai.com
@@ -263,7 +217,6 @@ domain:livekit.cloud
 domain:openaiapi-site.azureedge.net
 domain:openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
 domain:openaicomproductionae4b.blob.core.windows.net
-domain:production-openaicom-storage.azureedge.net
 regexp:^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
 domain:o33249.ingest.sentry.io
 domain:openaicom.imgix.net
@@ -350,7 +303,6 @@ keyword:tailscale.com
 keyword:teamviewer.com
 
 # Tidal
-domain:onetrust.com
 domain:squareup.com
 keyword:tidal.com
 
@@ -484,10 +436,8 @@ keyword:workos.com
 
 # Xbox
 domain:auth.xboxlive.com
-domain:edgeservices.bing.com
 domain:gssv-play-prod.xboxlive.com
 domain:rewards.bing.com
-domain:sydney.bing.com
 domain:xboxdesignlab.xbox.com
 
 # Xerox
@@ -583,7 +533,6 @@ domain:cmems-du.eu
 domain:co.nz
 domain:cocalc.com
 domain:codebrowser.dev
-domain:cohere.com
 domain:coingate.com
 domain:com.ua
 domain:consent.trustarc.com
@@ -680,7 +629,6 @@ domain:grafana.com
 domain:grammarly.com
 domain:graylog.org
 domain:grazie.ai
-domain:groq.com
 domain:groupon.com
 domain:grouponcdn.com
 keyword:happ.su
@@ -1040,7 +988,6 @@ domain:miro.com
 domain:miro-apps.com
 
 # Atlassian (Jira & Trello)
-domain:atlassian.com
 domain:atlassian.net
 domain:jira.com
 domain:trello.com
@@ -1049,15 +996,11 @@ domain:trello.com
 domain:docker.com
 domain:docker.io
 domain:jetbrains.com
-domain:jetbrains.space
 
 # Streaming & Music (Spotify & Netflix)
 domain:spotify.com
-domain:scdn.co
 domain:spotifycdn.com
 domain:netflix.com
-domain:nflxvideo.net
-domain:nflximg.net
 
 # Canva
 domain:canva.com
@@ -1081,7 +1024,6 @@ domain:claude.com
 domain:code.gist.build
 domain:connect.ngrok-agent.com
 domain:cursor-cdn.com
-domain:cursor.sh
 domain:cursorapi.com
 domain:dashboard.algolia.com
 domain:dashboard.gitguardian.com
@@ -1104,7 +1046,6 @@ domain:framerstatic.com
 domain:framerusercontent.com
 domain:gofund.me
 domain:gonift.com
-domain:gql.twitch.tv
 domain:grizzlysms.com
 domain:hc-ping.com
 domain:hchk.io
@@ -1141,9 +1082,7 @@ domain:notion-emojis.s3-us-west-2.amazonaws.com
 domain:notion.new
 domain:ntp.msn.com
 domain:octopus.do
-domain:openai.com
 domain:openh264.org
-domain:openrouter.ai
 domain:paddle.com
 domain:paddlestatus.com
 domain:parallels.cn
@@ -1179,7 +1118,6 @@ domain:syslog-ng.com
 domain:trae.ai
 domain:transferwise.com
 domain:uizard.io
-domain:usher.ttvnw.net
 domain:v.vrv.co
 domain:verificationacademy.com
 domain:vod-fy.crunchyrollcdn.com
