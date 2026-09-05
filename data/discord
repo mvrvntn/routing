@@ -1,7 +1,8 @@
-# Discord Main
+# Discord Main & Services
 domain:discord.com
 domain:discord.gg
 domain:discord.gift
+domain:discord.gifts
 domain:discord.media
 domain:discord.new
 domain:discord.store
@@ -12,6 +13,18 @@ domain:discordmerch.com
 domain:discordpartygames.com
 domain:discordsays.com
 domain:discordstatus.com
+domain:dis.gd
+domain:discord.co
+domain:discord.dev
+domain:discordactivities.com
+domain:discordactivity.com
+domain:watchdis.gd
+domain:discord.design
+domain:discord.style
+domain:hammerandchisel.com
 
-# Discord Voice & Gateway & CDN
+# WebRTC STUN & Storage
+domain:stun.l.google.com
 domain:discord-attachments-uploads-prd.storage.googleapis.com
+
+

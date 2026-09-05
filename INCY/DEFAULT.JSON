@@ -44,6 +44,8 @@
     "geosite:twitch-ads",
     "geosite:youtube",
     "geosite:telegram",
+    "geosite:discord",
+    "geosite:ai",
     "geosite:category-geoblock-ru"
   ],
   "ProxyIp": [],

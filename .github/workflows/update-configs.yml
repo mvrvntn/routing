@@ -127,7 +127,7 @@ jobs:
         run: |
           set -euo pipefail
           ARCH=$(dpkg --print-architecture)
-          LATEST_URL=$(${{ env.CURL }} https://api.github.com/repos/MetaCubeX/mihomo/releases/latest \
+          LATEST_URL=$(${{ env.CURL }} -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest \
             | grep -oP '"browser_download_url":\s*"\K[^"]*mihomo-linux-'"$ARCH"'-[^"]*\.deb(?=")' \
             | head -n1 || true)
           if [ -n "$LATEST_URL" ]; then
@@ -141,10 +141,39 @@ jobs:
       - name: Build .mrs & .srs
         run: |
           set -euo pipefail
-          mkdir -p /tmp/mihomo_rules /tmp/singbox_rules
+          mkdir -p /tmp/data_expanded /tmp/mihomo_rules /tmp/singbox_rules
+
+          # Preprocess data files to expand include: directives recursively
+          python3 -c '
+          import os, glob
+
+          def resolve_file(fname, visited=None):
+              if visited is None: visited = set()
+              if fname in visited: return []
+              visited.add(fname)
+              fpath = os.path.join("data", fname)
+              if not os.path.exists(fpath): return []
+              lines = []
+              with open(fpath, "r", encoding="utf-8") as f:
+                  for l in f:
+                      l = l.strip()
+                      if not l or l.startswith("#"): continue
+                      if l.startswith("include:"):
+                          inc_target = l.split(":")[1].strip()
+                          lines.extend(resolve_file(inc_target, visited.copy()))
+                      else:
+                          lines.append(l)
+              return lines
+
+          for p in glob.glob("data/*"):
+              name = os.path.basename(p)
+              resolved = resolve_file(name)
+              with open(os.path.join("/tmp/data_expanded", name), "w", encoding="utf-8") as out:
+                  out.write("\n".join(resolved) + "\n")
+          '
 
           if command -v mihomo &>/dev/null; then
-            for f in ./data/*; do
+            for f in /tmp/data_expanded/*; do
               [ -f "$f" ] || continue
               name=$(basename "$f")
               tmp="$(mktemp)"
@@ -166,7 +195,7 @@ jobs:
           fi
 
           if command -v sing-box &>/dev/null; then
-            for f in ./data/*; do
+            for f in /tmp/data_expanded/*; do
               [ -f "$f" ] || continue
               name=$(basename "$f")
               tmp_json="$(mktemp)"
@@ -213,6 +242,8 @@ jobs:
 
           if [ -d /tmp/mihomo_rules ]; then
             cp -a /tmp/mihomo_rules/. release/mihomo/ 2>/dev/null || true
+            cp -f MIHOMO/games.yaml release/mihomo/ 2>/dev/null || true
+            cp -f MIHOMO/ru-apps.yaml release/mihomo/ 2>/dev/null || true
             if [ -d geoip_src/output/mrs ]; then
               cp -a geoip_src/output/mrs/. release/mihomo/ 2>/dev/null || true
             fi
@@ -357,6 +388,9 @@ jobs:
           ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat" || true
           ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geosite.dat.sha256" || true
           ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat.sha256" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/mihomo/games.yaml" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/mihomo/ru-apps.yaml" || true
+          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/INCY/DEFAULT.JSON" || true
 
       # --- 9. OPTIONAL DEPLOY TO SERVERS ---
       - name: Deploy to servers (if configured)

@@ -1,0 +1,210 @@
+payload:
+  # Unreal Engine games
+  - PROCESS-NAME-REGEX,(?i).*Win64-Shipping.*
+
+  # Aimbeast
+  - PROCESS-NAME-REGEX,Aimbeast.*
+
+  # Among Us
+  - PROCESS-NAME,Among Us.exe
+
+  # Apex Legends
+  - PROCESS-NAME,ApexLauncher.exe # Launcher
+  - PROCESS-NAME,r5apex_dx12.exe # Apex Legends (DX12)
+
+  # BattleBit Remastered
+  - PROCESS-NAME-REGEX,BattleBit.*
+
+  # Content Warning
+  - PROCESS-NAME,Content Warning.exe
+
+  # Counter-Strike 2
+  - PROCESS-NAME,cs2.exe
+
+  # Euro Truck Simulator 2 / American Trucks Simulator
+  - PROCESS-NAME,eurotrucks2.exe
+  - PROCESS-NAME,amtrucks.exe
+
+  # Party Animals
+  - PROCESS-NAME,PartyAnimals.exe
+
+  # PEAK
+  - PROCESS-NAME,PEAK.exe
+
+  # PUBG (PlayerUnknown's Battlegrounds)
+  - PROCESS-NAME,ExecPubg.exe # Launcher
+  - PROCESS-NAME-REGEX,TslGame.* # Game
+
+  # Minecraft
+  - PROCESS-NAME,javaw.exe # Minecraft (Java Edition)
+  - PROCESS-NAME,Minecraft.exe # Minecraft (Bedrock Edition)
+
+  # FragPunk
+  - PROCESS-NAME,FragPunk.exe
+
+  # Dota 2
+  - PROCESS-NAME,dota2.exe
+
+  # Deadlock
+  - PROCESS-NAME,deadlock.exe
+
+  # GTA V (online + other multiplayer solutions)
+  - PROCESS-NAME-REGEX,.*GTA5.* # GTA V / Online
+  - PROCESS-NAME,altv.exe # alt:V (Majestic RP)
+  - PROCESS-NAME,altv-webengine.exe # alt:V webengine (Majestic RP)
+  - PROCESS-NAME,FiveM.exe # FiveM
+  - PROCESS-NAME-REGEX,(?i).*ragemp.* # RageMP
+  - PROCESS-NAME-REGEX,(?i).*Majestic.* # Majestic RP
+  - PROCESS-NAME-REGEX,(?i).*Rockstar.* # Rockstar Games Launcher
+  - PROCESS-NAME-REGEX,(?i).*SocialClub.* # Rockstar Social Club
+
+  # Team Fortress 2
+  - PROCESS-NAME,tf.exe
+  - PROCESS-NAME,tf_win64.exe
+
+  # Half-Life 2
+  - PROCESS-NAME,hl2.exe
+
+  # Rainbow Six Siege
+  - PROCESS-NAME,RainbowSix.exe
+
+  # osu!
+  - PROCESS-NAME,osu!.exe
+
+  # Quaver
+  - PROCESS-NAME,Quaver.exe
+
+  # Valorant
+  - PROCESS-NAME,VALORANT-Win64-Shipping.exe
+
+  # Escape from Tarkov
+  - PROCESS-NAME,BsgLauncher.exe # EFT Launcher
+  - PROCESS-NAME,EscapeFromTarkov.exe # Escape From Tarkov
+  - PROCESS-NAME,EscapeFromTarkovArena.exe # Escape From Tarkov - Arena
+
+  # Hunt: Showdown
+  - PROCESS-NAME,HuntGame.exe # Hunt: Showdown
+
+  # Античиты (группировка)
+  - PROCESS-NAME,start_protected_game.exe # Apex Easy, THE FINALS  Anti-Cheat
+  - PROCESS-NAME,BattleBitEAC.exe # BattleBit EAC
+  - PROCESS-NAME,EasyAntiCheat.exe # Easy Anti-Cheat
+  - PROCESS-NAME,TslGame_BE.exe # PUBG BattleEye
+  - PROCESS-NAME,TslGame_ZK.exe # PUBG Anti-Cheat module
+  - PROCESS-NAME-REGEX,(?i).*Vanguard.* # Valorant Vanguard Anti-Cheat
+  - PROCESS-NAME-REGEX,(?i).*vanguard.* # Vanguard Anti-Cheat (Valorant, League of Legends)
+  - PROCESS-NAME,vgc.exe # Vanguard Anti-Cheat (Valorant, League of Legends)
+  - PROCESS-NAME,vgm.exe # Vanguard Anti-Cheat (Valorant, League of Legends)
+  - PROCESS-NAME,denuvo-anti-cheat-update-service.exe # DENUVO Anticheat
+  - PROCESS-NAME,EscapeFromTarkovArena_BE.exe # Escape From Tarkov - Arena Battle Eye Anticheat
+  - PROCESS-NAME,EscapeFromTarkov_BE.exe # Escape From Tarkov Battle Eye Anticheat
+  - PROCESS-NAME,EasyAntiCheat_EOS.exe # Hunt: Showdown Easy Anti-Cheat
+  - PROCESS-NAME,faceitservice.exe # FaceIT AC
+  - PROCESS-NAME,faceitclient.exe # FaceIT AC
+  - PROCESS-NAME,SGuard64.exe # Anti-Cheat Expert
+  - PROCESS-NAME,SGuardSvc64.exe # Anti-Cheat Expert
+  - PROCESS-NAME,SGuardUpdate64.exe # Anti-Cheat Expert
+  - PROCESS-NAME,ACE-Service64.exe # Anti-Cheat Expert
+
+  # HELLDIVERS 2
+  - PROCESS-NAME,helldivers2.exe
+  - PROCESS-NAME,crs-handler.exe # Crash reports
+
+  # THE FINALS
+  - PROCESS-NAME,Discovery.exe
+  - PROCESS-NAME,Discovery-d.exe
+
+  # Rust
+  - PROCESS-NAME-REGEX,(?i).*RustClient.*
+
+  # Escape from Tarkov
+  - PROCESS-NAME-REGEX,EscapeFromTarkov.*
+
+  # Arena Breakout: Infinite
+  - PROCESS-NAME,UAGame.exe
+
+  # Marvel Rivals
+  - PROCESS-NAME,MarvelRivals_Launcher.exe
+  - PROCESS-NAME,Marvel-Win64-Shipping.exe
+
+  # Overwatch 2
+  - PROCESS-NAME,Overwatch.exe
+  - PROCESS-NAME,Battle.net.exe
+  - PROCESS-NAME,BlizzardBrowser.exe
+
+  # HoYoverse
+  - PROCESS-NAME,GenshinImpact.exe
+  - PROCESS-NAME,ZenlessZoneZero.exe
+  - PROCESS-NAME,StarRail.exe
+  - PROCESS-NAME,BH3.exe
+  - PROCESS-NAME,ZFGameBrowser.exe # In-game webview
+  - PROCESS-NAME,HYUpdater.exe
+  - PROCESS-NAME,HYPHelper.exe
+  - PROCESS-NAME,HYP.exe
+
+  # Umamusume: Pretty Derby
+  - PROCESS-NAME,UmamusumePrettyDerby.exe
+
+  # Wuthering Waves
+  - PROCESS-NAME,Wuthering Waves.exe
+  - PROCESS-NAME,KRWebView.exe # In-game webview
+  - PROCESS-NAME,KRSDKExternal.exe
+  # --- Steam ---
+  - PROCESS-NAME,steam.exe
+  - PROCESS-NAME,steamwebhelper.exe
+  - PROCESS-NAME,steamservice.exe
+
+  # --- Valve (Dota 2, CS2) ---
+  - PROCESS-NAME,csgo.exe
+
+  # --- Riot Games (LoL, Valorant) ---
+  - PROCESS-NAME,LeagueClient.exe
+  - PROCESS-NAME,League of Legends.exe
+  - PROCESS-NAME,VALORANT.exe
+  - PROCESS-NAME,RiotClientServices.exe
+
+  # --- Blizzard / Battle.net ---
+  - PROCESS-NAME,Hearthstone.exe
+  - PROCESS-NAME,Diablo IV.exe
+  - PROCESS-NAME,World of Warcraft.exe
+  - PROCESS-NAME,StarCraft II.exe
+
+  # --- EA / Origin ---
+  - PROCESS-NAME,Origin.exe
+  - PROCESS-NAME,EADesktop.exe
+  - PROCESS-NAME,r5apex.exe
+  - PROCESS-NAME,FIFA24.exe
+  - PROCESS-NAME,FIFA23.exe
+
+  # --- Ubisoft ---
+  - PROCESS-NAME,upc.exe
+  - PROCESS-NAME,UbisoftConnect.exe
+
+  # --- Epic Games ---
+  - PROCESS-NAME,EpicGamesLauncher.exe
+  - PROCESS-NAME,FortniteClient-Win64-Shipping.exe
+
+  # --- Escape from Tarkov ---
+
+  # --- Популярные игры ---
+  - PROCESS-NAME,PUBG-Win64-Shipping.exe
+  - PROCESS-NAME,TslGame.exe
+  - PROCESS-NAME,RustClient.exe
+  - PROCESS-NAME,rust.exe
+  - PROCESS-NAME,Cyberpunk2077.exe
+  - PROCESS-NAME,eldenring.exe
+  - PROCESS-NAME,GTA5.exe
+  - PROCESS-NAME,RDR2.exe
+  - PROCESS-NAME,bg3.exe
+  - PROCESS-NAME,bg3_dx11.exe
+  - PROCESS-NAME,ForzaHorizon5.exe
+  - PROCESS-NAME,Warthunder.exe
+  - PROCESS-NAME,WorldOfTanks.exe
+
+  # --- Лаунчеры ---
+  - PROCESS-NAME,GOGGalaxy.exe
+  - PROCESS-NAME,playnite.exe
+
+  # --- Добавленно вручную ---
+  - PROCESS-NAME,Raft.exe
+  - PROCESS-NAME,Tanki.exe
