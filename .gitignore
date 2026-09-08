@@ -7,3 +7,4 @@ scratch_*/
 *.tmp
 .DS_Store
 Thumbs.db
+/ADDON_AUTOROUTING/Remnawave/*.json

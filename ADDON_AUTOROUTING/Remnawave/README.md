@@ -42,8 +42,7 @@
 
 ## 3. Шаблон подписки Sing-Box
 В панели Remnawave ➔ **Settings** ➔ **Subscription Templates** ➔ **Sing-Box**:
-* Скопируйте содержимое файла [singbox_subscription_template.json](./singbox_subscription_template.json).
-* Шаблон использует независимые, скомпилированные бинарные `.srs` правила нашего репозитория через jsDelivr CDN (`discord-ip`, `telegram-ip`, `category-ru`, `whitelist`, `direct-ip`, `category-ads`, `win-spy`).
+* Рекомендуется использовать скомпилированные бинарные `.srs` правила нашего репозитория через jsDelivr CDN (`discord-ip`, `telegram-ip`, `category-ru`, `whitelist`, `direct-ip`, `category-ads`, `win-spy`).
 
 ---
 
@@ -55,12 +54,10 @@
 ---
 
 ## 5. Основной шаблон XRAY для каждой локации
-В Remnawave при настройке шаблона Xray для входящих локаций:
-* Используйте файл [xray_location_template.json](./xray_location_template.json).
-* В него уже включены:
-  * Маршрутизация доменов `discord`, `ai`, `category-geoblock-ru` через прокси.
-  * Прямое проксирование IP-подсетей `geoip:telegram` и `geoip:discord`.
-  * `routeOnly: true` для предотвращения утечек на iOS.
+В Remnawave при настройке шаблона Xray для входящих локаций рекомендуется включить:
+* Маршрутизацию доменов `geosite:discord`, `geosite:ai`, `geosite:category-geoblock-ru` через тег прокси.
+* Прямое проксирование IP-подсетей `geoip:telegram` и `geoip:discord`.
+* Опцию `"routeOnly": true` в секции `sniffing` для предотвращения утечек на iOS.
 
 ---
 
