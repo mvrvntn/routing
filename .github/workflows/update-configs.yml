@@ -407,7 +407,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b release
           git add -A
-          git commit -m "Release ${{ env.DAILY_TAG }}"
+          git commit -m "Релиз ${{ env.DAILY_TAG }}"
           git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
           git push -f -u origin release
           cd ..
@@ -416,7 +416,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.DAILY_TAG }}
-          name: "Routing Release ${{ env.DAILY_TAG }}"
+          name: "Релиз роутинга ${{ env.DAILY_TAG }}"
           prerelease: false
           draft: false
           files: |
@@ -432,7 +432,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add HAPP/ INCY/ README.md
           if ! git diff --cached --quiet; then
-            git commit -m "chore: update routing configs and deeplinks ${{ env.DAILY_TAG }} [skip ci]"
+            git commit -m "chore: обновление конфигураций роутинга и диплинков ${{ env.DAILY_TAG }} [skip ci]"
             git push origin main
           fi
 
