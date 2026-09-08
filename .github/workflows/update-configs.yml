@@ -47,6 +47,21 @@ jobs:
           DAILY_TAG=$(date -u +%Y%m%d%H%M)
           echo "DAILY_TAG=$DAILY_TAG" >> "$GITHUB_ENV"
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Unit Tests & Regression Verification
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover tests -v
+
+      - name: Run Smart Ingestion & Sanitization for Geoblocked Domains
+        run: |
+          set -euo pipefail
+          python3 scripts/update_geoblock.py
+
       # --- 1. BUILD GEOSITE.DAT ---
       - name: Checkout geosite builder
         uses: actions/checkout@v4
@@ -69,6 +84,18 @@ jobs:
 
           test -s /tmp/geosite_out/dlc.dat
           cp -f /tmp/geosite_out/dlc.dat ./geosite.dat
+
+      - name: Validate geosite.dat (Smoke Test)
+        run: |
+          set -euo pipefail
+          test -s ./geosite.dat
+          SIZE=$(wc -c < ./geosite.dat)
+          echo "geosite.dat size: $SIZE bytes"
+          if [ "$SIZE" -lt 65000 ] || [ "$SIZE" -gt 350000 ]; then
+            echo "Error: geosite.dat size ($SIZE bytes) outside expected safe range [65KB, 350KB]!"
+            exit 1
+          fi
+          echo "geosite.dat Smoke Test PASSED."
 
       # --- 2. BUILD GEOIP.DAT ---
       - name: Checkout geoip builder
@@ -121,6 +148,18 @@ jobs:
           ./geoip_builder convert -c config.json
           test -s output/dat/geoip.dat
           cp -f output/dat/geoip.dat ../geoip.dat
+
+      - name: Validate geoip.dat (Smoke Test)
+        run: |
+          set -euo pipefail
+          test -s ./geoip.dat
+          SIZE=$(wc -c < ./geoip.dat)
+          echo "geoip.dat size: $SIZE bytes"
+          if [ "$SIZE" -lt 300000 ] || [ "$SIZE" -gt 2500000 ]; then
+            echo "Error: geoip.dat size ($SIZE bytes) outside expected safe range [300KB, 2.5MB]!"
+            exit 1
+          fi
+          echo "geoip.dat Smoke Test PASSED."
 
       # --- 3. CONVERT RULESETS (MIHOMO & SING-BOX) ---
       - name: Install Mihomo & sing-box
