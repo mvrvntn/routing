@@ -13,6 +13,8 @@ on:
       - "HAPP/**"
       - "INCY/**"
       - "MIHOMO/**"
+      - "scripts/**"
+      - "tests/**"
       - ".github/workflows/update-configs.yml"
 
 permissions:
