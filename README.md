@@ -31,8 +31,8 @@
 | Профиль | Описание | Happ (iOS/Android/ПК) | INCY (iOS/Android/ПК) |
 | :--- | :--- | :--- | :--- |
 | **коридор роутинг**<br>*(DEFAULT)* | **Рекомендуемый.** Раздельный туннель: РФ напрямую, блок/AI/Discord/YouTube через VPN. | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON URL](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
-| **БС**<br>*(WHITELIST)* | **Белый список.** Напрямую только реестр ЦБ РФ, банки, Госуслуги и СБП. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON URL](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) |
-| **JSONSUB** | Базовый профиль для ручной кастомизации DNS и правил. | [⚡ В 1 клик](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON URL](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ В 1 клик](INCY/JSONSUB.DEEPLINK) |
+| **коридор роутинг (БС)**<br>*(WHITELIST)* | **Белый список.** Напрямую только реестр ЦБ РФ, банки, Госуслуги и СБП. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON URL](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) |
+| **коридор роутинг (JSONSUB)** | Базовый профиль для ручной кастомизации DNS и правил. | [⚡ В 1 клик](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON URL](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ В 1 клик](INCY/JSONSUB.DEEPLINK) |
 
 ### 🚀 Как импортировать
 
