@@ -1,0 +1,227 @@
+{
+  "dns": {
+    "hosts": {
+      "lkfl2.nalog.ru": "213.24.64.175",
+      "lknpd.nalog.ru": "213.24.64.181",
+      "domain:googleapis.cn": "googleapis.com",
+      "geosite:category-ads": "127.0.0.1"
+    },
+    "servers": [
+      {
+        "port": 53,
+        "address": "77.88.8.8",
+        "domains": [
+          "geosite:private",
+          "geosite:category-ru",
+          "geosite:whitelist",
+          "geosite:microsoft",
+          "geosite:apple",
+          "geosite:epicgames",
+          "geosite:riot",
+          "geosite:escapefromtarkov",
+          "geosite:steam",
+          "geosite:origin",
+          "geosite:twitch",
+          "geosite:pinterest",
+          "geosite:faceit"
+        ]
+      },
+      {
+        "address": "https://8.8.8.8/dns-query",
+        "domains": [
+          "geosite:github",
+          "geosite:twitch-ads",
+          "geosite:youtube",
+          "geosite:telegram",
+          "geosite:discord",
+          "geosite:ai",
+          "geosite:category-geoblock-ru"
+        ]
+      },
+      "https://1.1.1.1/dns-query",
+      "https://8.8.8.8/dns-query"
+    ],
+    "disableCache": false,
+    "queryStrategy": "UseIPv4"
+  },
+  "log": {
+    "loglevel": "error"
+  },
+  "stats": {},
+  "policy": {
+    "levels": {
+      "8": {
+        "connIdle": 90,
+        "handshake": 4,
+        "uplinkOnly": 1,
+        "downlinkOnly": 1
+      }
+    },
+    "system": {
+      "statsOutboundUplink": false,
+      "statsOutboundDownlink": false
+    }
+  },
+  "routing": {
+    "rules": [
+      {
+        "port": 53,
+        "type": "field",
+        "outboundTag": "dns-out"
+      },
+      {
+        "port": "25,135,137,138,139,445",
+        "type": "field",
+        "network": "tcp,udp",
+        "outboundTag": "block"
+      },
+      {
+        "port": 443,
+        "type": "field",
+        "network": "udp",
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "geosite:win-spy",
+          "geosite:torrent",
+          "geosite:category-ads"
+        ],
+        "outboundTag": "block"
+      },
+      {
+        "ip": [
+          "77.88.8.8",
+          "77.88.8.1"
+        ],
+        "type": "field",
+        "outboundTag": "direct"
+      },
+      {
+        "ip": [
+          "1.1.1.1",
+          "8.8.8.8"
+        ],
+        "type": "field",
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "domain:lava.ru",
+          "domain:lava.top",
+          "domain:lava.link",
+          "domain:lava.money",
+          "geosite:google-play",
+          "geosite:github",
+          "geosite:twitch-ads",
+          "geosite:youtube",
+          "geosite:telegram",
+          "geosite:discord",
+          "geosite:ai",
+          "geosite:category-geoblock-ru"
+        ],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:telegram",
+          "geoip:discord"
+        ],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "geosite:private",
+          "geosite:category-ru",
+          "geosite:whitelist",
+          "geosite:microsoft",
+          "geosite:apple",
+          "geosite:epicgames",
+          "geosite:riot",
+          "geosite:escapefromtarkov",
+          "geosite:steam",
+          "geosite:origin",
+          "geosite:twitch",
+          "geosite:pinterest",
+          "geosite:faceit"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "ip": [
+          "geoip:private",
+          "geoip:direct"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "network": "tcp,udp",
+        "outboundTag": "proxy"
+      }
+    ],
+    "domainStrategy": "IPIfNonMatch"
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "port": 10808,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true,
+        "auth": "noauth",
+        "userLevel": 8
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": true,
+        "destOverride": [
+          "http",
+          "quic",
+          "tls"
+        ]
+      }
+    },
+    {
+      "tag": "http",
+      "port": 10809,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "userLevel": 8,
+        "allowTransparent": false
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": true,
+        "destOverride": [
+          "http",
+          "quic",
+          "tls"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom"
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    },
+    {
+      "tag": "dns-out",
+      "protocol": "dns",
+      "proxySettings": {
+        "tag": "proxy"
+      }
+    }
+  ]
+}

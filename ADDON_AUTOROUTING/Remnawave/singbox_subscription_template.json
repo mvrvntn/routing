@@ -1,0 +1,241 @@
+{
+  "dns": {
+    "rules": [
+      {
+        "server": "fakeip-dns",
+        "query_type": [
+          "A",
+          "AAAA"
+        ]
+      },
+      {
+        "server": "ru-doh",
+        "rule_set": [
+          "category-ru",
+          "whitelist"
+        ]
+      },
+      {
+        "server": "google-doh"
+      }
+    ],
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    },
+    "servers": [
+      {
+        "tag": "ru-doh",
+        "detour": "direct",
+        "address": "https://77.88.8.8/dns-query",
+        "strategy": "ipv4_only",
+        "address_strategy": "prefer_ipv4"
+      },
+      {
+        "tag": "google-doh",
+        "detour": "direct",
+        "address": "https://8.8.8.8/dns-query",
+        "strategy": "ipv4_only",
+        "address_strategy": "prefer_ipv4"
+      },
+      {
+        "tag": "fakeip-dns",
+        "address": "fakeip"
+      }
+    ],
+    "independent_cache": true
+  },
+  "log": {
+    "level": "warning",
+    "disabled": false,
+    "timestamp": true
+  },
+  "route": {
+    "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "mode": "or",
+        "type": "logical",
+        "rules": [
+          {
+            "protocol": "dns"
+          },
+          {
+            "port": 53
+          }
+        ],
+        "action": "hijack-dns"
+      },
+      {
+        "outbound": "direct",
+        "ip_is_private": true
+      },
+      {
+        "port": [
+          25
+        ],
+        "outbound": "block"
+      },
+      {
+        "outbound": "block",
+        "rule_set": [
+          "category-ads",
+          "win-spy"
+        ]
+      },
+      {
+        "port": [
+          443
+        ],
+        "network": [
+          "udp"
+        ],
+        "outbound": "block"
+      },
+      {
+        "outbound": "→ Remnawave",
+        "rule_set": [
+          "discord-ip",
+          "discord",
+          "telegram-ip",
+          "telegram",
+          "youtube",
+          "category-geoblock-ru"
+        ]
+      },
+      {
+        "domain_suffix": [
+          "lava.ru",
+          "lava.top",
+          "lava.link",
+          "lava.money"
+        ],
+        "outbound": "→ Remnawave"
+      },
+      {
+        "outbound": "direct",
+        "rule_set": [
+          "category-ru",
+          "whitelist",
+          "direct-ip"
+        ]
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "category-ads",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-ads.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "win-spy",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/win-spy.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "discord-ip",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/discord-ip.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "discord",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/discord.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "telegram-ip",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/telegram-ip.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "telegram",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/telegram.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "youtube",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/youtube.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "category-geoblock-ru",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-geoblock-ru.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "category-ru",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-ru.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "whitelist",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/whitelist.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "direct-ip",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/direct.srs",
+        "type": "remote",
+        "format": "binary"
+      }
+    ],
+    "override_android_vpn": true,
+    "auto_detect_interface": true
+  },
+  "inbounds": [
+    {
+      "mtu": 1400,
+      "tag": "tun-in",
+      "type": "tun",
+      "sniff": true,
+      "stack": "mixed",
+      "platform": {
+        "http_proxy": {
+          "server": "127.0.0.1",
+          "enabled": true,
+          "server_port": 2412
+        }
+      },
+      "auto_route": true,
+      "strict_route": true,
+      "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
+      "sniff_override_destination": false
+    },
+    {
+      "tag": "mixed-in",
+      "type": "mixed",
+      "sniff": true,
+      "listen": "127.0.0.1",
+      "listen_port": 2080,
+      "sniff_override_destination": false
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
+      "tag": "block",
+      "type": "block"
+    },
+    {
+      "tag": "dns-out",
+      "type": "dns"
+    }
+  ]
+}
