@@ -1,13 +1,37 @@
-# Direct for checkers
+# Direct for IP checkers & anti-VPN detection (MAX, banks, Avito, telemetry)
+domain:2ip.ru
+domain:2ip.io
+domain:ipwho.is
 domain:ipify.org
 domain:checkip.amazonaws.com
 domain:ifconfig.me
+domain:ifconfig.co
+domain:ifconfig.io
+domain:icanhazip.com
+domain:ip-api.com
+domain:ipinfo.io
+domain:ident.me
+domain:ipecho.net
+domain:wtfismyip.com
+domain:ipapi.co
 domain:ipapi.is
 domain:iplocate.io
 domain:ip.sb
 domain:showip.net
-domain:2ip.ru
-domain:ipwho.is
+domain:db-ip.com
+domain:ipgeolocation.io
+domain:jsonip.com
+domain:check-host.net
+domain:whoer.net
+domain:browserleaks.com
+domain:whatismyipaddress.com
+domain:whatismyip.com
+domain:myip.opendns.com
+domain:ipregistry.co
+domain:ipdata.co
+domain:proxycheck.io
+domain:vpnapi.io
+domain:ipqualityscore.com
 
 # -----------------------------------------------------------
 # Russian, Regional & Cyrillic Top-Level Domains (TLDs & Geo-TLDs)
