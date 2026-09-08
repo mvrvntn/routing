@@ -1,61 +1,72 @@
-# 🔄 Интеграция автороутинга с Remnawave
+# 🔄 Интеграция автороутинга «коридор роутинг» с Remnawave
 
-В панели Remnawave поддерживаются два способа доставки правил маршрутизации клиентам **Happ** и **INCY**:
+Полное руководство по интеграции «коридор роутинг» с панелью **Remnawave** для всех типов клиентов (INCY, Happ, Sing-Box, Mihomo / Clash, Xray).
 
 ---
 
-## Вариант 1. Нативный Autorouting для INCY (Рекомендуемый)
+## 1. Автороутинг для INCY (Нативный, рекомендуется)
 
-Приложение [INCY](https://incy.cc) поддерживает встроенный механизм **Autorouting** — профиль привязывается к удаленному JSON-файлу репозитория, получает иконку облака ☁️ в приложении и самостоятельно обновляется каждые 24 часа.
-
-### Настройка в панели Remnawave:
-1. Перейдите в **Settings** ➔ **Subscription Templates / Response Rules** (Правила ответов).
-2. Создайте или отредактируйте правило для INCY (условие: заголовок `User-Agent` содержит `incy`).
+Приложение [INCY](https://incy.cc) поддерживает нативное автообновление профиля:
+1. В панели Remnawave перейдите в **Settings** ➔ **Subscription Templates / Response Rules** (Правила ответов).
+2. Отредактируйте правило для INCY (`User-Agent` содержит `incy`).
 3. Добавьте HTTP-заголовок ответа:
    ```http
-   autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
+   autorouting: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
    ```
-4. Сохраните правило.
-
-> 🚀 **Результат:** Клиенты INCY при первой загрузке подписки автоматически подключат автообновляемый профиль `koridor` и будут обновлять его в фоновом режиме.
+   *(Для профиля Белых Списков используйте: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON`)*.
 
 ---
 
-## Вариант 2. Автообновление через сервис `Remnawave-Routing-update` (для Happ и INCY)
+## 2. Автороутинг для Happ
 
-Для клиентов [Happ](https://happ.su) и статических диплинков используется официальный микросервис [lifeindarkside/Remnawave-Routing-update](https://github.com/lifeindarkside/Remnawave-Routing-update).
+Для [Happ](https://happ.su) передайте диплинк в заголовке `routing`:
+1. В **Правилах ответов** Remnawave для правила `Happ` (`User-Agent` содержит `happ`) добавьте заголовок:
+   ```http
+   routing: happ://routing/onadd/eyJOYW1lIjoi0LrQvtGA0LjQtNC+0YAg0YDQvtGD0YLQuNC90LMiLCJHbG9iYWxQcm94eSI6InRydWUiLCJVc2VDaHVua0ZpbGVzIjoidHJ1ZSIsIlJlbW90ZURucyI6IjguOC44LjgiLCJEb21lc3RpY0RucyI6Ijc3Ljg4LjguOCIsIlJlbW90ZUROU1R5cGUiOiJEb0giLCJSZW1vdGVETlNEb21haW4iOiJodHRwczovLzguOC44LjgvZG5zLXF1ZXJ5IiwiUmVtb3RlRE5TSVAiOiI4LjguOC44IiwiRG9tZXN0aWNETlNUeXBlIjoiRG9IIiwiRG9tZXN0aWNETlNEb21haW4iOiJodHRwczovLzc3Ljg4LjguOC9kbnMtcXVlcnkiLCJEb21lc3RpY0ROU0lQIjoiNzcuODguOC44IiwiR2VvaXB1cmwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvZ2gvbXZydm50bi9yb3V0aW5nQHJlbGVhc2UvZ2VvaXAuZGF0IiwiR2Vvc2l0ZXVybCI6Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9naC9tdnJ2bnRuL3JvdXRpbmdAcmVsZWFzZS9nZW9zaXRlLmRhdCIsIkxhc3RVcGRhdGVkIjoiMTc4ODU5MzY0MCIsIkRuc0hvc3RzIjp7ImxrZmwyLm5hbG9nLnJ1IjoiMjEzLjI0LjY0LjE3NSIsImxrbnBkLm5hbG9nLnJ1IjoiMjEzLjI0LjY0LjE4MSIsImRucy5nb29nbGUiOiI4LjguOC44IiwiY2xvdWRmbGFyZS1kbnMuY29tIjoiMS4xLjEuMSJ9LCJSb3V0ZU9yZGVyIjoiYmxvY2stcHJveHktZGlyZWN0IiwiRGlyZWN0U2l0ZXMiOlsiZ2Vvc2l0ZTpwcml2YXRlIiwiZ2Vvc2l0ZTpjYXRlZ29yeS1ydSIsImdlb3NpdGU6d2hpdGVsaXN0IiwiZ2Vvc2l0ZTptaWNyb3NvZnQiLCJnZW9zaXRlOmFwcGxlIiwiZ2Vvc2l0ZTplcGljZ2FtZXMiLCJnZW9zaXRlOnJpb3QiLCJnZW9zaXRlOmVzY2FwZWZyb210YXJrb3YiLCJnZW9zaXRlOnN0ZWFtIiwiZ2Vvc2l0ZTpvcmlnaW4iLCJnZW9zaXRlOnR3aXRjaCIsImdlb3NpdGU6cGludGVyZXN0IiwiZ2Vvc2l0ZTpmYWNlaXQiXSwiRGlyZWN0SXAiOlsiZ2VvaXA6cHJpdmF0ZSIsImdlb2lwOmRpcmVjdCJdLCJQcm94eVNpdGVzIjpbImdlb3NpdGU6Z29vZ2xlLXBsYXkiLCJnZW9zaXRlOmdvb2dsZS1kZWVwbWluZCIsImdlb3NpdGU6Z2l0aHViIiwiZ2Vvc2l0ZTp0d2l0Y2gtYWRzIiwiZ2Vvc2l0ZTp5b3V0dWJlIiwiZ2Vvc2l0ZTp0ZWxlZ3JhbSIsImdlb3NpdGU6ZGlzY29yZCIsImdlb3NpdGU6YWkiLCJnZW9zaXRlOmNhdGVnb3J5LWdlb2Jsb2NrLXJ1Il0sIlByb3h5SXAiOlsiZ2VvaXA6dGVsZWdyYW0iLCJnZW9pcDpkaXNjb3JkIl0sIkJsb2NrU2l0ZXMiOlsiZ2Vvc2l0ZTp3aW4tc3B5IiwiZ2Vvc2l0ZTp0b3JyZW50IiwiZ2Vvc2l0ZTpjYXRlZ29yeS1hZHMiXSwiQmxvY2tJcCI6W10sIkRvbWFpblN0cmF0ZWd5IjoiSVBJZk5vbk1hdGNoIiwiRmFrZUROUyI6ImZhbHNlIn0=
+   ```
+2. Либо используйте микросервис `remnawave-routing-update`:
+   ```yaml
+   services:
+     remnawave-routing-update:
+       image: ghcr.io/lifeindarkside/remnawave-routing-update:latest
+       container_name: remnawave-routing-update
+       restart: unless-stopped
+       environment:
+         - REMNA_BASE_URL=https://panel.yourdomain.com/api
+         - REMNA_TOKEN=your_remnawave_api_token_here
+         - GITHUB_RAW_URL=https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/HAPP/DEFAULT.DEEPLINK
+         - CHECK_INTERVAL=300
+   ```
 
-### Как это работает:
-1. Сервис опрашивает файл `.DEEPLINK` из репозитория `mvrvntn/routing`.
-2. При выходе нового релиза отправляет `PATCH` в Remnawave API (`/subscription-settings`).
-3. Панель начинает отдавать клиентам заголовок `routing: happ://routing/onadd/<base64>`.
+---
 
-### Установка на сервере:
+## 3. Шаблон подписки Sing-Box
+В панели Remnawave ➔ **Settings** ➔ **Subscription Templates** ➔ **Sing-Box**:
+* Скопируйте содержимое файла [singbox_subscription_template.json](./singbox_subscription_template.json).
+* Шаблон использует независимые, скомпилированные бинарные `.srs` правила нашего репозитория через jsDelivr CDN (`discord-ip`, `telegram-ip`, `category-ru`, `whitelist`, `direct-ip`, `category-ads`, `win-spy`).
 
-Добавьте в `docker-compose.yml` панели Remnawave:
+---
 
-```yaml
-services:
-  remnawave-routing-update:
-    image: ghcr.io/lifeindarkside/remnawave-routing-update:latest
-    container_name: remnawave-routing-update
-    restart: unless-stopped
-    environment:
-      # URL вашей панели Remnawave
-      - REMNA_BASE_URL=https://panel.yourdomain.com/api
-      # API токен (Panel -> Settings -> API Tokens с правами Subscription Settings / External Squads)
-      - REMNA_TOKEN=your_remnawave_api_token_here
-      # Ссылка на актуальный диплинк koridor
-      - GITHUB_RAW_URL=https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/HAPP/DEFAULT.DEEPLINK
-      # Интервал проверки (в секундах)
-      - CHECK_INTERVAL=300
+## 4. Шаблон подписки Mihomo / Clash
+В панели Remnawave ➔ **Settings** ➔ **Subscription Templates** ➔ **Clash / Mihomo**:
+* Скопируйте содержимое файла [MIHOMO/template_remnawave.yaml](../../MIHOMO/template_remnawave.yaml).
+* Шаблон полностью совместим с синтаксисом Remnawave (`# LEAVE THIS LINE!`, `remnawave: include-proxies: false`).
+
+---
+
+## 5. Основной шаблон XRAY для каждой локации
+В Remnawave при настройке шаблона Xray для входящих локаций:
+* Используйте файл [xray_location_template.json](./xray_location_template.json).
+* В него уже включены:
+  * Маршрутизация доменов `discord`, `ai`, `category-geoblock-ru` через прокси.
+  * Прямое проксирование IP-подсетей `geoip:telegram` и `geoip:discord`.
+  * `routeOnly: true` для предотвращения утечек на iOS.
+
+---
+
+## 6. Рекомендация для профиля ноды Remnawave
+В конфигурации ноды (`Профиль remnawave ноды.txt`) в секцию чекеров `warp-out` рекомендуется добавить:
+```json
+"ipwho.is"
 ```
-
-> **Совет:** Для INCY укажите:
-> `GITHUB_RAW_URL=https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.DEEPLINK`
-
-Запуск:
-```bash
-docker compose up -d remnawave-routing-update
-docker logs -f remnawave-routing-update
-```
+Это гарантирует, что российские приложения (Мос.ру, Ozon, WB), снайпящие реальный IP через сервис `ipwho.is`, будут работать без ложных срабатываний и плашек «Отключите VPN».

@@ -326,6 +326,14 @@ rule-providers:
     path: ./ruleset/telegram.mrs
     proxy: ⚡️ Авто
     interval: 86400
+  telegram-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/telegram-ip.mrs
+    path: ./ruleset/telegram-ip.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
   win-spy:
     type: http
     behavior: domain
@@ -364,6 +372,14 @@ rule-providers:
     format: mrs
     url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/discord.mrs
     path: ./ruleset/discord.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+  discord-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/discord-ip.mrs
+    path: ./ruleset/discord-ip.mrs
     proxy: ⚡️ Авто
     interval: 86400
   google-deepmind:
@@ -422,6 +438,7 @@ rules:
   - RULE-SET,twitch-ads,PROXY
   - RULE-SET,youtube,📺 Youtube
   - RULE-SET,telegram,PROXY
+  - RULE-SET,telegram-ip,PROXY,no-resolve
   - RULE-SET,github,PROXY
   - RULE-SET,epicgames,🎮 Игры
   - RULE-SET,origin,🎮 Игры
@@ -437,6 +454,7 @@ rules:
   - RULE-SET,whitelist,DIRECT
   - RULE-SET,torrent-clients,DIRECT
   - RULE-SET,discord,💬 Discord.exe
+  - RULE-SET,discord-ip,💬 Discord.exe,no-resolve
   - PROCESS-NAME-REGEX,discord,💬 Discord.exe
   - PROCESS-NAME-REGEX,vesktop,💬 Discord.exe
   - RULE-SET,games,🎮 Игры

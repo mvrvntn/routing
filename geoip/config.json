@@ -278,6 +278,42 @@
         "uri": "./CUSTOM-FIX-ADD.txt",
         "onlyIPType": "ipv4"
       }
+    },
+    {
+      "type": "maxmindGeoLite2ASNCSV",
+      "action": "add",
+      "args": {
+        "ipv4": "./geolite2/GeoLite2-ASN-Blocks-IPv4.csv",
+        "ipv6": "./geolite2/GeoLite2-ASN-Blocks-IPv6.csv",
+        "wantedList": {
+          "discord": [
+            "AS62597"
+          ],
+          "telegram": [
+            "AS44907",
+            "AS62041",
+            "AS59930",
+            "AS211157",
+            "AS62014"
+          ]
+        }
+      }
+    },
+    {
+      "type": "text",
+      "action": "add",
+      "args": {
+        "name": "discord",
+        "uri": "./discord.txt"
+      }
+    },
+    {
+      "type": "text",
+      "action": "add",
+      "args": {
+        "name": "telegram",
+        "uri": "./telegram.txt"
+      }
     }
   ],
   "output": [

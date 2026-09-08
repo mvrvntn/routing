@@ -245,6 +245,11 @@ jobs:
             cp -f MIHOMO/games.yaml release/mihomo/ 2>/dev/null || true
             cp -f MIHOMO/ru-apps.yaml release/mihomo/ 2>/dev/null || true
             if [ -d geoip_src/output/mrs ]; then
+              for rule in discord telegram; do
+                if [ -f "geoip_src/output/mrs/${rule}.mrs" ]; then
+                  mv "geoip_src/output/mrs/${rule}.mrs" "geoip_src/output/mrs/${rule}-ip.mrs"
+                fi
+              done
               cp -a geoip_src/output/mrs/. release/mihomo/ 2>/dev/null || true
             fi
             tar -czf release/mihomo.tar.gz -C release mihomo
@@ -253,12 +258,22 @@ jobs:
           if [ -d /tmp/singbox_rules ]; then
             cp -a /tmp/singbox_rules/. release/sing-box/ 2>/dev/null || true
             if [ -d geoip_src/output/srs ]; then
+              for rule in discord telegram; do
+                if [ -f "geoip_src/output/srs/${rule}.srs" ]; then
+                  mv "geoip_src/output/srs/${rule}.srs" "geoip_src/output/srs/${rule}-ip.srs"
+                fi
+              done
               cp -a geoip_src/output/srs/. release/sing-box/ 2>/dev/null || true
             fi
             tar -czf release/sing-box.tar.gz -C release sing-box
           fi
 
           if [ -d geoip_src/output/text ]; then
+            for rule in discord telegram; do
+              if [ -f "geoip_src/output/text/${rule}.txt" ]; then
+                mv "geoip_src/output/text/${rule}.txt" "geoip_src/output/text/${rule}-ip.txt"
+              fi
+            done
             cp -a geoip_src/output/text/. release/text/ 2>/dev/null || true
             tar -czf release/text.tar.gz -C release text
           fi
@@ -384,13 +399,15 @@ jobs:
       - name: Purge jsDelivr CDN
         run: |
           set -euo pipefail
-          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geosite.dat" || true
-          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat" || true
-          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geosite.dat.sha256" || true
-          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/geoip.dat.sha256" || true
-          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/mihomo/games.yaml" || true
-          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/mihomo/ru-apps.yaml" || true
-          ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/INCY/DEFAULT.JSON" || true
+          for file in geosite.dat geoip.dat geosite.dat.sha256 geoip.dat.sha256 \
+                      mihomo/discord-ip.mrs mihomo/telegram-ip.mrs mihomo/games.yaml mihomo/ru-apps.yaml \
+                      sing-box/discord-ip.srs sing-box/telegram-ip.srs; do
+            ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}" || true
+          done
+          for json in INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON \
+                      HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON; do
+            ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
+          done
 
       # --- 9. OPTIONAL DEPLOY TO SERVERS ---
       - name: Deploy to servers (if configured)

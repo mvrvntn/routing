@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 koridor Routing
+# 🚀 коридор роутинг
 
 **Высокопроизводительный репозиторий умной маршрутизации и раздельного туннелирования (Split Tunneling) для [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box) и [Remnawave](https://docs.rw).**
 
@@ -52,7 +52,7 @@
 | Профиль | Режим работы | RAM | Happ | INCY |
 | :--- | :--- | :--- | :--- | :--- |
 | **DEFAULT**<br>*(Рекомендуемый)* | **Split Tunneling:** RU/банки напрямую, AI/Discord/YouTube через VPN | `~3–5 МБ` | [⚡ Deeplink](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ Deeplink](INCY/DEFAULT.DEEPLINK)<br>[📄 JSON](INCY/DEFAULT.JSON) |
-| **WHITELIST** | **Строгий режим:** напрямую только реестр ЦБ РФ, Госуслуги, СБП | `~2 МБ` | [⚡ Deeplink](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ Deeplink](INCY/WHITELIST.DEEPLINK)<br>[📄 JSON](INCY/WHITELIST.JSON) |
+| **БС** *(WHITELIST)* | **Строгий режим:** напрямую только реестр ЦБ РФ, Госуслуги, СБП | `~2 МБ` | [⚡ Deeplink](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ Deeplink](INCY/WHITELIST.DEEPLINK)<br>[📄 JSON](INCY/WHITELIST.JSON) |
 | **JSONSUB** | **Base DNS:** базовый профиль для ручной настройки правил | `~1 МБ` | [⚡ Deeplink](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ Deeplink](INCY/JSONSUB.DEEPLINK)<br>[📄 JSON](INCY/JSONSUB.JSON) |
 
 ---
@@ -190,7 +190,7 @@ for f in ['HAPP', 'INCY']:
 <summary><b>1. Почему на iPhone процесс не вылетает?</b></summary>
 
 Лимит оперативной памяти iOS для фонового сетевого расширения составляет 15–30 МБ.
-Стандартные базы на 750 000 доменов весят 35 МБ и в RAM занимают более 80 МБ, вызывая системный краш (`Jetsam kill`). Базы koridor занимают всего ~350 КБ, а процесс в RAM держится в пределах **3–5 МБ**, гарантируя 100% стабильность на iOS.
+Стандартные базы на 750 000 доменов весят 35 МБ и в RAM занимают более 80 МБ, вызывая системный краш (`Jetsam kill`). Базы коридор роутинг занимают всего ~350 КБ, а процесс в RAM держится в пределах **3–5 МБ**, гарантируя 100% стабильность на iOS.
 </details>
 
 <details>

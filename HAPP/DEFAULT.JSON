@@ -1,5 +1,5 @@
 {
-  "Name": "koridor",
+  "Name": "коридор роутинг",
   "GlobalProxy": "true",
   "UseChunkFiles": "true",
   "RemoteDns": "8.8.8.8",
@@ -7,15 +7,17 @@
   "RemoteDNSType": "DoH",
   "RemoteDNSDomain": "https://8.8.8.8/dns-query",
   "RemoteDNSIP": "8.8.8.8",
-  "DomesticDNSType": "DoU",
-  "DomesticDNSDomain": "",
+  "DomesticDNSType": "DoH",
+  "DomesticDNSDomain": "https://77.88.8.8/dns-query",
   "DomesticDNSIP": "77.88.8.8",
   "Geoipurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat",
   "Geositeurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geosite.dat",
   "LastUpdated": "1788854308",
   "DnsHosts": {
     "lkfl2.nalog.ru": "213.24.64.175",
-    "lknpd.nalog.ru": "213.24.64.181"
+    "lknpd.nalog.ru": "213.24.64.181",
+    "dns.google": "8.8.8.8",
+    "cloudflare-dns.com": "1.1.1.1"
   },
   "RouteOrder": "block-proxy-direct",
   "DirectSites": [
@@ -48,7 +50,10 @@
     "geosite:ai",
     "geosite:category-geoblock-ru"
   ],
-  "ProxyIp": [],
+  "ProxyIp": [
+    "geoip:telegram",
+    "geoip:discord"
+  ],
   "BlockSites": [
     "geosite:win-spy",
     "geosite:torrent",
