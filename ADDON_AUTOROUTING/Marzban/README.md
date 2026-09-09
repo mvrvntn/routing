@@ -59,3 +59,10 @@ curl -fLo /var/lib/marzban/subscription.py \
   https://raw.githubusercontent.com/mvrvntn/routing/main/ADDON_AUTOROUTING/Marzban/subscription.py
 marzban restart
 ```
+
+---
+
+## 🙏 Благодарности
+Оригинальная разработка: ristavor. Благодарности: hydraponique & fatyzzz. Группа RoscomVPN в Telegram: https://t.me/vpnrouting. Донаты авторам оригинала (`USDT TRC20`): `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`.
+
+Проект «коридор»: [https://mvrvntn.github.io/koridor/](https://mvrvntn.github.io/koridor/)

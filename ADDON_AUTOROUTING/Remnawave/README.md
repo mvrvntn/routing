@@ -67,3 +67,13 @@
 "ipwho.is"
 ```
 Это гарантирует, что российские приложения (Мос.ру, Ozon, WB), проверяющие реальный IP через сервис `ipwho.is`, будут работать без ложных срабатываний и плашек «Отключите VPN».
+
+---
+
+## 🙏 Благодарности
+* Оригинальная разработка: **ristavor**
+* Исследования и списки: **hydraponique** & **fatyzzz**
+* Группа RoscomVPN в Telegram: [t.me/vpnrouting](https://t.me/vpnrouting)
+* Донаты авторам оригинала (`USDT TRC20`): `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
+
+Проект «коридор»: [https://mvrvntn.github.io/koridor/](https://mvrvntn.github.io/koridor/)

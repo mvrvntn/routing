@@ -2,7 +2,7 @@
 
 # 🚀 коридор роутинг
 
-**Автономный сервис умной маршрутизации и раздельного туннелирования (Split Tunneling) для [Happ](https://happ.su), [INCY](https://incy.cc), [Remnawave](https://docs.rw), [Sing-box](https://github.com/SagerNet/sing-box) и [Mihomo](https://github.com/MetaCubeX/mihomo).**
+**Автономный сервис умной маршрутизации и раздельного туннелирования (Split Tunneling) для [коридор VPN](https://mvrvntn.github.io/koridor/), [Happ](https://happ.su), [INCY](https://incy.cc), [Remnawave](https://docs.rw), [Sing-box](https://github.com/SagerNet/sing-box) и [Mihomo](https://github.com/MetaCubeX/mihomo).**
 
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
@@ -153,7 +153,24 @@ git diff origin/release~1 origin/release -- text/direct.txt
 
 ---
 
+## 🙏 Благодарности и поддержка разработчиков оригинала
+
+Проект базируется на наработках сообщества и выражает благодарность авторам оригинальных решений:
+* **Разработка:** [ristavor](https://github.com/ristavor)
+* **Благодарности:** [hydraponique](https://github.com/hydraponique) & [fatyzzz](https://github.com/fatyzzz)
+* **Группа RoscomVPN в Telegram:** [t.me/vpnrouting](https://t.me/vpnrouting)
+
+**Поддержать авторов оригинала (донат):**
+* `USDT TRC20`: `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
+
+---
+
 <div align="center">
+
+**[🌐 Официальный сайт «коридор VPN»](https://mvrvntn.github.io/koridor/)**  
+*Быстрый, приватный и устойчивый к блокировкам VPN*
+
+<br>
 
 [⭐ Поставьте Star](https://github.com/mvrvntn/routing), если проект вам помог!
 
