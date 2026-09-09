@@ -349,7 +349,7 @@ jobs:
 
             if [ "$folder" = "INCY" ]; then
               local autorouting_file="${folder}/${name}.AUTOROUTING"
-              printf 'incy://autorouting/onadd/https://raw.githubusercontent.com/%s/refs/heads/main/INCY/%s.JSON\n' "${{ github.repository }}" "$name" > "$autorouting_file"
+              printf 'incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/%s@main/INCY/%s.JSON\n' "${{ github.repository }}" "$name" > "$autorouting_file"
             fi
           }
 
@@ -386,11 +386,11 @@ jobs:
               elif "| **JSONSUB** | [⚡ Установить koridor JSON]" in l:
                   new_lines.append(f"| **JSONSUB** | [⚡ Установить koridor JSON](happ://routing/onadd/{b64_jsonsub}) | [HAPP/JSONSUB.JSON](HAPP/JSONSUB.JSON) |\n")
               elif "| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting]" in l:
-                  new_lines.append(f"| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/DEFAULT.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_default}) | [INCY/DEFAULT.JSON](INCY/DEFAULT.JSON) |\n")
+                  new_lines.append(f"| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_default}) | [INCY/DEFAULT.JSON](INCY/DEFAULT.JSON) |\n")
               elif "| **WHITELIST** | [☁️ Подключить Autorouting]" in l:
-                  new_lines.append(f"| **WHITELIST** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/WHITELIST.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_whitelist}) | [INCY/WHITELIST.JSON](INCY/WHITELIST.JSON) |\n")
+                  new_lines.append(f"| **WHITELIST** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_whitelist}) | [INCY/WHITELIST.JSON](INCY/WHITELIST.JSON) |\n")
               elif "| **JSONSUB** | [☁️ Подключить Autorouting]" in l:
-                  new_lines.append(f"| **JSONSUB** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/INCY/JSONSUB.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_jsonsub}) | [INCY/JSONSUB.JSON](INCY/JSONSUB.JSON) |\n")
+                  new_lines.append(f"| **JSONSUB** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/JSONSUB.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_jsonsub}) | [INCY/JSONSUB.JSON](INCY/JSONSUB.JSON) |\n")
               else:
                   new_lines.append(l)
 
@@ -442,11 +442,13 @@ jobs:
         run: |
           set -euo pipefail
           for file in geosite.dat geoip.dat geosite.dat.sha256 geoip.dat.sha256 \
-                      mihomo/discord-ip.mrs mihomo/telegram-ip.mrs mihomo/games.yaml mihomo/ru-apps.yaml \
-                      sing-box/discord-ip.srs sing-box/telegram-ip.srs; do
+                      mihomo/discord-ip.mrs mihomo/telegram-ip.mrs mihomo/whitelist-ip.mrs mihomo/private-ip.mrs \
+                      mihomo/games.yaml mihomo/ru-apps.yaml mihomo/torrent-clients.yaml \
+                      sing-box/discord-ip.srs sing-box/telegram-ip.srs sing-box/whitelist-ip.srs sing-box/private-ip.srs; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}" || true
           done
           for json in INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON \
+                      INCY/DEFAULT.AUTOROUTING INCY/WHITELIST.AUTOROUTING INCY/JSONSUB.AUTOROUTING \
                       HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
           done

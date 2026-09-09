@@ -34,7 +34,7 @@
        environment:
          - REMNA_BASE_URL=https://panel.yourdomain.com/api
          - REMNA_TOKEN=your_remnawave_api_token_here
-         - GITHUB_RAW_URL=https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/HAPP/DEFAULT.DEEPLINK
+         - GITHUB_RAW_URL=https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/DEFAULT.DEEPLINK
          - CHECK_INTERVAL=43200
    ```
 

@@ -16,9 +16,9 @@ from collections import defaultdict
 # ─────────────────────────────────────────────────────────────────────────────────
 
 _KORIDOR_URLS = {
-    "default": "https://raw.githubusercontent.com/mvrvntn/routing/main/HAPP/DEFAULT.DEEPLINK",
-    "jsonsub": "https://raw.githubusercontent.com/mvrvntn/routing/main/HAPP/JSONSUB.DEEPLINK",
-    "whitelist": "https://raw.githubusercontent.com/mvrvntn/routing/main/HAPP/WHITELIST.DEEPLINK",
+    "default": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/DEFAULT.DEEPLINK",
+    "jsonsub": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/JSONSUB.DEEPLINK",
+    "whitelist": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/WHITELIST.DEEPLINK",
 }
 
 

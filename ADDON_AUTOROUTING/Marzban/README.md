@@ -8,7 +8,7 @@
 
 ```bash
 curl -fLo /var/lib/marzban/subscription.py \
-  https://raw.githubusercontent.com/mvrvntn/routing/main/ADDON_AUTOROUTING/Marzban/subscription.py
+  https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/ADDON_AUTOROUTING/Marzban/subscription.py
 ```
 
 **2.** Прилинкуйте файл в `docker-compose.yml` панели (`/opt/marzban/docker-compose.yml`):
@@ -56,7 +56,7 @@ marzban restart
 
 ```bash
 curl -fLo /var/lib/marzban/subscription.py \
-  https://raw.githubusercontent.com/mvrvntn/routing/main/ADDON_AUTOROUTING/Marzban/subscription.py
+  https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/ADDON_AUTOROUTING/Marzban/subscription.py
 marzban restart
 ```
 

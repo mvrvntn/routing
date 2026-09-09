@@ -8,7 +8,7 @@
 
 ```bash
 curl -fLo /var/lib/marzneshin/subscription.py \
-  https://raw.githubusercontent.com/mvrvntn/routing/main/ADDON_AUTOROUTING/Marzneshin/subscription.py
+  https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/ADDON_AUTOROUTING/Marzneshin/subscription.py
 ```
 
 **2.** Прилинкуйте файл в `docker-compose.yml` панели (`/etc/opt/marzneshin/docker-compose.yml`):
@@ -56,7 +56,7 @@ marzneshin restart
 
 ```bash
 curl -fLo /var/lib/marzneshin/subscription.py \
-  https://raw.githubusercontent.com/mvrvntn/routing/main/ADDON_AUTOROUTING/Marzneshin/subscription.py
+  https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/ADDON_AUTOROUTING/Marzneshin/subscription.py
 marzneshin restart
 ```
 
