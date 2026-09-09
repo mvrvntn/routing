@@ -17,7 +17,7 @@
 
 ## ⚡ Как это работает
 
-* 🇷🇺 **Напрямую через провайдера (Direct):** Банки (Сбер, Т-Банк, ВТБ), Госуслуги, Налоговая, СБП, маркетплейсы (Ozon, WB), сервисы Яндекса, VK, Кинопоиск, игры (Steam, Epic, Riot). Работают на полной скорости вашего интернета без капч и блокировок антифродом.
+* 🇷🇺 **Напрямую через провайдера (Direct):** Банки (Сбер, Т-Банк, ВТБ), Госуслуги, Налоговая, СБП, маркетплейсы (Ozon, WB), сервисы Яндекса, VK, Кинопоиск, игры (Steam, Epic, Riot), а также IP-чекеры для защиты от детекта VPN (MAX, антифрод). Работают на полной скорости вашего интернета без капч и блокировок.
 * 🌍 **Через VPN (Proxy):** YouTube, Discord (**включая голосовые каналы**), Telegram (медиа дата-центров), Instagram, заблокированные сайты реестра, а также AI-сервисы (ChatGPT, Claude, Gemini, Perplexity).
 * 🍏 **Энергоэффективно (~1.8 МБ RAM):** База сжата алгоритмом схлопывания поддоменов (`geosite.dat` ~77 КБ). Смартфон не греется, батарея не садится, исключены вылеты VPN на iOS.
 * 🛡 **Аппаратный Safety Gate:** Домены зон `.ru`, `.рф`, `.su` физически не могут попасть в прокси-список.
@@ -31,8 +31,8 @@
 | Профиль | Описание | Happ (iOS/Android/ПК) | INCY (iOS/Android/ПК) |
 | :--- | :--- | :--- | :--- |
 | **коридор роутинг**<br>*(DEFAULT)* | **Рекомендуемый.** Раздельный туннель: РФ напрямую, блок/AI/Discord/YouTube через VPN. | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON URL](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
-| **коридор роутинг (БС)**<br>*(WHITELIST)* | **Белый список.** Напрямую только реестр ЦБ РФ, банки, Госуслуги и СБП. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON URL](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) |
-| **коридор роутинг (JSONSUB)** | Базовый профиль для ручной кастомизации DNS и правил. | [⚡ В 1 клик](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON URL](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ В 1 клик](INCY/JSONSUB.DEEPLINK) |
+| **коридор роутинг (БС)**<br>*(WHITELIST)* | **Белый список.** Спецрежим для шатдаунов мобильного интернета в РФ: напрямую только реестр ЦБ РФ, банки, Госуслуги, СБП и маркетплейсы. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON URL](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) |
+| **коридор роутинг (JSONSUB)** | Для JSON-подписок: только DoH DNS и кастомные базы, правила задаются в JSON-конфиге. | [⚡ В 1 клик](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON URL](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ В 1 клик](INCY/JSONSUB.DEEPLINK) |
 
 ### 🚀 Как импортировать
 

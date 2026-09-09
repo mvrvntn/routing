@@ -11,20 +11,20 @@
 2. Отредактируйте правило для INCY (`User-Agent` содержит `incy`).
 3. Добавьте HTTP-заголовок ответа:
    ```http
-   autorouting: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
+   autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
    ```
-   *(Для профиля Белых Списков используйте: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON`)*.
+   *(Для профиля Белых Списков: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON`, для JSONSUB: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/JSONSUB.JSON`)*.
 
 ---
 
 ## 2. Автороутинг для Happ
 
 Для [Happ](https://happ.su) передайте диплинк в заголовке `routing`:
-1. В **Правилах ответов** Remnawave для правила `Happ` (`User-Agent` содержит `happ`) добавьте заголовок:
+1. В **Правилах ответов** Remnawave для правила `Happ` (`User-Agent` содержит `happ`) добавьте заголовок (скопируйте готовую актуальную строку из файла [`HAPP/DEFAULT.DEEPLINK`](../../HAPP/DEFAULT.DEEPLINK)):
    ```http
-   routing: happ://routing/onadd/eyJOYW1lIjoi0LrQvtGA0LjQtNC+0YAg0YDQvtGD0YLQuNC90LMiLCJHbG9iYWxQcm94eSI6InRydWUiLCJVc2VDaHVua0ZpbGVzIjoidHJ1ZSIsIlJlbW90ZURucyI6IjguOC44LjgiLCJEb21lc3RpY0RucyI6Ijc3Ljg4LjguOCIsIlJlbW90ZUROU1R5cGUiOiJEb0giLCJSZW1vdGVETlNEb21haW4iOiJodHRwczovLzguOC44LjgvZG5zLXF1ZXJ5IiwiUmVtb3RlRE5TSVAiOiI4LjguOC44IiwiRG9tZXN0aWNETlNUeXBlIjoiRG9IIiwiRG9tZXN0aWNETlNEb21haW4iOiJodHRwczovLzc3Ljg4LjguOC9kbnMtcXVlcnkiLCJEb21lc3RpY0ROU0lQIjoiNzcuODguOC44IiwiR2VvaXB1cmwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvZ2gvbXZydm50bi9yb3V0aW5nQHJlbGVhc2UvZ2VvaXAuZGF0IiwiR2Vvc2l0ZXVybCI6Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9naC9tdnJ2bnRuL3JvdXRpbmdAcmVsZWFzZS9nZW9zaXRlLmRhdCIsIkxhc3RVcGRhdGVkIjoiMTc4ODU5MzY0MCIsIkRuc0hvc3RzIjp7ImxrZmwyLm5hbG9nLnJ1IjoiMjEzLjI0LjY0LjE3NSIsImxrbnBkLm5hbG9nLnJ1IjoiMjEzLjI0LjY0LjE4MSIsImRucy5nb29nbGUiOiI4LjguOC44IiwiY2xvdWRmbGFyZS1kbnMuY29tIjoiMS4xLjEuMSJ9LCJSb3V0ZU9yZGVyIjoiYmxvY2stcHJveHktZGlyZWN0IiwiRGlyZWN0U2l0ZXMiOlsiZ2Vvc2l0ZTpwcml2YXRlIiwiZ2Vvc2l0ZTpjYXRlZ29yeS1ydSIsImdlb3NpdGU6d2hpdGVsaXN0IiwiZ2Vvc2l0ZTptaWNyb3NvZnQiLCJnZW9zaXRlOmFwcGxlIiwiZ2Vvc2l0ZTplcGljZ2FtZXMiLCJnZW9zaXRlOnJpb3QiLCJnZW9zaXRlOmVzY2FwZWZyb210YXJrb3YiLCJnZW9zaXRlOnN0ZWFtIiwiZ2Vvc2l0ZTpvcmlnaW4iLCJnZW9zaXRlOnR3aXRjaCIsImdlb3NpdGU6cGludGVyZXN0IiwiZ2Vvc2l0ZTpmYWNlaXQiXSwiRGlyZWN0SXAiOlsiZ2VvaXA6cHJpdmF0ZSIsImdlb2lwOmRpcmVjdCJdLCJQcm94eVNpdGVzIjpbImdlb3NpdGU6Z29vZ2xlLXBsYXkiLCJnZW9zaXRlOmdvb2dsZS1kZWVwbWluZCIsImdlb3NpdGU6Z2l0aHViIiwiZ2Vvc2l0ZTp0d2l0Y2gtYWRzIiwiZ2Vvc2l0ZTp5b3V0dWJlIiwiZ2Vvc2l0ZTp0ZWxlZ3JhbSIsImdlb3NpdGU6ZGlzY29yZCIsImdlb3NpdGU6YWkiLCJnZW9zaXRlOmNhdGVnb3J5LWdlb2Jsb2NrLXJ1Il0sIlByb3h5SXAiOlsiZ2VvaXA6dGVsZWdyYW0iLCJnZW9pcDpkaXNjb3JkIl0sIkJsb2NrU2l0ZXMiOlsiZ2Vvc2l0ZTp3aW4tc3B5IiwiZ2Vvc2l0ZTp0b3JyZW50IiwiZ2Vvc2l0ZTpjYXRlZ29yeS1hZHMiXSwiQmxvY2tJcCI6W10sIkRvbWFpblN0cmF0ZWd5IjoiSVBJZk5vbk1hdGNoIiwiRmFrZUROUyI6ImZhbHNlIn0=
+   routing: happ://routing/onadd/...
    ```
-2. Либо используйте микросервис `remnawave-routing-update`:
+2. Либо настройте автоматическое обновление через микросервис [`remnawave-routing-update`](https://github.com/lifeindarkside/Remnawave-Routing-update):
    ```yaml
    services:
      remnawave-routing-update:
@@ -35,7 +35,7 @@
          - REMNA_BASE_URL=https://panel.yourdomain.com/api
          - REMNA_TOKEN=your_remnawave_api_token_here
          - GITHUB_RAW_URL=https://raw.githubusercontent.com/mvrvntn/routing/refs/heads/main/HAPP/DEFAULT.DEEPLINK
-         - CHECK_INTERVAL=300
+         - CHECK_INTERVAL=43200
    ```
 
 ---
@@ -66,4 +66,4 @@
 ```json
 "ipwho.is"
 ```
-Это гарантирует, что российские приложения (Мос.ру, Ozon, WB), снайпящие реальный IP через сервис `ipwho.is`, будут работать без ложных срабатываний и плашек «Отключите VPN».
+Это гарантирует, что российские приложения (Мос.ру, Ozon, WB), проверяющие реальный IP через сервис `ipwho.is`, будут работать без ложных срабатываний и плашек «Отключите VPN».
