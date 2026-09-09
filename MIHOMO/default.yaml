@@ -495,9 +495,9 @@ rules:
   # Отечественный сегмент (домены и чистые IP)
   - RULE-SET,category-ru,DIRECT
   - RULE-SET,whitelist,DIRECT
-  - RULE-SET,whitelist-ips,DIRECT
+  - RULE-SET,whitelist-ips,DIRECT,no-resolve
   - RULE-SET,ru-apps,DIRECT
-  - RULE-SET,direct-ips,DIRECT
+  - RULE-SET,direct-ips,DIRECT,no-resolve
 
   # Всё остальное зарубежное
   - MATCH,PROXY

@@ -520,9 +520,9 @@ rules:
   # --- DIRECT ---
   - RULE-SET,category-ru,DIRECT                    # RU-сайты, жесткая зависимость от whitelist
   - RULE-SET,whitelist,DIRECT                      # RU-белосписочный (домены)
-  - RULE-SET,whitelist-ips,DIRECT                  # RU-белосписочный (IP)
+  - RULE-SET,whitelist-ips,DIRECT,no-resolve       # RU-белосписочный (IP)
   - RULE-SET,ru-apps,DIRECT                        # RU-приложения Android
-  - RULE-SET,direct-ips,DIRECT
+  - RULE-SET,direct-ips,DIRECT,no-resolve
 
   # --- Всё остальное → PROXY ---
   - MATCH,PROXY
