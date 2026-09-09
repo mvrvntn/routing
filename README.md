@@ -46,19 +46,29 @@
 
 ---
 
-## 🔌 Для владельцев серверов (Remnawave, Sing-box, Xray)
+## 🔌 Интеграция с серверными панелями
 
-Готовые проверенные шаблоны конфигураций находятся в каталоге [`ADDON_AUTOROUTING/Remnawave/`](ADDON_AUTOROUTING/Remnawave/):
+Готовые проверенные решения и шаблоны конфигураций:
 
-1. **Xray Location (для узлов):** [`xray_location_template.json`](ADDON_AUTOROUTING/Remnawave/xray_location_template.json)  
-   Направляет `geoip:telegram`, `geoip:discord`, `geosite:discord`, `geosite:ai` и `category-geoblock-ru` в выходной прокси/warp с защитой `routeOnly: true`.
-2. **Sing-box Subscriptions:** [`singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json)  
-   Готовая структура правил с CDN-источниками бинарных `.srs` правил.
-3. **Выдача Autorouting в Remnawave:**  
-   В **Settings** ➔ **Subscription Settings / Response Rules** добавьте заголовок для клиентов с `User-Agent: incy`:
-   ```http
-   autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
-   ```
+### 1. [Remnawave](ADDON_AUTOROUTING/Remnawave/)
+* **Автовыдача для INCY:** В **Subscription ➔ Response Rules** (правило `incy`):
+  ```http
+  autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
+  ```
+* **Автовыдача для Happ:** В **Subscription ➔ Response Rules** (правило `happ`):
+  ```http
+  routing: happ://routing/onadd/...
+  ```
+  *(Актуальную строку берите из [`HAPP/DEFAULT.DEEPLINK`](HAPP/DEFAULT.DEEPLINK) либо настройте автообновление через микросервис [`remnawave-routing-update`](ADDON_AUTOROUTING/Remnawave/README.md#2-автороутинг-для-happ))*.
+* **Xray Location (ноды):** [`xray_location_template.json`](ADDON_AUTOROUTING/Remnawave/xray_location_template.json) с защитой `routeOnly: true`.
+* **Sing-box:** [`singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json).
+* **Mihomo / Clash:** [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml).
+
+### 2. [Marzban](ADDON_AUTOROUTING/Marzban/) и [Marzneshin](ADDON_AUTOROUTING/Marzneshin/)
+* Единый модуль [`subscription.py`](ADDON_AUTOROUTING/Marzban/subscription.py) для любых типов подписок (JSON и Non-JSON) с переключением профиля через переменную `KORIDOR_ROUTING_SOURCE` (`default`, `whitelist`, `jsonsub`).
+
+### 3. [3x-ui](ADDON_AUTOROUTING/3x-ui/)
+* Поддержка кастомных заголовков маршрутизации при отдаче клиентских подписок.
 
 ---
 
@@ -72,9 +82,25 @@
 
 ---
 
+## 📂 Структура репозитория
+
+```text
+├── data/                    # Исходные списки доменов для geosite.dat (category-ru, whitelist, discord...)
+├── geoip/                   # Исходные списки CIDR IP для geoip.dat (Discord, Telegram, вайтлисты хостинга)
+├── HAPP/                    # Готовые JSON-манифесты и .DEEPLINK для клиента Happ
+├── INCY/                    # Готовые JSON-манифесты, .DEEPLINK и .AUTOROUTING для клиента INCY
+├── MIHOMO/                  # Шаблоны конфигураций для ядра Mihomo / Clash
+├── ADDON_AUTOROUTING/       # Модули интеграции для панелей Remnawave, Marzban, Marzneshin, 3x-ui
+├── scripts/                 # Скрипты нормализации и санитизации гео-блокировок (update_geoblock.py)
+├── tests/                   # Набор регрессионных и юнит-тестов (Safety Gate, схлопывание поддоменов)
+└── .github/workflows/       # CI/CD пайплайн компиляции геобаз и публикации релизов
+```
+
+---
+
 ## 🤖 Автоматизация и тесты
 
-* **Автообновление:** Каждую ночь в 06:00 МСК GitHub Actions забирает свежие блокировки из реестра Antifilter, фильтрует их через Safety Gate, прогоняет тесты и выпускает новый релиз на CDN.
+* **Автообновление:** Каждую ночь в 03:00 UTC (06:00 МСК) GitHub Actions выкачивает свежие выгрузки реестров Antifilter и Re-filter, фильтрует их через Safety Gate, прогоняет тесты и выпускает релиз на CDN.
 * **Локальный прогон тестов:**
   ```bash
   python -m unittest discover tests -v
@@ -100,6 +126,29 @@
 <summary><b>3. Не будут ли перегружаться мои VPN-серверы?</b></summary>
 
 Нет. Через ваши серверы проходит только заблокированный трафик (~10–15%). Весь тяжёлый контент (видео VK, RuTube, Кинопоиск, скачивание игр в Steam, торренты) идёт напрямую через провайдера пользователя.
+</details>
+
+<details>
+<summary><b>4. Чем отличаются профили DEFAULT, WHITELIST (БС) и JSONSUB?</b></summary>
+
+* **DEFAULT:** Оптимален для 99% задач. РФ сервисы и чекеры напрямую, YouTube/Discord/AI/заблокированные ресурсы — через VPN.
+* **WHITELIST (БС):** Спецрежим для периодов ограничений мобильного интернета операторами РФ (белые списки ТСПУ). Напрямую идут только госуслуги, банки, операторы связи и социально значимые ресурсы.
+* **JSONSUB:** Базовый профиль для JSON-подписок. Содержит только DoH DNS и ссылки на базы данных, а правила маршрутизации считываются из самого JSON-конфига подписки.
+</details>
+
+<details>
+<summary><b>5. Как работает защита от детекта VPN в MAX, банках и Госуслугах?</b></summary>
+
+Сервисы определения IP и антифрода (более 30 чекеров, включая `browserleaks.com`, `whoer.net`, `ipinfo.io`, `ipwho.is`, `2ip.ru`) принудительно добавлены в категорию прямого соединения (`direct`). Приложения банков и мессенджер MAX видят реальный домашний IP и оператора абонента, а не сервер датацентра, что исключает блокировку аккаунтов.
+</details>
+
+<details>
+<summary><b>6. Как узнать, какие IP и домены изменились после ночной сборки?</b></summary>
+
+Вся дельта между релизами сохраняется в ветке `release`. Список добавленных и вырезанных IP-подсетей можно увидеть командой:
+```bash
+git diff origin/release~1 origin/release -- text/direct.txt
+```
 </details>
 
 ---
