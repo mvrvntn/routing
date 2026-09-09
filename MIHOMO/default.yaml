@@ -1,5 +1,18 @@
-# ВНИМАНИЕ! ЭТО БЕТА
-# НЕ ДЛЯ REMNAWAVE, А ДЛЯ РУЧНОЙ ВСТАВКИ!
+# ============================================================
+# ШАБЛОН MIHOMO ОТ коридор роутинг
+# ============================================================
+# Набор правил коридор роутинг, адаптированный для ядра Mihomo
+# Для ручной настройки на клиентах и ПК
+#
+# Разработка: ristavor
+# Благодарности: hydraponique & fatyzzz
+# Группа RoscomVPN в Telegram: https://t.me/vpnrouting
+#
+# Будем благодарны любой поддержке:
+# USDT TRC20 — TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR
+#
+# Проект «коридор»: https://mvrvntn.github.io/koridor/
+# ============================================================
 proxy-providers:
   prov:
     type: http
@@ -66,16 +79,19 @@ dns:
   fake-ip-filter:
     - rule-set:private-domains
   default-nameserver:
-  - https://77.88.8.8/dns-query
-  - https://8.8.8.8/dns-query
+    - 77.88.8.8
+    - 8.8.8.8
   proxy-server-nameserver:
-  - https://77.88.8.8/dns-query
-  - https://8.8.8.8/dns-query
+    - 77.88.8.8
+    - 8.8.8.8
   direct-nameserver:
-  - https://77.88.8.8/dns-query
-  - https://8.8.8.8/dns-query
+    - https://77.88.8.8/dns-query
+    - https://8.8.8.8/dns-query
   nameserver:
-  - https://8.8.8.8/dns-query#PROXY
+    - https://8.8.8.8/dns-query#PROXY
+  nameserver-policy:
+    'rule-set:private-domains,category-ru,whitelist':
+      - https://77.88.8.8/dns-query
 sniffer:
   enable: true
   override-destination: false
@@ -402,7 +418,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/legiz-ru/mihomo-rule-sets/main/other/torrent-clients.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/torrent-clients.yaml
     path: ./ruleset/torrent-clients.yaml
     proxy: ⚡️ Авто
     interval: 86400
@@ -410,7 +426,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/mvrvntn/routing/release/mihomo/games.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/games.yaml
     path: ./ruleset/games.yaml
     proxy: ⚡️ Авто
     interval: 86400
@@ -418,7 +434,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/mvrvntn/routing/release/mihomo/ru-apps.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/ru-apps.yaml
     path: ./ruleset/ru-apps.yaml
     proxy: ⚡️ Авто
     interval: 86400

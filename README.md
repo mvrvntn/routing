@@ -62,7 +62,7 @@
   *(Актуальную строку берите из [`HAPP/DEFAULT.DEEPLINK`](HAPP/DEFAULT.DEEPLINK) либо настройте автообновление через микросервис [`remnawave-routing-update`](ADDON_AUTOROUTING/Remnawave/README.md#2-автороутинг-для-happ))*.
 * **Xray Location (ноды):** [`xray_location_template.json`](ADDON_AUTOROUTING/Remnawave/xray_location_template.json) с защитой `routeOnly: true`.
 * **Sing-box:** [`singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json).
-* **Mihomo / Clash:** [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml).
+* **Mihomo / Clash:** [`MIHOMO/`](MIHOMO/README.md) (готовый [`default.yaml`](MIHOMO/default.yaml) и шаблон [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml)).
 
 ### 2. [Marzban](ADDON_AUTOROUTING/Marzban/) и [Marzneshin](ADDON_AUTOROUTING/Marzneshin/)
 * Единый модуль [`subscription.py`](ADDON_AUTOROUTING/Marzban/subscription.py) для любых типов подписок (JSON и Non-JSON) с переключением профиля через переменную `KORIDOR_ROUTING_SOURCE` (`default`, `whitelist`, `jsonsub`).

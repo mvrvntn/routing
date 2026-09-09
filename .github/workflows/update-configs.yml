@@ -285,6 +285,7 @@ jobs:
             cp -a /tmp/mihomo_rules/. release/mihomo/ 2>/dev/null || true
             cp -f MIHOMO/games.yaml release/mihomo/ 2>/dev/null || true
             cp -f MIHOMO/ru-apps.yaml release/mihomo/ 2>/dev/null || true
+            cp -f MIHOMO/torrent-clients.yaml release/mihomo/ 2>/dev/null || true
             if [ -d geoip_src/output/mrs ]; then
               for rule in discord telegram; do
                 if [ -f "geoip_src/output/mrs/${rule}.mrs" ]; then

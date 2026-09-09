@@ -81,16 +81,19 @@ dns:
   fake-ip-filter:
     - rule-set:private-domains # исключить из fake-ip приватные домены
   default-nameserver:
-    - https://77.88.8.8/dns-query
-    - https://8.8.8.8/dns-query
+    - 77.88.8.8
+    - 8.8.8.8
   proxy-server-nameserver:
-    - https://77.88.8.8/dns-query
-    - https://8.8.8.8/dns-query
+    - 77.88.8.8
+    - 8.8.8.8
   direct-nameserver:
     - https://77.88.8.8/dns-query
     - https://8.8.8.8/dns-query
   nameserver:
     - https://8.8.8.8/dns-query#PROXY
+  nameserver-policy:
+    'rule-set:private-domains,category-ru,whitelist':
+      - https://77.88.8.8/dns-query
 sniffer:
   enable: true
   override-destination: false
@@ -437,7 +440,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/legiz-ru/mihomo-rule-sets/main/other/torrent-clients.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/torrent-clients.yaml
     path: ./ruleset/torrent-clients.yaml
     proxy: ⚡️ Авто
     interval: 86400
@@ -445,7 +448,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/mvrvntn/routing/release/mihomo/games.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/games.yaml
     path: ./ruleset/games.yaml
     proxy: ⚡️ Авто
     interval: 86400
@@ -453,7 +456,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://raw.githubusercontent.com/mvrvntn/routing/release/mihomo/ru-apps.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/ru-apps.yaml
     path: ./ruleset/ru-apps.yaml
     proxy: ⚡️ Авто
     interval: 86400
