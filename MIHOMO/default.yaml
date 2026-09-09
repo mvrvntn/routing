@@ -85,13 +85,14 @@ dns:
     - 77.88.8.8
     - 8.8.8.8
   direct-nameserver:
-    - https://77.88.8.8/dns-query
-    - https://8.8.8.8/dns-query
+    - 77.88.8.8
+    - 77.88.8.1
   nameserver:
     - https://8.8.8.8/dns-query#PROXY
   nameserver-policy:
     'rule-set:private-domains,category-ru,whitelist':
-      - https://77.88.8.8/dns-query
+      - 77.88.8.8
+      - 77.88.8.1
 sniffer:
   enable: true
   override-destination: false
@@ -141,7 +142,7 @@ proxy-groups:
   include-all: true
   proxies:
     - 🛡️ VPN
-- name: 💬 Discord.exe
+- name: 💬 Discord
   icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Discord.png
   type: select
   include-all: true
@@ -298,10 +299,18 @@ rule-providers:
     type: http
     behavior: ipcidr
     format: mrs
-    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private.mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private-ip.mrs
     path: ./ruleset/geoip-private.mrs
     proxy: ⚡️ Авто
     interval: 2592000
+  whitelist-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist-ip.mrs
+    path: ./ruleset/geoip-whitelist.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
   direct-ips:
     type: http
     behavior: ipcidr
@@ -440,40 +449,55 @@ rule-providers:
     interval: 86400
 
 rules:
+  # Системные и приватные адреса
   - RULE-SET,private-ips,DIRECT,no-resolve
   - IP-CIDR,::/0,REJECT-DROP,no-resolve
   - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT-DROP
   - RULE-SET,private-domains,DIRECT
+
+  # Блокировка рекламы и спама
   - RULE-SET,category-ads,REJECT-DROP
   - RULE-SET,win-spy,REJECT-DROP
-  - RULE-SET,torrent-domains,DIRECT
+
+  # Сервисы через PROXY
   - RULE-SET,google-play,PROXY
   - RULE-SET,google-deepmind,PROXY
   - RULE-SET,ai,PROXY
   - RULE-SET,category-geoblock-ru,PROXY
   - RULE-SET,twitch-ads,PROXY
   - RULE-SET,youtube,📺 Youtube
+  - RULE-SET,discord,💬 Discord
+  - RULE-SET,discord-ip,💬 Discord,no-resolve
+  - PROCESS-NAME-REGEX,(?i)^(discord|vesktop).*,💬 Discord
   - RULE-SET,telegram,PROXY
   - RULE-SET,telegram-ip,PROXY,no-resolve
   - RULE-SET,github,PROXY
+
+  # Игровые платформы
   - RULE-SET,epicgames,🎮 Игры
   - RULE-SET,origin,🎮 Игры
   - RULE-SET,riot,🎮 Игры
   - RULE-SET,escapefromtarkov,🎮 Игры
   - RULE-SET,steam,🎮 Игры
   - RULE-SET,faceit,🎮 Игры
+  - RULE-SET,games,🎮 Игры
+
+  # Торренты — напрямую
+  - RULE-SET,torrent-domains,DIRECT
+  - RULE-SET,torrent-clients,DIRECT
+
+  # Сервисы в DIRECT
   - RULE-SET,twitch,DIRECT
   - RULE-SET,microsoft,DIRECT
   - RULE-SET,apple,DIRECT
   - RULE-SET,pinterest,DIRECT
+
+  # Отечественный сегмент (домены и чистые IP)
   - RULE-SET,category-ru,DIRECT
   - RULE-SET,whitelist,DIRECT
-  - RULE-SET,torrent-clients,DIRECT
-  - RULE-SET,discord,💬 Discord.exe
-  - RULE-SET,discord-ip,💬 Discord.exe,no-resolve
-  - PROCESS-NAME-REGEX,discord,💬 Discord.exe
-  - PROCESS-NAME-REGEX,vesktop,💬 Discord.exe
-  - RULE-SET,games,🎮 Игры
+  - RULE-SET,whitelist-ips,DIRECT
   - RULE-SET,ru-apps,DIRECT
   - RULE-SET,direct-ips,DIRECT
+
+  # Всё остальное зарубежное
   - MATCH,PROXY

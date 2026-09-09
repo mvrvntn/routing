@@ -287,7 +287,7 @@ jobs:
             cp -f MIHOMO/ru-apps.yaml release/mihomo/ 2>/dev/null || true
             cp -f MIHOMO/torrent-clients.yaml release/mihomo/ 2>/dev/null || true
             if [ -d geoip_src/output/mrs ]; then
-              for rule in discord telegram; do
+              for rule in discord telegram whitelist private; do
                 if [ -f "geoip_src/output/mrs/${rule}.mrs" ]; then
                   mv "geoip_src/output/mrs/${rule}.mrs" "geoip_src/output/mrs/${rule}-ip.mrs"
                 fi
@@ -300,7 +300,7 @@ jobs:
           if [ -d /tmp/singbox_rules ]; then
             cp -a /tmp/singbox_rules/. release/sing-box/ 2>/dev/null || true
             if [ -d geoip_src/output/srs ]; then
-              for rule in discord telegram; do
+              for rule in discord telegram whitelist private; do
                 if [ -f "geoip_src/output/srs/${rule}.srs" ]; then
                   mv "geoip_src/output/srs/${rule}.srs" "geoip_src/output/srs/${rule}-ip.srs"
                 fi
@@ -311,7 +311,7 @@ jobs:
           fi
 
           if [ -d geoip_src/output/text ]; then
-            for rule in discord telegram; do
+            for rule in discord telegram whitelist private; do
               if [ -f "geoip_src/output/text/${rule}.txt" ]; then
                 mv "geoip_src/output/text/${rule}.txt" "geoip_src/output/text/${rule}-ip.txt"
               fi

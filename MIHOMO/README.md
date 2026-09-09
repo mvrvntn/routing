@@ -51,6 +51,14 @@ rule-providers:
     path: ./ruleset/whitelist.mrs
     interval: 86400
 
+  whitelist-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist-ip.mrs
+    path: ./ruleset/geoip-whitelist.mrs
+    interval: 86400
+
   direct-ips:
     type: http
     behavior: ipcidr
@@ -188,6 +196,7 @@ rules:
   # Прямой доступ (РФ домены, Белый список и чистые RU IP без Антифильтра)
   - RULE-SET,category-ru,DIRECT
   - RULE-SET,whitelist,DIRECT
+  - RULE-SET,whitelist-ips,DIRECT
   - RULE-SET,direct-ips,DIRECT
 
   # Всё остальное зарубежное — в прокси
