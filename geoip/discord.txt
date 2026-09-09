@@ -1,4 +1,5 @@
 # Discord Voice / RTC servers & gateways (i3D.net & Discord infra)
 5.200.14.128/25
 66.22.192.0/18
+104.29.146.0/23
 138.128.136.0/21
