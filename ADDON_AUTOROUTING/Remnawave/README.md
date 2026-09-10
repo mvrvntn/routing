@@ -15,6 +15,18 @@
    ```
    *(Для профиля Белых Списков: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON`, для JSONSUB: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/JSONSUB.JSON`)*.
 
+> [!TIP]
+> **Полный туннель (отключение роутинга):**  
+> Если для определенного пользователя или тарифа требуется полный VPN (весь трафик строго через сервер без разделения), отдайте в Response Rules заголовок:
+> ```http
+> routing: off
+> ```
+> *(Поддерживается в INCY v3.5.4+ / v2.5.2+ на всех платформах)*.
+
+> [!NOTE]
+> **Официальный каталог allrouting.cc:**  
+> Профиль маршрутизации можно также импортировать напрямую через каталог [allrouting.cc](https://allrouting.cc), указав ссылку на наш `INCY/DEFAULT.JSON`.
+
 ---
 
 ## 2. Автороутинг для Happ
