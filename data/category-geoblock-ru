@@ -9,9 +9,6 @@ domain:7tv.app
 domain:8chan.moe
 domain:a-vrv.akamaized.net
 domain:abercrombie.com
-domain:abs-0.twimg.com
-domain:abs-zero.twimg.com
-domain:abs.twimg.com
 domain:activestate.com
 domain:acurapartswarehouse.com
 domain:adafruit.com
@@ -75,6 +72,7 @@ domain:api.fitbit.com
 domain:api.github.com
 domain:apiary.io
 domain:aplawrence.com
+domain:apple-relay.cloudflare.com
 domain:aqicn.org
 domain:arc.net
 domain:archive.org
@@ -587,6 +585,8 @@ domain:manus.cdn
 domain:manus.im
 domain:manybooks.net
 domain:marvelsnap.com
+domain:mask-api.icloud.com
+domain:mask.icloud.com
 domain:matrix.org
 domain:mattermost.com
 domain:max.com
@@ -758,7 +758,6 @@ domain:pay.buckaroo.nl
 domain:paypal.com
 domain:paywithmoon.com
 domain:pb.wtf
-domain:pbs.twimg.com
 domain:pcbway.com
 domain:pcgamesn.com
 domain:pcmag.com
@@ -942,6 +941,7 @@ domain:shinyhardware.co.uk
 domain:showtime.com
 domain:siemens-home.bsh-group.com
 domain:siemens.com
+domain:signal.org
 domain:sigsauer.com
 domain:singlekey-id.com
 domain:site.com
@@ -1044,6 +1044,7 @@ domain:thepiratebay.org
 domain:thesassway.com
 domain:thinkpads.com
 domain:thomas-krenn.com
+domain:threads.net
 domain:ti.com
 domain:tidal.com
 domain:tik-tokapi.com
@@ -1115,6 +1116,7 @@ domain:ttwebview.com
 domain:ttwstatic.com
 domain:tutanota.com
 domain:tvn24.pl
+domain:twimg.com
 domain:twitter.com
 domain:typekit.com
 domain:typekit.net
@@ -1145,7 +1147,6 @@ domain:verificationacademy.com
 domain:veritas.com
 domain:verstka.media
 domain:viber.com
-domain:video.twimg.com
 domain:vipdrive.net
 domain:viperatech.com
 domain:vmware.com

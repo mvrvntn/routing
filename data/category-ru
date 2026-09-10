@@ -157,4 +157,28 @@ domain:yuanshen.com
 # Lesta Games & Tanki (World of Tanks, Tanks Blitz, World of Warships)
 domain:lesta.games
 
+# Direct Gaming (Battle.net, EA, Ubisoft - low ping directly)
+domain:blizzard.com
+domain:ea.com
+domain:ubisoft.com
+
+# -----------------------------------------------------------
+# Domestic CDNs, Cloud, Marketplaces & Infrastructure (non-RU TLDs)
+# -----------------------------------------------------------
+domain:wbcontent.net
+domain:yandexcdn.net
+domain:vk.cloud
+domain:tildaapi.com
+domain:selectel.com
+domain:timeweb.net
+domain:beget.com
+domain:pobeda.aero
+domain:cdek.market
+domain:gismeteo.com
+domain:my.games
+
+# Push Notifications (Huawei / Honor HMS without Google Play)
+domain:push.hicloud.com
+domain:dbankcloud.com
+
 
