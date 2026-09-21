@@ -117,10 +117,23 @@
 ├── RELOCANT/                # Специфический профиль для релокантов (обратный сплит, роутеры, INCY, Happ)
 ├── MIHOMO/                  # Шаблоны конфигураций для ядра Mihomo / Clash
 ├── ADDON_AUTOROUTING/       # Модули интеграции для панелей Remnawave, Marzban, Marzneshin, 3x-ui
+├── tools/                   # Утилиты генерации клиентских правил (Streisand, v2RayNG, sing-box)
 ├── scripts/                 # Скрипты нормализации и проверки доменных списков (update_geoblock.py)
-├── tests/                   # Набор регрессионных и юнит-тестов (Safety Gate, схлопывание поддоменов)
+├── tests/                   # Набор регрессионных и юнит-тестов (Safety Gate, инструменты генерации)
 └── .github/workflows/       # CI/CD пайплайн компиляции геобаз и публикации релизов
 ```
+
+---
+
+## 🛠️ Утилиты генерации правил (iOS / Android / Desktop)
+
+Для клиентов, требующих импорта правил вручную или через QR:
+* **Streisand (iOS):** [`tools/streisand/generate_streisand_link.py`](tools/streisand/generate_streisand_link.py) — генерация ссылки `streisand://`
+* **v2RayNG (Android):** [`tools/v2rayNG/generate_v2rayng_routing_qr.py`](tools/v2rayNG/generate_v2rayng_routing_qr.py) — QR-код и JSON для импорта правил
+* **sing-box (Desktop/Mobile):** [`tools/singbox/generate_singbox_rules.py`](tools/singbox/generate_singbox_rules.py) — генерация правил маршрутизации со `.srs` бинарниками
+
+Подробная инструкция по запуску: [**Документация tools/**](tools/README.md).
+
 
 ---
 
