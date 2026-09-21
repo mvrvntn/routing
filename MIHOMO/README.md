@@ -12,6 +12,7 @@
 | :--- | :--- |
 | [`default.yaml`](default.yaml) | Полный рабочий конфиг с DNS, сниффером, группами прокси и правилами. Подходит для ПК и клиентов (Mihomo Party, Clash Verge Rev, Flclash). |
 | [`template_remnawave.yaml`](template_remnawave.yaml) | Шаблон для панели [Remnawave](https://docs.rw) (**Subscription ➔ Templates**). |
+| [`template_3x-ui.yaml`](template_3x-ui.yaml) | Шаблон для панели [3x-ui](https://github.com/hydraponique/3x-ui) со встроенной маршрутизацией. |
 | [`games.yaml`](games.yaml) | Список процессов популярных сетевых игр и лаунчеров (Steam, Epic, Riot, EFT, CS2, GTA RP, античиты). |
 | [`ru-apps.yaml`](ru-apps.yaml) | Пакеты российских Android-приложений для прямого доступа. |
 | [`torrent-clients.yaml`](torrent-clients.yaml) | Список процессов торрент-клиентов для исключения из проксирования. |
@@ -193,7 +194,7 @@ rules:
   - RULE-SET,ai,PROXY
   - RULE-SET,category-geoblock-ru,PROXY
 
-  # Прямой доступ (РФ домены, Белый список и чистые RU IP без Антифильтра)
+  # Прямой доступ (РФ домены, Белый список и валидированные RU IP)
   - RULE-SET,category-ru,DIRECT
   - RULE-SET,whitelist,DIRECT
   - RULE-SET,whitelist-ips,DIRECT
@@ -207,7 +208,7 @@ rules:
 
 ## 🛠 Особенности работы с базами
 
-* **Антифильтр без зависаний:** База `direct.mrs` формируется каждую ночь. Из пула российских провайдеров автоматически исключаются все заблокированные IP-адреса из списков Антифильтра и Re-filter. В результате нет необходимости загружать 200 000+ сырых IP в память роутера.
+* **Очистка пулов маршрутизации:** База `direct.mrs` формируется каждую ночь. Из пула российских провайдеров автоматически исключаются конфликтные и недоступные подсети по данным сетевой телеметрии. В результате роутер не перегружает оперативную память избыточными префиксами.
 * **DNS Bootstrap:** В параметрах `default-nameserver` и `proxy-server-nameserver` используются прямые IP (`77.88.8.8`, `8.8.8.8`), что предотвращает цикл резолва (дедлок) до установки защищенного соединения.
 * **Nameserver Policy:** Домены `.ru`, `.рф` и сервисы Белого списка резолвятся напрямую через Яндекс.DNS (`77.88.8.8`) без лишних капч и проверок.
 
@@ -217,7 +218,7 @@ rules:
 
 # Разработка: ristavor
 # Благодарности: hydraponique & fatyzzz
-# Группа RoscomVPN в Telegram: https://t.me/vpnrouting
+# Сообщество проекта в Telegram: https://t.me/vpnrouting
 #
 # Будем благодарны любой поддержке:
 # USDT TRC20 — TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR

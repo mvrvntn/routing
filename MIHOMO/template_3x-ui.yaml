@@ -1,0 +1,391 @@
+# ==============================================================================
+# 🚀 Шаблон подписки Mihomo (Clash.Meta) для панели 3x-ui
+# Оптимизированная маршрутизация: игры, гос. сервисы и банки идут напрямую;
+# внешние медиа, Discord и AI — через удаленный узел.
+# ==============================================================================
+
+proxy-groups:
+  - name: 🛡️ Прокси-узел
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hijacking.png
+    type: select
+    proxies:
+      - ⚡️ Авто-выбор
+    include-all: true
+    url: https://www.gstatic.com/generate_204
+
+  - name: 📺 Youtube
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
+    type: select
+    include-all: true
+    proxies:
+      - 🛡️ Прокси-узел
+
+  - name: 💬 Discord
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Discord.png
+    type: select
+    include-all: true
+    proxies:
+      - 🛡️ Прокси-узел
+
+  - name: 🎮 Игры
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
+    type: select
+    include-all: true
+    proxies:
+      - 🔓 Прямое соединение
+      - 🛡️ Прокси-узел
+
+  - name: ⚡️ Авто-выбор
+    type: url-test
+    tolerance: 150
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    include-all: true
+    hidden: true
+
+  - name: PROXY
+    type: select
+    hidden: true
+    proxies:
+      - 🛡️ Прокси-узел
+
+  - name: 🔓 Прямое соединение
+    type: select
+    hidden: true
+    proxies:
+      - DIRECT
+
+  - name: 🛑 Блокировка рекламы
+    type: select
+    hidden: true
+    proxies:
+      - REJECT
+
+rule-providers:
+  private-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private.mrs
+    path: ./ruleset/geosite-private.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 2592000
+
+  category-ru:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ru.mrs
+    path: ./ruleset/category-ru.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  whitelist:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist.mrs
+    path: ./ruleset/whitelist.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  microsoft:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/microsoft.mrs
+    path: ./ruleset/microsoft.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  apple:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/apple.mrs
+    path: ./ruleset/apple.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  google-play:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/google-play.mrs
+    path: ./ruleset/google-play.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  epicgames:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/epicgames.mrs
+    path: ./ruleset/epicgames.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  origin:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/origin.mrs
+    path: ./ruleset/origin.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  riot:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/riot.mrs
+    path: ./ruleset/riot.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  escapefromtarkov:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/escapefromtarkov.mrs
+    path: ./ruleset/escapefromtarkov.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  steam:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/steam.mrs
+    path: ./ruleset/steam.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  twitch:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/twitch.mrs
+    path: ./ruleset/twitch.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  pinterest:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/pinterest.mrs
+    path: ./ruleset/pinterest.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  faceit:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/faceit.mrs
+    path: ./ruleset/faceit.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  private-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private-ip.mrs
+    path: ./ruleset/geoip-private.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 2592000
+
+  direct-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/direct.mrs
+    path: ./ruleset/direct-ips.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  github:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/github.mrs
+    path: ./ruleset/github.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  twitch-ads:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/twitch-ads.mrs
+    path: ./ruleset/twitch-ads.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  youtube:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/youtube.mrs
+    path: ./ruleset/youtube.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  telegram:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/telegram.mrs
+    path: ./ruleset/telegram.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  telegram-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/telegram-ip.mrs
+    path: ./ruleset/telegram-ip.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  discord:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/discord.mrs
+    path: ./ruleset/discord.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  discord-ip:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/discord-ip.mrs
+    path: ./ruleset/discord-ip.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  ai:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/ai.mrs
+    path: ./ruleset/ai.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  category-geoblock-ru:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-geoblock-ru.mrs
+    path: ./ruleset/category-geoblock-ru.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  win-spy:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/win-spy.mrs
+    path: ./ruleset/win-spy.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  torrent-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/torrent.mrs
+    path: ./ruleset/torrent-domains.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  category-ads:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ads.mrs
+    path: ./ruleset/category-ads.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  torrent-clients:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/MIHOMO/torrent-clients.yaml
+    path: ./ruleset/torrent-clients.yaml
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  games:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/MIHOMO/games.yaml
+    path: ./ruleset/games.yaml
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+  ru-apps:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/MIHOMO/ru-apps.yaml
+    path: ./ruleset/ru-apps.yaml
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
+rules:
+  # Системные и локальные сети
+  - RULE-SET,private-ips,DIRECT,no-resolve
+  - IP-CIDR,::/0,REJECT-DROP,no-resolve
+  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT-DROP
+  - RULE-SET,private-domains,DIRECT
+
+  # Блокировка рекламы и спама
+  - RULE-SET,category-ads,🛑 Блокировка рекламы
+  - RULE-SET,win-spy,🛑 Блокировка рекламы
+
+  # P2P и торренты — напрямую
+  - RULE-SET,torrent-domains,DIRECT
+  - RULE-SET,torrent-clients,DIRECT
+
+  # Сетевые службы и медиа
+  - RULE-SET,google-play,PROXY
+  - RULE-SET,twitch-ads,PROXY
+  - RULE-SET,youtube,📺 Youtube
+  - RULE-SET,telegram,PROXY
+  - RULE-SET,telegram-ip,PROXY,no-resolve
+  - RULE-SET,discord,💬 Discord
+  - RULE-SET,discord-ip,PROXY,no-resolve
+  - RULE-SET,ai,PROXY
+  - RULE-SET,category-geoblock-ru,PROXY
+  - RULE-SET,github,PROXY
+
+  # Игры — напрямую с низким RTT
+  - RULE-SET,epicgames,🎮 Игры
+  - RULE-SET,origin,🎮 Игры
+  - RULE-SET,riot,🎮 Игры
+  - RULE-SET,escapefromtarkov,🎮 Игры
+  - RULE-SET,steam,🎮 Игры
+  - RULE-SET,faceit,🎮 Игры
+  - RULE-SET,games,🎮 Игры
+
+  # Локальные сервисы и доверенная инфраструктура
+  - RULE-SET,twitch,DIRECT
+  - RULE-SET,microsoft,DIRECT
+  - RULE-SET,apple,DIRECT
+  - RULE-SET,pinterest,DIRECT
+  - RULE-SET,category-ru,DIRECT
+  - RULE-SET,whitelist,DIRECT
+  - RULE-SET,ru-apps,DIRECT
+  - RULE-SET,direct-ips,DIRECT
+
+  # Остальной международный трафик
+  - MATCH,PROXY

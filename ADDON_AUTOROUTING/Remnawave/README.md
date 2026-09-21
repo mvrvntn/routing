@@ -16,8 +16,8 @@
    *(Для профиля Белых Списков: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON`, для JSONSUB: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/JSONSUB.JSON`, для Релоканта: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/INCY.JSON`)*.
 
 > [!TIP]
-> **Полный туннель (отключение роутинга):**  
-> Если для определенного пользователя или тарифа требуется полный VPN (весь трафик строго через сервер без разделения), отдайте в Response Rules заголовок:
+> **Полный туннель (отключение разделения трафика):**  
+> Если для определенного пользователя или тарифа требуется полный туннель (Full Tunnel — весь трафик строго через узел без разделения), отдайте в Response Rules заголовок:
 > ```http
 > routing: off
 > ```
@@ -85,7 +85,7 @@
 ## 🙏 Благодарности
 * Оригинальная разработка: **ristavor**
 * Исследования и списки: **hydraponique** & **fatyzzz**
-* Группа RoscomVPN в Telegram: [t.me/vpnrouting](https://t.me/vpnrouting)
+* Telegram-сообщество проекта: [t.me/vpnrouting](https://t.me/vpnrouting)
 * Донаты авторам оригинала (`USDT TRC20`): `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
 
 Проект «коридор»: [https://mvrvntn.github.io/koridor/](https://mvrvntn.github.io/koridor/)
