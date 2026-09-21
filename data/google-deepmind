@@ -57,6 +57,10 @@ domain:flow.google
 domain:flow.google.com
 domain:stitch.withgoogle.com
 
+# Google DeepMind - Colab (AI Features)
+domain:colab.google
+domain:colab.research.google.com
+
 # Google DeepMind - Android Studio Gemini Code Assist
 domain:aida.googleapis.com
 
