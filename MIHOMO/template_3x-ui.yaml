@@ -278,6 +278,15 @@ rule-providers:
     proxy: ⚡️ Авто-выбор
     interval: 86400
 
+  google-deepmind:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/google-deepmind.mrs
+    path: ./ruleset/google-deepmind.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
   category-geoblock-ru:
     type: http
     behavior: domain
@@ -365,6 +374,7 @@ rules:
   - RULE-SET,discord,💬 Discord
   - RULE-SET,discord-ip,PROXY,no-resolve
   - RULE-SET,ai,PROXY
+  - RULE-SET,google-deepmind,PROXY
   - RULE-SET,category-geoblock-ru,PROXY
   - RULE-SET,github,PROXY
 

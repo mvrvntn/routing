@@ -3,11 +3,17 @@ domain:deepmind.com
 domain:deepmind.google
 domain:gemini.google
 domain:gemini.google.com
+domain:gemini.gstatic.com
 domain:bard.google.com
 domain:ai.google
 domain:ai.google.dev
 domain:generativeai.google
 domain:generativeai.google.com
+
+# Google DeepMind - Authentication & Cookie Sync
+domain:accounts.google.com
+domain:myaccount.google.com
+domain:ogs.google.com
 
 # Google DeepMind - Google Generative Language API
 domain:geller-pa.googleapis.com
@@ -17,22 +23,29 @@ domain:robinfrontend-pa.googleapis.com
 domain:alkalicontent-pa.googleapis.com
 domain:alkalipa-pa.googleapis.com
 domain:bard-pa.googleapis.com
+domain:generativephotobooth-pa.googleapis.com
 
 # Google DeepMind - Google AI Studio
 domain:makersuite.google.com
 domain:ai.studio
 domain:aistudio.google.com
+domain:alkalicore-pa.clients6.google.com
+domain:alkalimakersuite-pa.clients6.google.com
+domain:webchannel-alkalimakersuite-pa.clients6.google.com
 
 # Google DeepMind - Gemini Code Assist
 domain:cloudaicompanion.googleapis.com
 domain:cloudcode-pa.googleapis.com
 domain:daily-cloudcode-pa.googleapis.com
+domain:aicode.googleapis.com
 
 # Google DeepMind - NotebookLM
 domain:notebooklm-pa.googleapis.com
 domain:notebooklm.googleapis.com
 domain:notebooklm.google
 domain:notebooklm.google.com
+domain:notebook.google
+domain:notebook.google.com
 
 # Google DeepMind - Jules & Labs
 domain:jules.google
@@ -40,6 +53,9 @@ domain:jules.google.com
 domain:labs.google
 domain:labs.google.com
 domain:aisandbox-pa.googleapis.com
+domain:flow.google
+domain:flow.google.com
+domain:stitch.withgoogle.com
 
 # Google DeepMind - Android Studio Gemini Code Assist
 domain:aida.googleapis.com
@@ -60,6 +76,7 @@ domain:aitestkitchen.withgoogle.com
 domain:apis.google.com
 domain:assistant-s3-pa.googleapis.com
 domain:waa-pa.googleapis.com
+domain:waa-pa.clients6.google.com
 domain:speechs3-pa.googleapis.com
 domain:developerprofiles-pa.googleapis.com
 domain:lookerstudio.google.com

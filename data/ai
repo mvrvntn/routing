@@ -70,3 +70,6 @@ domain:openrouter.ai
 domain:stability.ai
 domain:clipdrop.co
 domain:coze.com
+
+# Google DeepMind & Gemini
+include:google-deepmind
