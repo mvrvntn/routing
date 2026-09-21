@@ -1,6 +1,7 @@
 # OpenAI & ChatGPT
 domain:openai.com
 domain:chatgpt.com
+domain:sora.com
 domain:oaistatic.com
 domain:oaiusercontent.com
 domain:production-openaicom-storage.azureedge.net
@@ -31,6 +32,7 @@ domain:grok.com
 
 # Microsoft Copilot
 domain:copilot.microsoft.com
+domain:githubcopilot.com
 domain:edgeservices.bing.com
 domain:sydney.bing.com
 
@@ -50,6 +52,7 @@ domain:suno.com
 domain:suno.ai
 domain:udio.com
 domain:elevenlabs.io
+domain:eleven-labs.com
 domain:replicate.com
 domain:replicate.delivery
 domain:fal.ai

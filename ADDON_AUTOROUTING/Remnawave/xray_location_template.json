@@ -89,9 +89,7 @@
       {
         "ip": [
           "1.1.1.1",
-          "8.8.8.8",
-          "geoip:discord",
-          "geoip:telegram"
+          "8.8.8.8"
         ],
         "type": "field",
         "outboundTag": "proxy"
@@ -104,13 +102,10 @@
           "domain:lava.link",
           "domain:lava.money",
           "geosite:google-play",
-          "geosite:google-deepmind",
           "geosite:github",
           "geosite:twitch-ads",
           "geosite:youtube",
           "geosite:telegram",
-          "geosite:discord",
-          "geosite:ai",
           "geosite:category-geoblock-ru"
         ],
         "outboundTag": "proxy"
