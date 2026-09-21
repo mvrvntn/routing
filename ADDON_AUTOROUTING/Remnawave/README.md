@@ -13,7 +13,7 @@
    ```http
    autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
    ```
-   *(Для профиля Белых Списков: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON`, для JSONSUB: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/JSONSUB.JSON`)*.
+   *(Для профиля Белых Списков: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON`, для JSONSUB: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/JSONSUB.JSON`, для Релоканта: `incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/INCY.JSON`)*.
 
 > [!TIP]
 > **Полный туннель (отключение роутинга):**  

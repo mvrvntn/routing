@@ -361,6 +361,34 @@ jobs:
           update_json_and_deeplink "INCY" "WHITELIST"
           update_json_and_deeplink "INCY" "JSONSUB"
 
+          # Update RELOCANT manifests
+          update_relocant_client() {
+            local client="$1"
+            local json_file="RELOCANT/${client}.JSON"
+            local deeplink_file="RELOCANT/${client}.DEEPLINK"
+            local scheme="$(echo "$client" | tr '[:upper:]' '[:lower:]')"
+
+            local tmp="$(mktemp)"
+            jq \
+              --arg ts "$now_epoch" \
+              --arg geoip "$geoip_url" \
+              --arg geosite "$geosite_url" \
+              '.LastUpdated = $ts | .Geoipurl = $geoip | .Geositeurl = $geosite' \
+              "$json_file" > "$tmp"
+            mv "$tmp" "$json_file"
+
+            local b64="$(jq -c . "$json_file" | base64 -w 0)"
+            printf '%s://routing/onadd/%s\n' "$scheme" "$b64" > "$deeplink_file"
+
+            if [ "$client" = "INCY" ]; then
+              local autorouting_file="RELOCANT/INCY.AUTOROUTING"
+              printf 'incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/%s@main/RELOCANT/INCY.JSON\n' "${{ github.repository }}" > "$autorouting_file"
+            fi
+          }
+
+          update_relocant_client "HAPP"
+          update_relocant_client "INCY"
+
           python3 -c '
           import json, base64
 
@@ -431,7 +459,7 @@ jobs:
           set -euo pipefail
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add HAPP/ INCY/ README.md
+          git add HAPP/ INCY/ RELOCANT/ README.md
           if ! git diff --cached --quiet; then
             git commit -m "chore: обновление конфигураций роутинга и диплинков ${{ env.DAILY_TAG }} [skip ci]"
             git push origin main
@@ -447,9 +475,9 @@ jobs:
                       sing-box/discord-ip.srs sing-box/telegram-ip.srs sing-box/whitelist-ip.srs sing-box/private-ip.srs; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}" || true
           done
-          for json in INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON \
-                      INCY/DEFAULT.AUTOROUTING INCY/WHITELIST.AUTOROUTING INCY/JSONSUB.AUTOROUTING \
-                      HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON; do
+          for json in INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON RELOCANT/INCY.JSON \
+                      INCY/DEFAULT.AUTOROUTING INCY/WHITELIST.AUTOROUTING INCY/JSONSUB.AUTOROUTING RELOCANT/INCY.AUTOROUTING \
+                      HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON RELOCANT/HAPP.JSON; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
           done
 

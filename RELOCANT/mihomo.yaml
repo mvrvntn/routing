@@ -1,0 +1,204 @@
+# ============================================================
+# ШАБЛОН MIHOMO: коридор роутинг (релокант)
+# ============================================================
+# Обратный Split-Tunneling для проживающих за пределами РФ
+# (Сербия, Грузия, ЕС, Турция, СНГ и др.).
+#
+# КАК ЭТО РАБОТАЕТ:
+# 1. Весь мировой интернет (YouTube, Discord, Steam, Netflix, AI)
+#    идет НАПРЯМУЮ через местного провайдера на максимальной скорости.
+# 2. Только ресурсы РФ (Госуслуги, банки, Кинопоиск, Faceit RU)
+#    идут через российский прокси-сервер.
+#
+# Проект «коридор»: https://mvrvntn.github.io/koridor/
+# ============================================================
+
+proxy-providers:
+  ru-server:
+    type: http
+    url: <ВВЕДИТЕ URL ПОДПИСКИ С РОССИЙСКИМИ СЕРВЕРАМИ> # ссылка на подписку с РФ-нодами
+    path: ./provider/ru_proxies.yaml
+    interval: 86400
+    filter: "(?i)RU|Russia|Россия|Moscow|Москва|SPB|Питер"
+
+# Если у вас одиночный узел (VLESS / Shadowsocks) вместо подписки,
+# удалите блок proxy-providers выше и вставьте ваш прокси в блок proxies ниже:
+# proxies:
+#   - name: "Россия (VLESS)"
+#     type: vless
+#     server: your-ru-server.com
+#     port: 443
+#     uuid: your-uuid
+#     network: tcp
+#     tls: true
+#     udp: true
+#     flow: xtls-rprx-vision
+#     servername: your-ru-server.com
+#     reality-opts:
+#       public-key: your-public-key
+#       short-id: your-short-id
+#     client-fingerprint: chrome
+
+mixed-port: 7890
+mode: rule
+log-level: silent
+allow-lan: true # Разрешить раздачу в локальную сеть роутера (для SmartTV, телефонов, ПК)
+bind-address: "*"
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
+
+tun:
+  enable: true
+  stack: system
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+  strict-route: true
+  route-exclude-address:
+    - 224.0.0.0/3
+    - 10.0.0.0/8
+    - 127.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+
+sniffer:
+  enable: true
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "+.apple.com"
+
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  respect-rules: true
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+  nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+  proxy-server-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+  direct-nameserver:
+    - 1.1.1.1
+  nameserver-policy:
+    # Запросы к доменам РФ резолвятся через Яндекс внутри прокси-туннеля
+    "rule-set:category-ru,whitelist":
+      - "https://77.88.8.8/dns-query"
+  hosts:
+    "lkfl2.nalog.ru": 213.24.64.175
+    "lknpd.nalog.ru": 213.24.64.181
+    "cloudflare-dns.com": 1.1.1.1
+
+proxy-groups:
+  - name: "🇷🇺 Прокси РФ"
+    type: select
+    use:
+      - ru-server
+    proxies:
+      - DIRECT
+
+  - name: "💬 Faceit RU"
+    type: select
+    proxies:
+      - "🇷🇺 Прокси РФ"
+      - DIRECT
+
+  - name: "🛑 Блокировка"
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+
+rule-providers:
+  private-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    path: ./ruleset/private.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private.mrs"
+    interval: 86400
+
+  private-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    path: ./ruleset/private-ip.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private-ip.mrs"
+    interval: 86400
+
+  category-ru:
+    type: http
+    behavior: domain
+    format: mrs
+    path: ./ruleset/category-ru.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ru.mrs"
+    interval: 86400
+
+  whitelist:
+    type: http
+    behavior: domain
+    format: mrs
+    path: ./ruleset/whitelist.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist.mrs"
+    interval: 86400
+
+  whitelist-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    path: ./ruleset/whitelist-ip.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist-ip.mrs"
+    interval: 86400
+
+  faceit:
+    type: http
+    behavior: domain
+    format: mrs
+    path: ./ruleset/faceit.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/faceit.mrs"
+    interval: 86400
+
+  category-ads:
+    type: http
+    behavior: domain
+    format: mrs
+    path: ./ruleset/category-ads.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ads.mrs"
+    interval: 86400
+
+rules:
+  # 1. Локальные сети роутера
+  - RULE-SET,private-domains,DIRECT
+  - RULE-SET,private-ips,DIRECT,no-resolve
+
+  # 2. Реклама и трекеры
+  - RULE-SET,category-ads,🛑 Блокировка
+
+  # 3. Faceit (маршрутизация на Москву при выборе группы)
+  - RULE-SET,faceit,💬 Faceit RU
+
+  # 4. Государственные порталы, банки, СБП и маркетплейсы РФ
+  - RULE-SET,whitelist,🇷🇺 Прокси РФ
+  - RULE-SET,whitelist-ips,🇷🇺 Прокси РФ,no-resolve
+  - RULE-SET,category-ru,🇷🇺 Прокси РФ
+
+  # 5. Российские IP-подсети
+  - GEOIP,RU,🇷🇺 Прокси РФ
+
+  # 6. ВЕСЬ МИРОВОЙ ИНТЕРНЕТ — НАПРЯМУЮ ЧЕРЕЗ МЕСТНОГО ПРОВАЙДЕРА
+  - MATCH,DIRECT
