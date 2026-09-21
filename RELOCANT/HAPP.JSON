@@ -1,6 +1,6 @@
 {
   "Name": "коридор роутинг (релокант)",
-  "GlobalProxy": "true",
+  "GlobalProxy": "false",
   "UseChunkFiles": "true",
   "RemoteDns": "77.88.8.8",
   "DomesticDns": "1.1.1.1",
@@ -32,7 +32,8 @@
     "geosite:faceit"
   ],
   "ProxyIp": [
-    "geoip:whitelist"
+    "geoip:whitelist",
+    "geoip:direct"
   ],
   "BlockSites": [
     "geosite:win-spy",

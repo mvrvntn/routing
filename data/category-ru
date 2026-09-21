@@ -105,6 +105,7 @@ domain:rsc.cdn77.org
 domain:okko.tv
 domain:okko.sport
 domain:premier.one
+domain:zvuk.com
 domain:mangalib.me
 domain:animego.me
 domain:kinescope.io
@@ -115,6 +116,7 @@ domain:habrastorage.org
 domain:championat.com
 domain:tilda.cc
 domain:stepik.org
+domain:giga.chat
 
 # 2GIS & RuStore (non-.ru domains)
 domain:2gis.com
@@ -133,6 +135,8 @@ domain:vtb.com
 domain:vtbglobalperspectives.com
 domain:vtb-direct.com
 domain:korona.com
+domain:koronapay.com
+domain:qiwi.com
 domain:pvubank.com
 domain:alefbank.com
 domain:bank131.com
@@ -154,8 +158,10 @@ domain:starrails.com
 domain:zenlesszonezero.com
 domain:yuanshen.com
 
-# Lesta Games & Tanki (World of Tanks, Tanks Blitz, World of Warships)
+# Lesta Games, Astrum & Tanki (World of Tanks, Tanks Blitz, Warface)
 domain:lesta.games
+domain:astrum.gg
+domain:astrum.games
 
 # Direct Gaming (Battle.net, EA, Ubisoft - low ping directly)
 domain:blizzard.com
