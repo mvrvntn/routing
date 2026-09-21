@@ -19,6 +19,7 @@ _KORIDOR_URLS = {
     "default": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/DEFAULT.DEEPLINK",
     "jsonsub": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/JSONSUB.DEEPLINK",
     "whitelist": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/WHITELIST.DEEPLINK",
+    "relocant": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/HAPP.DEEPLINK",
 }
 
 
