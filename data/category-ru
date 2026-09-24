@@ -125,6 +125,12 @@ domain:2gis.media
 domain:rustore.cc
 domain:oneme.app
 
+# Russian Retail & Marketplaces CDN (non-.RU domains)
+domain:wbstatic.net
+domain:ozonusercontent.com
+domain:avito.st
+domain:vkusvill.net
+
 # Russian Banks & Financial Services on non-.RU domains
 domain:tinkoff.com
 domain:sberbank.com
