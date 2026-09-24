@@ -16,9 +16,6 @@ domain:counter.yadro.ru
 domain:adriver.ru
 domain:counter.rambler.ru
 domain:reef.vk-cdn.net
-domain:apptracer.ru
-domain:trace-flow.ru
-domain:vk-analytics.ru
 domain:webvisor.com
 domain:webvisor.org
 
@@ -57,9 +54,3 @@ domain:ad.xiaomi.com
 domain:data.mistat.intl.xiaomi.com
 domain:adx.ads.oppomobile.com
 domain:ads.samsung.com
-
-# User Tracking & Analytics SDKs
-domain:adjust.com
-domain:appsflyer.com
-domain:branch.io
-domain:amplitude.com
