@@ -12,7 +12,7 @@
   "DomesticDNSIP": "1.1.1.1",
   "Geoipurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat",
   "Geositeurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geosite.dat",
-  "LastUpdated": "1790237940",
+  "LastUpdated": "1790284761",
   "DnsHosts": {
     "lkfl2.nalog.ru": "213.24.64.175",
     "lknpd.nalog.ru": "213.24.64.181",
