@@ -16,9 +16,14 @@ domain:counter.yadro.ru
 domain:adriver.ru
 domain:counter.rambler.ru
 domain:reef.vk-cdn.net
-domain:sdk-api.apptracer.ru
+domain:apptracer.ru
 domain:oneme.app
 domain:oneme.ru
+domain:max.ru
+domain:trace-flow.ru
+domain:vk-analytics.ru
+domain:webvisor.com
+domain:webvisor.org
 
 # Major Mobile In-App Ad Networks (Games & Apps)
 domain:admob.com
