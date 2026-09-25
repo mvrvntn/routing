@@ -23,9 +23,10 @@ GEOBLOCK_FILE = DATA_DIR / "category-geoblock-ru"
 CATEGORY_RU_FILE = DATA_DIR / "category-ru"
 WHITELIST_FILE = DATA_DIR / "whitelist"
 
-# Antifilter community curated blocked domains (supports multiple concurrent mirrors)
+# Antifilter & Re-filter community curated blocked domains (supports multiple concurrent mirrors)
 COMMUNITY_URLS = [
     "https://community.antifilter.download/list/domains.lst",
+    "https://raw.githubusercontent.com/1andrevich/Re-filter-lists/refs/heads/main/community.lst",
 ]
 
 # Regex for valid domain name (RFC 1035 / RFC 1123)
@@ -139,9 +140,10 @@ async def fetch_single_url(url: str, timeout: int = 15) -> set[str]:
     return domains
 
 
-async def fetch_all_community_domains() -> set[str]:
+async def fetch_all_community_domains(urls: list[str] | None = None) -> set[str]:
     """Execute concurrent non-blocking fetch across all community mirrors."""
-    tasks = [fetch_single_url(url) for url in COMMUNITY_URLS]
+    target_urls = urls if urls is not None else COMMUNITY_URLS
+    tasks = [fetch_single_url(url) for url in target_urls]
     results = await asyncio.gather(*tasks, return_exceptions=False)
     combined = set().union(*results) if results else set()
     print(f"[Fetch] Total community domains retrieved: {len(combined)}.")
@@ -184,7 +186,7 @@ async def async_main(
 ) -> None:
     protected = load_protected_domains()
     baseline = load_baseline_geoblock()
-    community = await fetch_all_community_domains()
+    community = await fetch_all_community_domains(community_urls)
 
     combined = baseline | community
     print(f"[Process] Total raw domain pool: {len(combined)}")
