@@ -481,3 +481,19 @@ domain:dbankcloud.ru
 domain:tbank.ru
 domain:t-bank.ru
 domain:t-static.ru
+
+# Sber & Banking
+domain:sber.ru
+domain:sberbank.ru
+
+# Essential Services & Mobile Whitelist
+domain:dobro.ru
+domain:evotor.ru
+domain:hrlink.ru
+domain:lizaalert.org
+domain:ofd.ru
+domain:onf.ru
+domain:sirius.online
+domain:sochisirius.ru
+domain:sportmail.ru
+

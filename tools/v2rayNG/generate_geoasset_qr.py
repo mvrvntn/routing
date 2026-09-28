@@ -11,7 +11,6 @@ You can also pass `--source releases` to use the GitHub Releases URLs.
 
 import argparse
 import os
-import sys
 
 CDN_URLS = {
     "geoip.dat": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat",

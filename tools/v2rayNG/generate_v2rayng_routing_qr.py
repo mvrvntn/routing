@@ -9,7 +9,6 @@ format, generates a QR code image if qrcode is installed, and prints JSON.
 import argparse
 import json
 import os
-import sys
 import urllib.request
 
 DEFAULT_CONFIG_PATH = os.path.join(

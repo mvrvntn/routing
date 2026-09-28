@@ -37,6 +37,9 @@ DOMAIN_REGEX = re.compile(
 # Protected Top-Level Domains (Strict Safety Gate)
 PROTECTED_TLDS = (".ru", ".рф", ".su", ".xn--p1ai")
 
+# Explicit overrides permitted through safety gate (e.g. services that geoblock RU)
+EXPLICIT_PROXY_OVERRIDES = {"lava.ru"}
+
 
 def clean_domain_string(raw: str) -> str:
     """Strip protocol, path, port, prefixes, and trailing dots."""
@@ -109,7 +112,9 @@ def _sync_fetch(url: str, timeout: int = 15) -> str:
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         if resp.status != 200:
             raise ValueError(f"HTTP status {resp.status}")
-        data = resp.read(MAX_PAYLOAD_BYTES)
+        data = resp.read(MAX_PAYLOAD_BYTES + 1)
+        if len(data) > MAX_PAYLOAD_BYTES:
+            raise ValueError(f"Payload from {url} exceeds maximum limit of {MAX_PAYLOAD_BYTES} bytes")
         return data.decode("utf-8", errors="ignore")
 
 
@@ -152,6 +157,9 @@ async def fetch_all_community_domains(urls: list[str] | None = None) -> set[str]
 
 def is_protected_domain(domain: str, protected: set[str]) -> bool:
     """Guard clause: returns True if domain belongs to protected TLD or protected RU lists."""
+    if domain in EXPLICIT_PROXY_OVERRIDES:
+        return False
+
     if domain.endswith(PROTECTED_TLDS):
         return True
 
@@ -210,6 +218,8 @@ async def async_main(
     try:
         with open(temp_file, "w", encoding="utf-8", newline="\n") as f:
             f.writelines(output_lines)
+            f.flush()
+            os.fsync(f.fileno())
         temp_file.replace(geoblock_file)
     except Exception as e:
         temp_file.unlink(missing_ok=True)

@@ -31,6 +31,8 @@ jobs:
     timeout-minutes: 30
     env:
       CURL: "curl -fsSL --retry 3 --retry-delay 2 --retry-connrefused"
+      DEPLOY_SERVERS: ${{ secrets.DEPLOY_SERVERS }}
+      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
 
     steps:
       - name: Checkout codebase
@@ -87,7 +89,7 @@ jobs:
           test -s /tmp/geosite_out/dlc.dat
           cp -f /tmp/geosite_out/dlc.dat ./geosite.dat
 
-      - name: Validate geosite.dat (Smoke Test)
+      - name: Validate geosite.dat (Smoke Test & Content Verification)
         run: |
           set -euo pipefail
           test -s ./geosite.dat
@@ -97,7 +99,90 @@ jobs:
             echo "Error: geosite.dat size ($SIZE bytes) outside expected safe range [65KB, 350KB]!"
             exit 1
           fi
-          echo "geosite.dat Smoke Test PASSED."
+
+          python3 - <<'PY'
+          import glob, os, sys, re
+
+          def varint(buf, i):
+              result = shift = 0
+              while True:
+                  b = buf[i]; i += 1
+                  result |= (b & 0x7F) << shift
+                  if not (b & 0x80):
+                      return result, i
+                  shift += 7
+
+          def fields(buf):
+              i, out = 0, []
+              while i < len(buf):
+                  key, i = varint(buf, i)
+                  fn, wt = key >> 3, key & 7
+                  if wt == 0:   val, i = varint(buf, i)
+                  elif wt == 1: val, i = buf[i:i+8], i+8
+                  elif wt == 2:
+                      ln, i = varint(buf, i); val, i = buf[i:i+ln], i+ln
+                  elif wt == 5: val, i = buf[i:i+4], i+4
+                  else: raise ValueError(f"bad wire type {wt}")
+                  out.append((fn, wt, val))
+              return out
+
+          def parse_geosite(path):
+              data = open(path, "rb").read()
+              catalog = {}
+              for fn, wt, payload in fields(data):
+                  if fn != 1 or wt != 2: continue
+                  code, values = None, set()
+                  for f2, w2, v2 in fields(payload):
+                      if f2 == 1 and w2 == 2: code = v2.decode()
+                      elif f2 == 2 and w2 == 2:
+                          for f3, w3, v3 in fields(v2):
+                              if f3 == 2 and w3 == 2:
+                                  values.add(v3.decode().lower())
+                  if code: catalog[code.upper()] = values
+              return catalog
+
+          def resolve(name, stack=()):
+              if name in stack: return set()
+              path = os.path.join("data", name)
+              if not os.path.exists(path): return set()
+              out = set()
+              for line in open(path, encoding="utf-8", errors="ignore"):
+                  line = line.strip()
+                  if not line or line.startswith("#"): continue
+                  if line.startswith("include:"):
+                      out |= resolve(line.split(":", 1)[1].strip(), stack + (name,))
+                      continue
+                  line = re.sub(r"^(domain|full|keyword|regexp):", "", line)
+                  line = line.strip(". ").lower()
+                  if line: out.add(line)
+              return out
+
+          catalog = parse_geosite("geosite.dat")
+          failures = []
+          for path in sorted(glob.glob("data/*")):
+              name = os.path.basename(path).upper()
+              src = resolve(os.path.basename(path))
+              got = catalog.get(name)
+              if got is None:
+                  failures.append(f"{name}: category missing from geosite.dat")
+                  continue
+              missing = src - got
+              if missing:
+                  failures.append(
+                      f"{name}: {len(missing)}/{len(src)} source values missing "
+                      f"(e.g. {sorted(missing)[:5]})"
+                  )
+
+          for code in sorted(catalog):
+              print(f"  {code}: {len(catalog[code])} entries")
+
+          if failures:
+              print("❌ geosite.dat is out of sync with data/:")
+              for f in failures: print("  -", f)
+              sys.exit(1)
+          print("✅ geosite.dat fully covers data/")
+          PY
+          echo "geosite.dat Smoke Test & Content Verification PASSED."
 
       # --- 2. BUILD GEOIP.DAT ---
       - name: Checkout geoip builder
@@ -151,7 +236,7 @@ jobs:
           test -s output/dat/geoip.dat
           cp -f output/dat/geoip.dat ../geoip.dat
 
-      - name: Validate geoip.dat (Smoke Test)
+      - name: Validate geoip.dat (Smoke Test & Content Verification)
         run: |
           set -euo pipefail
           test -s ./geoip.dat
@@ -161,7 +246,98 @@ jobs:
             echo "Error: geoip.dat size ($SIZE bytes) outside expected safe range [300KB, 2.5MB]!"
             exit 1
           fi
-          echo "geoip.dat Smoke Test PASSED."
+
+          python3 - <<'PY'
+          import ipaddress, os, sys
+
+          def varint(buf, i):
+              result = shift = 0
+              while True:
+                  b = buf[i]; i += 1
+                  result |= (b & 0x7F) << shift
+                  if not (b & 0x80):
+                      return result, i
+                  shift += 7
+
+          def fields(buf):
+              i, out = 0, []
+              while i < len(buf):
+                  key, i = varint(buf, i)
+                  fn, wt = key >> 3, key & 7
+                  if wt == 0:   val, i = varint(buf, i)
+                  elif wt == 1: val, i = buf[i:i+8], i+8
+                  elif wt == 2:
+                      ln, i = varint(buf, i); val, i = buf[i:i+ln], i+ln
+                  elif wt == 5: val, i = buf[i:i+4], i+4
+                  else: raise ValueError(f"bad wire type {wt}")
+                  out.append((fn, wt, val))
+              return out
+
+          def parse_geoip(path):
+              catalog = {}
+              for fn, wt, payload in fields(open(path, "rb").read()):
+                  if fn != 1 or wt != 2: continue
+                  code, nets = None, []
+                  for f2, w2, v2 in fields(payload):
+                      if f2 == 1 and w2 == 2:
+                          code = v2.decode()
+                      elif f2 == 2 and w2 == 2:
+                          ip_bytes, prefix = None, None
+                          for f3, w3, v3 in fields(v2):
+                              if f3 == 1 and w3 == 2: ip_bytes = v3
+                              elif f3 == 2 and w3 == 0: prefix = v3
+                          if ip_bytes is not None and prefix is not None:
+                              nets.append(ipaddress.ip_network(
+                                  (ipaddress.ip_address(ip_bytes), prefix), strict=False))
+                  if code: catalog[code.upper()] = nets
+              return catalog
+
+          def read_cidrs(path):
+              out = []
+              if not os.path.exists(path): return out
+              for line in open(path, encoding="utf-8", errors="ignore"):
+                  line = line.strip()
+                  if not line or line.startswith("#"): continue
+                  try: out.append(ipaddress.ip_network(line, strict=False))
+                  except ValueError: pass
+              return out
+
+          catalog = parse_geoip("geoip.dat")
+          targets = {
+              "geoip/discord.txt": ("DISCORD", "geoip/discord.txt"),
+              "geoip/telegram.txt": ("TELEGRAM", "geoip/telegram.txt"),
+              "geoip/CUSTOM-FIX-ADD.txt": ("DIRECT", "geoip/CUSTOM-FIX-ADD.txt"),
+              "geoip/CUSTOM-LIST-ADD.txt": ("DIRECT", "geoip/CUSTOM-LIST-ADD.txt"),
+              "geoip/CUSTOM-WHITELIST.txt": ("WHITELIST", "geoip/CUSTOM-WHITELIST.txt"),
+          }
+
+          failures = []
+          for key, (code, path) in targets.items():
+              nets = catalog.get(code, [])
+              net_set = set(nets)
+              v4_nets = [n for n in nets if n.version == 4]
+              v6_nets = [n for n in nets if n.version == 6]
+              src_nets = read_cidrs(path)
+              missing = []
+              for net in src_nets:
+                  if net in net_set:
+                      continue
+                  pool = v4_nets if net.version == 4 else v6_nets
+                  if not any(net.subnet_of(n) for n in pool):
+                      missing.append(str(net))
+              if missing:
+                  failures.append(f"{path} -> {code}: {len(missing)} CIDR not covered (e.g. {missing[:5]})")
+
+          for code in sorted(catalog):
+              print(f"  {code}: {len(catalog[code])} CIDRs")
+
+          if failures:
+              print("❌ geoip.dat is out of sync with geoip/ sources:")
+              for f in failures: print("  -", f)
+              sys.exit(1)
+          print("✅ geoip.dat fully covers geoip/ sources")
+          PY
+          echo "geoip.dat Smoke Test & Content Verification PASSED."
 
       # --- 3. CONVERT RULESETS (MIHOMO & SING-BOX) ---
       - name: Install Mihomo & sing-box
@@ -389,43 +565,6 @@ jobs:
           update_relocant_client "HAPP"
           update_relocant_client "INCY"
 
-          python3 -c '
-          import json, base64
-
-          def get_b64(path):
-              with open(path, "r", encoding="utf-8") as f:
-                  d = json.load(f)
-              compact = json.dumps(d, separators=(",", ":"), ensure_ascii=False)
-              return base64.b64encode(compact.encode("utf-8")).decode("utf-8")
-
-          b64_default = get_b64("HAPP/DEFAULT.JSON")
-          b64_whitelist = get_b64("HAPP/WHITELIST.JSON")
-          b64_jsonsub = get_b64("HAPP/JSONSUB.JSON")
-
-          with open("README.md", "r", encoding="utf-8") as f:
-              lines = f.readlines()
-
-          new_lines = []
-          for l in lines:
-              if "| **DEFAULT** | [⚡ Установить koridor DEFAULT]" in l:
-                  new_lines.append(f"| **DEFAULT** | [⚡ Установить koridor DEFAULT](happ://routing/onadd/{b64_default}) | [HAPP/DEFAULT.JSON](HAPP/DEFAULT.JSON) |\n")
-              elif "| **WHITELIST** | [⚡ Установить koridor WHITELIST]" in l:
-                  new_lines.append(f"| **WHITELIST** | [⚡ Установить koridor WHITELIST](happ://routing/onadd/{b64_whitelist}) | [HAPP/WHITELIST.JSON](HAPP/WHITELIST.JSON) |\n")
-              elif "| **JSONSUB** | [⚡ Установить koridor JSON]" in l:
-                  new_lines.append(f"| **JSONSUB** | [⚡ Установить koridor JSON](happ://routing/onadd/{b64_jsonsub}) | [HAPP/JSONSUB.JSON](HAPP/JSONSUB.JSON) |\n")
-              elif "| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting]" in l:
-                  new_lines.append(f"| **DEFAULT** (Рекомендуемый) | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_default}) | [INCY/DEFAULT.JSON](INCY/DEFAULT.JSON) |\n")
-              elif "| **WHITELIST** | [☁️ Подключить Autorouting]" in l:
-                  new_lines.append(f"| **WHITELIST** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/WHITELIST.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_whitelist}) | [INCY/WHITELIST.JSON](INCY/WHITELIST.JSON) |\n")
-              elif "| **JSONSUB** | [☁️ Подключить Autorouting]" in l:
-                  new_lines.append(f"| **JSONSUB** | [☁️ Подключить Autorouting](incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/JSONSUB.JSON) | [⚡ Импортировать](incy://routing/onadd/{b64_jsonsub}) | [INCY/JSONSUB.JSON](INCY/JSONSUB.JSON) |\n")
-              else:
-                  new_lines.append(l)
-
-          with open("README.md", "w", encoding="utf-8") as f:
-              f.writelines(new_lines)
-          '
-
       # --- 6. PUSH RELEASE BRANCH & PUBLISH GITHUB RELEASE ---
       - name: Push to release branch
         run: |
@@ -484,9 +623,6 @@ jobs:
       # --- 9. OPTIONAL DEPLOY TO SERVERS ---
       - name: Deploy to servers (if configured)
         if: env.DEPLOY_SERVERS != '' && env.DEPLOY_SSH_KEY != ''
-        env:
-          DEPLOY_SERVERS: ${{ secrets.DEPLOY_SERVERS }}
-          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
         run: |
           set -euo pipefail
           HAPP_DEFAULT="$(tr -d '\n\r' < HAPP/DEFAULT.DEEPLINK)"

@@ -473,9 +473,6 @@ rules:
   - RULE-SET,category-ads,REJECT-DROP              # реклама
   - RULE-SET,win-spy,REJECT-DROP                   # телеметрия Windows
 
-  # --- Торренты ---
-  - RULE-SET,torrent-domains,DIRECT                # торрент-трекеры — напрямую
-
   # --- Сервисы через PROXY ---
   - RULE-SET,google-play,PROXY
   - RULE-SET,google-deepmind,PROXY

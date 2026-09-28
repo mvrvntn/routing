@@ -4,7 +4,19 @@ import requests
 import threading
 import time as _time
 
-from distutils.version import LooseVersion
+
+def _version_tuple(value: str) -> tuple[int, ...]:
+    """'1.8.29' / '6.40' / 'v1.10.0-beta' -> (1, 8, 29). Non-digits -> 0."""
+    parts: list[int] = []
+    for chunk in re.split(r"[._\-+]", value.strip().lstrip("vV")):
+        digits = re.match(r"^\d+", chunk)
+        parts.append(int(digits.group()) if digits else 0)
+    return tuple(parts)
+
+
+def _version_at_least(current: str, minimum: str) -> bool:
+    """Compare version strings without distutils/LooseVersion (Python 3.9+)."""
+    return _version_tuple(current) >= _version_tuple(minimum)
 
 
 # ─── koridor Routing Resolver ─────────────────────────────────────────────────
@@ -161,7 +173,7 @@ def user_subscription(
 
     elif (USE_CUSTOM_JSON_DEFAULT or USE_CUSTOM_JSON_FOR_V2RAYN) and re.match(r'^v2rayN/(\d+\.\d+)', user_agent):
         version_str = re.match(r'^v2rayN/(\d+\.\d+)', user_agent).group(1)
-        if LooseVersion(version_str) >= LooseVersion("6.40"):
+        if _version_at_least(version_str, "6.40"):
             conf = generate_subscription(user=user, config_format="v2ray-json", as_base64=False, reverse=False)
             return Response(content=conf, media_type="application/json", headers=response_headers)
         else:
@@ -170,10 +182,10 @@ def user_subscription(
 
     elif (USE_CUSTOM_JSON_DEFAULT or USE_CUSTOM_JSON_FOR_V2RAYNG) and re.match(r'^v2rayNG/(\d+\.\d+\.\d+)', user_agent):
         version_str = re.match(r'^v2rayNG/(\d+\.\d+\.\d+)', user_agent).group(1)
-        if LooseVersion(version_str) >= LooseVersion("1.8.29"):
+        if _version_at_least(version_str, "1.8.29"):
             conf = generate_subscription(user=user, config_format="v2ray-json", as_base64=False, reverse=False)
             return Response(content=conf, media_type="application/json", headers=response_headers)
-        elif LooseVersion(version_str) >= LooseVersion("1.8.18"):
+        elif _version_at_least(version_str, "1.8.18"):
             conf = generate_subscription(user=user, config_format="v2ray-json", as_base64=False, reverse=True)
             return Response(content=conf, media_type="application/json", headers=response_headers)
         else:
@@ -190,7 +202,7 @@ def user_subscription(
 
     elif (USE_CUSTOM_JSON_DEFAULT or USE_CUSTOM_JSON_FOR_HAPP) and re.match(r'^Happ/(\d+\.\d+\.\d+)', user_agent):
         version_str = re.match(r'^Happ/(\d+\.\d+\.\d+)', user_agent).group(1)
-        if LooseVersion(version_str) >= LooseVersion("1.63.1"):
+        if _version_at_least(version_str, "1.63.1"):
             conf = generate_subscription(user=user, config_format="v2ray-json", as_base64=False, reverse=False)
             return Response(content=conf, media_type="application/json", headers=response_headers)
         else:

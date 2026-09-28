@@ -74,26 +74,26 @@
         "ip_is_private": true
       },
       {
+        "action": "reject",
         "port": [
           25
-        ],
-        "outbound": "block"
+        ]
       },
       {
-        "outbound": "block",
+        "action": "reject",
         "rule_set": [
           "category-ads",
           "win-spy"
         ]
       },
       {
+        "action": "reject",
         "port": [
           443
         ],
         "network": [
           "udp"
-        ],
-        "outbound": "block"
+        ]
       },
       {
         "outbound": "→ Remnawave",
@@ -215,7 +215,6 @@
       "mtu": 1400,
       "tag": "tun-in",
       "type": "tun",
-      "sniff": true,
       "stack": "mixed",
       "platform": {
         "http_proxy": {
@@ -227,26 +226,19 @@
       "auto_route": true,
       "strict_route": true,
       "inet4_address": "172.19.0.1/30",
-      "inet6_address": "fdfe:dcba:9876::1/126",
-      "sniff_override_destination": false
+      "inet6_address": "fdfe:dcba:9876::1/126"
     },
     {
       "tag": "mixed-in",
       "type": "mixed",
-      "sniff": true,
       "listen": "127.0.0.1",
-      "listen_port": 2080,
-      "sniff_override_destination": false
+      "listen_port": 2080
     }
   ],
   "outbounds": [
     {
       "tag": "direct",
       "type": "direct"
-    },
-    {
-      "tag": "block",
-      "type": "block"
     },
     {
       "tag": "dns-out",

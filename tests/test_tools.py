@@ -30,7 +30,7 @@ class TestToolsSuite(unittest.TestCase):
     def test_streisand_conversion(self):
         v2 = convert_to_v2(mock_config)
         self.assertEqual(v2["name"], "TestVPN")
-        self.assertEqual(v2["domainStrategy"], "AsIs")
+        self.assertEqual(v2["domainStrategy"], "IPIfNonMatch")
         self.assertEqual(v2["domainMatcher"], "hybrid")
         self.assertTrue("uuid" in v2)
         self.assertEqual(len(v2["rules"]), 3)
@@ -83,6 +83,23 @@ class TestToolsSuite(unittest.TestCase):
         rel_urls = get_urls("releases")
         self.assertIn("github.com/mvrvntn/routing", rel_urls["geosite.dat"])
         self.assertIn("releases/latest/download", rel_urls["geoip.dat"])
+
+    def test_singbox_ip_entries_use_ip_rule_sets(self):
+        config = {
+            "ProxySites": ["geosite:telegram"],
+            "ProxyIp": ["geoip:telegram", "geoip:discord"],
+        }
+        rules = build_rules(config)
+        proxy = next(r for r in rules if r.get("outbound") == "proxy")
+        self.assertIn(
+            "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/telegram-ip.srs",
+            proxy["rule_set"],
+        )
+        self.assertIn(
+            "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/discord-ip.srs",
+            proxy["rule_set"],
+        )
+        self.assertEqual(len(proxy["rule_set"]), len(set(proxy["rule_set"])))
 
 
 if __name__ == "__main__":

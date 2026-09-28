@@ -7,7 +7,7 @@
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
 [![jsDelivr CDN](https://img.shields.io/badge/jsDelivr-CDN-orange.svg)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
-[![Tests](https://img.shields.io/badge/Tests-15%20Passed-brightgreen.svg)](tests/test_update_geoblock.py)
+[![Tests](https://img.shields.io/badge/Tests-20%20Passed-brightgreen.svg)](tests/)
 
 **Регион:** 🇷🇺 Россия + 🇧🇾 Беларусь
 

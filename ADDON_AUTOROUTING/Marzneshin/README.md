@@ -25,7 +25,7 @@ services:
 
 ```yaml
     environment:
-      KORIDOR_ROUTING_SOURCE: "default"   # default | jsonsub | whitelist | custom
+      KORIDOR_ROUTING_SOURCE: "default"   # default | jsonsub | whitelist | relocant | custom
       # KORIDOR_ROUTING_CUSTOM: "happ://..."  # только при source=custom
 ```
 
@@ -34,6 +34,7 @@ services:
 | `default` | Полный профиль: RU/BY direct, YouTube/Telegram/GitHub через прокси, реклама блокируется **(по умолчанию)** |
 | `jsonsub` | Минимальный профиль для JSON-подписок: только DNS + кастомные geoip/geosite |
 | `whitelist` | Direct только для сервисов и IP из белых списков РФ; всё остальное через прокси |
+| `relocant` | Обратный сплит: весь мир напрямую, сервисы РФ через российский прокси |
 | `custom` | Ваша произвольная ссылка из `KORIDOR_ROUTING_CUSTOM` |
 
 **4.** Перезагрузите Marzneshin:

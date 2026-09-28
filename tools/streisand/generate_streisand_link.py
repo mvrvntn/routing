@@ -14,7 +14,6 @@ import base64
 import json
 import os
 import plistlib
-import sys
 import urllib.request
 import uuid
 
@@ -48,10 +47,13 @@ def convert_to_v2(config: dict) -> dict:
     proxy_ips = config.get("ProxyIp", [])
     direct_ips = config.get("DirectIp", [])
 
+    has_ip_rules = bool(block_ips or proxy_ips or direct_ips)
+    domain_strategy = config.get("DomainStrategy") or ("IPIfNonMatch" if has_ip_rules else "AsIs")
+
     v2 = {
         "name": config.get("Name", "VPN Routing"),
         "uuid": str(uuid.uuid4()).upper(),
-        "domainStrategy": "AsIs",
+        "domainStrategy": domain_strategy,
         "domainMatcher": "hybrid",
         "rules": [],
     }

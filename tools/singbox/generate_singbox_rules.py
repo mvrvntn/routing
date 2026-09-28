@@ -13,7 +13,6 @@ Converts geosite/geoip entries to rule_set URLs pointing to .srs files.
 import argparse
 import json
 import os
-import sys
 import urllib.request
 
 DEFAULT_CONFIG_PATH = os.path.join(
@@ -59,12 +58,12 @@ KNOWN_GEOSITE_SRS = {
     "ai",
 }
 
-KNOWN_GEOIP_SRS = {
-    "direct",
-    "whitelist",
-    "private",
-    "telegram",
-    "discord",
+GEOIP_SRS_FILENAME = {
+    "direct": "direct.srs",
+    "whitelist": "whitelist-ip.srs",
+    "private": "private-ip.srs",
+    "telegram": "telegram-ip.srs",
+    "discord": "discord-ip.srs",
 }
 
 
@@ -89,9 +88,8 @@ def _geosite_to_srs(name: str) -> str | None:
 
 
 def _geoip_to_srs(name: str) -> str | None:
-    if name in KNOWN_GEOIP_SRS:
-        return f"{GEOIP_SRS_BASE}/{name}.srs"
-    return None
+    filename = GEOIP_SRS_FILENAME.get(name)
+    return f"{GEOIP_SRS_BASE}/{filename}" if filename else None
 
 
 def _parse_entries(site_entries: list, ip_entries: list) -> dict:
@@ -124,7 +122,7 @@ def _parse_entries(site_entries: list, ip_entries: list) -> dict:
 
     fields = {}
     if rule_sets:
-        fields["rule_set"] = rule_sets
+        fields["rule_set"] = list(dict.fromkeys(rule_sets))
     if domain:
         fields["domain"] = domain
     if domain_suffix:
