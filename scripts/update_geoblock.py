@@ -9,6 +9,7 @@ Asynchronous architecture using native asyncio + thread executor:
 5. Performs atomic update of data/category-geoblock-ru.
 """
 
+import os
 import sys
 import re
 import asyncio
