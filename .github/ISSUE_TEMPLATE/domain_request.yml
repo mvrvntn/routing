@@ -1,37 +1,63 @@
 name: 🌐 Запрос на добавление / изменение домена
-description: Предложить добавить домен в category-ru, ai, games или другую категорию
+description: Предложить добавить или перенаправить домен (Direct, Proxy, Whitelist, Relocant)
 title: "[Domain Request]: "
 labels: ["domains", "enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Спасибо за вклад в улучшение правил маршрутизации!
+        ### 💡 Анкета на добавление или изменение маршрута
+        Заполните форму ниже, чтобы предложить домен в правила маршрутизации.
   - type: input
     id: domain
     attributes:
-      label: Домен или маска (FQDN)
-      description: "Пример: sub.domain.ru, domain.com"
+      label: Домен или FQDN
+      description: Укажите точный домен или корневую маску (без https://, портов и путей).
       placeholder: example.com
     validations:
       required: true
   - type: dropdown
-    id: category
+    id: action
     attributes:
-      label: Целевая категория
+      label: Желаемый маршрут (Действие)
+      description: Каким образом должен обрабатываться этот ресурс?
       options:
-        - "category-ru (Прямой доступ в РФ / Direct)"
-        - "ai (Нейросети / Proxy)"
-        - "discord (Discord / Proxy)"
-        - "category-ads (Блокировка рекламы)"
-        - "Другая категория"
+        - "DIRECT (Напрямую): Сервисы РФ, банки, Госуслуги, игры, доставка"
+        - "PROXY (Через прокси): Зарубежные платформы, AI, сервисы с гео-дискриминацией"
+        - "WHITELIST (Белый список БС): Критическая инфраструктура РФ"
+        - "RELOCANT (Релокант): Для проживающих за пределами РФ (обратный сплит)"
+        - "BLOCK (Блокировка): Трекеры, спам, телеметрия"
+    validations:
+      required: true
+  - type: dropdown
+    id: category_type
+    attributes:
+      label: Тип сервиса
+      options:
+        - "Банки / Платежи / Финансы"
+        - "Государственные / Муниципальные порталы"
+        - "Медиаплатформы / Видео / Музыка"
+        - "Нейросети / AI-инструменты"
+        - "Игры / Игровые платформы"
+        - "Маркетплейсы / Доставка / Екоммерс"
+        - "Работа / Образование / Облачные сервисы"
+        - "Другое"
     validations:
       required: true
   - type: textarea
     id: reason
     attributes:
-      label: Обоснование / Проблема
-      description: Почему ресурс должен идти через данный маршрут?
-      placeholder: "Сервис заблокирован в РФ / сервис блокирует иностранные IP..."
+      label: Причина / Симптом проблемы
+      description: Какая ошибка возникает и почему домен должен идти через этот маршрут?
+      placeholder: "Пример: Сайт выдает 403 Forbidden при заходе с зарубежного IP / Приложение банка не открывается через прокси..."
     validations:
       required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Проверка перед отправкой
+      options:
+        - label: Домен указан без протокола (без `https://`) и без путей (без `/page`)
+          required: true
+        - label: Проверено фактическое поведение сервиса (напрямую и через узел)
+          required: true
