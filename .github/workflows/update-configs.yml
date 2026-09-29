@@ -157,6 +157,15 @@ jobs:
                   if line: out.add(line)
               return out
 
+          def is_covered(domain, catalog_set):
+              if domain in catalog_set:
+                  return True
+              parts = domain.split(".")
+              for i in range(1, len(parts)):
+                  if ".".join(parts[i:]) in catalog_set:
+                      return True
+              return False
+
           catalog = parse_geosite("geosite.dat")
           failures = []
           for path in sorted(glob.glob("data/*")):
@@ -166,7 +175,7 @@ jobs:
               if got is None:
                   failures.append(f"{name}: category missing from geosite.dat")
                   continue
-              missing = src - got
+              missing = [d for d in src if not is_covered(d, got)]
               if missing:
                   failures.append(
                       f"{name}: {len(missing)}/{len(src)} source values missing "
