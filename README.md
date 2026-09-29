@@ -36,8 +36,8 @@
 
 | Профиль | Назначение | Happ (iOS/Android/ПК) | INCY (iOS/Android/ПК) |
 | :--- | :--- | :--- | :--- |
-| **коридор роутинг**<br>*(DEFAULT)* | ⭐️ **Основной / Рекомендуемый.** Умное раздельное туннелирование: банки, маркетплейсы, Госуслуги и игры — напрямую; YouTube, Discord (вкл. голосовые), AI и внешние платформы — через прокси-узел. | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON URL](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
-| **коридор роутинг (JSONSUB)** | 🧩 **Для панелей подписок.** Базовый профиль с изолированными DoH DNS и базами geodata; правила маршрутизации считываются из JSON-конфигурации подписки. | [⚡ В 1 клик](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON URL](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ В 1 клик](INCY/JSONSUB.DEEPLINK) |
+| **коридор (@mavrtunbot)**<br>*(DEFAULT)* | ⭐️ **Основной / Рекомендуемый.** Умное раздельное туннелирование: банки, маркетплейсы, Госуслуги и игры — напрямую; YouTube, Discord (вкл. голосовые), AI и внешние платформы — через прокси-узел. | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON URL](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
+| **коридор (@mavrtunbot) • JSONSUB** | 🧩 **Для панелей подписок.** Базовый профиль с изолированными DoH DNS и базами geodata; правила маршрутизации считываются из JSON-конфигурации подписки. | [⚡ В 1 клик](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON URL](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ В 1 клик](INCY/JSONSUB.DEEPLINK) |
 
 ---
 
@@ -49,8 +49,8 @@
 
 | Профиль | Назначение | Happ | INCY | Документация |
 | :--- | :--- | :--- | :--- | :--- |
-| **коридор роутинг (БС)**<br>*(WHITELIST)* | 🛡 **Режим высокой сетевой автономии.** Профиль максимальной отказоустойчивости. Пропускает напрямую **исключительно** критическую инфраструктуру РФ (белые списки: Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для гарантированной доступности ключевых сервисов. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) | [WHITELIST](INCY/WHITELIST.JSON) |
-| **коридор роутинг (релокант)**<br>*(RELOCANT)* | 🌍 **Обратный роутинг (Reverse Split).** Для тех, кто находится **за пределами РФ** (Сербия, Грузия, ЕС, Турция, СНГ). Весь мировой интернет идёт напрямую на скорости 1 Гбит/с, и **только** сервисы РФ (Госуслуги, Банки РФ, Кинопоиск, Faceit RU) идут через российский прокси-сервер. | [⚡ В 1 клик](RELOCANT/HAPP.DEEPLINK)<br>[📄 JSON](RELOCANT/HAPP.JSON) | [☁️ Autorouting](RELOCANT/INCY.AUTOROUTING)<br>[⚡ В 1 клик](RELOCANT/INCY.DEEPLINK) | [📖 Инструкция для релокантов и роутеров](RELOCANT/README.md) |
+| **коридор (@mavrtunbot) • БС**<br>*(WHITELIST)* | 🛡 **Режим высокой сетевой автономии.** Профиль максимальной отказоустойчивости. Пропускает напрямую **исключительно** критическую инфраструктуру РФ (белые списки: Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для гарантированной доступности ключевых сервисов. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) | [WHITELIST](INCY/WHITELIST.JSON) |
+| **коридор (@mavrtunbot) • релокант**<br>*(RELOCANT)* | 🌍 **Обратный роутинг (Reverse Split).** Для тех, кто находится **за пределами РФ** (Сербия, Грузия, ЕС, Турция, СНГ). Весь мировой интернет идёт напрямую на скорости 1 Гбит/с, и **только** сервисы РФ (Госуслуги, Банки РФ, Кинопоиск, Faceit RU) идут через российский прокси-сервер. | [⚡ В 1 клик](RELOCANT/HAPP.DEEPLINK)<br>[📄 JSON](RELOCANT/HAPP.JSON) | [☁️ Autorouting](RELOCANT/INCY.AUTOROUTING)<br>[⚡ В 1 клик](RELOCANT/INCY.DEEPLINK) | [📖 Инструкция для релокантов и роутеров](RELOCANT/README.md) |
 
 ### 🚀 Как импортировать
 

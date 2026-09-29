@@ -1,5 +1,5 @@
 {
-  "Name": "коридор роутинг",
+  "Name": "коридор (@mavrtunbot)",
   "GlobalProxy": "true",
   "UseChunkFiles": "true",
   "RemoteDns": "8.8.8.8",
