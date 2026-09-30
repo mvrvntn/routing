@@ -3,7 +3,7 @@ name: Build & Update Routing
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "23 0 * * *"
   push:
     branches:
       - main
