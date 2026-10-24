@@ -101,6 +101,61 @@ class TestToolsSuite(unittest.TestCase):
         )
         self.assertEqual(len(proxy["rule_set"]), len(set(proxy["rule_set"])))
 
+    def test_singbox_epicgames_srs(self):
+        config = {
+            "DirectSites": ["geosite:epicgames"],
+        }
+        rules = build_rules(config)
+        direct = next(r for r in rules if r.get("outbound") == "direct")
+        self.assertIn(
+            "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/epicgames.srs",
+            direct["rule_set"],
+        )
+        self.assertNotIn("epic-games.srs", direct["rule_set"][0])
+
+    def test_configs_tag_integrity(self):
+        import glob
+        import json
+        data_files = {os.path.basename(p) for p in glob.glob(os.path.join(BASE_DIR, "data", "*"))}
+        with open(os.path.join(BASE_DIR, "geoip", "config.json"), "r", encoding="utf-8") as f:
+            cfg = json.load(f)
+        geoip_tags = set()
+        for item in cfg.get("input", []):
+            args = item.get("args", {})
+            if "name" in args:
+                geoip_tags.add(args["name"].lower())
+            if "wantedList" in args:
+                for k in args["wantedList"]:
+                    geoip_tags.add(k.lower())
+
+        json_paths = glob.glob(os.path.join(BASE_DIR, "HAPP", "*.JSON")) + \
+                     glob.glob(os.path.join(BASE_DIR, "INCY", "*.JSON")) + \
+                     glob.glob(os.path.join(BASE_DIR, "RELOCANT", "*.JSON"))
+
+        for jp in json_paths:
+            with open(jp, "r", encoding="utf-8") as jf:
+                data = json.load(jf)
+            for k in ("DirectSites", "ProxySites", "BlockSites"):
+                for entry in data.get(k, []):
+                    if entry.startswith("geosite:"):
+                        tag = entry.split(":", 1)[1]
+                        self.assertIn(tag, data_files, f"Unknown geosite tag '{tag}' in {jp}")
+            for k in ("DirectIp", "ProxyIp", "BlockIp"):
+                for entry in data.get(k, []):
+                    if entry.startswith("geoip:"):
+                        tag = entry.split(":", 1)[1].lower()
+                        self.assertIn(tag, geoip_tags, f"Unknown geoip tag '{tag}' in {jp}")
+
+    def test_data_no_duplicates(self):
+        import glob
+        for p in glob.glob(os.path.join(BASE_DIR, "data", "*")):
+            with open(p, "r", encoding="utf-8") as f:
+                lines = [l.strip().lower() for l in f if l.strip() and not l.strip().startswith("#")]
+            seen = set()
+            for l in lines:
+                self.assertNotIn(l, seen, f"Duplicate entry '{l}' found in {os.path.basename(p)}")
+                seen.add(l)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -25,9 +25,7 @@ DEFAULT_CONFIG_URL = "https://raw.githubusercontent.com/mvrvntn/routing/main/HAP
 GEOSITE_SRS_BASE = "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box"
 GEOIP_SRS_BASE = "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box"
 
-GEOSITE_NAME_MAP = {
-    "epicgames": "epic-games",
-}
+GEOSITE_NAME_MAP: dict[str, str] = {}
 
 KNOWN_GEOSITE_SRS = {
     "whitelist",
@@ -45,12 +43,12 @@ KNOWN_GEOSITE_SRS = {
     "pinterest",
     "steam",
     "epicgames",
-    "epic-games",
     "riot",
     "escapefromtarkov",
     "faceit",
     "origin",
     "category-ads",
+    "category-ads-all",
     "win-spy",
     "private",
     "torrent",

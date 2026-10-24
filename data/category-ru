@@ -126,8 +126,6 @@ domain:rustore.cc
 domain:oneme.app
 
 # Russian Retail & Marketplaces CDN (non-.RU domains)
-domain:wbstatic.net
-domain:ozonusercontent.com
 domain:avito.st
 domain:vkusvill.net
 

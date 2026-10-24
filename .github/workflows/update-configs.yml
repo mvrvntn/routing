@@ -617,15 +617,27 @@ jobs:
       - name: Purge jsDelivr CDN
         run: |
           set -euo pipefail
-          for file in geosite.dat geoip.dat geosite.dat.sha256 geoip.dat.sha256 \
-                      mihomo/discord-ip.mrs mihomo/telegram-ip.mrs mihomo/whitelist-ip.mrs mihomo/private-ip.mrs \
-                      mihomo/games.yaml mihomo/ru-apps.yaml mihomo/torrent-clients.yaml \
-                      sing-box/discord-ip.srs sing-box/telegram-ip.srs sing-box/whitelist-ip.srs sing-box/private-ip.srs; do
+          for file in geosite.dat geoip.dat geosite.dat.sha256 geoip.dat.sha256; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}" || true
           done
+          if [ -d release/mihomo ]; then
+            for f in release/mihomo/*; do
+              [ -f "$f" ] || continue
+              fname=$(basename "$f")
+              ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/mihomo/${fname}" || true
+            done
+          fi
+          if [ -d release/sing-box ]; then
+            for f in release/sing-box/*; do
+              [ -f "$f" ] || continue
+              fname=$(basename "$f")
+              ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/sing-box/${fname}" || true
+            done
+          fi
           for json in INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON RELOCANT/INCY.JSON \
                       INCY/DEFAULT.AUTOROUTING INCY/WHITELIST.AUTOROUTING INCY/JSONSUB.AUTOROUTING RELOCANT/INCY.AUTOROUTING \
-                      HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON RELOCANT/HAPP.JSON; do
+                      HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON RELOCANT/HAPP.JSON \
+                      RELOCANT/mihomo.yaml MIHOMO/default.yaml MIHOMO/template_remnawave.yaml MIHOMO/template_3x-ui.yaml; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
           done
 
