@@ -156,6 +156,87 @@ class TestToolsSuite(unittest.TestCase):
                 self.assertNotIn(l, seen, f"Duplicate entry '{l}' found in {os.path.basename(p)}")
                 seen.add(l)
 
+    def test_deeplink_and_autorouting_integrity(self):
+        import glob
+        import base64
+        import json
+        deeplink_files = glob.glob(os.path.join(BASE_DIR, "*", "*.DEEPLINK"))
+        for dlf in deeplink_files:
+            with open(dlf, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+            self.assertTrue(content.startswith("happ://") or content.startswith("incy://"))
+            prefix = "routing/onadd/"
+            idx = content.find(prefix)
+            self.assertNotEqual(idx, -1, f"Missing {prefix} in {dlf}")
+            b64 = content[idx + len(prefix):]
+            pad = len(b64) % 4
+            if pad:
+                b64 += "=" * (4 - pad)
+            decoded_obj = json.loads(base64.b64decode(b64).decode("utf-8"))
+            
+            # Find matching JSON file
+            dirname, fname = os.path.split(dlf)
+            base_name = os.path.splitext(fname)[0]
+            json_path = os.path.join(dirname, f"{base_name}.JSON")
+            self.assertTrue(os.path.exists(json_path), f"Missing JSON pair for {dlf}")
+            with open(json_path, "r", encoding="utf-8") as jf:
+                source_obj = json.load(jf)
+            self.assertEqual(decoded_obj, source_obj, f"Mismatch between {dlf} and {json_path}")
+
+        autorouting_files = glob.glob(os.path.join(BASE_DIR, "*", "*.AUTOROUTING"))
+        for arf in autorouting_files:
+            with open(arf, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+            self.assertTrue(content.startswith("incy://autorouting/onadd/https://cdn.jsdelivr.net/"))
+
+    def test_remnawave_templates_integrity(self):
+        import json
+        sb_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", "Remnawave", "singbox_subscription_template.json")
+        with open(sb_path, "r", encoding="utf-8") as f:
+            sb = json.load(f)
+        self.assertIn("route", sb)
+        self.assertIn("rules", sb["route"])
+        self.assertIn("rule_set", sb["route"])
+        rule_set_tags = {r["tag"] for r in sb["route"]["rule_set"]}
+        self.assertIn("discord", rule_set_tags)
+        self.assertIn("discord-ip", rule_set_tags)
+        self.assertIn("ai", rule_set_tags)
+
+        xray_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", "Remnawave", "xray_location_template.json")
+        with open(xray_path, "r", encoding="utf-8") as f:
+            xray = json.load(f)
+        self.assertIn("routing", xray)
+        self.assertIn("rules", xray["routing"])
+        proxy_rules = [r for r in xray["routing"]["rules"] if r.get("outboundTag") == "proxy"]
+        proxy_domains = set()
+        proxy_ips = set()
+        for r in proxy_rules:
+            if "domain" in r:
+                proxy_domains.update(r["domain"])
+            if "ip" in r:
+                proxy_ips.update(r["ip"])
+        self.assertIn("geosite:discord", proxy_domains)
+        self.assertIn("geosite:ai", proxy_domains)
+        self.assertIn("geoip:discord", proxy_ips)
+        self.assertIn("geoip:telegram", proxy_ips)
+
+    def test_mihomo_yaml_syntax_and_providers(self):
+        import glob
+        try:
+            import yaml
+        except ImportError:
+            return
+        yaml_files = glob.glob(os.path.join(BASE_DIR, "MIHOMO", "*.yaml")) + \
+                     glob.glob(os.path.join(BASE_DIR, "RELOCANT", "*.yaml"))
+        for yf in yaml_files:
+            with open(yf, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+            self.assertIsInstance(data, dict, f"Root not dict in {yf}")
+            if "rule-providers" in data:
+                for name, provider in data["rule-providers"].items():
+                    url = provider.get("url", "")
+                    self.assertTrue(url.startswith("https://cdn.jsdelivr.net/"), f"Invalid provider URL in {yf}: {url}")
+
 
 if __name__ == "__main__":
     unittest.main()

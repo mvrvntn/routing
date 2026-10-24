@@ -102,11 +102,22 @@
           "domain:lava.link",
           "domain:lava.money",
           "geosite:google-play",
+          "geosite:google-deepmind",
           "geosite:github",
           "geosite:twitch-ads",
           "geosite:youtube",
           "geosite:telegram",
+          "geosite:discord",
+          "geosite:ai",
           "geosite:category-geoblock-ru"
+        ],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:telegram",
+          "geoip:discord"
         ],
         "outboundTag": "proxy"
       },

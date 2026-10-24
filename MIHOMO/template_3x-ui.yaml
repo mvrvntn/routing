@@ -327,7 +327,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/MIHOMO/torrent-clients.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/torrent-clients.yaml
     path: ./ruleset/torrent-clients.yaml
     proxy: ⚡️ Авто-выбор
     interval: 86400
@@ -336,7 +336,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/MIHOMO/games.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/games.yaml
     path: ./ruleset/games.yaml
     proxy: ⚡️ Авто-выбор
     interval: 86400
@@ -345,7 +345,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/MIHOMO/ru-apps.yaml
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/ru-apps.yaml
     path: ./ruleset/ru-apps.yaml
     proxy: ⚡️ Авто-выбор
     interval: 86400

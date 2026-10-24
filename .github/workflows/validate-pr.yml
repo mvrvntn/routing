@@ -13,11 +13,15 @@ on:
       - "HAPP/**"
       - "INCY/**"
       - "MIHOMO/**"
+      - "RELOCANT/**"
+      - "ADDON_AUTOROUTING/**"
+      - "tools/**"
+      - "tests/**"
       - ".github/**"
 
 jobs:
   validate:
-    name: Validate JSON, YAML and Geodata
+    name: Validate JSON, YAML, Geodata & Run Tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -30,18 +34,27 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install PyYAML
+      - name: Install Dependencies
         run: pip install pyyaml
 
       - name: Run Integrity & Syntax Test
         run: |
           python3 -c "
           import glob, json, yaml, sys
+          if hasattr(sys.stdout, 'reconfigure'):
+              sys.stdout.reconfigure(encoding='utf-8')
 
           errors = []
 
           # 1. Validate JSON
-          for p in glob.glob('HAPP/*.JSON') + glob.glob('INCY/*.JSON'):
+          json_files = (
+              glob.glob('HAPP/*.JSON') +
+              glob.glob('INCY/*.JSON') +
+              glob.glob('RELOCANT/*.JSON') +
+              glob.glob('ADDON_AUTOROUTING/**/*.json', recursive=True) +
+              glob.glob('geoip/*.json')
+          )
+          for p in json_files:
               try:
                   with open(p, 'r', encoding='utf-8') as f:
                       json.load(f)
@@ -49,7 +62,12 @@ jobs:
                   errors.append(f'JSON error in {p}: {e}')
 
           # 2. Validate YAML
-          for p in glob.glob('MIHOMO/*.yaml') + glob.glob('.github/**/*.yml', recursive=True):
+          yaml_files = (
+              glob.glob('MIHOMO/*.yaml') +
+              glob.glob('RELOCANT/*.yaml') +
+              glob.glob('.github/**/*.yml', recursive=True)
+          )
+          for p in yaml_files:
               try:
                   with open(p, 'r', encoding='utf-8') as f:
                       yaml.safe_load(f)
@@ -74,3 +92,6 @@ jobs:
           else:
               print('✅ ALL ROUTING, JSON, YAML, AND DOMAIN DATA FILES PASSED VALIDATION PERFECTLY!')
           "
+
+      - name: Run Test Suite
+        run: python -m unittest discover tests -v
