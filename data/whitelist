@@ -9,6 +9,8 @@ domain:iplocate.io
 domain:ip.sb
 
 domain:2ip.ru
+domain:sypexgeo.net
+domain:sxgeo.city
 
 # Federal Gov.
 
@@ -496,4 +498,18 @@ domain:onf.ru
 domain:sirius.online
 domain:sochisirius.ru
 domain:sportmail.ru
+
+# Zoom (Direct)
+domain:zoom.us
+domain:zoom.com
+domain:zoomgov.com
+domain:zoom.cn
+
+# Russian Commerce, CDN & Hosting (Direct)
+domain:novabev.com
+domain:edgecenter.ru
+domain:reg.ru
+domain:etm.ru
+domain:emex.ru
+domain:epc-data.com
 
