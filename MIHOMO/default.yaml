@@ -463,7 +463,7 @@ rules:
   - RULE-SET,youtube,📺 Youtube
   - RULE-SET,discord,💬 Discord
   - RULE-SET,discord-ip,💬 Discord,no-resolve
-  - PROCESS-NAME-REGEX,(?i)^(discord|vesktop).*,💬 Discord
+  - PROCESS-NAME-REGEX,(?i)^(discord|vesktop|armcord|legcord|ripcord).*,💬 Discord
   - RULE-SET,telegram,PROXY
   - RULE-SET,telegram-ip,PROXY,no-resolve
   - RULE-SET,github,PROXY

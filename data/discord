@@ -24,14 +24,30 @@ domain:watchdis.gd
 domain:discord.design
 domain:discord.style
 domain:hammerandchisel.com
+domain:discord.app
+domain:discord.events
+domain:discord.io
+domain:discord.me
+domain:discord.tube
+domain:discord.net
+domain:discordapp.dev
+domain:discordcdn.net
 
-# WebRTC STUN & Storage
+# WebRTC STUN, Voice & Krisp
 domain:stun.l.google.com
 domain:stun1.l.google.com
 domain:stun2.l.google.com
 domain:stun3.l.google.com
 domain:stun4.l.google.com
+domain:stun.cloudflare.com
+domain:krisp.ai
 domain:discordapp.io
 domain:discord-attachments-uploads-prd.storage.googleapis.com
+
+# Embedded GIF Search (Tenor & Giphy)
+domain:tenor.com
+domain:tenor.co
+domain:giphy.com
+domain:giphy.co
 
 
