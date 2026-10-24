@@ -27,6 +27,11 @@ domain:hammerandchisel.com
 
 # WebRTC STUN & Storage
 domain:stun.l.google.com
+domain:stun1.l.google.com
+domain:stun2.l.google.com
+domain:stun3.l.google.com
+domain:stun4.l.google.com
+domain:discordapp.io
 domain:discord-attachments-uploads-prd.storage.googleapis.com
 
 

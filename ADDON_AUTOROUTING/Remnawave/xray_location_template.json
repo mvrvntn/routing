@@ -89,7 +89,9 @@
       {
         "ip": [
           "1.1.1.1",
-          "8.8.8.8"
+          "8.8.8.8",
+          "geoip:telegram",
+          "geoip:discord"
         ],
         "type": "field",
         "outboundTag": "proxy"
@@ -106,6 +108,8 @@
           "geosite:twitch-ads",
           "geosite:youtube",
           "geosite:telegram",
+          "geosite:discord",
+          "geosite:ai",
           "geosite:category-geoblock-ru"
         ],
         "outboundTag": "proxy"
