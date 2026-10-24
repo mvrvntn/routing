@@ -39,7 +39,7 @@ DOMAIN_REGEX = re.compile(
 PROTECTED_TLDS = (".ru", ".рф", ".su", ".xn--p1ai")
 
 # Explicit overrides permitted through safety gate (e.g. services that geoblock RU)
-EXPLICIT_PROXY_OVERRIDES = {"lava.ru"}
+EXPLICIT_PROXY_OVERRIDES = {"lava.ru", "freedom-travel.kz", "freedom-travel.at"}
 
 
 def clean_domain_string(raw: str) -> str:
