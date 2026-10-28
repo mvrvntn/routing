@@ -237,6 +237,74 @@ class TestToolsSuite(unittest.TestCase):
                     url = provider.get("url", "")
                     self.assertTrue(url.startswith("https://cdn.jsdelivr.net/"), f"Invalid provider URL in {yf}: {url}")
 
+    def test_dns_configurations_and_eof_prevention(self):
+        import glob
+        import json
+        for folder in ("HAPP", "INCY", "RELOCANT"):
+            for p in glob.glob(os.path.join(BASE_DIR, folder, "*.JSON")):
+                with open(p, "r", encoding="utf-8") as f:
+                    cfg = json.load(f)
+                self.assertNotIn("common.dot.dns.yandex.net", str(cfg), f"Dead DoT endpoint in {p}")
+                if "77.88.8.8" in cfg.get("DomesticDns", ""):
+                    self.assertEqual(
+                        cfg.get("DomesticDNSType"),
+                        "DoU",
+                        f"{p} has 77.88.8.8 with DomesticDNSType='{cfg.get('DomesticDNSType')}' (must be 'DoU' to prevent iOS EOF)",
+                    )
+                    self.assertEqual(
+                        cfg.get("DomesticDNSDomain", ""),
+                        "",
+                        f"{p} should have empty DomesticDNSDomain for DoU",
+                    )
+
+    def test_data_includes_integrity(self):
+        import glob
+        data_files = {os.path.basename(p) for p in glob.glob(os.path.join(BASE_DIR, "data", "*"))}
+        for p in glob.glob(os.path.join(BASE_DIR, "data", "*")):
+            with open(p, "r", encoding="utf-8") as f:
+                for line_no, line in enumerate(f, 1):
+                    line = line.strip()
+                    if line.startswith("include:"):
+                        target = line.split(":", 1)[1].strip()
+                        self.assertIn(
+                            target,
+                            data_files,
+                            f"Missing include target '{target}' at {p}:{line_no}",
+                        )
+
+    def test_geoip_cidrs_validity(self):
+        import glob
+        import ipaddress
+        for p in glob.glob(os.path.join(BASE_DIR, "geoip", "*.txt")):
+            with open(p, "r", encoding="utf-8") as f:
+                for line_no, line in enumerate(f, 1):
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    try:
+                        ipaddress.ip_network(line, strict=False)
+                    except ValueError as e:
+                        self.fail(f"Invalid CIDR '{line}' at {p}:{line_no}: {e}")
+
+    def test_remnawave_singbox_rulesets_coherence(self):
+        import json
+        sb_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", "Remnawave", "singbox_subscription_template.json")
+        with open(sb_path, "r", encoding="utf-8") as f:
+            sb = json.load(f)
+        declared_rule_sets = {rs["tag"] for rs in sb.get("route", {}).get("rule_set", [])}
+        for idx, rule in enumerate(sb.get("route", {}).get("rules", [])):
+            refs = rule.get("rule_set", [])
+            if isinstance(refs, str):
+                refs = [refs]
+            for r in refs:
+                self.assertIn(r, declared_rule_sets, f"Rule #{idx} references undeclared rule_set '{r}' in {sb_path}")
+        declared_dns = {s["tag"] for s in sb.get("dns", {}).get("servers", [])}
+        for idx, dr in enumerate(sb.get("dns", {}).get("rules", [])):
+            srv = dr.get("server")
+            if srv:
+                self.assertIn(srv, declared_dns, f"DNS rule #{idx} references undeclared server '{srv}' in {sb_path}")
+
 
 if __name__ == "__main__":
     unittest.main()
+
