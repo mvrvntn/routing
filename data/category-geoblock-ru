@@ -124,7 +124,10 @@ domain:apple-pay-gateway.apple.com
 domain:apple-pay.com
 domain:apple-relay.cloudflare.com
 domain:applepay.apple.com
+domain:applepay.cdn-apple.com
 domain:applepay.com
+domain:applepay.info
+domain:applepaycash.com
 domain:applepaycash.net
 domain:applepaycash.tv
 domain:applewallet.com
@@ -837,6 +840,7 @@ domain:netflixstudios.com
 domain:netflixtechblog.com
 domain:netgate.com
 domain:netlify.com
+domain:network-services.americanexpress.com
 domain:new.abb.com
 domain:newark.com
 domain:news.google.com
@@ -985,6 +989,7 @@ domain:pcbway.com
 domain:pcgamesn.com
 domain:pcmag.com
 domain:pdq.com
+domain:pds.apple.com
 domain:penguin.com
 domain:penguinrandomhouse.com
 domain:penpot.app
@@ -1043,6 +1048,7 @@ domain:pornhub.com
 domain:pornolab.net
 domain:porsche.com
 domain:portal.bgpmon.net
+domain:pos-device.apple.com
 domain:posthog.com
 domain:pplx.ai
 domain:ppy.sh
@@ -1242,9 +1248,11 @@ domain:slideshare.net
 domain:smartbear.co
 domain:smartbear.com
 domain:smartdeploy.com
+domain:smoothpebble.apple.com
 domain:smp-device-content.apple.com
 domain:smp-device.apple.com
 domain:smp-payment.apple.com
+domain:smp-paymentservices.apple.com
 domain:snap-storage-cdn.l.google.com
 domain:snap.com
 domain:snapchat.com
@@ -1414,6 +1422,7 @@ domain:tmdb-image-prod.b-cdn.net
 domain:tmdb.com
 domain:tmdb.org
 domain:together.ai
+domain:token.americanexpress.com
 domain:token.visa.com
 domain:tokenized.play.google.com
 domain:tommy.com

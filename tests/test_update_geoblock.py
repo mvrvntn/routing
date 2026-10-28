@@ -104,6 +104,10 @@ class TestSafetyGate(unittest.TestCase):
         self.assertFalse(is_protected_domain("apple-pay-gateway.apple.com", self.protected))
         self.assertFalse(is_protected_domain("wallet.apple.com", self.protected))
         self.assertFalse(is_protected_domain("nc-pod1-smp-device.apple.com", self.protected))
+        self.assertFalse(is_protected_domain("pos-device.apple.com", self.protected))
+        self.assertFalse(is_protected_domain("smp-paymentservices.apple.com", self.protected))
+        self.assertFalse(is_protected_domain("smoothpebble.apple.com", self.protected))
+        self.assertFalse(is_protected_domain("pds.apple.com", self.protected))
         # apple.com root must be protected to prevent overriding direct OS update downloads
         self.assertTrue(is_protected_domain("apple.com", self.protected))
 

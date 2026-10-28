@@ -322,6 +322,12 @@ class TestToolsSuite(unittest.TestCase):
             "domain:pass-services.apple.com",
             "domain:applepaycash.net",
             "domain:applewallet.com",
+            "domain:pos-device.apple.com",
+            "domain:smp-paymentservices.apple.com",
+            "domain:applepay.cdn-apple.com",
+            "domain:token.americanexpress.com",
+            "domain:smoothpebble.apple.com",
+            "domain:pds.apple.com",
             "domain:vts.visa.com",
             "domain:mdes.mastercard.com",
         ]
@@ -346,7 +352,11 @@ class TestToolsSuite(unittest.TestCase):
             with open(yf, "r", encoding="utf-8") as f:
                 content = f.read()
             self.assertIn("DOMAIN-KEYWORD,smp-device,PROXY", content, f"Missing smp-device keyword rule in {yf}")
+            self.assertIn("DOMAIN-KEYWORD,smp-,PROXY", content, f"Missing smp- keyword rule in {yf}")
+            self.assertIn("DOMAIN-KEYWORD,applepay,PROXY", content, f"Missing applepay keyword rule in {yf}")
             self.assertIn("DOMAIN,wallet.apple.com,PROXY", content, f"Missing wallet.apple.com rule in {yf}")
+            self.assertIn("DOMAIN,pos-device.apple.com,PROXY", content, f"Missing pos-device rule in {yf}")
+            self.assertIn("DOMAIN,smoothpebble.apple.com,PROXY", content, f"Missing smoothpebble rule in {yf}")
             idx_smp = content.find("DOMAIN-KEYWORD,smp-device,PROXY")
             idx_apple = content.find("RULE-SET,apple,DIRECT")
             self.assertGreater(idx_apple, idx_smp, f"Apple Wallet rules must precede RULE-SET,apple,DIRECT in {yf}")
