@@ -484,6 +484,15 @@ rules:
   # Сервисы в DIRECT
   - RULE-SET,twitch,DIRECT
   - RULE-SET,microsoft,DIRECT
+  # Apple Wallet, Apple Pay & Apple Cash (Обход региональной блокировки)
+  - DOMAIN-KEYWORD,smp-device,PROXY
+  - DOMAIN-KEYWORD,apple-pay,PROXY
+  - DOMAIN-KEYWORD,applewallet,PROXY
+  - DOMAIN-KEYWORD,applepaycash,PROXY
+  - DOMAIN,wallet.apple.com,PROXY
+  - DOMAIN,paymentpass.apple.com,PROXY
+  - DOMAIN,pass-services.apple.com,PROXY
+  - DOMAIN,passbook.apple.com,PROXY
   - RULE-SET,apple,DIRECT
   - RULE-SET,pinterest,DIRECT
 

@@ -8,6 +8,12 @@
     },
     "servers": [
       {
+        "address": "https://1.1.1.1/dns-query",
+        "domains": [
+          "geosite:category-geoblock-ru"
+        ]
+      },
+      {
         "port": 53,
         "address": "77.88.8.8",
         "domains": [

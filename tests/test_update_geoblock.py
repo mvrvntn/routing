@@ -99,6 +99,14 @@ class TestSafetyGate(unittest.TestCase):
         self.assertFalse(is_protected_domain("notion.so", self.protected))
         self.assertFalse(is_protected_domain("spotify.com", self.protected))
 
+    def test_apple_wallet_overrides_and_root_protection(self):
+        self.assertFalse(is_protected_domain("smp-device.apple.com", self.protected))
+        self.assertFalse(is_protected_domain("apple-pay-gateway.apple.com", self.protected))
+        self.assertFalse(is_protected_domain("wallet.apple.com", self.protected))
+        self.assertFalse(is_protected_domain("nc-pod1-smp-device.apple.com", self.protected))
+        # apple.com root must be protected to prevent overriding direct OS update downloads
+        self.assertTrue(is_protected_domain("apple.com", self.protected))
+
 
 class TestSubdomainPruning(unittest.TestCase):
     """Test memory-optimizing domain collapsing without losing coverage."""

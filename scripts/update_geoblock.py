@@ -41,6 +41,36 @@ PROTECTED_TLDS = (".ru", ".рф", ".su", ".xn--p1ai")
 # Explicit overrides permitted through safety gate (e.g. services that geoblock RU)
 EXPLICIT_PROXY_OVERRIDES = {"lava.ru", "freedom-travel.kz", "freedom-travel.at"}
 
+# Baseline Apple Pay, Apple Wallet & Apple Cash endpoints (fixes regional lockouts on iOS)
+APPLE_WALLET_DOMAINS = {
+    "api.apple-pay.com",
+    "apple-pay-gateway.apple.com",
+    "cn-apple-pay-gateway.apple.com",
+    "apple-pay.com",
+    "applepay.apple.com",
+    "applepay.com",
+    "applepaycash.net",
+    "applepaycash.tv",
+    "applewallet.com",
+    "applewallet.tv",
+    "pass-services.apple.com",
+    "passbook.apple.com",
+    "paymentpass.apple.com",
+    "smp-device.apple.com",
+    "smp-device-content.apple.com",
+    "smp-payment.apple.com",
+    "wallet.apple.com",
+    "vts.visa.com",
+    "token.visa.com",
+    "mdes.mastercard.com",
+}
+
+for _prefix in ("pr", "nc", "tj"):
+    _max_pod = 3 if _prefix == "tj" else 15
+    for _i in range(1, _max_pod + 1):
+        APPLE_WALLET_DOMAINS.add(f"{_prefix}-pod{_i}-smp-device.apple.com")
+        APPLE_WALLET_DOMAINS.add(f"apple-pay-gateway-{_prefix}-pod{_i}.apple.com")
+
 
 def clean_domain_string(raw: str) -> str:
     """Strip protocol, path, port, prefixes, and trailing dots."""
@@ -86,8 +116,8 @@ def load_protected_domains() -> set[str]:
 
 
 def load_baseline_geoblock() -> set[str]:
-    """Load existing manual baseline from category-geoblock-ru and data/ai."""
-    baseline = set()
+    """Load existing manual baseline from category-geoblock-ru, data/ai, and Apple Wallet endpoints."""
+    baseline = set(APPLE_WALLET_DOMAINS)
     for file_path in (GEOBLOCK_FILE, DATA_DIR / "ai"):
         if not file_path.exists():
             continue
@@ -158,8 +188,12 @@ async def fetch_all_community_domains(urls: list[str] | None = None) -> set[str]
 
 def is_protected_domain(domain: str, protected: set[str]) -> bool:
     """Guard clause: returns True if domain belongs to protected TLD or protected RU lists."""
-    if domain in EXPLICIT_PROXY_OVERRIDES:
+    if domain in EXPLICIT_PROXY_OVERRIDES or domain in APPLE_WALLET_DOMAINS:
         return False
+
+    # Prevent root apple.com from entering geoblock (Apple Pay/Wallet subdomains are explicitly allowed)
+    if domain == "apple.com":
+        return True
 
     if domain.endswith(PROTECTED_TLDS):
         return True

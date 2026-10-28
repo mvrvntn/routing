@@ -304,6 +304,62 @@ class TestToolsSuite(unittest.TestCase):
             if srv:
                 self.assertIn(srv, declared_dns, f"DNS rule #{idx} references undeclared server '{srv}' in {sb_path}")
 
+    def test_apple_wallet_routing_and_priority(self):
+        import json
+        import glob
+
+        # 1. Verify category-geoblock-ru has critical Apple Pay / Wallet domains
+        geoblock_path = os.path.join(BASE_DIR, "data", "category-geoblock-ru")
+        with open(geoblock_path, "r", encoding="utf-8") as f:
+            geoblock_entries = {line.strip() for line in f if line.strip() and not line.startswith("#")}
+
+        critical_domains = [
+            "domain:wallet.apple.com",
+            "domain:smp-device.apple.com",
+            "domain:smp-device-content.apple.com",
+            "domain:apple-pay-gateway.apple.com",
+            "domain:paymentpass.apple.com",
+            "domain:pass-services.apple.com",
+            "domain:applepaycash.net",
+            "domain:applewallet.com",
+            "domain:vts.visa.com",
+            "domain:mdes.mastercard.com",
+        ]
+        for d in critical_domains:
+            self.assertIn(d, geoblock_entries, f"Missing {d} in data/category-geoblock-ru")
+
+        # 2. Verify HAPP and INCY prioritize ProxySites over DirectSites
+        for folder in ("HAPP", "INCY"):
+            manifest_path = os.path.join(BASE_DIR, folder, "DEFAULT.JSON")
+            with open(manifest_path, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+            self.assertEqual(cfg.get("RouteOrder"), "block-proxy-direct")
+            self.assertIn("geosite:category-geoblock-ru", cfg.get("ProxySites", []))
+            self.assertIn("geosite:apple", cfg.get("DirectSites", []))
+
+        # 3. Verify Mihomo configs have explicit Apple Wallet proxy rules before apple direct rule
+        for yf in [
+            os.path.join(BASE_DIR, "MIHOMO", "default.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_remnawave.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_3x-ui.yaml"),
+        ]:
+            with open(yf, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn("DOMAIN-KEYWORD,smp-device,PROXY", content, f"Missing smp-device keyword rule in {yf}")
+            self.assertIn("DOMAIN,wallet.apple.com,PROXY", content, f"Missing wallet.apple.com rule in {yf}")
+            idx_smp = content.find("DOMAIN-KEYWORD,smp-device,PROXY")
+            idx_apple = content.find("RULE-SET,apple,DIRECT")
+            self.assertGreater(idx_apple, idx_smp, f"Apple Wallet rules must precede RULE-SET,apple,DIRECT in {yf}")
+
+        # 4. Verify Xray template routes category-geoblock-ru DNS to DoH ahead of Yandex DNS
+        xray_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", "Remnawave", "xray_location_template.json")
+        with open(xray_path, "r", encoding="utf-8") as f:
+            xray = json.load(f)
+        dns_servers = xray.get("dns", {}).get("servers", [])
+        doh_server = next((s for s in dns_servers if isinstance(s, dict) and "geosite:category-geoblock-ru" in s.get("domains", [])), None)
+        self.assertIsNotNone(doh_server, "Missing DoH DNS server for category-geoblock-ru in xray_location_template.json")
+        self.assertTrue(doh_server.get("address", "").startswith("https://"), "category-geoblock-ru DNS must use secure DoH")
+
 
 if __name__ == "__main__":
     unittest.main()
