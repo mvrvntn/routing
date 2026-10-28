@@ -98,7 +98,7 @@ dns:
   nameserver-policy:
     # Запросы к доменам РФ резолвятся через Яндекс внутри прокси-туннеля
     "rule-set:category-ru,whitelist":
-      - "https://77.88.8.8/dns-query"
+      - 77.88.8.8
   hosts:
     "lkfl2.nalog.ru": 213.24.64.175
     "lknpd.nalog.ru": 213.24.64.181

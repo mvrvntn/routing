@@ -2,7 +2,7 @@
   "dns": {
     "rules": [
       {
-        "server": "ru-doh",
+        "server": "ru-dns",
         "rule_set": [
           "category-ru",
           "whitelist"
@@ -26,9 +26,9 @@
     },
     "servers": [
       {
-        "tag": "ru-doh",
+        "tag": "ru-dns",
         "detour": "direct",
-        "address": "https://77.88.8.8/dns-query",
+        "address": "77.88.8.8",
         "strategy": "ipv4_only",
         "address_strategy": "prefer_ipv4"
       },
