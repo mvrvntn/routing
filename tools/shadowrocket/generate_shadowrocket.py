@@ -180,9 +180,10 @@ DOMAIN-KEYWORD,smp-,PROXY
 DOMAIN-KEYWORD,applepay,PROXY
 DOMAIN-SUFFIX,apple-pay.com,PROXY
 
-# --- Discord (Полная маршрутизация: Домены + Голосовые RTC IP) ---
+# --- Discord (Полная маршрутизация: Домены + Голосовые RTC IP + Медиа-порты) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord-ips.list,PROXY
+DEST-PORT,19294-19344,PROXY
 
 # --- Проксируемые зарубежные ресурсы (Proxy) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
@@ -258,6 +259,7 @@ RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/youtube.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord-ips.list,PROXY
+DEST-PORT,19294-19344,PROXY
 
 # Прямой доступ только для белого списка и локальной сети
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT

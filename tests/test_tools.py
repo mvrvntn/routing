@@ -525,6 +525,59 @@ class TestToolsSuite(unittest.TestCase):
         self.assertIsNone(clean_domain("regexp:.*google.*"))
         self.assertIsNone(clean_domain("# just comment"))
 
+    def test_discord_bulletproof_routing(self):
+        """Verify Discord failsafe rules across Mihomo, Sing-box, Xray, and Shadowrocket."""
+        # 1. Mihomo configs
+        mihomo_files = [
+            os.path.join(BASE_DIR, "MIHOMO", "default.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_remnawave.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_3x-ui.yaml"),
+        ]
+        for mf in mihomo_files:
+            with open(mf, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn("AND,((NETWORK,UDP),(DST-PORT,19294-19344)),💬 Discord", content, f"Missing UDP 19294-19344 in {mf}")
+            self.assertIn("webcord", content, f"Missing webcord in {mf}")
+            self.assertIn("vesktop", content, f"Missing vesktop in {mf}")
+
+        # 2. Sing-box template
+        sb_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", "Remnawave", "singbox_subscription_template.json")
+        with open(sb_path, "r", encoding="utf-8") as f:
+            import json
+            sb = json.load(f)
+        rules = sb.get("route", {}).get("rules", [])
+        has_discord_port = any(
+            r.get("network") == "udp" and "19294:19344" in r.get("port_range", []) and r.get("outbound") == "→ Remnawave"
+            for r in rules
+        )
+        self.assertTrue(has_discord_port, "Missing Discord UDP port_range 19294:19344 rule in Sing-box template")
+
+        # 3. Xray template
+        xray_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", "Remnawave", "xray_location_template.json")
+        with open(xray_path, "r", encoding="utf-8") as f:
+            xray = json.load(f)
+        xrules = xray.get("routing", {}).get("rules", [])
+        has_xray_port = any(
+            r.get("network") == "udp" and r.get("port") == "19294-19344" and r.get("outboundTag") == "proxy"
+            for r in xrules
+        )
+        self.assertTrue(has_xray_port, "Missing Discord UDP port 19294-19344 in Xray template")
+
+        # 4. Shadowrocket configs
+        sr_files = [
+            os.path.join(BASE_DIR, "SHADOWROCKET", "DEFAULT.CONF"),
+            os.path.join(BASE_DIR, "SHADOWROCKET", "WHITELIST.CONF"),
+        ]
+        for srf in sr_files:
+            with open(srf, "r", encoding="utf-8") as f:
+                sr_content = f.read()
+            self.assertIn("DEST-PORT,19294-19344,PROXY", sr_content, f"Missing DEST-PORT,19294-19344,PROXY in {srf}")
+
+        # 5. GeoIP CIDR full Cloudflare Anycast edge
+        with open(os.path.join(BASE_DIR, "geoip", "discord.txt"), "r", encoding="utf-8") as f:
+            discord_cidrs = f.read()
+        self.assertIn("162.159.128.0/19", discord_cidrs, "Missing 162.159.128.0/19 in geoip/discord.txt")
+
 
 if __name__ == "__main__":
     unittest.main()

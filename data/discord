@@ -41,7 +41,12 @@ domain:stun3.l.google.com
 domain:stun4.l.google.com
 domain:stun.cloudflare.com
 domain:krisp.ai
+domain:krisp.net
 domain:discordapp.io
+domain:discord.quest
+domain:discord-quests.com
+domain:discordapp.page.link
+domain:discord.help
 domain:discord-attachments-uploads-prd.storage.googleapis.com
 
 # Embedded GIF Search (Tenor & Giphy)

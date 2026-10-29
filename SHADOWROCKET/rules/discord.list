@@ -1,5 +1,5 @@
 # NAME: discord.list
-# TOTAL RULES: 46
+# TOTAL RULES: 51
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,discord.com
@@ -42,7 +42,12 @@ DOMAIN-SUFFIX,stun3.l.google.com
 DOMAIN-SUFFIX,stun4.l.google.com
 DOMAIN-SUFFIX,stun.cloudflare.com
 DOMAIN-SUFFIX,krisp.ai
+DOMAIN-SUFFIX,krisp.net
 DOMAIN-SUFFIX,discordapp.io
+DOMAIN-SUFFIX,discord.quest
+DOMAIN-SUFFIX,discord-quests.com
+DOMAIN-SUFFIX,discordapp.page.link
+DOMAIN-SUFFIX,discord.help
 DOMAIN-SUFFIX,discord-attachments-uploads-prd.storage.googleapis.com
 DOMAIN-SUFFIX,tenor.com
 DOMAIN-SUFFIX,tenor.co

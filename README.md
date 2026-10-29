@@ -68,6 +68,24 @@
     https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/INCY.JSON
     ```
   *(Профиль будет обновляться автоматически раз в сутки)*.
+* **Shadowrocket (iOS):** В приложении Shadowrocket перейдите в **Конфигурация** ➔ **+** ➔ вставьте URL профиля:
+  * Основной: `https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/DEFAULT.CONF`
+  * Белый список (БС): `https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/WHITELIST.CONF`
+
+---
+
+## 💬 100% Работа Discord (WebRTC, Voice, Video)
+
+Если у вас или ваших пользователей возникают проблемы с Discord (вечный статус `RTC Connecting` / `Подключение к RTC`, «Маршрут не найден», заикания звука, дропы демонстрации экрана):
+
+👉 **[Ознакомьтесь с полным руководством по Discord (100% Bulletproof Guide)](docs/DISCORD_FIX.md)**
+
+В репозитории реализовано 4-уровневое отказоустойчивое решение:
+1. **Доменные списки (`geosite:discord`)**: 55+ доменов, STUN-серверы, Krisp AI, Quests, Activities.
+2. **IP CIDR-диапазоны (`geoip:discord`)**: Cloudflare Anycast (`162.159.128.0/19`), i3D.net (`66.22.192.0/18`), GCP.
+3. **Failsafe по порту (UDP `19294–19344`)**: Официальный IANA-диапазон Discord Media перехватывается безусловно во всех клиентах.
+4. **Процессный перехват**: Поддержка официального клиента и альтернатив (`Vesktop`, `WebCord`, `ArmCord`, `Legcord`, `Ripcord`, `Dorion`).
+5. **Инструкция по настройкам клиента**: Отключение конфликтующего QoS, переключение аудиоподсистемы, защита от утечек IPv6.
 
 ---
 

@@ -129,6 +129,12 @@
       },
       {
         "type": "field",
+        "network": "udp",
+        "port": "19294-19344",
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
         "domain": [
           "geosite:private",
           "geosite:category-ru",

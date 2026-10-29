@@ -109,6 +109,30 @@
         ]
       },
       {
+        "network": "udp",
+        "port_range": [
+          "19294:19344"
+        ],
+        "outbound": "→ Remnawave"
+      },
+      {
+        "process_name": [
+          "Discord.exe",
+          "Discord",
+          "DiscordCanary.exe",
+          "DiscordPTB.exe",
+          "Vesktop.exe",
+          "vesktop",
+          "WebCord.exe",
+          "webcord",
+          "ArmCord.exe",
+          "armcord",
+          "Ripcord.exe",
+          "ripcord"
+        ],
+        "outbound": "→ Remnawave"
+      },
+      {
         "domain_suffix": [
           "lava.ru",
           "lava.top",
