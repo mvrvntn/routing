@@ -1,0 +1,345 @@
+{
+  "dns": {
+    "hosts": {
+      "lkfl2.nalog.ru": "213.24.64.175",
+      "lknpd.nalog.ru": "213.24.64.181",
+      "domain:googleapis.cn": "googleapis.com",
+      "geosite:category-ads": "127.0.0.1"
+    },
+    "servers": [
+      {
+        "address": "https://1.1.1.1/dns-query",
+        "domains": [
+          "geosite:category-geoblock-ru",
+          "geosite:ai",
+          "domain:apps.apple.com",
+          "domain:itunes.apple.com",
+          "domain:mzstatic.com",
+          "domain:iads.apple.com",
+          "domain:smp-device.apple.com",
+          "domain:apple-pay-gateway.apple.com",
+          "domain:wallet.apple.com",
+          "domain:api.apple-pay.com",
+          "domain:apple-pay.com",
+          "domain:applepay.com",
+          "domain:applewallet.com",
+          "domain:cstat.apple.com",
+          "domain:xp.apple.com",
+          "domain:passbook.apple.com"
+        ]
+      },
+      {
+        "port": 53,
+        "address": "77.88.8.8",
+        "domains": [
+          "domain:your-node-domain.com",
+          "domain:your-panel-domain.com",
+          "geosite:private",
+          "geosite:category-ru",
+          "geosite:whitelist",
+          "geosite:microsoft",
+          "geosite:apple",
+          "geosite:epicgames",
+          "geosite:riot",
+          "geosite:escapefromtarkov",
+          "geosite:steam",
+          "geosite:origin",
+          "geosite:twitch",
+          "geosite:pinterest",
+          "geosite:faceit"
+        ]
+      },
+      "https://1.1.1.1/dns-query",
+      "https://8.8.8.8/dns-query"
+    ],
+    "disableCache": false,
+    "queryStrategy": "UseIPv4"
+  },
+  "log": {
+    "loglevel": "error"
+  },
+  "stats": {},
+  "policy": {
+    "levels": {
+      "8": {
+        "connIdle": 90,
+        "handshake": 4,
+        "uplinkOnly": 1,
+        "downlinkOnly": 1
+      }
+    },
+    "system": {
+      "statsOutboundUplink": false,
+      "statsOutboundDownlink": false
+    }
+  },
+  "routing": {
+    "domainMatcher": "hybrid",
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "port": 53,
+        "type": "field",
+        "outboundTag": "dns-out"
+      },
+      {
+        "port": "25,2525,135,137,138,139,445",
+        "type": "field",
+        "network": "tcp,udp",
+        "outboundTag": "block"
+      },
+      {
+        "port": 443,
+        "type": "field",
+        "network": "udp",
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "geosite:win-spy",
+          "geosite:torrent",
+          "geosite:category-ads"
+        ],
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "domain:your-node-domain.com",
+          "domain:your-panel-domain.com"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "ip": [
+          "77.88.8.8",
+          "77.88.8.1"
+        ],
+        "type": "field",
+        "outboundTag": "direct"
+      },
+      {
+        "ip": [
+          "1.1.1.1",
+          "8.8.8.8"
+        ],
+        "type": "field",
+        "balancerTag": "Super_Balancer"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "domain:apps.apple.com",
+          "domain:itunes.apple.com",
+          "domain:mzstatic.com",
+          "domain:iads.apple.com",
+          "domain:smp-device.apple.com",
+          "domain:apple-pay-gateway.apple.com",
+          "domain:wallet.apple.com",
+          "domain:api.apple-pay.com",
+          "domain:apple-pay.com",
+          "domain:applepay.com",
+          "domain:applewallet.com",
+          "domain:cstat.apple.com",
+          "domain:xp.apple.com",
+          "domain:passbook.apple.com",
+          "domain:pay.google.com",
+          "domain:payments.google.com",
+          "domain:wallet.google.com",
+          "domain:scone-pa.googleapis.com",
+          "domain:cloudconfig.googleapis.com",
+          "domain:vts.visa.com",
+          "domain:token.visa.com",
+          "domain:mdes.mastercard.com",
+          "domain:mastercard.com",
+          "domain:visa.com",
+          "domain:copilot.microsoft.com",
+          "domain:githubcopilot.com",
+          "domain:openai.com",
+          "domain:chatgpt.com",
+          "domain:oaistatic.com",
+          "domain:oaiusercontent.com",
+          "domain:sora.com",
+          "domain:claude.ai",
+          "domain:anthropic.com",
+          "domain:perplexity.ai",
+          "domain:pplx.ai",
+          "domain:grok.com",
+          "domain:x.ai",
+          "domain:gemini.google.com",
+          "domain:aistudio.google.com",
+          "domain:canva.com",
+          "domain:elevenlabs.io",
+          "domain:lava.ru",
+          "domain:lava.top",
+          "domain:lava.link",
+          "domain:lava.money",
+          "geosite:google-play",
+          "geosite:google-deepmind",
+          "geosite:github",
+          "geosite:twitch-ads",
+          "geosite:youtube",
+          "geosite:telegram",
+          "geosite:discord",
+          "geosite:ai",
+          "geosite:category-geoblock-ru"
+        ],
+        "balancerTag": "Super_Balancer"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:telegram",
+          "geoip:discord"
+        ],
+        "balancerTag": "Super_Balancer"
+      },
+      {
+        "type": "field",
+        "network": "udp",
+        "port": "19294-19344",
+        "balancerTag": "Super_Balancer"
+      },
+      {
+        "type": "field",
+        "domain": [
+          "geosite:private",
+          "geosite:category-ru",
+          "geosite:whitelist",
+          "geosite:microsoft",
+          "geosite:apple",
+          "geosite:epicgames",
+          "geosite:riot",
+          "geosite:escapefromtarkov",
+          "geosite:steam",
+          "geosite:origin",
+          "geosite:twitch",
+          "geosite:pinterest",
+          "geosite:faceit"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "ip": [
+          "geoip:private",
+          "geoip:direct"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "network": "tcp,udp",
+        "balancerTag": "Super_Balancer"
+      }
+    ],
+    "balancers": [
+      {
+        "tag": "Super_Balancer",
+        "selector": [
+          "proxy"
+        ],
+        "strategy": {
+          "type": "leastLoad",
+          "settings": {
+            "maxRTT": "3500ms",
+            "expected": 15,
+            "baselines": [
+              "2s"
+            ],
+            "tolerance": 0.4
+          }
+        },
+        "fallbackTag": "direct"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "port": 10808,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true,
+        "auth": "noauth",
+        "userLevel": 8
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": true,
+        "destOverride": [
+          "http",
+          "quic",
+          "tls"
+        ]
+      }
+    },
+    {
+      "tag": "http",
+      "port": 10809,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "userLevel": 8,
+        "allowTransparent": false
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": true,
+        "destOverride": [
+          "http",
+          "quic",
+          "tls"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "timeout": 5,
+      "protocol": "freedom",
+      "settings": {
+        "userLevel": 8,
+        "domainStrategy": "AsIs"
+      }
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    },
+    {
+      "tag": "dns-out",
+      "protocol": "dns"
+    }
+  ],
+  "remnawave": {
+    "injectHosts": [
+      {
+        "selector": {
+          "type": "uuids",
+          "values": [
+            "00000000-0000-0000-0000-000000000001",
+            "00000000-0000-0000-0000-000000000002",
+            "00000000-0000-0000-0000-000000000003"
+          ]
+        },
+        "tagPrefix": "proxy",
+        "selectFrom": "ALL"
+      }
+    ]
+  },
+  "burstObservatory": {
+    "pingConfig": {
+      "timeout": "5s",
+      "interval": "60s",
+      "sampling": 1,
+      "destination": "http://cp.cloudflare.com/generate_204",
+      "connectivity": "http://cp.cloudflare.com/generate_204"
+    },
+    "subjectSelector": [
+      "proxy"
+    ]
+  }
+}

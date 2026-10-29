@@ -10,13 +10,30 @@
       {
         "address": "https://1.1.1.1/dns-query",
         "domains": [
-          "geosite:category-geoblock-ru"
+          "geosite:category-geoblock-ru",
+          "geosite:ai",
+          "domain:apps.apple.com",
+          "domain:itunes.apple.com",
+          "domain:mzstatic.com",
+          "domain:iads.apple.com",
+          "domain:smp-device.apple.com",
+          "domain:apple-pay-gateway.apple.com",
+          "domain:wallet.apple.com",
+          "domain:api.apple-pay.com",
+          "domain:apple-pay.com",
+          "domain:applepay.com",
+          "domain:applewallet.com",
+          "domain:cstat.apple.com",
+          "domain:xp.apple.com",
+          "domain:passbook.apple.com"
         ]
       },
       {
         "port": 53,
         "address": "77.88.8.8",
         "domains": [
+          "domain:your-node-domain.com",
+          "domain:your-panel-domain.com",
           "geosite:private",
           "geosite:category-ru",
           "geosite:whitelist",
@@ -57,6 +74,8 @@
     }
   },
   "routing": {
+    "domainMatcher": "hybrid",
+    "domainStrategy": "IPIfNonMatch",
     "rules": [
       {
         "port": 53,
@@ -64,7 +83,7 @@
         "outboundTag": "dns-out"
       },
       {
-        "port": "25,135,137,138,139,445",
+        "port": "25,2525,135,137,138,139,445",
         "type": "field",
         "network": "tcp,udp",
         "outboundTag": "block"
@@ -85,6 +104,14 @@
         "outboundTag": "block"
       },
       {
+        "type": "field",
+        "domain": [
+          "domain:your-node-domain.com",
+          "domain:your-panel-domain.com"
+        ],
+        "outboundTag": "direct"
+      },
+      {
         "ip": [
           "77.88.8.8",
           "77.88.8.1"
@@ -103,6 +130,47 @@
       {
         "type": "field",
         "domain": [
+          "domain:apps.apple.com",
+          "domain:itunes.apple.com",
+          "domain:mzstatic.com",
+          "domain:iads.apple.com",
+          "domain:smp-device.apple.com",
+          "domain:apple-pay-gateway.apple.com",
+          "domain:wallet.apple.com",
+          "domain:api.apple-pay.com",
+          "domain:apple-pay.com",
+          "domain:applepay.com",
+          "domain:applewallet.com",
+          "domain:cstat.apple.com",
+          "domain:xp.apple.com",
+          "domain:passbook.apple.com",
+          "domain:pay.google.com",
+          "domain:payments.google.com",
+          "domain:wallet.google.com",
+          "domain:scone-pa.googleapis.com",
+          "domain:cloudconfig.googleapis.com",
+          "domain:vts.visa.com",
+          "domain:token.visa.com",
+          "domain:mdes.mastercard.com",
+          "domain:mastercard.com",
+          "domain:visa.com",
+          "domain:copilot.microsoft.com",
+          "domain:githubcopilot.com",
+          "domain:openai.com",
+          "domain:chatgpt.com",
+          "domain:oaistatic.com",
+          "domain:oaiusercontent.com",
+          "domain:sora.com",
+          "domain:claude.ai",
+          "domain:anthropic.com",
+          "domain:perplexity.ai",
+          "domain:pplx.ai",
+          "domain:grok.com",
+          "domain:x.ai",
+          "domain:gemini.google.com",
+          "domain:aistudio.google.com",
+          "domain:canva.com",
+          "domain:elevenlabs.io",
           "domain:lava.ru",
           "domain:lava.top",
           "domain:lava.link",
@@ -164,8 +232,7 @@
         "network": "tcp,udp",
         "outboundTag": "proxy"
       }
-    ],
-    "domainStrategy": "IPIfNonMatch"
+    ]
   },
   "inbounds": [
     {
@@ -211,7 +278,12 @@
   "outbounds": [
     {
       "tag": "direct",
-      "protocol": "freedom"
+      "timeout": 5,
+      "protocol": "freedom",
+      "settings": {
+        "userLevel": 8,
+        "domainStrategy": "AsIs"
+      }
     },
     {
       "tag": "block",
@@ -219,10 +291,7 @@
     },
     {
       "tag": "dns-out",
-      "protocol": "dns",
-      "proxySettings": {
-        "tag": "proxy"
-      }
+      "protocol": "dns"
     }
   ]
 }

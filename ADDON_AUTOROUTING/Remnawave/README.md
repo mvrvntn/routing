@@ -66,14 +66,27 @@
 ---
 
 ## 5. Основной шаблон XRAY для каждой локации
-В Remnawave при настройке шаблона Xray для входящих локаций рекомендуется включить:
-* Маршрутизацию доменов `geosite:discord`, `geosite:ai`, `geosite:category-geoblock-ru` через тег прокси.
+В Remnawave при настройке шаблона Xray для локаций используется файл [`xray_location_template.json`](./xray_location_template.json):
+* Маршрутизация доменов `geosite:discord`, `geosite:ai`, `geosite:category-geoblock-ru` через тег `proxy`.
 * Прямое проксирование IP-подсетей `geoip:telegram` и `geoip:discord`.
-* Опцию `"routeOnly": true` в секции `sniffing` для предотвращения утечек на iOS.
+* Выделенное правило для голосовых UDP-портов Discord (`19294-19344`).
+* Защита Apple Pay, Wallet, Google Pay, банковских токенов и AI-сервисов (`copilot`, `chatgpt`, `claude`).
+* Опция `"routeOnly": true` в секции `sniffing` для предотвращения утечек на iOS.
 
 ---
 
-## 6. Рекомендация для профиля ноды Remnawave
+## 6. Шаблоны балансировщиков Xray (Super_Balancer)
+Для создания отказоустойчивых пулов серверов с автобалансировкой нагрузки (`leastLoad` по RTT):
+* [`xray_balancer_xhttp.json`](./xray_balancer_xhttp.json) — шаблон для пула нод XHTTP / VLESS.
+* [`xray_balancer_tcp.json`](./xray_balancer_tcp.json) — шаблон для пула нод TCP Reality / VLESS.
+* [`xray_balancer_hysteria2.json`](./xray_balancer_hysteria2.json) — шаблон для пула нод Hysteria2.
+
+> [!TIP]
+> В секции `"remnawave": { "injectHosts": [ ... ] }` укажите UUID ваших реальных нод из панели Remnawave, а в правиле `direct` и DNS замените `your-node-domain.com` на домены ваших серверов, чтобы исключить зацикливание трафика.
+
+---
+
+## 7. Рекомендация для профиля ноды Remnawave
 В конфигурации ноды (`Профиль remnawave ноды.txt`) в секцию чекеров `warp-out` рекомендуется добавить:
 ```json
 "ipwho.is"
