@@ -1,5 +1,5 @@
 # NAME: category-ads.list
-# TOTAL RULES: 52
+# TOTAL RULES: 59
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ad.mail.ru
@@ -54,3 +54,10 @@ DOMAIN-SUFFIX,ad.xiaomi.com
 DOMAIN-SUFFIX,data.mistat.intl.xiaomi.com
 DOMAIN-SUFFIX,adx.ads.oppomobile.com
 DOMAIN-SUFFIX,ads.samsung.com
+DOMAIN-SUFFIX,adjust.com
+DOMAIN-SUFFIX,appsflyer.com
+DOMAIN-SUFFIX,branch.io
+DOMAIN-SUFFIX,kochava.com
+DOMAIN-SUFFIX,singular.net
+DOMAIN-SUFFIX,mixpanel.com
+DOMAIN-SUFFIX,scorecardresearch.com

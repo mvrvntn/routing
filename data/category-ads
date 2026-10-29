@@ -57,3 +57,12 @@ domain:ad.xiaomi.com
 domain:data.mistat.intl.xiaomi.com
 domain:adx.ads.oppomobile.com
 domain:ads.samsung.com
+
+# Mobile Attribution & Telemetry Trackers
+domain:adjust.com
+domain:appsflyer.com
+domain:branch.io
+domain:kochava.com
+domain:singular.net
+domain:mixpanel.com
+domain:scorecardresearch.com

@@ -1,5 +1,5 @@
 # NAME: steam.list
-# TOTAL RULES: 43
+# TOTAL RULES: 47
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,playartifact.com
@@ -45,3 +45,7 @@ DOMAIN-SUFFIX,lv.queniujq.cn
 DOMAIN-SUFFIX,xz.pphimalayanrt.com
 DOMAIN-SUFFIX,steamchina.com
 DOMAIN-SUFFIX,gstore.val.manlaxy.com
+DOMAIN-SUFFIX,steamstatic.com
+DOMAIN-SUFFIX,steampipe.akamaized.net
+DOMAIN-SUFFIX,steamcdn-a.akamaihd.net
+DOMAIN-SUFFIX,steamstore-a.akamaihd.net

@@ -1,5 +1,5 @@
 # NAME: whitelist.list
-# TOTAL RULES: 583
+# TOTAL RULES: 605
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ipify.org
@@ -585,3 +585,25 @@ DOMAIN-SUFFIX,championat.com
 DOMAIN-SUFFIX,my.games
 DOMAIN-SUFFIX,vkclips.app
 DOMAIN-SUFFIX,2gis.dev
+DOMAIN-SUFFIX,ipleak.net
+DOMAIN-SUFFIX,dnsleaktest.com
+DOMAIN-SUFFIX,browserscan.net
+DOMAIN-SUFFIX,pixelscan.net
+DOMAIN-SUFFIX,iphey.com
+DOMAIN-SUFFIX,whatleaks.com
+DOMAIN-SUFFIX,scamalytics.com
+DOMAIN-SUFFIX,iphub.info
+DOMAIN-SUFFIX,ip2location.com
+DOMAIN-SUFFIX,seeip.org
+DOMAIN-SUFFIX,ipaddress.com
+DOMAIN-SUFFIX,myip.com
+DOMAIN-SUFFIX,ipapi.io
+DOMAIN-SUFFIX,whatsmyip.com
+DOMAIN-SUFFIX,myexternalip.com
+DOMAIN-SUFFIX,dnschecker.org
+DOMAIN-SUFFIX,bot.sannysoft.com
+DOMAIN-SUFFIX,doileak.com
+DOMAIN-SUFFIX,tank-online.com
+DOMAIN-SUFFIX,kontur.host
+DOMAIN-SUFFIX,playstation.net
+DOMAIN-SUFFIX,xboxlive.com
