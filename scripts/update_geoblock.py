@@ -23,6 +23,7 @@ DATA_DIR = REPO_ROOT / "data"
 GEOBLOCK_FILE = DATA_DIR / "category-geoblock-ru"
 CATEGORY_RU_FILE = DATA_DIR / "category-ru"
 WHITELIST_FILE = DATA_DIR / "whitelist"
+TORRENT_FILE = DATA_DIR / "torrent"
 
 # Antifilter & Re-filter community curated blocked domains (supports multiple concurrent mirrors)
 COMMUNITY_URLS = [
@@ -109,9 +110,9 @@ def is_valid_domain(domain: str) -> bool:
 
 
 def load_protected_domains() -> set[str]:
-    """Load domains from category-ru and whitelist to ensure they are never proxied."""
+    """Load domains from category-ru, whitelist, and torrent to ensure they are never proxied."""
     protected = set()
-    for file_path in (CATEGORY_RU_FILE, WHITELIST_FILE):
+    for file_path in (CATEGORY_RU_FILE, WHITELIST_FILE, TORRENT_FILE):
         if not file_path.exists():
             continue
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
@@ -119,7 +120,7 @@ def load_protected_domains() -> set[str]:
                 d = clean_domain_string(line)
                 if d and is_valid_domain(d):
                     protected.add(d)
-    print(f"[Safety Gate] Loaded {len(protected)} protected domains from category-ru and whitelist.")
+    print(f"[Safety Gate] Loaded {len(protected)} protected domains from category-ru, whitelist, and torrent.")
     return protected
 
 

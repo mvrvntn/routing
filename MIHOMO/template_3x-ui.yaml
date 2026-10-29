@@ -197,6 +197,15 @@ rule-providers:
     proxy: ⚡️ Авто-выбор
     interval: 2592000
 
+  whitelist-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist-ip.mrs
+    path: ./ruleset/geoip-whitelist.mrs
+    proxy: ⚡️ Авто-выбор
+    interval: 86400
+
   direct-ips:
     type: http
     behavior: ipcidr
@@ -409,8 +418,9 @@ rules:
   - RULE-SET,pinterest,DIRECT
   - RULE-SET,category-ru,DIRECT
   - RULE-SET,whitelist,DIRECT
+  - RULE-SET,whitelist-ips,DIRECT,no-resolve
   - RULE-SET,ru-apps,DIRECT
-  - RULE-SET,direct-ips,DIRECT
+  - RULE-SET,direct-ips,DIRECT,no-resolve
 
   # Остальной международный трафик
   - MATCH,PROXY

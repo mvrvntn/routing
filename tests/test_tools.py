@@ -440,6 +440,57 @@ class TestToolsSuite(unittest.TestCase):
             items = [l[2:].strip().strip("'\"") for l in lines]
             self.assertEqual(len(items), len(set(items)), f"Duplicate entries in {tc_path}")
 
+    def test_google_play_fcm_not_proxied(self):
+        gp_path = os.path.join(BASE_DIR, "data", "google-play")
+        with open(gp_path, "r", encoding="utf-8") as f:
+            gp_lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
+        self.assertNotIn("domain:mtalk.google.com", gp_lines, "mtalk.google.com must not be in google-play to avoid proxying FCM")
+
+        ru_path = os.path.join(BASE_DIR, "data", "category-ru")
+        with open(ru_path, "r", encoding="utf-8") as f:
+            ru_lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
+        self.assertIn("domain:mtalk.google.com", ru_lines, "mtalk.google.com must be in category-ru for direct FCM push")
+
+    def test_category_geoblock_ru_no_torrent_trackers(self):
+        def parse_file(fname):
+            doms = set()
+            with open(os.path.join(BASE_DIR, "data", fname), "r", encoding="utf-8") as f:
+                for l in f:
+                    l = l.strip()
+                    if not l or l.startswith("#") or l.startswith("include:"):
+                        continue
+                    if l.startswith("domain:"):
+                        doms.add(l[7:].strip().lower())
+                    elif not l.startswith("full:") and not l.startswith("regexp:"):
+                        doms.add(l.strip().lower())
+            return doms
+
+        geoblock = parse_file("category-geoblock-ru")
+        torrent = parse_file("torrent")
+        overlap = geoblock & torrent
+        self.assertEqual(overlap, set(), f"Torrent trackers found in category-geoblock-ru: {overlap}")
+
+    def test_mihomo_torrent_priority_and_no_resolve(self):
+        configs = [
+            os.path.join(BASE_DIR, "MIHOMO", "default.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_remnawave.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_3x-ui.yaml"),
+        ]
+        for cfg_path in configs:
+            with open(cfg_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            idx_torrent = content.find("RULE-SET,torrent-domains,DIRECT")
+            idx_geoblock = content.find("RULE-SET,category-geoblock-ru,PROXY")
+            self.assertNotEqual(idx_torrent, -1, f"Missing torrent-domains in {cfg_path}")
+            self.assertNotEqual(idx_geoblock, -1, f"Missing category-geoblock-ru in {cfg_path}")
+            self.assertLess(
+                idx_torrent,
+                idx_geoblock,
+                f"torrent-domains must precede category-geoblock-ru in {cfg_path} to prevent torrent proxy leaks",
+            )
+            # Ensure direct-ips has no-resolve
+            self.assertIn("RULE-SET,direct-ips,DIRECT,no-resolve", content, f"direct-ips must use no-resolve in {cfg_path}")
+
 
 if __name__ == "__main__":
     unittest.main()

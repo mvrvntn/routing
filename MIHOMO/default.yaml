@@ -456,6 +456,10 @@ rules:
   - RULE-SET,category-ads,REJECT-DROP
   - RULE-SET,win-spy,REJECT-DROP
 
+  # Торренты — напрямую
+  - RULE-SET,torrent-domains,DIRECT
+  - RULE-SET,torrent-clients,DIRECT
+
   # Сервисы через PROXY
   - RULE-SET,google-play,PROXY
   - RULE-SET,google-deepmind,PROXY
@@ -478,10 +482,6 @@ rules:
   - RULE-SET,steam,🎮 Игры
   - RULE-SET,faceit,🎮 Игры
   - RULE-SET,games,🎮 Игры
-
-  # Торренты — напрямую
-  - RULE-SET,torrent-domains,DIRECT
-  - RULE-SET,torrent-clients,DIRECT
 
   # Сервисы в DIRECT
   - RULE-SET,twitch,DIRECT
