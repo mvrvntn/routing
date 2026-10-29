@@ -59,7 +59,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install Python Dependencies
-        run: pip install --no-cache-dir pyyaml
+        run: pip install --no-cache-dir pyyaml requests
 
       - name: Run Unit Tests & Regression Verification
         run: |

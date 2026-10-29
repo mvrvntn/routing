@@ -36,7 +36,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install Dependencies
-        run: pip install pyyaml
+        run: pip install pyyaml requests
 
       - name: Run Integrity & Syntax Test
         run: |

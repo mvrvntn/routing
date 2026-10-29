@@ -568,6 +568,7 @@ class TestToolsSuite(unittest.TestCase):
         """Test version parsing and KoridorResolver caching in ADDON_AUTOROUTING."""
         from unittest.mock import MagicMock, patch
 
+        import sys
         for addon in ("Marzban", "Marzneshin"):
             sub_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", addon, "subscription.py")
             self.assertTrue(os.path.exists(sub_path), f"{sub_path} missing")
@@ -578,7 +579,9 @@ class TestToolsSuite(unittest.TestCase):
                         break
                     lines.append(line)
             ns = {}
-            exec("".join(lines), ns)
+            mock_requests = MagicMock()
+            with patch.dict(sys.modules, {"requests": mock_requests}):
+                exec("".join(lines), ns)
 
             # Test version functions if present
             if "_version_tuple" in ns and "_version_at_least" in ns:
@@ -600,15 +603,16 @@ class TestToolsSuite(unittest.TestCase):
             # 2. HTTP fetch and caching
             mock_resp = MagicMock()
             mock_resp.text = "happ://routing/onadd/test-deeplink\n"
-            with patch.dict(os.environ, {"KORIDOR_ROUTING_SOURCE": "default", "KORIDOR_ROUTING_CUSTOM": ""}), \
-                 patch("requests.get", return_value=mock_resp) as mock_get:
+            mock_requests.get.reset_mock()
+            mock_requests.get.return_value = mock_resp
+            with patch.dict(os.environ, {"KORIDOR_ROUTING_SOURCE": "default", "KORIDOR_ROUTING_CUSTOM": ""}):
                 resolver = _KoridorResolver("default")
                 val1 = resolver.get()
                 self.assertEqual(val1, "happ://routing/onadd/test-deeplink")
                 # Second call should use cache without HTTP request
                 val2 = resolver.get()
                 self.assertEqual(val2, "happ://routing/onadd/test-deeplink")
-                self.assertEqual(mock_get.call_count, 1)
+                self.assertEqual(mock_requests.get.call_count, 1)
 
     def test_check_dead_domains_parser(self):
         from tools.check_dead_domains import clean_domain
