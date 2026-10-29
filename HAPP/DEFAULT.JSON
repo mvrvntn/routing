@@ -40,6 +40,10 @@
     "geoip:direct"
   ],
   "ProxySites": [
+    "domain:cp.cloudflare.com",
+    "domain:connectivitycheck.gstatic.com",
+    "domain:msftconnecttest.com",
+    "domain:detectportal.firefox.com",
     "geosite:google-play",
     "geosite:google-deepmind",
     "geosite:github",

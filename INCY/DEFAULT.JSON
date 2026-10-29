@@ -5,7 +5,7 @@
   "RemoteDns": "8.8.8.8",
   "DomesticDns": "77.88.8.8",
   "RemoteDNSType": "DoH",
-  "RemoteDNSDomain": "https://dns.google/dns-query",
+  "RemoteDNSDomain": "https://8.8.8.8/dns-query",
   "RemoteDNSIP": "8.8.8.8",
   "DomesticDNSType": "DoU",
   "DomesticDNSDomain": "",
@@ -40,6 +40,10 @@
     "geoip:direct"
   ],
   "ProxySites": [
+    "domain:cp.cloudflare.com",
+    "domain:connectivitycheck.gstatic.com",
+    "domain:msftconnecttest.com",
+    "domain:detectportal.firefox.com",
     "geosite:google-play",
     "geosite:google-deepmind",
     "geosite:github",

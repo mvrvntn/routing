@@ -1,5 +1,5 @@
 # NAME: ai.list
-# TOTAL RULES: 56
+# TOTAL RULES: 119
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,openai.com
@@ -58,3 +58,66 @@ DOMAIN-SUFFIX,openrouter.ai
 DOMAIN-SUFFIX,stability.ai
 DOMAIN-SUFFIX,clipdrop.co
 DOMAIN-SUFFIX,coze.com
+DOMAIN-SUFFIX,deepmind.com
+DOMAIN-SUFFIX,deepmind.google
+DOMAIN-SUFFIX,gemini.google
+DOMAIN-SUFFIX,gemini.google.com
+DOMAIN-SUFFIX,gemini.gstatic.com
+DOMAIN-SUFFIX,bard.google.com
+DOMAIN-SUFFIX,ai.google
+DOMAIN-SUFFIX,ai.google.dev
+DOMAIN-SUFFIX,generativeai.google
+DOMAIN-SUFFIX,generativeai.google.com
+DOMAIN-SUFFIX,accounts.google.com
+DOMAIN-SUFFIX,myaccount.google.com
+DOMAIN-SUFFIX,ogs.google.com
+DOMAIN-SUFFIX,geller-pa.googleapis.com
+DOMAIN-SUFFIX,generativelanguage.googleapis.com
+DOMAIN-SUFFIX,geminipersonalization-pa.googleapis.com
+DOMAIN-SUFFIX,proactivebackend-pa.googleapis.com
+DOMAIN-SUFFIX,robinfrontend-pa.googleapis.com
+DOMAIN-SUFFIX,alkalicontent-pa.googleapis.com
+DOMAIN-SUFFIX,alkalimining-pa.googleapis.com
+DOMAIN-SUFFIX,alkalipa-pa.googleapis.com
+DOMAIN-SUFFIX,bard-pa.googleapis.com
+DOMAIN-SUFFIX,generativephotobooth-pa.googleapis.com
+DOMAIN-SUFFIX,makersuite.google.com
+DOMAIN-SUFFIX,ai.studio
+DOMAIN-SUFFIX,aistudio.google.com
+DOMAIN-SUFFIX,cloudaicompanion.googleapis.com
+DOMAIN-SUFFIX,cloudcode-pa.googleapis.com
+DOMAIN-SUFFIX,daily-cloudcode-pa.googleapis.com
+DOMAIN-SUFFIX,aicode.googleapis.com
+DOMAIN-SUFFIX,notebooklm-pa.googleapis.com
+DOMAIN-SUFFIX,notebooklm.googleapis.com
+DOMAIN-SUFFIX,notebooklm.google
+DOMAIN-SUFFIX,notebooklm.google.com
+DOMAIN-SUFFIX,notebook.google
+DOMAIN-SUFFIX,notebook.google.com
+DOMAIN-SUFFIX,jules.google
+DOMAIN-SUFFIX,jules.google.com
+DOMAIN-SUFFIX,labs.google
+DOMAIN-SUFFIX,labs.google.com
+DOMAIN-SUFFIX,aisandbox-pa.googleapis.com
+DOMAIN-SUFFIX,flow.google
+DOMAIN-SUFFIX,flow.google.com
+DOMAIN-SUFFIX,stitch.withgoogle.com
+DOMAIN-SUFFIX,colab.google
+DOMAIN-SUFFIX,colab.research.google.com
+DOMAIN-SUFFIX,aida.googleapis.com
+DOMAIN-SUFFIX,opal.google
+DOMAIN-SUFFIX,opal.google.com
+DOMAIN-SUFFIX,antigravity-pa.googleapis.com
+DOMAIN-SUFFIX,antigravity.googleapis.com
+DOMAIN-SUFFIX,antigravity.google
+DOMAIN-SUFFIX,antigravity-unleash.goog
+DOMAIN-SUFFIX,clients6.google.com
+DOMAIN-SUFFIX,aitestkitchen.withgoogle.com
+DOMAIN-SUFFIX,apis.google.com
+DOMAIN-SUFFIX,assistant-s3-pa.googleapis.com
+DOMAIN-SUFFIX,waa-pa.googleapis.com
+DOMAIN-SUFFIX,speechs3-pa.googleapis.com
+DOMAIN-SUFFIX,developerprofiles-pa.googleapis.com
+DOMAIN-SUFFIX,lookerstudio.google.com
+DOMAIN-SUFFIX,o.pki.goog
+DOMAIN-SUFFIX,suggestqueries.google.com

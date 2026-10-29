@@ -60,17 +60,44 @@ def parse_geosite_rule(line: str) -> str | None:
     return None
 
 
+def resolve_data_file_rules(src_path: Path, visited: set[Path] | None = None) -> list[str]:
+    """Read a data category file and recursively resolve rules and include: directives."""
+    if visited is None:
+        visited = set()
+    src_path = src_path.resolve()
+    if not src_path.exists() or src_path in visited:
+        return []
+
+    visited.add(src_path)
+    rules: list[str] = []
+
+    with open(src_path, "r", encoding="utf-8") as f:
+        for line in f:
+            raw_line = line.strip()
+            if not raw_line or raw_line.startswith("#"):
+                continue
+            if " #" in raw_line:
+                raw_line = raw_line.split(" #", 1)[0].strip()
+            parts = raw_line.split()
+            rule_def = parts[0]
+            if rule_def.startswith("include:"):
+                inc_name = rule_def.split(":", 1)[1].strip()
+                inc_path = src_path.parent / inc_name
+                rules.extend(resolve_data_file_rules(inc_path, visited))
+            else:
+                converted = parse_geosite_rule(line)
+                if converted:
+                    rules.append(converted)
+
+    return rules
+
+
 def convert_data_file_to_list(src_path: Path, dst_path: Path, name: str) -> int:
     """Read a data category file and write a Shadowrocket .list file."""
     if not src_path.exists():
         return 0
 
-    out_rules: list[str] = []
-    with open(src_path, "r", encoding="utf-8") as f:
-        for line in f:
-            converted = parse_geosite_rule(line)
-            if converted:
-                out_rules.append(converted)
+    out_rules = resolve_data_file_rules(src_path)
 
     # Deduplicate while preserving order
     seen = set()
@@ -144,7 +171,7 @@ dns-direct-fallback-proxy = true
 
 # Удаленный DoH (Quad9) и отечественный DoH (Yandex)
 dns-server = https://dns.quad9.net/dns-query, 9.9.9.9
-fallback-dns-server = https://common.dot.dns.yandex.net/dns-query, 77.88.8.8, system
+fallback-dns-server = https://dns.yandex.ru/dns-query, 77.88.8.8, system
 
 # Перехват стандартных DNS запросов
 hijack-dns = :53
@@ -233,7 +260,7 @@ dns-fallback-system = false
 dns-direct-fallback-proxy = true
 
 dns-server = https://dns.quad9.net/dns-query, 9.9.9.9
-fallback-dns-server = https://common.dot.dns.yandex.net/dns-query, 77.88.8.8, system
+fallback-dns-server = https://dns.yandex.ru/dns-query, 77.88.8.8, system
 hijack-dns = :53
 always-real-ip = *
 

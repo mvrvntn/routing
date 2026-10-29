@@ -256,6 +256,37 @@ class TestToolsSuite(unittest.TestCase):
                         "",
                         f"{p} should have empty DomesticDNSDomain for DoU",
                     )
+                if cfg.get("RemoteDns") == "8.8.8.8" and cfg.get("RemoteDNSType") == "DoH":
+                    self.assertEqual(
+                        cfg.get("RemoteDNSDomain"),
+                        "https://8.8.8.8/dns-query",
+                        f"{p} must use IP-based DoH URL to avoid bootstrap deadlock",
+                    )
+
+    def test_connectivity_check_domains_and_whitelist_route_order(self):
+        import json
+        expected_latency_domains = [
+            "domain:cp.cloudflare.com",
+            "domain:connectivitycheck.gstatic.com",
+            "domain:msftconnecttest.com",
+            "domain:detectportal.firefox.com",
+        ]
+        for folder in ("HAPP", "INCY"):
+            def_path = os.path.join(BASE_DIR, folder, "DEFAULT.JSON")
+            with open(def_path, "r", encoding="utf-8") as f:
+                def_cfg = json.load(f)
+            self.assertEqual(def_cfg.get("RouteOrder"), "block-proxy-direct")
+            for dom in expected_latency_domains:
+                self.assertIn(dom, def_cfg.get("ProxySites", []), f"Missing {dom} in {def_path} ProxySites")
+
+            wl_path = os.path.join(BASE_DIR, folder, "WHITELIST.JSON")
+            with open(wl_path, "r", encoding="utf-8") as f:
+                wl_cfg = json.load(f)
+            self.assertEqual(
+                wl_cfg.get("RouteOrder"),
+                "block-direct-proxy",
+                f"{wl_path} must have RouteOrder block-direct-proxy so non-whitelist traffic proxies",
+            )
 
     def test_data_includes_integrity(self):
         import glob
@@ -509,13 +540,75 @@ class TestToolsSuite(unittest.TestCase):
         with open(sr_default, "r", encoding="utf-8") as f:
             content = f.read()
         self.assertIn("dns.quad9.net", content)
-        self.assertIn("common.dot.dns.yandex.net", content)
+        self.assertIn("dns.yandex.ru", content)
+        self.assertNotIn("common.dot.dns.yandex.net", content)
         self.assertIn("lkfl2.nalog.ru = 213.24.64.175", content)
         self.assertIn("rules/category-ads.list,REJECT", content)
         self.assertIn("rules/discord.list,PROXY", content)
         self.assertIn("rules/discord-ips.list,PROXY", content)
         self.assertIn("GEOIP,RU,DIRECT", content)
         self.assertIn("FINAL,PROXY", content)
+
+        # Verify include: directive expansion
+        ads_all = os.path.join(BASE_DIR, "SHADOWROCKET", "rules", "category-ads-all.list")
+        self.assertTrue(os.path.exists(ads_all))
+        with open(ads_all, "r", encoding="utf-8") as f:
+            ads_content = f.read()
+        self.assertIn("DOMAIN-SUFFIX,adfox.yandex.ru", ads_content)
+        self.assertGreater(stats.get("domain:category-ads-all", 0), 0)
+
+        ai_list = os.path.join(BASE_DIR, "SHADOWROCKET", "rules", "ai.list")
+        self.assertTrue(os.path.exists(ai_list))
+        with open(ai_list, "r", encoding="utf-8") as f:
+            ai_content = f.read()
+        self.assertIn("DOMAIN-SUFFIX,deepmind.google", ai_content)
+        self.assertIn("DOMAIN-SUFFIX,openai.com", ai_content)
+
+    def test_marzban_and_marzneshin_subscription_helpers(self):
+        """Test version parsing and KoridorResolver caching in ADDON_AUTOROUTING."""
+        from unittest.mock import MagicMock, patch
+
+        for addon in ("Marzban", "Marzneshin"):
+            sub_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", addon, "subscription.py")
+            self.assertTrue(os.path.exists(sub_path), f"{sub_path} missing")
+            with open(sub_path, "r", encoding="utf-8") as f:
+                lines = []
+                for line in f:
+                    if line.startswith("from fastapi") or line.startswith("from app."):
+                        break
+                    lines.append(line)
+            ns = {}
+            exec("".join(lines), ns)
+
+            # Test version functions if present
+            if "_version_tuple" in ns and "_version_at_least" in ns:
+                _version_tuple = ns["_version_tuple"]
+                _version_at_least = ns["_version_at_least"]
+                self.assertEqual(_version_tuple("1.8.29"), (1, 8, 29))
+                self.assertEqual(_version_tuple("v2.0.1-beta"), (2, 0, 1, 0))
+                self.assertTrue(_version_at_least("1.8.29", "1.8.0"))
+                self.assertTrue(_version_at_least("2.0.0", "1.9.9"))
+                self.assertFalse(_version_at_least("1.7.9", "1.8.0"))
+
+            # Test _KoridorResolver
+            _KoridorResolver = ns["_KoridorResolver"]
+            # 1. Custom override via source
+            with patch.dict(os.environ, {"KORIDOR_ROUTING_SOURCE": "custom", "KORIDOR_ROUTING_CUSTOM": "happ://custom-url"}):
+                resolver = _KoridorResolver("default")
+                self.assertEqual(resolver.get(), "happ://custom-url")
+
+            # 2. HTTP fetch and caching
+            mock_resp = MagicMock()
+            mock_resp.text = "happ://routing/onadd/test-deeplink\n"
+            with patch.dict(os.environ, {"KORIDOR_ROUTING_SOURCE": "default", "KORIDOR_ROUTING_CUSTOM": ""}), \
+                 patch("requests.get", return_value=mock_resp) as mock_get:
+                resolver = _KoridorResolver("default")
+                val1 = resolver.get()
+                self.assertEqual(val1, "happ://routing/onadd/test-deeplink")
+                # Second call should use cache without HTTP request
+                val2 = resolver.get()
+                self.assertEqual(val2, "happ://routing/onadd/test-deeplink")
+                self.assertEqual(mock_get.call_count, 1)
 
     def test_check_dead_domains_parser(self):
         from tools.check_dead_domains import clean_domain

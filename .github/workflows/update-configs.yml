@@ -13,8 +13,10 @@ on:
       - "HAPP/**"
       - "INCY/**"
       - "MIHOMO/**"
+      - "SHADOWROCKET/**"
       - "scripts/**"
       - "tests/**"
+      - "tools/**"
       - ".github/workflows/update-configs.yml"
 
 permissions:
@@ -577,6 +579,12 @@ jobs:
           update_relocant_client "HAPP"
           update_relocant_client "INCY"
 
+      # --- 5.1 BUILD SHADOWROCKET CONFIGS & RULESETS ---
+      - name: Build Shadowrocket profiles & rulesets
+        run: |
+          set -euo pipefail
+          python3 tools/shadowrocket/generate_shadowrocket.py
+
       # --- 6. PUSH RELEASE BRANCH & PUBLISH GITHUB RELEASE ---
       - name: Push to release branch
         run: |
@@ -610,7 +618,7 @@ jobs:
           set -euo pipefail
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add HAPP/ INCY/ RELOCANT/ README.md
+          git add HAPP/ INCY/ RELOCANT/ SHADOWROCKET/ README.md
           if ! git diff --cached --quiet; then
             git commit -m "chore: обновление конфигураций роутинга и диплинков ${{ env.DAILY_TAG }} [skip ci]"
             git push origin main
@@ -640,7 +648,8 @@ jobs:
           for json in INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON RELOCANT/INCY.JSON \
                       INCY/DEFAULT.AUTOROUTING INCY/WHITELIST.AUTOROUTING INCY/JSONSUB.AUTOROUTING RELOCANT/INCY.AUTOROUTING \
                       HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON RELOCANT/HAPP.JSON \
-                      RELOCANT/mihomo.yaml MIHOMO/default.yaml MIHOMO/template_remnawave.yaml MIHOMO/template_3x-ui.yaml; do
+                      RELOCANT/mihomo.yaml MIHOMO/default.yaml MIHOMO/template_remnawave.yaml MIHOMO/template_3x-ui.yaml \
+                      SHADOWROCKET/DEFAULT.CONF SHADOWROCKET/WHITELIST.CONF; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
           done
 

@@ -5,5 +5,6 @@ __pycache__/
 scratch/
 scratch_*/
 *.tmp
+out_prompt.txt
 .DS_Store
 Thumbs.db

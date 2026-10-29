@@ -5,7 +5,7 @@
   "RemoteDns": "8.8.8.8",
   "DomesticDns": "77.88.8.8",
   "RemoteDNSType": "DoH",
-  "RemoteDNSDomain": "https://dns.google/dns-query",
+  "RemoteDNSDomain": "https://8.8.8.8/dns-query",
   "RemoteDNSIP": "8.8.8.8",
   "DomesticDNSType": "DoU",
   "DomesticDNSDomain": "",
@@ -19,7 +19,7 @@
     "dns.google": "8.8.8.8",
     "cloudflare-dns.com": "1.1.1.1"
   },
-  "RouteOrder": "block-proxy-direct",
+  "RouteOrder": "block-direct-proxy",
   "DirectSites": [
     "geosite:private",
     "geosite:whitelist"

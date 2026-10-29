@@ -8,7 +8,7 @@
   "RemoteDNSDomain": "",
   "RemoteDNSIP": "77.88.8.8",
   "DomesticDNSType": "DoH",
-  "DomesticDNSDomain": "https://cloudflare-dns.com/dns-query",
+  "DomesticDNSDomain": "https://1.1.1.1/dns-query",
   "DomesticDNSIP": "1.1.1.1",
   "Geoipurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat",
   "Geositeurl": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geosite.dat",
