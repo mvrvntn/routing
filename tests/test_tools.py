@@ -268,6 +268,8 @@ class TestToolsSuite(unittest.TestCase):
         expected_latency_domains = [
             "domain:cp.cloudflare.com",
             "domain:connectivitycheck.gstatic.com",
+            "domain:connectivitycheck.android.com",
+            "domain:clients3.google.com",
             "domain:msftconnecttest.com",
             "domain:detectportal.firefox.com",
         ]
@@ -287,6 +289,14 @@ class TestToolsSuite(unittest.TestCase):
                 "block-direct-proxy",
                 f"{wl_path} must have RouteOrder block-direct-proxy so non-whitelist traffic proxies",
             )
+
+        for client in ("HAPP", "INCY"):
+            rel_path = os.path.join(BASE_DIR, "RELOCANT", f"{client}.JSON")
+            with open(rel_path, "r", encoding="utf-8") as f:
+                rel_cfg = json.load(f)
+            self.assertEqual(rel_cfg.get("RouteOrder"), "block-proxy-direct")
+            for dom in expected_latency_domains:
+                self.assertIn(dom, rel_cfg.get("ProxySites", []), f"Missing {dom} in {rel_path} ProxySites")
 
     def test_data_includes_integrity(self):
         import glob

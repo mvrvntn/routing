@@ -42,6 +42,8 @@
   "ProxySites": [
     "domain:cp.cloudflare.com",
     "domain:connectivitycheck.gstatic.com",
+    "domain:connectivitycheck.android.com",
+    "domain:clients3.google.com",
     "domain:msftconnecttest.com",
     "domain:detectportal.firefox.com",
     "geosite:google-play",
