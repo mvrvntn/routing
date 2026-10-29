@@ -32,8 +32,6 @@
         "port": 53,
         "address": "77.88.8.8",
         "domains": [
-          "domain:your-node-domain.com",
-          "domain:your-panel-domain.com",
           "geosite:private",
           "geosite:category-ru",
           "geosite:whitelist",
@@ -102,14 +100,6 @@
           "geosite:category-ads"
         ],
         "outboundTag": "block"
-      },
-      {
-        "type": "field",
-        "domain": [
-          "domain:your-node-domain.com",
-          "domain:your-panel-domain.com"
-        ],
-        "outboundTag": "direct"
       },
       {
         "ip": [

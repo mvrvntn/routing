@@ -75,18 +75,7 @@
 
 ---
 
-## 6. Шаблоны балансировщиков Xray (Super_Balancer)
-Для создания отказоустойчивых пулов серверов с автобалансировкой нагрузки (`leastLoad` по RTT):
-* [`xray_balancer_xhttp.json`](./xray_balancer_xhttp.json) — шаблон для пула нод XHTTP / VLESS.
-* [`xray_balancer_tcp.json`](./xray_balancer_tcp.json) — шаблон для пула нод TCP Reality / VLESS.
-* [`xray_balancer_hysteria2.json`](./xray_balancer_hysteria2.json) — шаблон для пула нод Hysteria2.
-
-> [!TIP]
-> В секции `"remnawave": { "injectHosts": [ ... ] }` укажите UUID ваших реальных нод из панели Remnawave, а в правиле `direct` и DNS замените `your-node-domain.com` на домены ваших серверов, чтобы исключить зацикливание трафика.
-
----
-
-## 7. Рекомендация для профиля ноды Remnawave
+## 6. Рекомендация для профиля ноды Remnawave
 В конфигурации ноды (`Профиль remnawave ноды.txt`) в секцию чекеров `warp-out` рекомендуется добавить:
 ```json
 "ipwho.is"
