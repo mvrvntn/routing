@@ -56,6 +56,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Python Dependencies
+        run: pip install --no-cache-dir pyyaml
+
       - name: Run Unit Tests & Regression Verification
         run: |
           set -euo pipefail

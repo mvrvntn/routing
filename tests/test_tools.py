@@ -395,7 +395,11 @@ class TestToolsSuite(unittest.TestCase):
                     )
 
     def test_mihomo_sniffer_apple_protection(self):
-        import yaml
+        try:
+            import yaml
+        except ImportError:
+            yaml = None
+
         configs = [
             os.path.join(BASE_DIR, "MIHOMO", "default.yaml"),
             os.path.join(BASE_DIR, "MIHOMO", "template_remnawave.yaml"),
@@ -403,22 +407,38 @@ class TestToolsSuite(unittest.TestCase):
         ]
         for cfg_path in configs:
             with open(cfg_path, "r", encoding="utf-8") as f:
-                doc = yaml.safe_load(f)
-            sniffer = doc.get("sniffer", {})
-            self.assertTrue(sniffer.get("enable"), f"Sniffer not enabled in {cfg_path}")
-            skip_domain = sniffer.get("skip-domain", [])
-            self.assertIn("+.apple.com", skip_domain, f"Missing '+.apple.com' in sniffer.skip-domain of {cfg_path}")
+                content = f.read()
+            if yaml is not None:
+                doc = yaml.safe_load(content)
+                sniffer = doc.get("sniffer", {})
+                self.assertTrue(sniffer.get("enable"), f"Sniffer not enabled in {cfg_path}")
+                skip_domain = sniffer.get("skip-domain", [])
+                self.assertIn("+.apple.com", skip_domain, f"Missing '+.apple.com' in sniffer.skip-domain of {cfg_path}")
+            else:
+                self.assertIn("sniffer:", content)
+                self.assertIn("enable: true", content)
+                self.assertIn("+.apple.com", content)
 
     def test_mihomo_torrent_clients_no_duplicates(self):
-        import yaml
+        try:
+            import yaml
+        except ImportError:
+            yaml = None
+
         tc_path = os.path.join(BASE_DIR, "MIHOMO", "torrent-clients.yaml")
         with open(tc_path, "r", encoding="utf-8") as f:
-            data = yaml.safe_load(f)
-        payload = data.get("payload", [])
-        seen = set()
-        for item in payload:
-            self.assertNotIn(item, seen, f"Duplicate entry '{item}' in {tc_path}")
-            seen.add(item)
+            content = f.read()
+        if yaml is not None:
+            data = yaml.safe_load(content)
+            payload = data.get("payload", [])
+            seen = set()
+            for item in payload:
+                self.assertNotIn(item, seen, f"Duplicate entry '{item}' in {tc_path}")
+                seen.add(item)
+        else:
+            lines = [l.strip() for l in content.splitlines() if l.strip().startswith("- ")]
+            items = [l[2:].strip().strip("'\"") for l in lines]
+            self.assertEqual(len(items), len(set(items)), f"Duplicate entries in {tc_path}")
 
 
 if __name__ == "__main__":
