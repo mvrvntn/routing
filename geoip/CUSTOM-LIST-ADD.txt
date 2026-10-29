@@ -214,4 +214,9 @@
 # Blizzard Entertainment EU (Battle.net / WoW Low Ping Direct)
 137.221.0.0/16
 
+# Google Cloud European Gaming Pools (Low Ping Direct)
+34.78.64.0/24
+34.34.66.0/24
+34.179.202.0/24
+
 

@@ -1,5 +1,5 @@
 # NAME: whitelist.list
-# TOTAL RULES: 605
+# TOTAL RULES: 609
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ipify.org
@@ -607,3 +607,7 @@ DOMAIN-SUFFIX,tank-online.com
 DOMAIN-SUFFIX,kontur.host
 DOMAIN-SUFFIX,playstation.net
 DOMAIN-SUFFIX,xboxlive.com
+DOMAIN-SUFFIX,gorzdrav.org
+DOMAIN-SUFFIX,gosuslugi.com
+DOMAIN-SUFFIX,my.com
+DOMAIN-SUFFIX,ali.ski

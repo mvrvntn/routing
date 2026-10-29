@@ -1,5 +1,5 @@
 # NAME: category-ads.list
-# TOTAL RULES: 59
+# TOTAL RULES: 72
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ad.mail.ru
@@ -61,3 +61,16 @@ DOMAIN-SUFFIX,kochava.com
 DOMAIN-SUFFIX,singular.net
 DOMAIN-SUFFIX,mixpanel.com
 DOMAIN-SUFFIX,scorecardresearch.com
+DOMAIN-SUFFIX,pubmatic.com
+DOMAIN-SUFFIX,rubiconproject.com
+DOMAIN-SUFFIX,openx.net
+DOMAIN-SUFFIX,adform.net
+DOMAIN-SUFFIX,bidswitch.net
+DOMAIN-SUFFIX,indexww.com
+DOMAIN-SUFFIX,triplelift.com
+DOMAIN-SUFFIX,sharethrough.com
+DOMAIN-SUFFIX,sovrn.com
+DOMAIN-SUFFIX,media.net
+DOMAIN-SUFFIX,mgid.com
+DOMAIN-SUFFIX,hotjar.com
+DOMAIN-SUFFIX,fullstory.com

@@ -66,3 +66,20 @@ domain:kochava.com
 domain:singular.net
 domain:mixpanel.com
 domain:scorecardresearch.com
+
+# Programmatic Ad Exchanges & SSP / DSP Platforms
+domain:pubmatic.com
+domain:rubiconproject.com
+domain:openx.net
+domain:adform.net
+domain:bidswitch.net
+domain:indexww.com
+domain:triplelift.com
+domain:sharethrough.com
+domain:sovrn.com
+domain:media.net
+domain:mgid.com
+
+# Session Replay & User Screen Recording
+domain:hotjar.com
+domain:fullstory.com

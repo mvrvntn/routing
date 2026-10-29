@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1688
+# TOTAL RULES: 1690
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -386,6 +386,7 @@ DOMAIN-SUFFIX,discordstatus.com
 DOMAIN-SUFFIX,discourse-cdn.com
 DOMAIN-SUFFIX,disctech.com
 DOMAIN-SUFFIX,disneyplus.com
+DOMAIN-SUFFIX,dssott.com
 DOMAIN-SUFFIX,distrochooser.de
 DOMAIN-SUFFIX,dkr.com
 DOMAIN-SUFFIX,dnb.com
@@ -701,6 +702,7 @@ DOMAIN-SUFFIX,lib.rus.ec
 DOMAIN-SUFFIX,libgen.rs
 DOMAIN-SUFFIX,libsdl.org
 DOMAIN-SUFFIX,lidarr.audio
+DOMAIN-SUFFIX,licdn.com
 DOMAIN-SUFFIX,lifehacker.com
 DOMAIN-SUFFIX,lightburnsoftware.com
 DOMAIN-SUFFIX,lightning.ai
