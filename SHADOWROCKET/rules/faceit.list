@@ -1,0 +1,7 @@
+# NAME: faceit.list
+# TOTAL RULES: 3
+# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+
+DOMAIN-SUFFIX,faceit.com
+DOMAIN-SUFFIX,faceit-cdn.net
+DOMAIN-SUFFIX,faceitmedia.com

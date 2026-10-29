@@ -1,0 +1,9 @@
+# NAME: twitch-ads.list
+# TOTAL RULES: 5
+# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+
+DOMAIN-SUFFIX,gql.twitch.tv
+DOMAIN-SUFFIX,usher.ttvnw.net
+DOMAIN-SUFFIX,ads.twitch.tv
+DOMAIN-SUFFIX,playlist.ttvnw.net
+DOMAIN-SUFFIX,static-cdn.jtvnw.net

@@ -1,0 +1,41 @@
+# NAME: microsoft.list
+# TOTAL RULES: 37
+# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+
+DOMAIN-SUFFIX,microsoft.com
+DOMAIN-SUFFIX,microsoftonline.com
+DOMAIN-SUFFIX,windows.com
+DOMAIN-SUFFIX,windowsupdate.com
+DOMAIN-SUFFIX,windows.net
+DOMAIN-SUFFIX,msedge.net
+DOMAIN-SUFFIX,msn.com
+DOMAIN-SUFFIX,bing.com
+DOMAIN-SUFFIX,live.com
+DOMAIN-SUFFIX,live.net
+DOMAIN-SUFFIX,livefilestore.com
+DOMAIN-SUFFIX,office.com
+DOMAIN-SUFFIX,office365.com
+DOMAIN-SUFFIX,azure.com
+DOMAIN-SUFFIX,onedrive.com
+DOMAIN-SUFFIX,onedrive.co
+DOMAIN-SUFFIX,onedrive.eu
+DOMAIN-SUFFIX,onedrive.net
+DOMAIN-SUFFIX,onedrive.org
+DOMAIN-SUFFIX,1drv.com
+DOMAIN-SUFFIX,1drv.ms
+DOMAIN-SUFFIX,xbox
+DOMAIN-SUFFIX,xbox.com
+DOMAIN-SUFFIX,xbox.co
+DOMAIN-SUFFIX,xbox.eu
+DOMAIN-SUFFIX,xbox.org
+DOMAIN-SUFFIX,xbox360.com
+DOMAIN-SUFFIX,xboxgamepass.com
+DOMAIN-SUFFIX,xboxgamestudios.com
+DOMAIN-SUFFIX,xboxservices.com
+DOMAIN-SUFFIX,xboxstudios.com
+DOMAIN-SUFFIX,gamepass.com
+DOMAIN-SUFFIX,xbx.lv
+DOMAIN-SUFFIX,orithegame.com
+DOMAIN-SUFFIX,tellmewhygame.com
+DOMAIN-SUFFIX,renovacionxboxlive.com
+DOMAIN-SUFFIX,msocsp.com

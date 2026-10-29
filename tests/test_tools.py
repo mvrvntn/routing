@@ -491,7 +491,42 @@ class TestToolsSuite(unittest.TestCase):
             # Ensure direct-ips has no-resolve
             self.assertIn("RULE-SET,direct-ips,DIRECT,no-resolve", content, f"direct-ips must use no-resolve in {cfg_path}")
 
+    def test_shadowrocket_generation_and_rules(self):
+        from tools.shadowrocket.generate_shadowrocket import parse_geosite_rule, build_all_shadowrocket
+        self.assertEqual(parse_geosite_rule("domain:example.com"), "DOMAIN-SUFFIX,example.com")
+        self.assertEqual(parse_geosite_rule("full:example.com @attr"), "DOMAIN,example.com")
+        self.assertEqual(parse_geosite_rule("keyword:test # note"), "DOMAIN-KEYWORD,test")
+        self.assertIsNone(parse_geosite_rule("regexp:^pattern.*$"))
+        self.assertIsNone(parse_geosite_rule("# only comment"))
+
+        stats = build_all_shadowrocket(verbose=False)
+        self.assertIn("domain:category-geoblock-ru", stats)
+        self.assertIn("ip:discord-ips", stats)
+        self.assertIn("ip:whitelist-ips", stats)
+
+        sr_default = os.path.join(BASE_DIR, "SHADOWROCKET", "DEFAULT.CONF")
+        self.assertTrue(os.path.exists(sr_default), "SHADOWROCKET/DEFAULT.CONF missing")
+        with open(sr_default, "r", encoding="utf-8") as f:
+            content = f.read()
+        self.assertIn("dns.quad9.net", content)
+        self.assertIn("common.dot.dns.yandex.net", content)
+        self.assertIn("lkfl2.nalog.ru = 213.24.64.175", content)
+        self.assertIn("rules/category-ads.list,REJECT", content)
+        self.assertIn("rules/discord.list,PROXY", content)
+        self.assertIn("rules/discord-ips.list,PROXY", content)
+        self.assertIn("GEOIP,RU,DIRECT", content)
+        self.assertIn("FINAL,PROXY", content)
+
+    def test_check_dead_domains_parser(self):
+        from tools.check_dead_domains import clean_domain
+        self.assertEqual(clean_domain("domain:example.com"), "example.com")
+        self.assertEqual(clean_domain("full:Sub.EXAMPLE.COM @ads # comment"), "sub.example.com")
+        self.assertIsNone(clean_domain("keyword:google"))
+        self.assertIsNone(clean_domain("regexp:.*google.*"))
+        self.assertIsNone(clean_domain("# just comment"))
+
 
 if __name__ == "__main__":
     unittest.main()
+
 

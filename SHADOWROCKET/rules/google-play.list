@@ -1,0 +1,31 @@
+# NAME: google-play.list
+# TOTAL RULES: 27
+# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+
+DOMAIN-SUFFIX,googleplay.com
+DOMAIN-SUFFIX,play.google.com
+DOMAIN-SUFFIX,play.googleapis.com
+DOMAIN-SUFFIX,play-fe.googleapis.com
+DOMAIN-SUFFIX,prod-lt-playstoregatewayadapter-pa.googleapis.com
+DOMAIN-SUFFIX,playstoregatewayadapter-pa.googleapis.com
+DOMAIN-SUFFIX,play-lh.googleusercontent.com
+DOMAIN-SUFFIX,connectivitycheck.gstatic.com
+DOMAIN-SUFFIX,android.clients.google.com
+DOMAIN-SUFFIX,lh3.googleusercontent.com
+DOMAIN-SUFFIX,android-safebrowsing.google.com
+DOMAIN-SUFFIX,voledevice-pa.googleapis.com
+DOMAIN-SUFFIX,play-apps-features.googleusercontent.com
+DOMAIN-SUFFIX,playconsole.static.usercontent.goog
+DOMAIN-SUFFIX,digitalassetlinks.googleapis.com
+DOMAIN-SUFFIX,playgateway-pa.googleapis.com
+DOMAIN-SUFFIX,googleads.g.doubleclick.net
+DOMAIN-SUFFIX,infinitedata-pa.googleapis.com
+DOMAIN-SUFFIX,google-ohttp-relay-safebrowsing.fastly-edge.com
+DOMAIN-SUFFIX,app-measurement.com
+DOMAIN-SUFFIX,quake-pa.googleapis.com
+DOMAIN-SUFFIX,safebrowsing.googleapis.com
+DOMAIN-SUFFIX,ota.googlezip.net
+DOMAIN-SUFFIX,ota-cache1.googlezip.net
+DOMAIN-SUFFIX,ota-cache2.googlezip.net
+DOMAIN-SUFFIX,ota-cache3.googlezip.net
+DOMAIN-SUFFIX,firebaseinstallations.googleapis.com

@@ -8,6 +8,8 @@ Python-утилиты для генерации клиентских конфи�
 
 ```
 tools/
+├── shadowrocket/
+│   └── generate_shadowrocket.py        # Генерация профилей .CONF и списков .list для Shadowrocket (iOS)
 ├── streisand/
 │   └── generate_streisand_link.py      # Генерация ссылки streisand:// для iOS
 ├── v2rayNG/
@@ -15,6 +17,7 @@ tools/
 │   └── generate_geoasset_qr.py         # QR-коды для обновления geoip.dat и geosite.dat
 ├── singbox/
 │   └── generate_singbox_rules.py       # Генерация rules JSON для sing-box (Throne / NekoRay v4+)
+├── check_dead_domains.py               # Асинхронный аудит доступности доменов (RFC 8020 NXDOMAIN)
 └── README.md
 ```
 
@@ -24,6 +27,14 @@ tools/
 - Стандартная библиотека Python (для генерации QR-изображений опционально `pip install qrcode[pil]`)
 
 ## 🚀 Использование
+
+### Shadowrocket (iOS)
+
+Генерация профилей `DEFAULT.CONF`, `WHITELIST.CONF` и скомпилированных правил `rules/*.list`:
+
+```bash
+python tools/shadowrocket/generate_shadowrocket.py
+```
 
 ### Streisand (iOS)
 
