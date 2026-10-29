@@ -60,7 +60,6 @@ payload:
   - PROCESS-NAME,azureus
   - PROCESS-NAME,ktorrent
   - PROCESS-NAME,rtorrent
-  - PROCESS-NAME,tribler
   - PROCESS-NAME,torrserver
 
   # Android Packages

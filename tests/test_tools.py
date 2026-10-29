@@ -370,6 +370,53 @@ class TestToolsSuite(unittest.TestCase):
         self.assertIsNotNone(doh_server, "Missing DoH DNS server for category-geoblock-ru in xray_location_template.json")
         self.assertTrue(doh_server.get("address", "").startswith("https://"), "category-geoblock-ru DNS must use secure DoH")
 
+    def test_data_no_redundant_subdomains(self):
+        for fname in ("category-geoblock-ru", "google-deepmind"):
+            fpath = os.path.join(BASE_DIR, "data", fname)
+            with open(fpath, "r", encoding="utf-8") as f:
+                lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
+            domains = set()
+            for l in lines:
+                if l.startswith("domain:"):
+                    domains.add(l[7:])
+                elif not l.startswith("full:") and not l.startswith("regexp:"):
+                    domains.add(l)
+            for d in domains:
+                parts = d.split(".")
+                for i in range(1, len(parts)):
+                    parent = ".".join(parts[i:])
+                    self.assertNotIn(
+                        parent,
+                        domains,
+                        f"Subdomain '{d}' in {fname} is shadowed by parent domain '{parent}'",
+                    )
+
+    def test_mihomo_sniffer_apple_protection(self):
+        import yaml
+        configs = [
+            os.path.join(BASE_DIR, "MIHOMO", "default.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_remnawave.yaml"),
+            os.path.join(BASE_DIR, "RELOCANT", "mihomo.yaml"),
+        ]
+        for cfg_path in configs:
+            with open(cfg_path, "r", encoding="utf-8") as f:
+                doc = yaml.safe_load(f)
+            sniffer = doc.get("sniffer", {})
+            self.assertTrue(sniffer.get("enable"), f"Sniffer not enabled in {cfg_path}")
+            skip_domain = sniffer.get("skip-domain", [])
+            self.assertIn("+.apple.com", skip_domain, f"Missing '+.apple.com' in sniffer.skip-domain of {cfg_path}")
+
+    def test_mihomo_torrent_clients_no_duplicates(self):
+        import yaml
+        tc_path = os.path.join(BASE_DIR, "MIHOMO", "torrent-clients.yaml")
+        with open(tc_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        payload = data.get("payload", [])
+        seen = set()
+        for item in payload:
+            self.assertNotIn(item, seen, f"Duplicate entry '{item}' in {tc_path}")
+            seen.add(item)
+
 
 if __name__ == "__main__":
     unittest.main()

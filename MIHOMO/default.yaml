@@ -106,6 +106,8 @@ sniffer:
       ports:
       - 443
       - 8443
+  skip-domain:
+  - "+.apple.com"
   skip-dst-address:
   - 224.0.0.0/3
   - 10.0.0.0/8

@@ -43,7 +43,6 @@ EXPLICIT_PROXY_OVERRIDES = {"lava.ru", "freedom-travel.kz", "freedom-travel.at"}
 
 # Baseline Apple Pay, Apple Wallet & Apple Cash endpoints (fixes regional lockouts on iOS)
 APPLE_WALLET_DOMAINS = {
-    "api.apple-pay.com",
     "apple-pay-gateway.apple.com",
     "cn-apple-pay-gateway.apple.com",
     "apple-pay.com",

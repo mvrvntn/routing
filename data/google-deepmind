@@ -31,9 +31,6 @@ domain:generativephotobooth-pa.googleapis.com
 domain:makersuite.google.com
 domain:ai.studio
 domain:aistudio.google.com
-domain:alkalicore-pa.clients6.google.com
-domain:alkalimakersuite-pa.clients6.google.com
-domain:webchannel-alkalimakersuite-pa.clients6.google.com
 
 # Google DeepMind - Gemini Code Assist
 domain:cloudaicompanion.googleapis.com
@@ -82,7 +79,6 @@ domain:aitestkitchen.withgoogle.com
 domain:apis.google.com
 domain:assistant-s3-pa.googleapis.com
 domain:waa-pa.googleapis.com
-domain:waa-pa.clients6.google.com
 domain:speechs3-pa.googleapis.com
 domain:developerprofiles-pa.googleapis.com
 domain:lookerstudio.google.com
