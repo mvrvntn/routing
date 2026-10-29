@@ -371,15 +371,18 @@ class TestToolsSuite(unittest.TestCase):
         self.assertTrue(doh_server.get("address", "").startswith("https://"), "category-geoblock-ru DNS must use secure DoH")
 
     def test_data_no_redundant_subdomains(self):
-        for fname in ("category-geoblock-ru", "google-deepmind"):
-            fpath = os.path.join(BASE_DIR, "data", fname)
+        import glob
+        for fpath in glob.glob(os.path.join(BASE_DIR, "data", "*")):
+            if os.path.isdir(fpath) or os.path.basename(fpath) == "private":
+                continue
+            fname = os.path.basename(fpath)
             with open(fpath, "r", encoding="utf-8") as f:
                 lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
             domains = set()
             for l in lines:
                 if l.startswith("domain:"):
                     domains.add(l[7:])
-                elif not l.startswith("full:") and not l.startswith("regexp:"):
+                elif not l.startswith("full:") and not l.startswith("regexp:") and not l.startswith("include:"):
                     domains.add(l)
             for d in domains:
                 parts = d.split(".")
