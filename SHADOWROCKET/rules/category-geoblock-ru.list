@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1687
+# TOTAL RULES: 1686
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -59,6 +59,7 @@ DOMAIN-SUFFIX,aimlab.gg
 DOMAIN-SUFFIX,aimlabs.com
 DOMAIN-SUFFIX,aimlabspages.kinsta.cloud
 DOMAIN-SUFFIX,airbnb.com
+DOMAIN-SUFFIX,airbnb.ru
 DOMAIN-SUFFIX,airbrake.io
 DOMAIN-SUFFIX,aircanada.com
 DOMAIN-SUFFIX,aisandbox-pa.googleapis.com
@@ -160,6 +161,7 @@ DOMAIN-SUFFIX,atwiki.jp
 DOMAIN-SUFFIX,audio-ak-spotify-com.akamaized.net
 DOMAIN-SUFFIX,audio4-ak-spotify-com.akamaized.net
 DOMAIN-SUFFIX,augmentcode.com
+DOMAIN-SUFFIX,auth.xboxlive.com
 DOMAIN-SUFFIX,auth0.com
 DOMAIN-SUFFIX,autocad.com
 DOMAIN-SUFFIX,autodesk.com
@@ -316,7 +318,6 @@ DOMAIN-SUFFIX,cloudflare-ech.com
 DOMAIN-SUFFIX,cloudflareclient.com
 DOMAIN-SUFFIX,cmems-du.eu
 DOMAIN-SUFFIX,cn-apple-pay-gateway.apple.com
-DOMAIN-SUFFIX,co.nz
 DOMAIN-SUFFIX,cocalc.com
 DOMAIN-SUFFIX,code.gist.build
 DOMAIN-SUFFIX,codebrowser.dev
@@ -327,7 +328,6 @@ DOMAIN-SUFFIX,cohere.com
 DOMAIN-SUFFIX,coinbase.com
 DOMAIN-SUFFIX,coinbase.net
 DOMAIN-SUFFIX,coingate.com
-DOMAIN-SUFFIX,com.ua
 DOMAIN-SUFFIX,connect.ngrok-agent.com
 DOMAIN-SUFFIX,consent.trustarc.com
 DOMAIN-SUFFIX,contabo.com
@@ -462,7 +462,6 @@ DOMAIN-SUFFIX,engagor.com
 DOMAIN-SUFFIX,entrust.com
 DOMAIN-SUFFIX,envato.com
 DOMAIN-SUFFIX,epg.one
-DOMAIN-SUFFIX,epicgames.com
 DOMAIN-SUFFIX,essential.gg
 DOMAIN-SUFFIX,etsy.com
 DOMAIN-SUFFIX,eu-iot-prod.aws.tcljd.com
@@ -590,6 +589,7 @@ DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,groq.com
 DOMAIN-SUFFIX,groupon.com
 DOMAIN-SUFFIX,grouponcdn.com
+DOMAIN-SUFFIX,gssv-play-prod.xboxlive.com
 DOMAIN-SUFFIX,gtagarage.com
 DOMAIN-SUFFIX,guilded.gg
 DOMAIN-SUFFIX,gulagu.net
@@ -752,7 +752,6 @@ DOMAIN-SUFFIX,linuxiac.com
 DOMAIN-SUFFIX,lipstickalley.com
 DOMAIN-SUFFIX,liquibase.com
 DOMAIN-SUFFIX,liquidsky.com
-DOMAIN-SUFFIX,live.net
 DOMAIN-SUFFIX,livekit.cloud
 DOMAIN-SUFFIX,llamameta.net
 DOMAIN-SUFFIX,localbitcoins.com

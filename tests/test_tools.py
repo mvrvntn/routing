@@ -685,6 +685,53 @@ class TestToolsSuite(unittest.TestCase):
             discord_cidrs = f.read()
         self.assertIn("162.159.128.0/19", discord_cidrs, "Missing 162.159.128.0/19 in geoip/discord.txt")
 
+    def test_no_cross_action_domain_overlaps(self):
+        """Ensure Direct categories do not share exact domains with Proxy or Block categories."""
+        def parse_category(fname):
+            doms = set()
+            with open(os.path.join(BASE_DIR, "data", fname), "r", encoding="utf-8") as f:
+                for line in f:
+                    s = line.strip()
+                    if not s or s.startswith("#") or s.startswith("include:") or s.startswith("regexp:"):
+                        continue
+                    for pfx in ("domain:", "full:", "keyword:"):
+                        if s.startswith(pfx):
+                            s = s[len(pfx):]
+                            break
+                    doms.add(s.strip(". ").lower())
+            return doms
+
+        direct_cats = ("category-ru", "whitelist", "epicgames", "steam", "riot", "escapefromtarkov", "origin", "faceit", "microsoft")
+        proxy_cats = ("category-geoblock-ru", "google-play", "discord", "telegram", "youtube", "ai", "google-deepmind")
+        block_cats = ("category-ads", "win-spy", "torrent")
+
+        direct_union = set().union(*(parse_category(c) for c in direct_cats))
+        proxy_union = set().union(*(parse_category(c) for c in proxy_cats))
+        block_union = set().union(*(parse_category(c) for c in block_cats))
+
+        self.assertEqual(
+            direct_union & proxy_union,
+            set(),
+            f"Direct and Proxy categories have overlapping domains: {direct_union & proxy_union}",
+        )
+        self.assertEqual(
+            direct_union & block_union,
+            set(),
+            f"Direct and Block categories have overlapping domains: {direct_union & block_union}",
+        )
+
+    def test_mihomo_payload_files_no_duplicates(self):
+        """Ensure MIHOMO/games.yaml, ru-apps.yaml, and torrent-clients.yaml have no duplicate entries."""
+        for fname in ("games.yaml", "ru-apps.yaml", "torrent-clients.yaml"):
+            fpath = os.path.join(BASE_DIR, "MIHOMO", fname)
+            items = []
+            with open(fpath, "r", encoding="utf-8") as f:
+                for line in f:
+                    s = line.strip()
+                    if s.startswith("- "):
+                        items.append(s)
+            self.assertEqual(len(items), len(set(items)), f"Duplicate entries found in MIHOMO/{fname}")
+
 
 if __name__ == "__main__":
     unittest.main()

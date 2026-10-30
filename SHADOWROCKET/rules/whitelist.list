@@ -1,5 +1,5 @@
 # NAME: whitelist.list
-# TOTAL RULES: 609
+# TOTAL RULES: 605
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ipify.org
@@ -501,9 +501,7 @@ DOMAIN-SUFFIX,alt5-mtalk.google.com
 DOMAIN-SUFFIX,alt6-mtalk.google.com
 DOMAIN-SUFFIX,alt7-mtalk.google.com
 DOMAIN-SUFFIX,alt8-mtalk.google.com
-DOMAIN-SUFFIX,android.clients.google.com
 DOMAIN-SUFFIX,fcm.googleapis.com
-DOMAIN-SUFFIX,firebaseinstallations.googleapis.com
 DOMAIN-SUFFIX,mipush.xiaomi.com
 DOMAIN-SUFFIX,xmpush.xiaomi.com
 DOMAIN-SUFFIX,push.hicloud.com
@@ -561,8 +559,6 @@ DOMAIN-SUFFIX,alicdn.com
 DOMAIN-SUFFIX,ddos-guard.net
 DOMAIN-SUFFIX,qrator.net
 DOMAIN-SUFFIX,ngenix.net
-DOMAIN-SUFFIX,webvisor.com
-DOMAIN-SUFFIX,webvisor.org
 DOMAIN-SUFFIX,aviasales.com
 DOMAIN-SUFFIX,onetwotrip.com
 DOMAIN-SUFFIX,pobeda.aero

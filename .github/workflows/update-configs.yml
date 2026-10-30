@@ -327,18 +327,15 @@ jobs:
 
           failures = []
           for key, (code, path) in targets.items():
-              nets = catalog.get(code, [])
-              net_set = set(nets)
-              v4_nets = [n for n in nets if n.version == 4]
-              v6_nets = [n for n in nets if n.version == 6]
+              net_set = set(catalog.get(code, []))
               src_nets = read_cidrs(path)
-              missing = []
-              for net in src_nets:
-                  if net in net_set:
-                      continue
-                  pool = v4_nets if net.version == 4 else v6_nets
-                  if not any(net.subnet_of(n) for n in pool):
-                      missing.append(str(net))
+              missing = [
+                  str(net) for net in src_nets
+                  if net not in net_set and not any(
+                      net.supernet(new_prefix=p) in net_set
+                      for p in range(net.prefixlen - 1, -1, -1)
+                  )
+              ]
               if missing:
                   failures.append(f"{path} -> {code}: {len(missing)} CIDR not covered (e.g. {missing[:5]})")
 
@@ -618,7 +615,7 @@ jobs:
           set -euo pipefail
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add HAPP/ INCY/ RELOCANT/ SHADOWROCKET/ README.md
+          git add data/category-geoblock-ru geosite.dat geoip.dat HAPP/ INCY/ RELOCANT/ SHADOWROCKET/ README.md
           if ! git diff --cached --quiet; then
             git commit -m "chore: обновление конфигураций роутинга и диплинков ${{ env.DAILY_TAG }} [skip ci]"
             git push origin main
@@ -646,10 +643,12 @@ jobs:
             done
           fi
           for json in INCY/DEFAULT.JSON INCY/WHITELIST.JSON INCY/JSONSUB.JSON RELOCANT/INCY.JSON \
+                      INCY/DEFAULT.DEEPLINK INCY/WHITELIST.DEEPLINK INCY/JSONSUB.DEEPLINK RELOCANT/INCY.DEEPLINK \
                       INCY/DEFAULT.AUTOROUTING INCY/WHITELIST.AUTOROUTING INCY/JSONSUB.AUTOROUTING RELOCANT/INCY.AUTOROUTING \
                       HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON RELOCANT/HAPP.JSON \
+                      HAPP/DEFAULT.DEEPLINK HAPP/WHITELIST.DEEPLINK HAPP/JSONSUB.DEEPLINK RELOCANT/HAPP.DEEPLINK \
                       RELOCANT/mihomo.yaml MIHOMO/default.yaml MIHOMO/template_remnawave.yaml MIHOMO/template_3x-ui.yaml \
-                      SHADOWROCKET/DEFAULT.CONF SHADOWROCKET/WHITELIST.CONF; do
+                      SHADOWROCKET/DEFAULT.CONF SHADOWROCKET/WHITELIST.CONF RELOCANT/SHADOWROCKET.CONF; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
           done
 

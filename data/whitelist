@@ -528,9 +528,7 @@ domain:alt5-mtalk.google.com
 domain:alt6-mtalk.google.com
 domain:alt7-mtalk.google.com
 domain:alt8-mtalk.google.com
-domain:android.clients.google.com
 domain:fcm.googleapis.com
-domain:firebaseinstallations.googleapis.com
 domain:mipush.xiaomi.com
 domain:xmpush.xiaomi.com
 domain:push.hicloud.com
@@ -592,8 +590,6 @@ domain:alicdn.com
 domain:ddos-guard.net
 domain:qrator.net
 domain:ngenix.net
-domain:webvisor.com
-domain:webvisor.org
 
 # --- Russian Travel & Airlines (Non-.RU TLDs) ---
 domain:aviasales.com

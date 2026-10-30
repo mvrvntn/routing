@@ -12,7 +12,6 @@ Covers:
 
 import sys
 import unittest
-import asyncio
 from pathlib import Path
 from unittest.mock import patch
 
@@ -25,9 +24,12 @@ from scripts.update_geoblock import (
     clean_domain_string,
     is_valid_domain,
     is_protected_domain,
+    load_protected_domains,
+    load_baseline_regexps,
     prune_redundant_subdomains,
     fetch_single_url,
     async_main,
+    run_coro,
 )
 
 
@@ -111,6 +113,18 @@ class TestSafetyGate(unittest.TestCase):
         # apple.com root must be protected to prevent overriding direct OS update downloads
         self.assertTrue(is_protected_domain("apple.com", self.protected))
 
+    def test_explicit_proxy_overrides_and_gaming_protection(self):
+        real_protected = load_protected_domains()
+        self.assertFalse(is_protected_domain("airbnb.ru", real_protected))
+        self.assertFalse(is_protected_domain("lava.ru", real_protected))
+        self.assertFalse(is_protected_domain("auth.xboxlive.com", real_protected))
+        self.assertFalse(is_protected_domain("gssv-play-prod.xboxlive.com", real_protected))
+        self.assertTrue(is_protected_domain("xboxlive.com", real_protected))
+        self.assertTrue(is_protected_domain("epicgames.com", real_protected))
+        self.assertTrue(is_protected_domain("co.nz", real_protected))
+        self.assertTrue(is_protected_domain("com.ua", real_protected))
+        self.assertTrue(is_protected_domain("live.net", real_protected))
+
 
 class TestSubdomainPruning(unittest.TestCase):
     """Test memory-optimizing domain collapsing without losing coverage."""
@@ -142,19 +156,19 @@ class TestSubdomainPruning(unittest.TestCase):
         self.assertEqual(pruned, domains)
 
 
-class TestNetworkIsolationAndMocks(unittest.IsolatedAsyncioTestCase):
+class TestNetworkIsolationAndMocks(unittest.TestCase):
     """Test async network fetching with zero live network calls."""
 
     @patch("scripts.update_geoblock._sync_fetch")
-    async def test_successful_fetch(self, mock_fetch):
+    def test_successful_fetch(self, mock_fetch):
         mock_fetch.return_value = "chatgpt.com\ninstagram.com\n1.2.3.4\n# comment\n"
-        result = await fetch_single_url("https://mock.url/domains.lst", timeout=5)
+        result = run_coro(fetch_single_url("https://mock.url/domains.lst", timeout=5))
         self.assertEqual(result, {"chatgpt.com", "instagram.com"})
 
     @patch("scripts.update_geoblock._sync_fetch")
-    async def test_timeout_fallback(self, mock_fetch):
+    def test_timeout_fallback(self, mock_fetch):
         mock_fetch.side_effect = TimeoutError("Socket timed out")
-        result = await fetch_single_url("https://mock.url/timeout.lst", timeout=1)
+        result = run_coro(fetch_single_url("https://mock.url/timeout.lst", timeout=1))
         self.assertEqual(result, set())
 
 
@@ -170,17 +184,36 @@ class TestAtomicWriteAndRollback(unittest.TestCase):
             # Patch load functions to provide minimal data
             with patch("scripts.update_geoblock.load_protected_domains", return_value=set()), \
                  patch("scripts.update_geoblock.load_baseline_geoblock", return_value={"initial.com"}), \
+                 patch("scripts.update_geoblock.load_baseline_regexps", return_value=[]), \
                  patch("scripts.update_geoblock.fetch_all_community_domains", return_value=set()):
 
                 # Simulate disk write failure
                 with patch("builtins.open", side_effect=OSError("Disk write error")):
                     with self.assertRaises(OSError):
-                        asyncio.run(async_main(geoblock_file=target, community_urls=[]))
+                        run_coro(async_main(geoblock_file=target, community_urls=[]))
 
             # Ensure .tmp is cleaned up and original file intact
             tmp_file = target.with_suffix(".tmp")
             self.assertFalse(tmp_file.exists())
             self.assertEqual(target.read_text(encoding="utf-8"), "domain:initial.com\n")
+
+    def test_preserves_regexp_entries(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmpdir:
+            target = Path(tmpdir) / "test_geoblock"
+            target.write_text(
+                "domain:openai.com\nregexp:^chatgpt-async-webps-prod-\\S+-\\d+\\.webpubsub\\.azure\\.com$\n",
+                encoding="utf-8",
+            )
+            regexps = load_baseline_regexps(target)
+            self.assertEqual(regexps, [r"^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$"])
+            with patch("scripts.update_geoblock.load_protected_domains", return_value=set()), \
+                 patch("scripts.update_geoblock.load_baseline_geoblock", return_value={"openai.com"}), \
+                 patch("scripts.update_geoblock.fetch_all_community_domains", return_value=set()):
+                run_coro(async_main(geoblock_file=target, community_urls=[]))
+            written = target.read_text(encoding="utf-8").splitlines()
+            self.assertIn("domain:openai.com", written)
+            self.assertIn(r"regexp:^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$", written)
 
 
 if __name__ == "__main__":

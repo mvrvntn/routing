@@ -12,10 +12,11 @@ Asynchronous architecture using native asyncio + thread executor:
 import os
 import sys
 import re
-import asyncio
+import concurrent.futures
 import urllib.request
 import urllib.error
 from pathlib import Path
+from typing import Any, Coroutine
 
 # Paths relative to repo root
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -24,6 +25,14 @@ GEOBLOCK_FILE = DATA_DIR / "category-geoblock-ru"
 CATEGORY_RU_FILE = DATA_DIR / "category-ru"
 WHITELIST_FILE = DATA_DIR / "whitelist"
 TORRENT_FILE = DATA_DIR / "torrent"
+DIRECT_GAMING_FILES = (
+    DATA_DIR / "epicgames",
+    DATA_DIR / "steam",
+    DATA_DIR / "riot",
+    DATA_DIR / "escapefromtarkov",
+    DATA_DIR / "origin",
+    DATA_DIR / "faceit",
+)
 
 # Antifilter & Re-filter community curated blocked domains (supports multiple concurrent mirrors)
 COMMUNITY_URLS = [
@@ -39,8 +48,18 @@ DOMAIN_REGEX = re.compile(
 # Protected Top-Level Domains (Strict Safety Gate)
 PROTECTED_TLDS = (".ru", ".рф", ".su", ".xn--p1ai")
 
+# Bare public suffixes / direct Microsoft CDN domains that must never enter geoblock
+BARE_PROTECTED_SUFFIXES = {"co.nz", "com.ua", "live.net"}
+
 # Explicit overrides permitted through safety gate (e.g. services that geoblock RU)
-EXPLICIT_PROXY_OVERRIDES = {"lava.ru", "freedom-travel.kz", "freedom-travel.at"}
+EXPLICIT_PROXY_OVERRIDES = {
+    "lava.ru",
+    "airbnb.ru",
+    "freedom-travel.kz",
+    "freedom-travel.at",
+    "auth.xboxlive.com",
+    "gssv-play-prod.xboxlive.com",
+}
 
 # Baseline Apple Pay, Apple Wallet & Apple Cash endpoints (fixes regional lockouts on iOS)
 APPLE_WALLET_DOMAINS = {
@@ -110,9 +129,9 @@ def is_valid_domain(domain: str) -> bool:
 
 
 def load_protected_domains() -> set[str]:
-    """Load domains from category-ru, whitelist, and torrent to ensure they are never proxied."""
-    protected = set()
-    for file_path in (CATEGORY_RU_FILE, WHITELIST_FILE, TORRENT_FILE):
+    """Load domains from category-ru, whitelist, torrent, and direct gaming lists to ensure they are never proxied."""
+    protected = set(BARE_PROTECTED_SUFFIXES)
+    for file_path in (CATEGORY_RU_FILE, WHITELIST_FILE, TORRENT_FILE, *DIRECT_GAMING_FILES):
         if not file_path.exists():
             continue
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
@@ -120,23 +139,57 @@ def load_protected_domains() -> set[str]:
                 d = clean_domain_string(line)
                 if d and is_valid_domain(d):
                     protected.add(d)
-    print(f"[Safety Gate] Loaded {len(protected)} protected domains from category-ru, whitelist, and torrent.")
+    print(f"[Safety Gate] Loaded {len(protected)} protected domains from category-ru, whitelist, torrent, and gaming lists.")
     return protected
 
 
-def load_baseline_geoblock() -> set[str]:
+def load_baseline_geoblock(geoblock_file: Path = GEOBLOCK_FILE) -> set[str]:
     """Load existing manual baseline from category-geoblock-ru, data/ai, and Apple Wallet endpoints."""
     baseline = set(APPLE_WALLET_DOMAINS)
-    for file_path in (GEOBLOCK_FILE, DATA_DIR / "ai"):
+    for file_path in (geoblock_file, DATA_DIR / "ai"):
         if not file_path.exists():
             continue
         with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
             for line in f:
-                d = clean_domain_string(line)
+                s = line.strip()
+                if s.startswith("regexp:"):
+                    continue
+                d = clean_domain_string(s)
                 if d and is_valid_domain(d):
                     baseline.add(d)
     print(f"[Baseline] Loaded {len(baseline)} baseline domains.")
     return baseline
+
+
+def load_baseline_regexps(geoblock_file: Path = GEOBLOCK_FILE) -> list[str]:
+    """Load existing regexp: rules from category-geoblock-ru so they are preserved across updates."""
+    regexps: list[str] = []
+    seen: set[str] = set()
+    if not geoblock_file.exists():
+        return regexps
+    with open(geoblock_file, "r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            s = line.strip()
+            if not s or s.startswith("#"):
+                continue
+            if " #" in s:
+                s = s.split(" #", 1)[0].strip()
+            if s.startswith("regexp:"):
+                pattern = s.removeprefix("regexp:").strip()
+                if pattern and pattern not in seen:
+                    seen.add(pattern)
+                    regexps.append(pattern)
+    return regexps
+
+
+def run_coro(coro: Coroutine[Any, Any, Any]) -> Any:
+    """Drive a pure coroutine to completion without requiring a loopback socketpair event loop."""
+    try:
+        coro.send(None)
+    except StopIteration as exc:
+        return exc.value
+    finally:
+        coro.close()
 
 
 # Max allowed payload size per remote fetch (10 MB) to prevent DoS / Memory Bombs
@@ -159,20 +212,17 @@ def _sync_fetch(url: str, timeout: int = 15) -> str:
 
 
 async def fetch_single_url(url: str, timeout: int = 15) -> set[str]:
-    """Asynchronously fetch and parse domains from a single remote URL with cancellation safety."""
+    """Fetch and parse domains from a single remote URL with timeout and error handling."""
     print(f"[Fetch] Concurrently fetching: {url}...")
     try:
-        raw_text = await asyncio.wait_for(
-            asyncio.to_thread(_sync_fetch, url, timeout),
-            timeout=timeout + 2
-        )
-    except asyncio.TimeoutError:
+        raw_text = _sync_fetch(url, timeout)
+    except TimeoutError:
         print(f"[Warning] Timeout fetching {url} after {timeout}s. Skipping.")
         return set()
     except urllib.error.HTTPError as e:
         print(f"[Warning] HTTP {e.code} ({e.reason}) fetching {url}. Skipping.")
         return set()
-    except (urllib.error.URLError, TimeoutError, OSError) as e:
+    except (urllib.error.URLError, OSError, ValueError) as e:
         print(f"[Warning] Network error fetching {url}: {e}. Skipping.")
         return set()
 
@@ -188,8 +238,11 @@ async def fetch_single_url(url: str, timeout: int = 15) -> set[str]:
 async def fetch_all_community_domains(urls: list[str] | None = None) -> set[str]:
     """Execute concurrent non-blocking fetch across all community mirrors."""
     target_urls = urls if urls is not None else COMMUNITY_URLS
-    tasks = [fetch_single_url(url) for url in target_urls]
-    results = await asyncio.gather(*tasks, return_exceptions=False)
+    if not target_urls:
+        return set()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=min(8, len(target_urls))) as executor:
+        futures = [executor.submit(run_coro, fetch_single_url(url)) for url in target_urls]
+        results = [fut.result() for fut in futures]
     combined = set().union(*results) if results else set()
     print(f"[Fetch] Total community domains retrieved: {len(combined)}.")
     return combined
@@ -234,11 +287,14 @@ def prune_redundant_subdomains(domains: set[str]) -> set[str]:
 
 async def async_main(
     geoblock_file: Path = GEOBLOCK_FILE,
-    community_urls: list[str] = COMMUNITY_URLS,
+    community_urls: list[str] | None = None,
 ) -> None:
     protected = load_protected_domains()
     baseline = load_baseline_geoblock()
-    community = await fetch_all_community_domains(community_urls)
+    baseline_regexps = load_baseline_regexps(geoblock_file)
+    community = await fetch_all_community_domains(
+        COMMUNITY_URLS if community_urls is None else community_urls
+    )
 
     combined = baseline | community
     print(f"[Process] Total raw domain pool: {len(combined)}")
@@ -256,8 +312,10 @@ async def async_main(
         print(f"[Error] Sanitized count ({len(final_domains)}) abnormally lower than baseline ({len(baseline)}). Aborting.")
         sys.exit(1)
 
-    # Write atomically with rollback protection
+    # Write atomically with rollback protection (preserving regexp: entries)
     output_lines = [f"domain:{d}\n" for d in sorted(final_domains)]
+    for rx in baseline_regexps:
+        output_lines.append(f"regexp:{rx}\n")
     temp_file = geoblock_file.with_suffix(".tmp")
     try:
         with open(temp_file, "w", encoding="utf-8", newline="\n") as f:
@@ -270,11 +328,14 @@ async def async_main(
         print(f"[Error] Failed to write {geoblock_file.name}: {e}. Rolled back.")
         raise
 
-    print(f"[Success] Updated {geoblock_file.name}: {len(final_domains)} domains written atomically.")
+    print(
+        f"[Success] Updated {geoblock_file.name}: {len(final_domains)} domains "
+        f"and {len(baseline_regexps)} regexps written atomically."
+    )
 
 
 def main() -> None:
-    asyncio.run(async_main())
+    run_coro(async_main())
 
 
 if __name__ == "__main__":
