@@ -8,6 +8,7 @@
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
 [![jsDelivr CDN](https://img.shields.io/badge/jsDelivr-CDN-orange.svg)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
 [![Tests](https://img.shields.io/badge/Tests-47%20Passed-brightgreen.svg)](tests/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Регион:** 🇷🇺 Россия + 🇧🇾 Беларусь
 
@@ -260,6 +261,16 @@ git diff origin/release~1 origin/release -- text/direct.txt
 
 **Поддержать авторов оригинала (донат):**
 * `USDT TRC20`: `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
+
+---
+
+## 📄 Лицензия (License)
+
+Проект и созданные базы данных правил распространяются под разрешительной свободной лицензией **[MIT](LICENSE)**.
+
+* Вы можете свободно использовать, копировать, модифицировать, объединять, публиковать, распространять и интегрировать наборы правил (geoip.dat, geosite.dat, .mrs, .srs, .json, .conf) в любые сторонние проекты, приложения и сервисы (включая коммерческие VPN-сервисы).
+* Единственное условие лицензии: сохранение уведомления об авторских правах и ссылки на исходный репозиторий проекта ([mvrvntn/routing](https://github.com/mvrvntn/routing)).
+* Проект предоставляется «как есть» (AS IS), без каких-либо прямых или косвенных гарантий.
 
 ---
 
