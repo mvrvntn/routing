@@ -1,0 +1,230 @@
+# ============================================================
+# ШАБЛОН MIHOMO: БЕЛЫЙ КОРИДОР (WHITELIST)
+# ============================================================
+# Адаптировано для сетей с жесткими белыми списками (ТСПУ / Direct Bypass)
+#
+# Принцип работы:
+# 1. Сайты и IP из российских белых списков (госуслуги, банки, сервисы РФ, CIDR РФ)
+#    идут НАПРЯМУЮ (DIRECT) на максимальной скорости провайдера.
+# 2. Реклама, спай, торренты и нестабильный QUIC (UDP 443) блокируются (REJECT).
+# 3. Весь остальной заблокированный трафик направляется через группу
+#    «🛡️ Белый коридор» (автоматический выбор самого быстрого живого VLESS-узла).
+# ============================================================
+
+mixed-port: 7890
+mode: rule
+log-level: silent
+allow-lan: false
+ipv6: true
+unified-delay: true
+tcp-concurrent: true
+
+tun:
+  enable: true
+  stack: system
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+  strict-route: true
+  route-exclude-address:
+    - 224.0.0.0/3
+    - 10.0.0.0/8
+    - 127.0.0.0/8
+    - 100.64.0.0/10
+    - 172.16.0.0/12
+    - 169.254.0.0/16
+    - 192.168.0.0/16
+    - 192.0.0.0/24
+    - 192.0.2.0/24
+    - 192.88.99.0/24
+    - 198.51.100.0/24
+    - 203.0.113.0/24
+    - fc00::/7
+    - ff00::/8
+    - fe80::/10
+    - ::/127
+
+dns:
+  enable: true
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - rule-set:private-domains
+  default-nameserver:
+    - 77.88.8.8
+    - 8.8.8.8
+  proxy-server-nameserver:
+    - 77.88.8.8
+    - 8.8.8.8
+  direct-nameserver:
+    - 77.88.8.8
+    - 77.88.8.1
+  nameserver:
+    - https://8.8.8.8/dns-query#🛡️ Белый коридор
+  nameserver-policy:
+    'rule-set:private-domains,category-ru,whitelist':
+      - 77.88.8.8
+      - 77.88.8.1
+  hosts:
+    lkfl2.nalog.ru: 213.24.64.175
+    lknpd.nalog.ru: 213.24.64.181
+    dns.google: 8.8.8.8
+    cloudflare-dns.com: 1.1.1.1
+
+sniffer:
+  enable: true
+  override-destination: false
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+    TLS:
+      ports:
+        - 443
+        - 8443
+  skip-domain:
+    - "+.apple.com"
+  skip-dst-address:
+    - 224.0.0.0/3
+    - 10.0.0.0/8
+    - 127.0.0.0/8
+    - 100.64.0.0/10
+    - 172.16.0.0/12
+    - 198.18.0.0/15
+    - 169.254.0.0/16
+    - 192.168.0.0/16
+    - 192.0.0.0/24
+    - 192.0.2.0/24
+    - 192.88.99.0/24
+    - 198.51.100.0/24
+    - 203.0.113.0/24
+    - fc00::/7
+    - ff00::/8
+    - fe80::/10
+    - ::/127
+
+find-process-mode: strict
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+proxies:
+  # PROXIES_PLACEHOLDER
+
+proxy-groups:
+  - name: 🛡️ Белый коридор
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hijacking.png
+    type: select
+    proxies:
+      - ⚡️ Авто
+      # PROXY_LIST_PLACEHOLDER
+
+  - name: ⚡️ Авто
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 120
+    tolerance: 50
+    lazy: false
+    proxies:
+      # PROXY_LIST_PLACEHOLDER
+
+rule-providers:
+  category-ads:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ads.mrs
+    path: ./ruleset/category-ads.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+
+  win-spy:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/win-spy.mrs
+    path: ./ruleset/win-spy.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+
+  torrent:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/torrent.mrs
+    path: ./ruleset/torrent.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+
+  private-domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private.mrs
+    path: ./ruleset/private.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+
+  private-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private-ip.mrs
+    path: ./ruleset/geoip-private.mrs
+    proxy: ⚡️ Авто
+    interval: 2592000
+
+  whitelist:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist.mrs
+    path: ./ruleset/whitelist.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+
+  whitelist-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist-ip.mrs
+    path: ./ruleset/geoip-whitelist.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+
+  category-ru:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ru.mrs
+    path: ./ruleset/category-ru.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
+
+rules:
+  # --- Защита от утечек и блокировка ненужного трафика ---
+  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
+  - AND,((NETWORK,UDP),(DST-PORT,853)),REJECT
+  - IP-CIDR,224.0.0.0/3,REJECT,no-resolve
+  - IP-CIDR,127.0.0.0/8,REJECT,no-resolve
+  - RULE-SET,category-ads,REJECT
+  - RULE-SET,win-spy,REJECT
+  - RULE-SET,torrent,REJECT
+
+  # --- Локальные сети и приватные домены ---
+  - RULE-SET,private-domains,DIRECT
+  - RULE-SET,private-ips,DIRECT,no-resolve
+  - GEOIP,private,DIRECT,no-resolve
+
+  # --- Белые списки и ресурсы РФ (DIRECT без прокси) ---
+  - RULE-SET,whitelist,DIRECT
+  - RULE-SET,whitelist-ips,DIRECT,no-resolve
+  - RULE-SET,category-ru,DIRECT
+  - GEOIP,RU,DIRECT
+
+  # --- Всё остальное (заблокированные зарубежные ресурсы) -> через Белый коридор ---
+  - MATCH,🛡️ Белый коридор
