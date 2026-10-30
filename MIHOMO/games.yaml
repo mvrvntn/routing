@@ -208,3 +208,13 @@ payload:
   # --- Добавленно вручную ---
   - PROCESS-NAME,Raft.exe
   - PROCESS-NAME,Tanki.exe
+
+  # --- DayZ ---
+  - PROCESS-NAME,DayZ_x64.exe
+  - PROCESS-NAME,DayZ.exe
+  - PROCESS-NAME,DayZLauncher.exe
+  - PROCESS-NAME,DayZ_BE.exe
+  - PROCESS-NAME,DayZSALauncher.exe
+  - PROCESS-NAME,DZSALauncher.exe
+  - PROCESS-NAME-REGEX,(?i).*DayZ.*
+
