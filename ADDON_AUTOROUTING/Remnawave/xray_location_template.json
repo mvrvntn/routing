@@ -193,6 +193,12 @@
       },
       {
         "type": "field",
+        "network": "udp",
+        "port": "50000-50100",
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
         "domain": [
           "geosite:private",
           "geosite:category-ru",

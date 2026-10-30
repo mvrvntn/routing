@@ -111,7 +111,8 @@
       {
         "network": "udp",
         "port_range": [
-          "19294:19344"
+          "19294:19344",
+          "50000:50100"
         ],
         "outbound": "→ Remnawave"
       },
