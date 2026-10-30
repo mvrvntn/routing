@@ -218,3 +218,8 @@ payload:
   - PROCESS-NAME,DZSALauncher.exe
   - PROCESS-NAME-REGEX,(?i).*DayZ.*
 
+  # --- Популярные сетевые игры (Legiz / Davoyan bundle) ---
+  - PROCESS-NAME-REGEX,DeadByDaylight.*
+  - PROCESS-NAME,Phasmophobia.exe
+  - PROCESS-NAME-REGEX,(?i)^AstrumPlay
+  - DOMAIN-SUFFIX,cybershoke.net

@@ -78,7 +78,25 @@ dns:
   enhanced-mode: fake-ip # fake-ip/redir-host
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
-    - rule-set:private-domains # исключить из fake-ip приватные домены
+    - rule-set:private-domains
+    - '*.lan'
+    - '*.local'
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - 'stun.*.*.*'
+    - 'stun.*.*'
+    - '*.*.stun.playstation.net'
+    - 'xbox.*.*.microsoft.com'
+    - '+.xboxlive.com'
+    - 'time.windows.com'
+    - 'time.apple.com'
+    - 'time.nist.gov'
+    - '*.pool.ntp.org'
+    - 'pool.ntp.org'
+    - 'ntp.ubuntu.com'
+    - 'time*.apple.com'
+    - 'time*.google.com'
+    - 'speedtest.cros.wr.pvp.net' # исключить из fake-ip приватные домены
   default-nameserver:
     - 77.88.8.8
     - 8.8.8.8
@@ -96,6 +114,7 @@ dns:
       - 77.88.8.1
 sniffer:
   enable: true
+  force-dns-mapping: true
   override-destination: false
   parse-pure-ip: true
   sniff:
@@ -469,6 +488,7 @@ rules:
   - RULE-SET,private-ips,DIRECT,no-resolve         # приватные IP — всегда напрямую, без DNS
   - IP-CIDR,::/0,REJECT-DROP,no-resolve            # весь IPv6-трафик, не попавший в fake-ip — блок
   - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT-DROP # QUIC — принудительно через TCP
+  - PROCESS-NAME-REGEX,(?i).*(tailscale|wireguard|netbird).*,DIRECT
   - RULE-SET,private-domains,DIRECT                # локальные домены — напрямую
 
   # --- Блокировки ---
@@ -489,9 +509,11 @@ rules:
   - RULE-SET,discord,💬 Discord
   - RULE-SET,discord-ip,💬 Discord,no-resolve
   - AND,((NETWORK,UDP),(DST-PORT,19294-19344)),💬 Discord
+  - AND,((NETWORK,UDP),(DST-PORT,50000-50100)),💬 Discord
   - PROCESS-NAME-REGEX,(?i)^(discord|vesktop|webcord|armcord|legcord|ripcord|dorion|equicord|vencord).*,💬 Discord
   - RULE-SET,telegram,PROXY
   - RULE-SET,telegram-ip,PROXY,no-resolve
+  - PROCESS-NAME-REGEX,(?i).*(ayugram|telegram|nekogram|nagram|nekox).*,PROXY
   - RULE-SET,github,PROXY
 
   # --- Игровые платформы и сервисы → 🎮 Игры (по умолчанию DIRECT, можно переключить) ---
@@ -504,6 +526,9 @@ rules:
   - RULE-SET,games,🎮 Игры                         # общая игровая категория
 
   # --- Сервисы в DIRECT ---
+  # Push-уведомления (Apple APNs & Google FCM) — напрямую для 0ms задержки и сохранения TCP keepalive
+  - OR,((DST-PORT,5223),(DOMAIN-SUFFIX,push.apple.com)),DIRECT
+  - OR,((DST-PORT,5228-5230),(DOMAIN-KEYWORD,mtalk),(DOMAIN-SUFFIX,fcm.googleapis.com)),DIRECT
   - RULE-SET,twitch,DIRECT
   - RULE-SET,microsoft,DIRECT
   # Apple Wallet, Apple Pay, Apple Cash & Apple Intelligence (Обход региональной блокировки)
