@@ -1,7 +1,13 @@
+regexp:^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
+regexp:(^|\.)apiproxy-device-prod-nlb-.+\.amazonaws\.com$
+regexp:(^|\.)apiproxy-website-nlb-prod-.+\.amazonaws\.com$
+regexp:(^|\.)dualstack\.apiproxy-.+\.amazonaws\.com$
+regexp:(^|\.)dualstack\.ichnaea-web-.+\.amazonaws\.com$
 domain:10minutemail.com
 domain:1337x.to
 domain:2407.pl
 domain:37signals.com
+domain:4pda.ru
 domain:4pda.to
 domain:4pda.ws
 domain:6pm.com
@@ -47,6 +53,7 @@ domain:adobetag.com
 domain:affinity.studio
 domain:agar.io
 domain:agents.media
+domain:agentura.ru
 domain:ai.com
 domain:ai.google.dev
 domain:ai.studio
@@ -141,6 +148,7 @@ domain:applepaycash.net
 domain:applepaycash.tv
 domain:applewallet.com
 domain:applewallet.tv
+domain:appstorrent.ru
 domain:aqicn.org
 domain:arc.net
 domain:archive.org
@@ -184,6 +192,7 @@ domain:beamng.tech
 domain:behance.net
 domain:bell-sw.com
 domain:bestbuy.com
+domain:bestchange.ru
 domain:beyond.hg-cdn.com
 domain:binance.com
 domain:binance.net
@@ -324,6 +333,7 @@ domain:cohere.com
 domain:coinbase.com
 domain:coinbase.net
 domain:coingate.com
+domain:colta.ru
 domain:connect.ngrok-agent.com
 domain:consent.trustarc.com
 domain:contabo.com
@@ -1007,6 +1017,7 @@ domain:opus.pro
 domain:oracle.com
 domain:oraclecloud.com
 domain:orbit-games.com
+domain:orda.kz
 domain:ottg.app
 domain:outflank.nl
 domain:ovdinfo.org
@@ -1557,6 +1568,7 @@ domain:video.twimg.com.cdn.cloudflare.net
 domain:vintagestory.at
 domain:vipdrive.net
 domain:viperatech.com
+domain:vlast.kz
 domain:vmware.com
 domain:vndb.org
 domain:vod-fy.crunchyrollcdn.com
@@ -1684,8 +1696,3 @@ domain:znanija.com
 domain:zohomail.com
 domain:zona.media
 domain:zoosk.com
-regexp:^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
-regexp:(^|\.)apiproxy-device-prod-nlb-.+\.amazonaws\.com$
-regexp:(^|\.)apiproxy-website-nlb-prod-.+\.amazonaws\.com$
-regexp:(^|\.)dualstack\.apiproxy-.+\.amazonaws\.com$
-regexp:(^|\.)dualstack\.ichnaea-web-.+\.amazonaws\.com$

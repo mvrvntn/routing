@@ -59,6 +59,13 @@ EXPLICIT_PROXY_OVERRIDES = {
     "freedom-travel.at",
     "auth.xboxlive.com",
     "gssv-play-prod.xboxlive.com",
+    "bestchange.ru",
+    "appstorrent.ru",
+    "vlast.kz",
+    "orda.kz",
+    "colta.ru",
+    "agentura.ru",
+    "4pda.ru",
 }
 
 # Baseline Apple Pay, Apple Wallet & Apple Cash endpoints (fixes regional lockouts on iOS)

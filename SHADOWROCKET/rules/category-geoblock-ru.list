@@ -1,11 +1,12 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1686
+# TOTAL RULES: 1693
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
 DOMAIN-SUFFIX,1337x.to
 DOMAIN-SUFFIX,2407.pl
 DOMAIN-SUFFIX,37signals.com
+DOMAIN-SUFFIX,4pda.ru
 DOMAIN-SUFFIX,4pda.to
 DOMAIN-SUFFIX,4pda.ws
 DOMAIN-SUFFIX,6pm.com
@@ -51,6 +52,7 @@ DOMAIN-SUFFIX,adobetag.com
 DOMAIN-SUFFIX,affinity.studio
 DOMAIN-SUFFIX,agar.io
 DOMAIN-SUFFIX,agents.media
+DOMAIN-SUFFIX,agentura.ru
 DOMAIN-SUFFIX,ai.com
 DOMAIN-SUFFIX,ai.google.dev
 DOMAIN-SUFFIX,ai.studio
@@ -145,6 +147,7 @@ DOMAIN-SUFFIX,applepaycash.net
 DOMAIN-SUFFIX,applepaycash.tv
 DOMAIN-SUFFIX,applewallet.com
 DOMAIN-SUFFIX,applewallet.tv
+DOMAIN-SUFFIX,appstorrent.ru
 DOMAIN-SUFFIX,aqicn.org
 DOMAIN-SUFFIX,arc.net
 DOMAIN-SUFFIX,archive.org
@@ -188,6 +191,7 @@ DOMAIN-SUFFIX,beamng.tech
 DOMAIN-SUFFIX,behance.net
 DOMAIN-SUFFIX,bell-sw.com
 DOMAIN-SUFFIX,bestbuy.com
+DOMAIN-SUFFIX,bestchange.ru
 DOMAIN-SUFFIX,beyond.hg-cdn.com
 DOMAIN-SUFFIX,binance.com
 DOMAIN-SUFFIX,binance.net
@@ -328,6 +332,7 @@ DOMAIN-SUFFIX,cohere.com
 DOMAIN-SUFFIX,coinbase.com
 DOMAIN-SUFFIX,coinbase.net
 DOMAIN-SUFFIX,coingate.com
+DOMAIN-SUFFIX,colta.ru
 DOMAIN-SUFFIX,connect.ngrok-agent.com
 DOMAIN-SUFFIX,consent.trustarc.com
 DOMAIN-SUFFIX,contabo.com
@@ -1011,6 +1016,7 @@ DOMAIN-SUFFIX,opus.pro
 DOMAIN-SUFFIX,oracle.com
 DOMAIN-SUFFIX,oraclecloud.com
 DOMAIN-SUFFIX,orbit-games.com
+DOMAIN-SUFFIX,orda.kz
 DOMAIN-SUFFIX,ottg.app
 DOMAIN-SUFFIX,outflank.nl
 DOMAIN-SUFFIX,ovdinfo.org
@@ -1561,6 +1567,7 @@ DOMAIN-SUFFIX,video.twimg.com.cdn.cloudflare.net
 DOMAIN-SUFFIX,vintagestory.at
 DOMAIN-SUFFIX,vipdrive.net
 DOMAIN-SUFFIX,viperatech.com
+DOMAIN-SUFFIX,vlast.kz
 DOMAIN-SUFFIX,vmware.com
 DOMAIN-SUFFIX,vndb.org
 DOMAIN-SUFFIX,vod-fy.crunchyrollcdn.com

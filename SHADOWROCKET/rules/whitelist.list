@@ -1,5 +1,5 @@
 # NAME: whitelist.list
-# TOTAL RULES: 605
+# TOTAL RULES: 627
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ipify.org
@@ -607,3 +607,25 @@ DOMAIN-SUFFIX,gorzdrav.org
 DOMAIN-SUFFIX,gosuslugi.com
 DOMAIN-SUFFIX,my.com
 DOMAIN-SUFFIX,ali.ski
+DOMAIN-SUFFIX,101hotels.com
+DOMAIN-SUFFIX,1c.com
+DOMAIN-SUFFIX,alfa.bank
+DOMAIN-SUFFIX,alfabank.gcdn.co
+DOMAIN-SUFFIX,alfabank.st
+DOMAIN-SUFFIX,anywayanyday.com
+DOMAIN-SUFFIX,atomyze.tech
+DOMAIN-SUFFIX,autoru.me
+DOMAIN-SUFFIX,avito.tech
+DOMAIN-SUFFIX,beeline.tv
+DOMAIN-SUFFIX,best2pay.net
+DOMAIN-SUFFIX,bitrix24.net
+DOMAIN-SUFFIX,bitrix24.tech
+DOMAIN-SUFFIX,carrotquest.io
+DOMAIN-SUFFIX,cdnvideo.net
+DOMAIN-SUFFIX,eaptechka.online
+DOMAIN-SUFFIX,envybox.io
+DOMAIN-SUFFIX,more.tv
+DOMAIN-SUFFIX,ok.me
+DOMAIN-SUFFIX,ozonru.me
+DOMAIN-SUFFIX,ren.tv
+DOMAIN-SUFFIX,sber.me

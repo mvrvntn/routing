@@ -21,6 +21,8 @@
   },
   "RouteOrder": "block-proxy-direct",
   "DirectSites": [
+    "domain:yandex",
+    "domain:sber",
     "geosite:private",
     "geosite:category-ru",
     "geosite:whitelist",
