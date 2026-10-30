@@ -1,8 +1,3 @@
-regexp:^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
-regexp:(^|\.)apiproxy-device-prod-nlb-.+\.amazonaws\.com$
-regexp:(^|\.)apiproxy-website-nlb-prod-.+\.amazonaws\.com$
-regexp:(^|\.)dualstack\.apiproxy-.+\.amazonaws\.com$
-regexp:(^|\.)dualstack\.ichnaea-web-.+\.amazonaws\.com$
 domain:10minutemail.com
 domain:1337x.to
 domain:2407.pl
@@ -1696,3 +1691,8 @@ domain:znanija.com
 domain:zohomail.com
 domain:zona.media
 domain:zoosk.com
+regexp:^chatgpt-async-webps-prod-\S+-\d+\.webpubsub\.azure\.com$
+regexp:(^|\.)apiproxy-device-prod-nlb-.+\.amazonaws\.com$
+regexp:(^|\.)apiproxy-website-nlb-prod-.+\.amazonaws\.com$
+regexp:(^|\.)dualstack\.apiproxy-.+\.amazonaws\.com$
+regexp:(^|\.)dualstack\.ichnaea-web-.+\.amazonaws\.com$
