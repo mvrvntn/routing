@@ -84,6 +84,10 @@ dns:
     - '+.msftncsi.com'
     - '+.stun.playstation.net'
     - '+.xboxlive.com'
+    - '*.cm.steampowered.com'
+    - '*.steamserver.net'
+    - '+.battle.net'
+    - 'stun.l.google.com'
     - 'time.windows.com'
     - 'time.apple.com'
     - 'time.nist.gov'
@@ -494,6 +498,16 @@ rules:
   - RULE-SET,telegram-ip,PROXY,no-resolve
   - PROCESS-NAME-REGEX,(?i).*(ayugram|telegram|nekogram|nagram|nekox).*,PROXY
   - RULE-SET,github,PROXY
+
+  # Игровые загрузки (CDN дистрибутивов) — напрямую на максимальной скорости провайдера
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamstatic.com,DIRECT
+  - DOMAIN-SUFFIX,steampipe.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,steamcdn-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,download.epicgames.com,DIRECT
+  - DOMAIN-SUFFIX,epicgames.download.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,origin-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,lvlt.origin.com,DIRECT
 
   # Игровые платформы
   - RULE-SET,epicgames,🎮 Игры

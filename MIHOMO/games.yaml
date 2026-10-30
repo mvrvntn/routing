@@ -127,10 +127,13 @@ payload:
   - PROCESS-NAME,MarvelRivals_Launcher.exe
   - PROCESS-NAME,Marvel-Win64-Shipping.exe
 
-  # Overwatch 2
+  # Overwatch 2 & Blizzard
   - PROCESS-NAME,Overwatch.exe
   - PROCESS-NAME,Battle.net.exe
+  - PROCESS-NAME,Battle.net Helper.exe
   - PROCESS-NAME,BlizzardBrowser.exe
+  - DOMAIN-SUFFIX,battle.net
+  - DOMAIN-SUFFIX,blizzard.com
 
   # HoYoverse
   - PROCESS-NAME,GenshinImpact.exe
@@ -179,6 +182,10 @@ payload:
   # --- Ubisoft ---
   - PROCESS-NAME,upc.exe
   - PROCESS-NAME,UbisoftConnect.exe
+  - PROCESS-NAME,Uplay.exe
+  - PROCESS-NAME,UplayWebCore.exe
+  - DOMAIN-SUFFIX,ubisoft.com
+  - DOMAIN-SUFFIX,ubi.com
 
   # --- Epic Games ---
   - PROCESS-NAME,EpicGamesLauncher.exe
@@ -203,6 +210,9 @@ payload:
 
   # --- Лаунчеры ---
   - PROCESS-NAME,GOGGalaxy.exe
+  - PROCESS-NAME,GalaxyClient.exe
+  - PROCESS-NAME,GalaxyClientService.exe
+  - DOMAIN-SUFFIX,gog.com
   - PROCESS-NAME,playnite.exe
 
   # --- Добавленно вручную ---
@@ -223,3 +233,19 @@ payload:
   - PROCESS-NAME,Phasmophobia.exe
   - PROCESS-NAME-REGEX,(?i)^AstrumPlay
   - DOMAIN-SUFFIX,cybershoke.net
+  # --- Roblox ---
+  - PROCESS-NAME,RobloxPlayerBeta.exe
+  - PROCESS-NAME,RobloxPlayer.exe
+  - PROCESS-NAME,RobloxStudioBeta.exe
+  - DOMAIN-SUFFIX,roblox.com
+  - DOMAIN-SUFFIX,rbxcdn.com
+
+  # --- Call of Duty / Activision (Ricochet) ---
+  - PROCESS-NAME,cod.exe
+  - PROCESS-NAME,bootstrapper.exe
+  - DOMAIN-SUFFIX,callofduty.com
+  - DOMAIN-SUFFIX,activision.com
+
+  # --- Внутриигровой голосовой чат (Vivox) ---
+  - DOMAIN-SUFFIX,vivox.com
+

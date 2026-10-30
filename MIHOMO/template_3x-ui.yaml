@@ -392,6 +392,16 @@ rules:
   - RULE-SET,category-geoblock-ru,PROXY
   - RULE-SET,github,PROXY
 
+  # --- Игровые загрузки (CDN дистрибутивов) — напрямую на максимальной скорости провайдера ---
+  - DOMAIN-SUFFIX,steamcontent.com,DIRECT
+  - DOMAIN-SUFFIX,steamstatic.com,DIRECT
+  - DOMAIN-SUFFIX,steampipe.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,steamcdn-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,download.epicgames.com,DIRECT
+  - DOMAIN-SUFFIX,epicgames.download.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,origin-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,lvlt.origin.com,DIRECT
+
   # Игры — напрямую с низким RTT
   - RULE-SET,epicgames,🎮 Игры
   - RULE-SET,origin,🎮 Игры
