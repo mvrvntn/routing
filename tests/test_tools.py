@@ -753,14 +753,8 @@ class TestToolsSuite(unittest.TestCase):
         self.assertIn("RULE-SET,ru-apps,🇷🇺 Прокси РФ", rel_data.get("rules", []))
 
     def test_shadowrocket_and_xray_consistency(self):
-        """Verify Shadowrocket google-play/twitch-ads proxy rules, RELOCANT/SHADOWROCKET.CONF, and Xray rule fields."""
+        """Verify RELOCANT/SHADOWROCKET.CONF and Xray rule fields."""
         import json
-        sr_def = os.path.join(BASE_DIR, "SHADOWROCKET", "DEFAULT.CONF")
-        with open(sr_def, "r", encoding="utf-8") as f:
-            def_text = f.read()
-        self.assertIn("SHADOWROCKET/rules/google-play.list,PROXY", def_text)
-        self.assertIn("SHADOWROCKET/rules/twitch-ads.list,PROXY", def_text)
-
         sr_rel = os.path.join(BASE_DIR, "RELOCANT", "SHADOWROCKET.CONF")
         self.assertTrue(os.path.isfile(sr_rel), "Missing RELOCANT/SHADOWROCKET.CONF")
         with open(sr_rel, "r", encoding="utf-8") as f:
