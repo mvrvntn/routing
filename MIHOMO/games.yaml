@@ -246,3 +246,35 @@ payload:
   - PROCESS-NAME,RobloxStudioBeta.exe
   - DOMAIN-SUFFIX,roblox.com
   - DOMAIN-SUFFIX,rbxcdn.com
+
+  # --- Киберспорт, античиты и соревновательные дисциплины ---
+  - PROCESS-NAME,FC24.exe
+  - PROCESS-NAME,FC25.exe
+  - PROCESS-NAME,FC26.exe
+  - PROCESS-NAME,EAAntiCheat.GameServiceLauncher.exe
+  - PROCESS-NAME,RocketLeague.exe
+  - PROCESS-NAME,aces.exe
+  - PROCESS-NAME,enlisted.exe
+  - PROCESS-NAME,Crossout.exe
+  - PROCESS-NAME,GameGuard.exe
+  - PROCESS-NAME,fc-anti-cheat.exe
+  - PROCESS-NAME,BEService.exe
+  - PROCESS-NAME,NarakaBladepoint.exe
+  - PROCESS-NAME,DeltaForceClient-Win64-Shipping.exe
+  - PROCESS-NAME,Polaris-Win64-Shipping.exe
+  - PROCESS-NAME,StreetFighter6.exe
+  - PROCESS-NAME,MK12.exe
+  - PROCESS-NAME,PathOfExile.exe
+  - PROCESS-NAME,PathOfExileSteam.exe
+  - PROCESS-NAME,PathOfExile_x64.exe
+  - PROCESS-NAME,Warframe.x64.exe
+  - PROCESS-NAME,Albion-Online.exe
+  - PROCESS-NAME,iRacingSim64DX11.exe
+  - PROCESS-NAME,acs.exe
+  - DOMAIN-SUFFIX,demonware.net
+  - DOMAIN-SUFFIX,fastcup.net
+  - DOMAIN-SUFFIX,gameguard.ac
+  - DOMAIN-SUFFIX,battleye.com
+  - DOMAIN-SUFFIX,pathofexile.com
+  - DOMAIN-SUFFIX,warthunder.com
+  - DOMAIN-SUFFIX,gaijin.net

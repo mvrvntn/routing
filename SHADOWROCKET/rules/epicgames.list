@@ -1,5 +1,5 @@
 # NAME: epicgames.list
-# TOTAL RULES: 27
+# TOTAL RULES: 29
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,3lateral.com
@@ -29,3 +29,5 @@ DOMAIN-SUFFIX,spyjinx.com
 DOMAIN-SUFFIX,twinmotion.com
 DOMAIN-SUFFIX,unrealengine.com
 DOMAIN-SUFFIX,unrealtournament.com
+DOMAIN-SUFFIX,psyonix.com
+DOMAIN-SUFFIX,rlcdn.com

@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1692
+# TOTAL RULES: 1690
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -178,7 +178,6 @@ DOMAIN-SUFFIX,backend-v2.crixet.com
 DOMAIN-SUFFIX,bard.google.com
 DOMAIN-SUFFIX,basecamp.com
 DOMAIN-SUFFIX,basecampapi.com
-DOMAIN-SUFFIX,battle.net
 DOMAIN-SUFFIX,bbc.co.uk
 DOMAIN-SUFFIX,bbc.com
 DOMAIN-SUFFIX,bbci.co.uk
@@ -1528,7 +1527,6 @@ DOMAIN-SUFFIX,typekit.com
 DOMAIN-SUFFIX,typekit.net
 DOMAIN-SUFFIX,typing.com
 DOMAIN-SUFFIX,uaudio.com
-DOMAIN-SUFFIX,ubi.com
 DOMAIN-SUFFIX,ubnt.com
 DOMAIN-SUFFIX,udemy.com
 DOMAIN-SUFFIX,udemycdn.com

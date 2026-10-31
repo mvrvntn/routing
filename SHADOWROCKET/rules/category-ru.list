@@ -1,5 +1,5 @@
 # NAME: category-ru.list
-# TOTAL RULES: 154
+# TOTAL RULES: 164
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,2ip.io
@@ -129,10 +129,20 @@ DOMAIN-SUFFIX,lesta.games
 DOMAIN-SUFFIX,astrum.gg
 DOMAIN-SUFFIX,astrum.games
 DOMAIN-SUFFIX,blizzard.com
+DOMAIN-SUFFIX,battle.net
 DOMAIN-SUFFIX,ea.com
 DOMAIN-SUFFIX,ubisoft.com
+DOMAIN-SUFFIX,ubi.com
 DOMAIN-SUFFIX,roblox.com
 DOMAIN-SUFFIX,rbxcdn.com
+DOMAIN-SUFFIX,warthunder.com
+DOMAIN-SUFFIX,gaijin.net
+DOMAIN-SUFFIX,crossout.net
+DOMAIN-SUFFIX,enlisted.net
+DOMAIN-SUFFIX,pathofexile.com
+DOMAIN-SUFFIX,battleye.com
+DOMAIN-SUFFIX,mobilelegends.com
+DOMAIN-SUFFIX,moonton.com
 DOMAIN-SUFFIX,wbcontent.net
 DOMAIN-SUFFIX,yandexcdn.net
 DOMAIN-SUFFIX,vk.cloud

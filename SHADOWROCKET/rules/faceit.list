@@ -1,7 +1,12 @@
 # NAME: faceit.list
-# TOTAL RULES: 3
+# TOTAL RULES: 8
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,faceit.com
 DOMAIN-SUFFIX,faceit-cdn.net
 DOMAIN-SUFFIX,faceitmedia.com
+DOMAIN-SUFFIX,cybershoke.net
+DOMAIN-SUFFIX,fastcup.net
+DOMAIN-SUFFIX,gameguard.ac
+DOMAIN-SUFFIX,scope.gg
+DOMAIN-SUFFIX,leetify.com
