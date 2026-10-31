@@ -12,6 +12,7 @@
 | :--- | :--- |
 | [`default.yaml`](default.yaml) | Полный рабочий конфиг с DNS, сниффером, группами прокси и правилами. Подходит для ПК и клиентов (Mihomo Party, Clash Verge Rev, Flclash). |
 | [`template_remnawave.yaml`](template_remnawave.yaml) | Шаблон для панели [Remnawave](https://docs.rw) (**Subscription ➔ Templates**). |
+| [`template_whitelist.yaml`](template_whitelist.yaml) | Шаблон режима высокой автономии (Белый список критической инфраструктуры) для [Remnawave](https://docs.rw). |
 | [`template_3x-ui.yaml`](template_3x-ui.yaml) | Шаблон для панели [3x-ui](https://github.com/hydraponique/3x-ui) со встроенной маршрутизацией. |
 | [`games.yaml`](games.yaml) | Список процессов популярных сетевых игр и лаунчеров (Steam, Epic, Riot, EFT, CS2, GTA RP, античиты). |
 | [`ru-apps.yaml`](ru-apps.yaml) | Пакеты российских Android-приложений для прямого доступа. |
@@ -216,11 +217,11 @@ rules:
 
 ## 🤝 Благодарности и поддержка
 
-# Разработка: ristavor
-# Благодарности: hydraponique & fatyzzz
-# Сообщество проекта в Telegram: https://t.me/vpnrouting
-#
-# Будем благодарны любой поддержке:
-# USDT TRC20 — TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR
+* **Разработка:** [ristavor](https://github.com/ristavor)
+* **Благодарности:** [hydraponique](https://github.com/hydraponique) & [fatyzzz](https://github.com/fatyzzz)
+* **Сообщество проекта в Telegram:** [t.me/vpnrouting](https://t.me/vpnrouting)
+
+**Будем благодарны любой поддержке (донат авторам оригинала):**
+* `USDT TRC20`: `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
 
 *Проект «коридор»: [https://mvrvntn.github.io/koridor/](https://mvrvntn.github.io/koridor/)*

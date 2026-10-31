@@ -21,6 +21,7 @@
 * 🇷🇺 **Напрямую через локального провайдера (Direct):** Государственные порталы, банки (Сбер, Т-Банк, ВТБ), Налоговая служба, СБП, маркетплейсы (Ozon, WB), сервисы Яндекса, VK, Кинопоиск, сетевые игры (Steam, Epic, Riot) и диагностические чекеры сетевых параметров. Работают с минимальным пингом (RTT) на максимальной скорости домашнего/мобильного провайдера без лишних капч и проверок.
 * 🌍 **Через удалённый прокси-узел (Proxy):** Зарубежные медиаплатформы, YouTube, Discord (**включая прямые UDP голосовые серверы**), Telegram, а также исследовательские AI-инструменты (ChatGPT, Claude, Gemini, Perplexity) и внешние сервисы.
 * 🍏 **Энергоэффективно (~1.8 МБ RAM):** База сжата алгоритмом агрегации поддоменов (`geosite.dat` ~77 КБ). Снижает нагрузку на CPU смартфона, предотвращает нагрев аккумулятора и системные сбросы сетевого расширения на iOS.
+* 🎮 **Оптимизация для гейминга (Low Latency & CDN Bypass):** Игровой голосовой движок Vivox (`vivox.com`), платформы Steam, Battle.net, Epic Games, Riot, Tarkov, Roblox, Call of Duty (Ricochet). Скачивание обновлений и дистрибутивов игр принудительно направляется напрямую (`DIRECT`) на скорости 1 Гбит/с даже при активации VPN для игр, а замер пинга в матчах защищен от задержек Fake-IP (SDR / STUN bypass).
 * 🛡 **Аппаратный Safety Gate:** Домены национальных зон `.ru`, `.рф`, `.su` аппаратно изолированы от проксирования.
 
 ---
@@ -50,7 +51,7 @@
 
 | Профиль | Назначение | Happ | INCY | Документация |
 | :--- | :--- | :--- | :--- | :--- |
-| **коридор роутинг • БС**<br>*(WHITELIST)* | 🛡 **Режим высокой сетевой автономии.** Профиль максимальной отказоустойчивости. Пропускает напрямую **исключительно** критическую инфраструктуру РФ (белые списки: Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для гарантированной доступности ключевых сервисов. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) | [WHITELIST](INCY/WHITELIST.JSON) |
+| **коридор роутинг • БС**<br>*(WHITELIST)* | 🛡 **Режим высокой сетевой автономии.** Профиль максимальной отказоустойчивости. Пропускает напрямую **исключительно** критическую инфраструктуру РФ (белые списки: Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для гарантированной доступности ключевых сервисов. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) | [📄 Манифест](HAPP/WHITELIST.JSON) |
 | **коридор роутинг • релокант**<br>*(RELOCANT)* | 🌍 **Обратный роутинг (Reverse Split).** Для тех, кто находится **за пределами РФ** (Сербия, Грузия, ЕС, Турция, СНГ). Весь мировой интернет идёт напрямую на скорости 1 Гбит/с, и **только** сервисы РФ (Госуслуги, Банки РФ, Кинопоиск, Faceit RU) идут через российский прокси-сервер. | [⚡ В 1 клик](RELOCANT/HAPP.DEEPLINK)<br>[📄 JSON](RELOCANT/HAPP.JSON) | [☁️ Autorouting](RELOCANT/INCY.AUTOROUTING)<br>[⚡ В 1 клик](RELOCANT/INCY.DEEPLINK) | [📖 Инструкция для релокантов и роутеров](RELOCANT/README.md) |
 
 ### 🚀 Как импортировать
@@ -70,8 +71,8 @@
     ```
   *(Профиль будет обновляться автоматически раз в сутки)*.
 * **Shadowrocket (iOS):** В приложении Shadowrocket перейдите в **Конфигурация** ➔ **+** ➔ вставьте URL профиля:
-  * Основной: `https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/DEFAULT.CONF`
-  * Белый список (БС): `https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/WHITELIST.CONF`
+  * Основной: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/DEFAULT.CONF))*
+  * Белый список (БС): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/WHITELIST.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/WHITELIST.CONF))*
 
 ---
 
@@ -121,6 +122,7 @@
   ```http
   autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
   ```
+  *(Дополнительные заголовки: `routing-geo-update-interval: 86400` — независимое расписание обновления геофайлов; `routing: off` — принудительный полный туннель без сплита).*
 * **Автовыдача для Happ:** В **Subscription ➔ Response Rules** (правило `happ`):
   ```http
   routing: happ://routing/onadd/...
@@ -128,7 +130,11 @@
   *(Актуальную строку берите из [`HAPP/DEFAULT.DEEPLINK`](HAPP/DEFAULT.DEEPLINK) либо настройте автообновление через микросервис [`remnawave-routing-update`](ADDON_AUTOROUTING/Remnawave/README.md#2-автороутинг-для-happ))*.
 * **Xray Location (ноды):** [`xray_location_template.json`](ADDON_AUTOROUTING/Remnawave/xray_location_template.json) с защитой `routeOnly: true`.
 * **Sing-box:** [`singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json).
-* **Mihomo / Clash:** [`MIHOMO/`](MIHOMO/README.md) (готовый [`default.yaml`](MIHOMO/default.yaml) и шаблон [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml)).
+* **Mihomo / Clash:** [`MIHOMO/`](MIHOMO/README.md):
+  * Основной шаблон: [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml)
+  * Режим высокой автономии (Белый список): [`template_whitelist.yaml`](MIHOMO/template_whitelist.yaml)
+  * Шаблон для 3x-ui: [`template_3x-ui.yaml`](MIHOMO/template_3x-ui.yaml)
+  * Готовый конфиг для клиентов (ПК/смартфоны): [`default.yaml`](MIHOMO/default.yaml)
 
 ### 2. [Marzban](ADDON_AUTOROUTING/Marzban/) и [Marzneshin](ADDON_AUTOROUTING/Marzneshin/)
 * Единый модуль [`subscription.py`](ADDON_AUTOROUTING/Marzban/subscription.py) для любых типов подписок (JSON и Non-JSON) с переключением профиля через переменную `KORIDOR_ROUTING_SOURCE` (`default`, `whitelist`, `jsonsub`).
@@ -158,9 +164,12 @@
 ├── RELOCANT/                # Специфический профиль для релокантов (обратный сплит, роутеры, INCY, Happ)
 ├── MIHOMO/                  # Шаблоны конфигураций для ядра Mihomo / Clash
 ├── ADDON_AUTOROUTING/       # Модули интеграции для панелей Remnawave, Marzban, Marzneshin, 3x-ui
+├── SHADOWROCKET/            # Готовые профили .CONF и наборы правил .list для iOS
 ├── tools/                   # Утилиты генерации клиентских правил (Streisand, v2RayNG, sing-box)
 ├── scripts/                 # Скрипты нормализации и проверки доменных списков (update_geoblock.py)
 ├── tests/                   # Набор регрессионных и юнит-тестов (Safety Gate, инструменты генерации)
+├── docs/                    # Дополнительные руководства (DISCORD_FIX.md)
+├── LICENSE                  # Открытая разрешительная лицензия MIT
 └── .github/workflows/       # CI/CD пайплайн компиляции геобаз и публикации релизов
 ```
 
@@ -178,13 +187,53 @@
 
 ---
 
-## 🤖 Автоматизация и тесты
+## 🛠️ Локальная разработка, архитектура и CI/CD
 
-* **Автообновление:** Каждую ночь в 00:23 UTC (03:23 МСК) GitHub Actions синхронизирует сетевые списки и базы провайдеров, валидирует их через Safety Gate, прогоняет тесты и публикует обновленный релиз на CDN.
-* **Локальный прогон тестов:**
-  ```bash
-  python -m unittest discover tests -v
-  ```
+### 1. Архитектура и поток данных (Data Flow)
+
+```mermaid
+flowchart TD
+    A["data/ (Домены) & geoip/ (CIDR)"] --> B["Safety Gate & Pruner (scripts/update_geoblock.py)"]
+    B --> C1["v2fly compiler → geosite.dat"]
+    B --> C2["Loyalsoldier compiler → geoip.dat"]
+    B --> C3["sing-box compile → sing-box/*.srs"]
+    B --> C4["mihomo convert-ruleset → mihomo/*.mrs"]
+    C1 & C2 & C3 & C4 --> D["Smoke Tests & Verifiers"]
+    D --> E["GitHub Actions (00:23 UTC)"]
+    E --> F["Ветка release & GitHub Releases"]
+    F --> G["jsDelivr CDN (Автоматическая очистка кэша)"]
+```
+
+* **Safety Gate & Pruning:** Скрипт [`scripts/update_geoblock.py`](scripts/update_geoblock.py) аппаратно изолирует национальные TLD (`.ru`, `.рф`, `.su`), домены критической инфраструктуры и банков от попадания в списки проксирования, а также сворачивает избыточные дочерние поддомены.
+* **Сборка бинарных артефактов:** Автоматически компилируются базы `geosite.dat` (Protobuf), `geoip.dat`, `.srs` (бинарные деревья sing-box) и `.mrs` (бинарные деревья Mihomo).
+* **Smoke Tests:** Проверяется валидность структуры, целостность синтаксиса и допустимые диапазоны размеров файлов.
+* **Публикация и CDN:** Артефакты отправляются в ветку `release`, создается релиз GitHub, а для CDN jsDelivr вызывается `purge` для мгновенной отдачи клиентам.
+
+### 2. Локальная разработка и тестирование
+
+**Установка зависимостей:**
+```bash
+git clone https://github.com/mvrvntn/routing.git
+cd routing
+python -m pip install -r requirements.txt
+```
+
+**Запуск регрессионных и интеграционных тестов (47 тестов):**
+```bash
+python -m unittest discover tests -v
+```
+
+**Нормализация и санитация списков доменов:**
+```bash
+python scripts/update_geoblock.py
+```
+
+**Проверка синтаксиса конфигураций ядра Mihomo:**
+```bash
+mihomo -t -f MIHOMO/default.yaml
+mihomo -t -f MIHOMO/template_remnawave.yaml
+mihomo -t -f MIHOMO/template_whitelist.yaml
+```
 
 ---
 
