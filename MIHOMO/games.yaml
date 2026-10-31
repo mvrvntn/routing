@@ -233,18 +233,9 @@ payload:
   - PROCESS-NAME,Phasmophobia.exe
   - PROCESS-NAME-REGEX,(?i)^AstrumPlay
   - DOMAIN-SUFFIX,cybershoke.net
-  # --- Roblox ---
-  - PROCESS-NAME,RobloxPlayerBeta.exe
-  - PROCESS-NAME,RobloxPlayer.exe
-  - PROCESS-NAME,RobloxStudioBeta.exe
-  - DOMAIN-SUFFIX,roblox.com
-  - DOMAIN-SUFFIX,rbxcdn.com
 
   # --- Call of Duty / Activision (Ricochet) ---
   - PROCESS-NAME,cod.exe
   - PROCESS-NAME,bootstrapper.exe
   - DOMAIN-SUFFIX,callofduty.com
   - DOMAIN-SUFFIX,activision.com
-
-  # --- Внутриигровой голосовой чат (Vivox) ---
-  - DOMAIN-SUFFIX,vivox.com

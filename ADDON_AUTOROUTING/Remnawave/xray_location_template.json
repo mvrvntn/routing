@@ -12,6 +12,9 @@
         "domains": [
           "geosite:category-geoblock-ru",
           "geosite:ai",
+          "geosite:twitch-ads",
+          "domain:copilot.microsoft.com",
+          "domain:githubcopilot.com",
           "domain:apps.apple.com",
           "domain:itunes.apple.com",
           "domain:mzstatic.com",

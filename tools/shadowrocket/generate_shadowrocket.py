@@ -216,19 +216,24 @@ DEST-PORT,19294-19344,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/ai.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-deepmind.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/youtube.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/telegram.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/github.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch-ads.list,PROXY
 
-# --- Прямой доступ: Локальные сети и Системные push-сервисы (Direct) ---
+# --- Прямой доступ: Локальные сети и Системные сервисы (Direct) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/apple.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/microsoft.list,DIRECT
 
 # --- Прямой доступ: Игровые платформы и медиастриминг (Direct) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/steam.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/epicgames.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/riot.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/origin.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/escapefromtarkov.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/faceit.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/pinterest.list,DIRECT
 
@@ -282,7 +287,11 @@ RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ads.list,REJECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/torrent.list,REJECT
 
 # Принудительное проксирование гео-заблокированных ресурсов
+DOMAIN-KEYWORD,smp-,PROXY
+DOMAIN-KEYWORD,applepay,PROXY
+DOMAIN-SUFFIX,apple-pay.com,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/youtube.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord-ips.list,PROXY
@@ -291,7 +300,6 @@ DEST-PORT,19294-19344,PROXY
 # Прямой доступ только для белого списка и локальной сети
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/apple.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist-ips.list,DIRECT
 
