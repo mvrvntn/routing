@@ -52,6 +52,24 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - rule-set:private-domains
+    - '*.lan'
+    - '*.local'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - 'captive.apple.com'
+    - '+.connectivitycheck.gstatic.com'
+    - '+.connectivitycheck.android.com'
+    - 'clients3.google.com'
+    - '+.stun.playstation.net'
+    - '+.xboxlive.com'
+    - '*.cm.steampowered.com'
+    - '*.steamserver.net'
+    - '+.battle.net'
+    - 'stun.l.google.com'
+    - 'time.windows.com'
+    - 'time.apple.com'
+    - 'time.nist.gov'
+    - '+.pool.ntp.org'
   default-nameserver:
     - 77.88.8.8
     - 8.8.8.8
@@ -112,8 +130,7 @@ profile:
   store-selected: true
   store-fake-ip: true
 
-proxies:
-  # PROXIES_PLACEHOLDER
+proxies: # LEAVE THIS LINE!
 
 proxy-groups:
   - name: 🛡️ Белый коридор
@@ -121,16 +138,18 @@ proxy-groups:
     type: select
     proxies:
       - ⚡️ Авто
-      # PROXY_LIST_PLACEHOLDER
+    # LEAVE THIS LINE!
+    url: https://www.gstatic.com/generate_204
 
   - name: ⚡️ Авто
     type: url-test
-    url: http://www.gstatic.com/generate_204
-    interval: 120
-    tolerance: 50
-    lazy: false
-    proxies:
-      # PROXY_LIST_PLACEHOLDER
+    tolerance: 150
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    remnawave:
+      include-proxies: false
+    include-all: true
+    hidden: true
 
 rule-providers:
   category-ads:
@@ -205,26 +224,33 @@ rule-providers:
     proxy: ⚡️ Авто
     interval: 86400
 
-rules:
-  # --- Защита от утечек и блокировка ненужного трафика ---
-  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
-  - AND,((NETWORK,UDP),(DST-PORT,853)),REJECT
-  - IP-CIDR,224.0.0.0/3,REJECT,no-resolve
-  - IP-CIDR,127.0.0.0/8,REJECT,no-resolve
-  - RULE-SET,category-ads,REJECT
-  - RULE-SET,win-spy,REJECT
-  - RULE-SET,torrent,REJECT
+  direct-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/direct.mrs
+    path: ./ruleset/direct-ips.mrs
+    proxy: ⚡️ Авто
+    interval: 86400
 
-  # --- Локальные сети и приватные домены ---
-  - RULE-SET,private-domains,DIRECT
+rules:
+  # --- Системные и приватные адреса ---
   - RULE-SET,private-ips,DIRECT,no-resolve
-  - GEOIP,private,DIRECT,no-resolve
+  - IP-CIDR,::/0,REJECT-DROP,no-resolve
+  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT-DROP
+  - AND,((NETWORK,UDP),(DST-PORT,853)),REJECT-DROP
+  - RULE-SET,private-domains,DIRECT
+
+  # --- Блокировка рекламы, телеметрии и P2P ---
+  - RULE-SET,category-ads,REJECT-DROP
+  - RULE-SET,win-spy,REJECT-DROP
+  - RULE-SET,torrent,DIRECT
 
   # --- Белые списки и ресурсы РФ (DIRECT без прокси) ---
   - RULE-SET,whitelist,DIRECT
   - RULE-SET,whitelist-ips,DIRECT,no-resolve
   - RULE-SET,category-ru,DIRECT
-  - GEOIP,RU,DIRECT
+  - RULE-SET,direct-ips,DIRECT,no-resolve
 
   # --- Всё остальное (заблокированные зарубежные ресурсы) -> через Белый коридор ---
   - MATCH,🛡️ Белый коридор

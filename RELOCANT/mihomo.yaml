@@ -83,6 +83,26 @@ dns:
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - rule-set:private-domains
+    - '*.lan'
+    - '*.local'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - 'captive.apple.com'
+    - '+.connectivitycheck.gstatic.com'
+    - '+.connectivitycheck.android.com'
+    - 'clients3.google.com'
+    - '+.stun.playstation.net'
+    - '+.xboxlive.com'
+    - '*.cm.steampowered.com'
+    - '*.steamserver.net'
+    - '+.battle.net'
+    - 'stun.l.google.com'
+    - 'time.windows.com'
+    - 'time.apple.com'
+    - 'time.nist.gov'
+    - '+.pool.ntp.org'
   respect-rules: true
   default-nameserver:
     - 1.1.1.1
@@ -173,6 +193,14 @@ rule-providers:
     url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/faceit.mrs"
     interval: 86400
 
+  direct-ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    path: ./ruleset/direct-ips.mrs
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/direct.mrs"
+    interval: 86400
+
   category-ads:
     type: http
     behavior: domain
@@ -197,9 +225,8 @@ rules:
   - RULE-SET,whitelist-ips,🇷🇺 Прокси РФ,no-resolve
   - RULE-SET,category-ru,🇷🇺 Прокси РФ
 
-  # 5. Российские и белорусские IP-подсети
-  - GEOIP,RU,🇷🇺 Прокси РФ
-  - GEOIP,BY,🇷🇺 Прокси РФ
+  # 5. Российские и белорусские IP-подсети (скомпилированная база direct.mrs без зависимости от MMDB)
+  - RULE-SET,direct-ips,🇷🇺 Прокси РФ,no-resolve
 
   # 6. ВЕСЬ МИРОВОЙ ИНТЕРНЕТ — НАПРЯМУЮ ЧЕРЕЗ МЕСТНОГО ПРОВАЙДЕРА
   - MATCH,DIRECT

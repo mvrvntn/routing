@@ -364,6 +364,7 @@ rules:
   - RULE-SET,private-ips,DIRECT,no-resolve
   - IP-CIDR,::/0,REJECT-DROP,no-resolve
   - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT-DROP
+  - AND,((NETWORK,UDP),(DST-PORT,853)),REJECT-DROP
   - PROCESS-NAME-REGEX,(?i).*(tailscale|wireguard|netbird).*,DIRECT
   - RULE-SET,private-domains,DIRECT
 

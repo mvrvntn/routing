@@ -83,6 +83,10 @@ dns:
     - '*.local'
     - '+.msftconnecttest.com'
     - '+.msftncsi.com'
+    - 'captive.apple.com'
+    - '+.connectivitycheck.gstatic.com'
+    - '+.connectivitycheck.android.com'
+    - 'clients3.google.com'
     - '+.stun.playstation.net'
     - '+.xboxlive.com'
     - '*.cm.steampowered.com'
@@ -490,6 +494,7 @@ rules:
   - RULE-SET,private-ips,DIRECT,no-resolve         # приватные IP — всегда напрямую, без DNS
   - IP-CIDR,::/0,REJECT-DROP,no-resolve            # весь IPv6-трафик, не попавший в fake-ip — блок
   - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT-DROP # QUIC — принудительно через TCP
+  - AND,((NETWORK,UDP),(DST-PORT,853)),REJECT-DROP # DoQ (DNS-over-QUIC) — блокировка утечек DNS
   - PROCESS-NAME-REGEX,(?i).*(tailscale|wireguard|netbird).*,DIRECT
   - RULE-SET,private-domains,DIRECT                # локальные домены — напрямую
 
