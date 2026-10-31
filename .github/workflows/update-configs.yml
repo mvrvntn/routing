@@ -367,6 +367,14 @@ jobs:
           fi
 
           ${{ env.CURL }} https://sing-box.app/install.sh | sudo -E sh -s -- --version 1.12.12 || true
+          if ! command -v sing-box &>/dev/null; then
+            SB_URL="https://github.com/SagerNet/sing-box/releases/download/v1.12.12/sing-box_1.12.12_linux_${ARCH}.deb"
+            ${{ env.CURL }} -o /tmp/sing-box.deb "$SB_URL"
+            sudo dpkg -i /tmp/sing-box.deb || sudo apt-get install -f -y
+            rm -f /tmp/sing-box.deb
+          fi
+          command -v mihomo >/dev/null
+          command -v sing-box >/dev/null
 
       - name: Build .mrs & .srs
         run: |
@@ -481,8 +489,18 @@ jobs:
                   mv "geoip_src/output/mrs/${rule}.mrs" "geoip_src/output/mrs/${rule}-ip.mrs"
                 fi
               done
+              if [ -f "geoip_src/output/mrs/direct.mrs" ]; then
+                cp -f "geoip_src/output/mrs/direct.mrs" "geoip_src/output/mrs/direct-ip.mrs"
+              fi
               cp -a geoip_src/output/mrs/. release/mihomo/ 2>/dev/null || true
             fi
+            for f in data/*; do
+              name=$(basename "$f")
+              test -s "release/mihomo/${name}.mrs"
+            done
+            for ip_rule in direct direct-ip discord-ip telegram-ip whitelist-ip private-ip; do
+              test -s "release/mihomo/${ip_rule}.mrs"
+            done
             tar -czf release/mihomo.tar.gz -C release mihomo
           fi
 
@@ -494,8 +512,18 @@ jobs:
                   mv "geoip_src/output/srs/${rule}.srs" "geoip_src/output/srs/${rule}-ip.srs"
                 fi
               done
+              if [ -f "geoip_src/output/srs/direct.srs" ]; then
+                cp -f "geoip_src/output/srs/direct.srs" "geoip_src/output/srs/direct-ip.srs"
+              fi
               cp -a geoip_src/output/srs/. release/sing-box/ 2>/dev/null || true
             fi
+            for f in data/*; do
+              name=$(basename "$f")
+              test -s "release/sing-box/${name}.srs"
+            done
+            for ip_rule in direct direct-ip discord-ip telegram-ip whitelist-ip private-ip; do
+              test -s "release/sing-box/${ip_rule}.srs"
+            done
             tar -czf release/sing-box.tar.gz -C release sing-box
           fi
 
@@ -505,6 +533,9 @@ jobs:
                 mv "geoip_src/output/text/${rule}.txt" "geoip_src/output/text/${rule}-ip.txt"
               fi
             done
+            if [ -f "geoip_src/output/text/direct.txt" ]; then
+              cp -f "geoip_src/output/text/direct.txt" "geoip_src/output/text/direct-ip.txt"
+            fi
             cp -a geoip_src/output/text/. release/text/ 2>/dev/null || true
             tar -czf release/text.tar.gz -C release text
           fi
