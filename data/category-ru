@@ -167,10 +167,12 @@ domain:lesta.games
 domain:astrum.gg
 domain:astrum.games
 
-# Direct Gaming (Battle.net, EA, Ubisoft - low ping directly)
+# Direct Gaming (Battle.net, EA, Ubisoft, Roblox - low ping directly)
 domain:blizzard.com
 domain:ea.com
 domain:ubisoft.com
+domain:roblox.com
+domain:rbxcdn.com
 
 # -----------------------------------------------------------
 # Domestic CDNs, Cloud, Marketplaces & Infrastructure (non-RU TLDs)

@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1694
+# TOTAL RULES: 1692
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -1172,7 +1172,6 @@ DOMAIN-SUFFIX,ratatype.com
 DOMAIN-SUFFIX,raycast-releases.com
 DOMAIN-SUFFIX,raycast.com
 DOMAIN-SUFFIX,razer.com
-DOMAIN-SUFFIX,rbxcdn.com
 DOMAIN-SUFFIX,reactflow.dev
 DOMAIN-SUFFIX,readdle.com
 DOMAIN-SUFFIX,readybot.io
@@ -1215,7 +1214,6 @@ DOMAIN-SUFFIX,revolut.com
 DOMAIN-SUFFIX,rewards.bing.com
 DOMAIN-SUFFIX,rezka.ag
 DOMAIN-SUFFIX,ridl.io
-DOMAIN-SUFFIX,roblox.com
 DOMAIN-SUFFIX,roovza-launches.appsflyersdk.com
 DOMAIN-SUFFIX,roovza.inapps.appsflyersdk.com
 DOMAIN-SUFFIX,roovza.launches.appsflyersdk.com

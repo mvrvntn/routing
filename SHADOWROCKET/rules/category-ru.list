@@ -1,5 +1,5 @@
 # NAME: category-ru.list
-# TOTAL RULES: 152
+# TOTAL RULES: 154
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,2ip.io
@@ -131,6 +131,8 @@ DOMAIN-SUFFIX,astrum.games
 DOMAIN-SUFFIX,blizzard.com
 DOMAIN-SUFFIX,ea.com
 DOMAIN-SUFFIX,ubisoft.com
+DOMAIN-SUFFIX,roblox.com
+DOMAIN-SUFFIX,rbxcdn.com
 DOMAIN-SUFFIX,wbcontent.net
 DOMAIN-SUFFIX,yandexcdn.net
 DOMAIN-SUFFIX,vk.cloud
