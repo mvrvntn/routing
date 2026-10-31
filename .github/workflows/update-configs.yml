@@ -250,7 +250,11 @@ jobs:
           rm -rf output
           ./geoip_builder convert -c config.json
           test -s output/dat/geoip.dat
-          cp -f output/dat/geoip.dat ../geoip.dat
+          if [ "${{ github.event_name }}" = "push" ] && [ -s ../geoip.dat ] && ! git -C .. diff --name-only HEAD~1 HEAD | grep -q '^geoip/'; then
+            echo "geoip/ unchanged on push event ? preserving existing geoip.dat to avoid unnecessary SHA-256 churn"
+          else
+            cp -f output/dat/geoip.dat ../geoip.dat
+          fi
 
       - name: Validate geoip.dat (Smoke Test & Content Verification)
         run: |
@@ -658,8 +662,25 @@ jobs:
       - name: Purge jsDelivr CDN
         run: |
           set -euo pipefail
-          for file in geosite.dat geoip.dat geosite.dat.sha256 geoip.dat.sha256; do
-            ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${file}" || true
+          # Wait for GitHub raw CDN (5-min Fastly cache) to reflect the new release branch before purging jsDelivr
+          sleep 15
+          for base in geosite.dat geoip.dat; do
+            local_sha="$(cat "release/${base}.sha256" | tr -d '[:space:]')"
+            for attempt in 1 2 3 4 5 6; do
+              raw_sha="$(${{ env.CURL }} "https://raw.githubusercontent.com/${{ github.repository }}/release/${base}.sha256" 2>/dev/null | tr -d '[:space:]' || true)"
+              if [ "$raw_sha" = "$local_sha" ]; then
+                break
+              fi
+              sleep 5
+            done
+            cdn_dat_sha="$(${{ env.CURL }} "https://cdn.jsdelivr.net/gh/${{ github.repository }}@release/${base}" 2>/dev/null | sha256sum | awk '{print $1}' || true)"
+            cdn_txt_sha="$(${{ env.CURL }} "https://cdn.jsdelivr.net/gh/${{ github.repository }}@release/${base}.sha256" 2>/dev/null | tr -d '[:space:]' || true)"
+            if [ "$cdn_dat_sha" != "$local_sha" ]; then
+              ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${base}" || true
+            fi
+            if [ "$cdn_txt_sha" != "$local_sha" ]; then
+              ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@release/${base}.sha256" || true
+            fi
           done
           if [ -d release/mihomo ]; then
             for f in release/mihomo/*; do
