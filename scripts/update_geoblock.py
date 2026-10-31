@@ -66,6 +66,7 @@ EXPLICIT_PROXY_OVERRIDES = {
     "colta.ru",
     "agentura.ru",
     "4pda.ru",
+    "vivox.com",
 }
 
 # Baseline Apple Pay, Apple Wallet & Apple Cash endpoints (fixes regional lockouts on iOS)

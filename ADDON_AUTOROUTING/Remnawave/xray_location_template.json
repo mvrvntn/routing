@@ -87,7 +87,7 @@
         "outboundTag": "block"
       },
       {
-        "port": 443,
+        "port": "443,853",
         "type": "field",
         "network": "udp",
         "outboundTag": "block"
@@ -217,8 +217,10 @@
         "outboundTag": "direct"
       },
       {
+        "type": "field",
         "ip": [
           "geoip:private",
+          "geoip:whitelist",
           "geoip:direct"
         ],
         "outboundTag": "direct"

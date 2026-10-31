@@ -26,7 +26,8 @@
 | :--- | :--- | :--- |
 | **INCY (Рекомендуется)** | ☁️ **Autorouting (Автообновляемый)** | [Вставить в INCY](INCY.AUTOROUTING)<br>`https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/INCY.JSON` |
 | **INCY** | ⚡ **Импорт в 1 клик** | [Открыть диплинк](INCY.DEEPLINK) |
-| **Happ** | ⚡ **Импорт в 1 клик** | [Открыть диплинк](HAPP.DEEPLINK) |
+| **Happ** | ⚡ **Импорт в 1 клик** | [Открыть диплинк](HAPP.DEEPLINK)<br>`https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/HAPP.JSON` |
+| **Shadowrocket** | ☁️ **Конфигурация (.CONF)** | `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/SHADOWROCKET.CONF` |
 | **Mihomo / Роутер** | 🛠 **Конфигурация** | [`RELOCANT/mihomo.yaml`](mihomo.yaml) |
 
 ### Настройка в INCY:

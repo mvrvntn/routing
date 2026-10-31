@@ -7,7 +7,7 @@
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
 [![jsDelivr CDN](https://img.shields.io/badge/jsDelivr-CDN-orange.svg)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
-[![Tests](https://img.shields.io/badge/Tests-47%20Passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-49%20Passed-brightgreen.svg)](tests/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Регион:** 🇷🇺 Россия + 🇧🇾 Беларусь
@@ -112,6 +112,7 @@
 * **Shadowrocket (iOS):** В приложении Shadowrocket перейдите в **Конфигурация** ➔ **+** ➔ вставьте URL профиля:
   * Основной: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/DEFAULT.CONF))*
   * Белый список (БС): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/WHITELIST.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/WHITELIST.CONF))*
+  * Релокант: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/SHADOWROCKET.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/RELOCANT/SHADOWROCKET.CONF))*
 
 ---
 

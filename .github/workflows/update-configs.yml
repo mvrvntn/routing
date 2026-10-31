@@ -13,7 +13,9 @@ on:
       - "HAPP/**"
       - "INCY/**"
       - "MIHOMO/**"
+      - "RELOCANT/**"
       - "SHADOWROCKET/**"
+      - "ADDON_AUTOROUTING/**"
       - "scripts/**"
       - "tests/**"
       - "tools/**"
@@ -411,9 +413,9 @@ jobs:
                   gsub(/\r/,"")
                   s=trim($0)
                   sub(/[ \t]*#.*/, "", s)
-                  if (s ~ /^full:/) { sub(/^full:/, "", s); if (s != "") print s; next }
-                  if (s ~ /^domain:/) { sub(/^domain:/, "", s); sub(/^\./, "", s); if (s != "") print "+." s; next }
-                  if (s ~ /^keyword:/) { sub(/^keyword:/, "", s); sub(/^\./, "", s); if (s != "") print "+." s ".*"; next }
+                  if (s ~ /^full:/) { sub(/^full:/, "", s); s=trim(s); if (s != "") print s; next }
+                  if (s ~ /^domain:/) { sub(/^domain:/, "", s); s=trim(s); sub(/^\./, "", s); if (s != "") print "+." s; next }
+                  if (s ~ /^keyword:/) { sub(/^keyword:/, "", s); s=trim(s); sub(/^\./, "", s); if (s != "") print "+." s ".*"; next }
                   if (s != "" && s !~ /^[a-z0-9_-]+:/) { sub(/^\./, "", s); print "+." s }
                 }
               ' "$f" > "$tmp"
@@ -647,10 +649,18 @@ jobs:
                       INCY/DEFAULT.AUTOROUTING INCY/WHITELIST.AUTOROUTING INCY/JSONSUB.AUTOROUTING RELOCANT/INCY.AUTOROUTING \
                       HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON RELOCANT/HAPP.JSON \
                       HAPP/DEFAULT.DEEPLINK HAPP/WHITELIST.DEEPLINK HAPP/JSONSUB.DEEPLINK RELOCANT/HAPP.DEEPLINK \
-                      RELOCANT/mihomo.yaml MIHOMO/default.yaml MIHOMO/template_remnawave.yaml MIHOMO/template_3x-ui.yaml \
+                      RELOCANT/mihomo.yaml MIHOMO/default.yaml MIHOMO/template_remnawave.yaml MIHOMO/template_whitelist.yaml MIHOMO/template_3x-ui.yaml \
+                      ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json ADDON_AUTOROUTING/Remnawave/xray_location_template.json \
                       SHADOWROCKET/DEFAULT.CONF SHADOWROCKET/WHITELIST.CONF RELOCANT/SHADOWROCKET.CONF; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
           done
+          if [ -d SHADOWROCKET/rules ]; then
+            for f in SHADOWROCKET/rules/*.list; do
+              [ -f "$f" ] || continue
+              fname=$(basename "$f")
+              ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/SHADOWROCKET/rules/${fname}" || true
+            done
+          fi
 
       # --- 9. OPTIONAL DEPLOY TO SERVERS ---
       - name: Deploy to servers (if configured)

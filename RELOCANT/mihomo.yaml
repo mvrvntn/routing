@@ -209,6 +209,14 @@ rule-providers:
     url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ads.mrs"
     interval: 86400
 
+  ru-apps:
+    type: http
+    behavior: classical
+    format: yaml
+    path: ./ruleset/ru-apps.yaml
+    url: "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/ru-apps.yaml"
+    interval: 86400
+
 rules:
   # 1. Локальные сети роутера
   - RULE-SET,private-domains,DIRECT
@@ -220,7 +228,8 @@ rules:
   # 3. Faceit (маршрутизация на Москву при выборе группы)
   - RULE-SET,faceit,💬 Faceit RU
 
-  # 4. Государственные порталы, банки, СБП и маркетплейсы РФ
+  # 4. Государственные порталы, банки, СБП, маркетплейсы и приложения РФ
+  - RULE-SET,ru-apps,🇷🇺 Прокси РФ
   - RULE-SET,whitelist,🇷🇺 Прокси РФ
   - RULE-SET,whitelist-ips,🇷🇺 Прокси РФ,no-resolve
   - RULE-SET,category-ru,🇷🇺 Прокси РФ

@@ -732,6 +732,48 @@ class TestToolsSuite(unittest.TestCase):
                         items.append(s)
             self.assertEqual(len(items), len(set(items)), f"Duplicate entries found in MIHOMO/{fname}")
 
+    def test_mihomo_rule_precedence_no_shadowing(self):
+        """Ensure dedicated selector groups (Youtube, Discord) precede category-geoblock-ru in Mihomo configs."""
+        import yaml
+        for fname in ("default.yaml", "template_remnawave.yaml", "template_3x-ui.yaml"):
+            fpath = os.path.join(BASE_DIR, "MIHOMO", fname)
+            with open(fpath, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+            rules = data.get("rules", [])
+            idx_yt = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,youtube,"))
+            idx_dc = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,discord,"))
+            idx_geo = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,category-geoblock-ru,"))
+            self.assertLess(idx_yt, idx_geo, f"youtube rule must precede category-geoblock-ru in {fname}")
+            self.assertLess(idx_dc, idx_geo, f"discord rule must precede category-geoblock-ru in {fname}")
+
+        rel_path = os.path.join(BASE_DIR, "RELOCANT", "mihomo.yaml")
+        with open(rel_path, "r", encoding="utf-8") as f:
+            rel_data = yaml.safe_load(f)
+        self.assertIn("ru-apps", rel_data.get("rule-providers", {}))
+        self.assertIn("RULE-SET,ru-apps,🇷🇺 Прокси РФ", rel_data.get("rules", []))
+
+    def test_shadowrocket_and_xray_consistency(self):
+        """Verify Shadowrocket google-play/twitch-ads proxy rules, RELOCANT/SHADOWROCKET.CONF, and Xray rule fields."""
+        import json
+        sr_def = os.path.join(BASE_DIR, "SHADOWROCKET", "DEFAULT.CONF")
+        with open(sr_def, "r", encoding="utf-8") as f:
+            def_text = f.read()
+        self.assertIn("SHADOWROCKET/rules/google-play.list,PROXY", def_text)
+        self.assertIn("SHADOWROCKET/rules/twitch-ads.list,PROXY", def_text)
+
+        sr_rel = os.path.join(BASE_DIR, "RELOCANT", "SHADOWROCKET.CONF")
+        self.assertTrue(os.path.isfile(sr_rel), "Missing RELOCANT/SHADOWROCKET.CONF")
+        with open(sr_rel, "r", encoding="utf-8") as f:
+            rel_text = f.read()
+        self.assertIn("GEOIP,RU,PROXY", rel_text)
+        self.assertIn("FINAL,DIRECT", rel_text)
+
+        xray_path = os.path.join(BASE_DIR, "ADDON_AUTOROUTING", "Remnawave", "xray_location_template.json")
+        with open(xray_path, "r", encoding="utf-8") as f:
+            xray = json.load(f)
+        for i, r in enumerate(xray.get("routing", {}).get("rules", [])):
+            self.assertEqual(r.get("type"), "field", f"Rule #{i} in xray_location_template.json missing type='field'")
+
 
 if __name__ == "__main__":
     unittest.main()

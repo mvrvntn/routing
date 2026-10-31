@@ -89,7 +89,8 @@
       {
         "action": "reject",
         "port": [
-          443
+          443,
+          853
         ],
         "network": [
           "udp"
@@ -105,7 +106,10 @@
           "youtube",
           "category-geoblock-ru",
           "ai",
-          "google-deepmind"
+          "google-deepmind",
+          "google-play",
+          "github",
+          "twitch-ads"
         ]
       },
       {
@@ -138,20 +142,53 @@
           "lava.ru",
           "lava.top",
           "lava.link",
-          "lava.money"
+          "lava.money",
+          "apps.apple.com",
+          "itunes.apple.com",
+          "mzstatic.com",
+          "iads.apple.com",
+          "smp-device.apple.com",
+          "apple-pay-gateway.apple.com",
+          "wallet.apple.com",
+          "api.apple-pay.com",
+          "apple-pay.com",
+          "applepay.com",
+          "applewallet.com",
+          "cstat.apple.com",
+          "xp.apple.com",
+          "passbook.apple.com"
         ],
         "outbound": "→ Remnawave"
       },
       {
         "outbound": "direct",
         "rule_set": [
+          "private",
           "category-ru",
           "whitelist",
+          "whitelist-ip",
+          "torrent",
+          "microsoft",
+          "apple",
+          "steam",
+          "epicgames",
+          "riot",
+          "origin",
+          "escapefromtarkov",
+          "faceit",
+          "twitch",
+          "pinterest",
           "direct-ip"
         ]
       }
     ],
     "rule_set": [
+      {
+        "tag": "private",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/private.srs",
+        "type": "remote",
+        "format": "binary"
+      },
       {
         "tag": "category-ads",
         "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-ads.srs",
@@ -161,6 +198,12 @@
       {
         "tag": "win-spy",
         "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/win-spy.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "torrent",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/torrent.srs",
         "type": "remote",
         "format": "binary"
       },
@@ -213,6 +256,24 @@
         "format": "binary"
       },
       {
+        "tag": "google-play",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/google-play.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "github",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/github.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "twitch-ads",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/twitch-ads.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
         "tag": "category-ru",
         "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-ru.srs",
         "type": "remote",
@@ -221,6 +282,72 @@
       {
         "tag": "whitelist",
         "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/whitelist.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "whitelist-ip",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/whitelist-ip.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "microsoft",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/microsoft.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "apple",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/apple.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "steam",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/steam.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "epicgames",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/epicgames.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "riot",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/riot.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "origin",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/origin.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "escapefromtarkov",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/escapefromtarkov.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "faceit",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/faceit.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "twitch",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/twitch.srs",
+        "type": "remote",
+        "format": "binary"
+      },
+      {
+        "tag": "pinterest",
+        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/pinterest.srs",
         "type": "remote",
         "format": "binary"
       },

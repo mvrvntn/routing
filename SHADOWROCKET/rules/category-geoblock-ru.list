@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1693
+# TOTAL RULES: 1694
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -1567,6 +1567,7 @@ DOMAIN-SUFFIX,video.twimg.com.cdn.cloudflare.net
 DOMAIN-SUFFIX,vintagestory.at
 DOMAIN-SUFFIX,vipdrive.net
 DOMAIN-SUFFIX,viperatech.com
+DOMAIN-SUFFIX,vivox.com
 DOMAIN-SUFFIX,vlast.kz
 DOMAIN-SUFFIX,vmware.com
 DOMAIN-SUFFIX,vndb.org

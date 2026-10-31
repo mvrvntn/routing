@@ -216,19 +216,24 @@ DEST-PORT,19294-19344,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/ai.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-deepmind.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/youtube.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/telegram.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/github.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch-ads.list,PROXY
 
 # --- Прямой доступ: Локальные сети и Системные push-сервисы (Direct) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/apple.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/microsoft.list,DIRECT
 
 # --- Прямой доступ: Игровые платформы и медиастриминг (Direct) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/steam.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/epicgames.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/riot.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/origin.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/escapefromtarkov.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/faceit.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/pinterest.list,DIRECT
 
@@ -281,8 +286,14 @@ lknpd.nalog.ru = 213.24.64.181
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ads.list,REJECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/torrent.list,REJECT
 
+# Apple Pay / Wallet / Apple Intelligence (PROXY для обхода гео-блокировок)
+DOMAIN-KEYWORD,smp-,PROXY
+DOMAIN-KEYWORD,applepay,PROXY
+DOMAIN-SUFFIX,apple-pay.com,PROXY
+
 # Принудительное проксирование гео-заблокированных ресурсов
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/youtube.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord-ips.list,PROXY
@@ -291,12 +302,66 @@ DEST-PORT,19294-19344,PROXY
 # Прямой доступ только для белого списка и локальной сети
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/apple.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist-ips.list,DIRECT
 
 # Все остальное проксируется
 FINAL,PROXY
+"""
+
+
+def generate_relocant_conf() -> str:
+    """Generate the full content for RELOCANT/SHADOWROCKET.CONF."""
+    return f"""# @mvrvntn Routing for Shadowrocket
+# Profile: RELOCANT (Обратный роутинг для релокантов и путешественников: РФ через прокси, мир напрямую)
+# Repository: {REPO_URL}
+
+[General]
+ipv6 = false
+prefer-ipv6 = false
+private-ip-answer = true
+dns-direct-system = false
+dns-fallback-system = false
+dns-direct-fallback-proxy = true
+
+dns-server = https://cloudflare-dns.com/dns-query, https://dns.google/dns-query, 1.1.1.1, 8.8.8.8
+fallback-dns-server = https://dns.yandex.ru/dns-query, 77.88.8.8, system
+hijack-dns = :53
+always-real-ip = *
+
+skip-proxy = 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12, 127.0.0.1, localhost, *.local, captive.apple.com
+tun-excluded-routes = 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.88.99.0/24, 192.168.0.0/16, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 255.255.255.255/32, 239.255.255.250/32
+
+icmp-auto-reply = false
+always-reject-url-rewrite = false
+udp-policy-not-supported-behaviour = REJECT
+update-url = {REPO_URL}/RELOCANT/SHADOWROCKET.CONF
+
+[Host]
+lkfl2.nalog.ru = 213.24.64.175
+lknpd.nalog.ru = 213.24.64.181
+
+[Rule]
+# --- Локальные сети и системные ресурсы (Direct) ---
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT
+
+# --- Блокировка рекламы и трекеров (Block) ---
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ads.list,REJECT
+
+# --- Игровые серверы РФ и СНГ (Proxy) ---
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/faceit.list,PROXY
+
+# --- Государственные порталы, банки, СБП и домены РФ (Proxy) ---
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist-ips.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ru.list,PROXY
+
+# --- Подсети Российской Федерации и Республики Беларусь (Proxy) ---
+GEOIP,RU,PROXY
+GEOIP,BY,PROXY
+
+# --- Весь остальной мировой интернет — напрямую (Direct) ---
+FINAL,DIRECT
 """
 
 
@@ -339,6 +404,13 @@ def build_all_shadowrocket(verbose: bool = True) -> dict[str, int]:
         f.write(generate_whitelist_conf())
     if verbose:
         print(f"  [OK] Written {OUTPUT_DIR / 'WHITELIST.CONF'}")
+
+    relocant_dir = REPO_ROOT / "RELOCANT"
+    relocant_dir.mkdir(parents=True, exist_ok=True)
+    with open(relocant_dir / "SHADOWROCKET.CONF", "w", encoding="utf-8") as f:
+        f.write(generate_relocant_conf())
+    if verbose:
+        print(f"  [OK] Written {relocant_dir / 'SHADOWROCKET.CONF'}")
 
     return stats
 
