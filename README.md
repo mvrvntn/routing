@@ -16,6 +16,31 @@
 
 ---
 
+<details>
+<summary><b>📑 Оглавление (быстрая навигация по документу)</b></summary>
+
+- [⚡ Как это работает](#-как-это-работает)
+- [📱 Поддерживаемые клиенты и быстрое подключение](#-поддерживаемые-клиенты-и-быстрое-подключение)
+  - [Матрица клиентских профилей](#-матрица-клиентских-профилей)
+  - [Основные профили (Split Tunneling)](#-основные-профили-раздельное-туннелирование--split-tunneling)
+  - [Специфические профили (Белый список и Релокант)](#-специфические-профили-специальные-сценарии)
+  - [Инструкция по импорту](#-как-импортировать)
+- [💬 100% Работа Discord (WebRTC, Voice, Video)](#-100-работа-discord-webrtc-voice-video)
+- [🔌 Интеграция с серверными панелями (Remnawave, Marzban, 3x-ui)](#-интеграция-с-серверными-панелями)
+- [💻 Ссылки на скомпилированные базы и Rule-Sets (.dat, .srs, .mrs)](#-ссылки-на-скомпилированные-базы-и-rule-sets)
+- [📂 Структура репозитория](#-структура-репозитория)
+- [🛠️ Утилиты генерации правил (Streisand, v2RayNG, sing-box)](#️-утилиты-генерации-правил-ios--android--desktop)
+- [🛠️ Локальная разработка, архитектура и CI/CD](#️-локальная-разработка-архитектура-и-cicd)
+- [💡 Предложить домен или маршрут](#-предложить-домен-или-маршрут)
+- [❓ FAQ](#-faq)
+- [🙏 Благодарности и поддержка](#-благодарности-и-поддержка-разработчиков-оригинала)
+- [📄 Лицензия](#-лицензия-license)
+- [⚖️ Дисклеймер](#️-дисклеймер-legal-disclaimer)
+
+</details>
+
+---
+
 ## ⚡ Как это работает
 
 * 🇷🇺 **Напрямую через локального провайдера (Direct):** Государственные порталы, банки (Сбер, Т-Банк, ВТБ), Налоговая служба, СБП, маркетплейсы (Ozon, WB), сервисы Яндекса, VK, Кинопоиск, сетевые игры (Steam, Epic, Riot) и диагностические чекеры сетевых параметров. Работают с минимальным пингом (RTT) на максимальной скорости домашнего/мобильного провайдера без лишних капч и проверок.
@@ -26,11 +51,25 @@
 
 ---
 
-## 📱 Быстрое подключение (Happ & INCY)
+## 📱 Поддерживаемые клиенты и быстрое подключение
 
 > [!IMPORTANT]
 > **Основа проекта — умное раздельное туннелирование (Split Tunneling) и оптимизация сетевых маршрутов.**  
 > Для повседневного использования на смартфонах и ПК используйте основной профиль **DEFAULT** (или **JSONSUB**).
+
+### 📱 Матрица клиентских профилей
+
+| Клиент / Платформа | Поддерживаемый формат | Готовая ссылка / Профиль |
+| :--- | :--- | :--- |
+| **Happ** (iOS, Android, macOS, Windows) | JSON / DeepLink | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK) · [📄 JSON](HAPP/DEFAULT.JSON) |
+| **INCY** (iOS, Android, macOS, Windows) | Autorouting / DeepLink | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING) · [⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
+| **Mihomo / Clash Verge / FlClash** | YAML / MRS | [📄 Конфиг](MIHOMO/default.yaml) · [📖 Документация](MIHOMO/README.md) |
+| **Sing-box / Throne / NekoRay** | JSON / SRS | [📄 Шаблон подписки](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json) |
+| **Shadowrocket** (iOS) | .CONF / .list | [☁️ jsDelivr CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF) · [📄 Профиль](SHADOWROCKET/DEFAULT.CONF) |
+| **Streisand** (iOS) | `streisand://` | [🛠️ Генератор ссылки](tools/streisand/generate_streisand_link.py) |
+| **v2RayNG** (Android) | Routing QR / JSON | [🛠️ Генератор QR](tools/v2rayNG/generate_v2rayng_routing_qr.py) |
+
+---
 
 ### 🌟 Основные профили (Раздельное туннелирование / Split Tunneling)
 
@@ -151,6 +190,31 @@
   * `geoip.dat`: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat`
 * **Sing-box (`.srs`):** `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/<category>.srs`
 * **Mihomo (`.mrs`):** `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/<category>.mrs`
+
+<details>
+<summary><b>📋 Доступные категории правил .mrs (Mihomo) и .srs (Sing-box) — нажмите, чтобы развернуть</b></summary>
+
+| Категория | Назначение / Сервисы | Ссылка (.mrs для Mihomo) | Ссылка (.srs для Sing-box) |
+| :--- | :--- | :--- | :--- |
+| **category-ru** | Государственные порталы, банки РФ, Яндекс, VK, Ozon, WB | [category-ru.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ru.mrs) | [category-ru.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-ru.srs) |
+| **whitelist** | Критическая инфраструктура РФ (СБП, связь, реестры) | [whitelist.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist.mrs) | [whitelist.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/whitelist.srs) |
+| **category-geoblock-ru** | Зарубежные сервисы с геоблоком РФ и реестровые блокировки | [category-geoblock-ru.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-geoblock-ru.mrs) | [category-geoblock-ru.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-geoblock-ru.srs) |
+| **youtube** | YouTube, Googlevideo, YouTube Music | [youtube.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/youtube.mrs) | [youtube.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/youtube.srs) |
+| **discord** | Discord веб, сигнализация, шлюзы, Krisp AI | [discord.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/discord.mrs) | [discord.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/discord.srs) |
+| **telegram** | Telegram CDN, веб-клиенты, инфраструктура | [telegram.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/telegram.mrs) | [telegram.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/telegram.srs) |
+| **ai** | OpenAI ChatGPT, Anthropic Claude, Google Gemini, Perplexity | [ai.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/ai.mrs) | [ai.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/ai.srs) |
+| **github** | GitHub, Gist, GitHub Copilot | [github.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/github.mrs) | [github.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/github.srs) |
+| **steam** | Магазин Steam, сообщество, инвентарь (без тяжелых CDN) | [steam.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/steam.mrs) | [steam.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/steam.srs) |
+| **epicgames** | Epic Games Store, Fortnite, Unreal Engine | [epicgames.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/epicgames.mrs) | [epicgames.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/epicgames.srs) |
+| **riot** | Riot Games, League of Legends, Valorant | [riot.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/riot.mrs) | [riot.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/riot.srs) |
+| **origin** | Electronic Arts, Origin, EA Desktop | [origin.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/origin.mrs) | [origin.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/origin.srs) |
+| **escapefromtarkov** | Battlestate Games, Escape from Tarkov | [escapefromtarkov.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/escapefromtarkov.mrs) | [escapefromtarkov.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/escapefromtarkov.srs) |
+| **faceit** | FACEIT платформа, античит, матчинг | [faceit.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/faceit.mrs) | [faceit.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/faceit.srs) |
+| **category-ads** | Рекламные сети, аналитические трекеры | [category-ads.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ads.mrs) | [category-ads.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-ads.srs) |
+| **win-spy** | Телеметрия и сбор данных Windows | [win-spy.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/win-spy.mrs) | [win-spy.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/win-spy.srs) |
+| **private** | Зарезервированные и приватные локальные домены | [private.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private.mrs) | [private.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/private.srs) |
+
+</details>
 
 ---
 
@@ -297,6 +361,16 @@ mihomo -t -f MIHOMO/template_whitelist.yaml
 ```bash
 git diff origin/release~1 origin/release -- text/direct.txt
 ```
+</details>
+
+<details>
+<summary><b>7. Как настроить автообновление geosite.dat и geoip.dat на сервере/ноде (Remnanode / Xray)?</b></summary>
+
+Для автоматического обновления геобаз на удаленном Linux-сервере добавьте задачу в cron (`crontab -e`). Рекомендуется выполнять ежедневно в 04:00 по МСК (после завершения ночной сборки релизов в 03:23 МСК):
+```bash
+0 1 * * * curl -fsSL --retry 3 -o /opt/remnanode/geoip.dat https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat && curl -fsSL --retry 3 -o /opt/remnanode/geosite.dat https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geosite.dat && (cd /opt/remnanode && docker compose restart)
+```
+*(Для классического Xray замените директорию на `/usr/local/share/xray/` и перезапустите службу: `systemctl restart xray`)*.
 </details>
 
 ---
