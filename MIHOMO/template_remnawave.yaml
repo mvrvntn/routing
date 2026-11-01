@@ -14,6 +14,7 @@
 #   🇫🇲❯ АВТО     — автовыбор по задержке (url-test, интервал 3 мин)
 #   📺 Youtube   — отдельный выбор узла для YouTube
 #   💬 Discord   — отдельный выбор узла для Discord / Vesktop
+#   📨 Telegram  — отдельный выбор узла для Telegram
 #   🎮 Игры      — игровые сервисы (Steam, Epic, Origin, Riot, EfT, FaceIT…)
 #   🔓 Без VPN   — принудительный прямой доступ (DIRECT)
 #   ⛔ Блок      — блокировка (REJECT)
@@ -24,7 +25,8 @@
 #   • Microsoft, Apple                      → DIRECT
 #   • Российские домены (category-ru), ru-apps → DIRECT
 #   • Twitch, Pinterest                     → DIRECT
-#   • YouTube, Telegram, GitHub             → PROXY
+#   • YouTube, Discord, Telegram            → соответствующие группы
+#   • GitHub, Google Play, AI               → PROXY
 #   • Игровые сервисы                       → 🎮 Игры
 #   • Остальное                             → PROXY
 #
@@ -181,6 +183,18 @@ proxy-groups:
       - 🇫🇲❯ АВТО
   - name: 💬 Discord
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Discord.png
+    type: select
+    remnawave:
+      include-proxies: false
+    include-all: true
+    exclude-filter: "❯.+(⭐|🪞|⚡)"
+    exclude-type: "shadowsocks|ss"
+    proxies:
+      - 🛡️ VPN
+      - 🔓 Без VPN
+      - 🇫🇲❯ АВТО
+  - name: 📨 Telegram
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
     type: select
     remnawave:
       include-proxies: false
@@ -527,9 +541,9 @@ rules:
   - AND,((NETWORK,UDP),(DST-PORT,19294-19344)),💬 Discord
   - AND,((NETWORK,UDP),(DST-PORT,50000-50100)),💬 Discord
   - PROCESS-NAME-REGEX,(?i)^(discord|vesktop|webcord|armcord|legcord|ripcord|dorion|equicord|vencord).*,💬 Discord
-  - RULE-SET,telegram,PROXY
-  - RULE-SET,telegram-ip,PROXY,no-resolve
-  - PROCESS-NAME-REGEX,(?i).*(ayugram|telegram|nekogram|nagram|nekox).*,PROXY
+  - RULE-SET,telegram,📨 Telegram
+  - RULE-SET,telegram-ip,📨 Telegram,no-resolve
+  - PROCESS-NAME-REGEX,(?i).*(ayugram|telegram|nekogram|nagram|nekox).*,📨 Telegram
   - RULE-SET,google-play,PROXY
   - RULE-SET,google-deepmind,PROXY
   - RULE-SET,ai,PROXY
