@@ -1,5 +1,5 @@
 # NAME: whitelist.list
-# TOTAL RULES: 627
+# TOTAL RULES: 629
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ipify.org
@@ -256,6 +256,7 @@ DOMAIN-SUFFIX,lmru.tech
 DOMAIN-SUFFIX,magnit.ru
 DOMAIN-SUFFIX,mail.ru
 DOMAIN-SUFFIX,max.ru
+DOMAIN-SUFFIX,maks.su
 DOMAIN-SUFFIX,megafon.ru
 DOMAIN-SUFFIX,megamarket.ru
 DOMAIN-SUFFIX,megamarket.tech
@@ -505,6 +506,7 @@ DOMAIN-SUFFIX,fcm.googleapis.com
 DOMAIN-SUFFIX,mipush.xiaomi.com
 DOMAIN-SUFFIX,xmpush.xiaomi.com
 DOMAIN-SUFFIX,push.hicloud.com
+DOMAIN-SUFFIX,dbankcloud.com
 DOMAIN-SUFFIX,connectivitycheck.samsungcloud.com
 DOMAIN-SUFFIX,t-bank.com
 DOMAIN-SUFFIX,sberbank.com

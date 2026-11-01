@@ -265,6 +265,7 @@ domain:lmru.tech
 domain:magnit.ru
 domain:mail.ru
 domain:max.ru
+domain:maks.su
 domain:megafon.ru
 domain:megamarket.ru
 domain:megamarket.tech
@@ -532,6 +533,7 @@ domain:fcm.googleapis.com
 domain:mipush.xiaomi.com
 domain:xmpush.xiaomi.com
 domain:push.hicloud.com
+domain:dbankcloud.com
 domain:connectivitycheck.samsungcloud.com
 
 # --- Russian Banks & Financial Services (Non-.RU TLDs) ---
