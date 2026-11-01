@@ -178,6 +178,7 @@ proxy-groups:
     proxies:
       - 🛡️ VPN
       - 🇫🇲❯ АВТО
+      - 🔓 Без VPN
   - name: 💬 Discord
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Discord.png
     type: select
@@ -189,6 +190,7 @@ proxy-groups:
     proxies:
       - 🛡️ VPN
       - 🇫🇲❯ АВТО
+      - 🔓 Без VPN
   - name: 🎮 Игры
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
     type: select
