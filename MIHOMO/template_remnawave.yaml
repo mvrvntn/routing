@@ -106,6 +106,8 @@ dns:
     - 'time3.google.com'
     - 'time4.google.com'
     - 'speedtest.cros.wr.pvp.net' # исключить из fake-ip приватные домены
+    - '+.bittorrent.com'
+    - '+.transmissionbt.com'
   default-nameserver:
     - 77.88.8.8
     - 8.8.8.8
@@ -169,6 +171,7 @@ proxy-groups:
     exclude-filter: "❯.+(⭐|🪞|⚡)"
     exclude-type: "shadowsocks|ss"
     url: https://www.gstatic.com/generate_204
+    expected-status: 204
   - name: 📺 Youtube
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
     type: select
@@ -181,6 +184,8 @@ proxy-groups:
       - 🛡️ VPN
       - 🔓 Без VPN
       - 🇫🇲❯ АВТО
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
   - name: 💬 Discord
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Discord.png
     type: select
@@ -193,6 +198,8 @@ proxy-groups:
       - 🛡️ VPN
       - 🔓 Без VPN
       - 🇫🇲❯ АВТО
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
   - name: 📨 Telegram
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
     type: select
@@ -205,6 +212,8 @@ proxy-groups:
       - 🛡️ VPN
       - 🔓 Без VPN
       - 🇫🇲❯ АВТО
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
   - name: 🎮 Игры
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
     type: select
@@ -217,6 +226,8 @@ proxy-groups:
       - 🔓 Без VPN
       - 🛡️ VPN
       - 🇫🇲❯ АВТО
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
   - name: 🇫🇲❯ АВТО
     type: url-test
     tolerance: 50
