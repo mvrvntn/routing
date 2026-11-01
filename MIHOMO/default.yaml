@@ -19,6 +19,11 @@ proxy-providers:
     url: <ВВЕДИТЕ URL ПОДПИСКИ> # в формате mihomo
     path: ./provider/proxies.yaml
     interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      expected-status: 204
+      interval: 300
 # Если нет ссылки - удалите блок выше, расскоментируйте блок ниже и заполните
 # можете воспользоваться конвертером https://dikozimpact.github.io/clash-convertor/
 #proxies:
@@ -186,7 +191,9 @@ proxy-groups:
   type: url-test
   tolerance: 150
   url: https://www.gstatic.com/generate_204
+  expected-status: 204
   interval: 300
+  lazy: true
   include-all: true
   hidden: true
 - name: PROXY

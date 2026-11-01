@@ -20,6 +20,11 @@ proxy-providers:
     path: ./provider/ru_proxies.yaml
     interval: 86400
     filter: "(?i)RU|Russia|Россия|Moscow|Москва|SPB|Питер"
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      expected-status: 204
+      interval: 300
 
 # Если у вас одиночный узел (VLESS / Shadowsocks) вместо подписки,
 # удалите блок proxy-providers выше и вставьте ваш прокси в блок proxies ниже:
@@ -126,6 +131,7 @@ dns:
 
 proxy-groups:
   - name: "🇷🇺 Прокси РФ"
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Russia.png
     type: select
     use:
       - ru-server
@@ -133,12 +139,14 @@ proxy-groups:
       - DIRECT
 
   - name: "💬 Faceit RU"
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
     type: select
     proxies:
       - "🇷🇺 Прокси РФ"
       - DIRECT
 
   - name: "🛑 Блокировка"
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Reject.png
     type: select
     proxies:
       - REJECT

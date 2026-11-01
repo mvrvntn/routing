@@ -196,7 +196,9 @@ proxy-groups:
     type: url-test
     tolerance: 150
     url: https://www.gstatic.com/generate_204
+    expected-status: 204
     interval: 300
+    lazy: true
     # exclude-filter: прокси, которые хотите исключить
     remnawave:
       include-proxies: false
