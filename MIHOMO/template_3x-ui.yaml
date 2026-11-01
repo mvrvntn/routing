@@ -12,6 +12,7 @@ proxy-groups:
       - ⚡️ Авто-выбор
     include-all: true
     url: https://www.gstatic.com/generate_204
+    expected-status: 204
 
   - name: 📺 Youtube
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
@@ -19,6 +20,10 @@ proxy-groups:
     include-all: true
     proxies:
       - 🛡️ Прокси-узел
+      - 🔓 Прямое соединение
+      - ⚡️ Авто-выбор
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
 
   - name: 💬 Discord
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Discord.png
@@ -26,6 +31,21 @@ proxy-groups:
     include-all: true
     proxies:
       - 🛡️ Прокси-узел
+      - 🔓 Прямое соединение
+      - ⚡️ Авто-выбор
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
+
+  - name: 📨 Telegram
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png
+    type: select
+    include-all: true
+    proxies:
+      - 🛡️ Прокси-узел
+      - 🔓 Прямое соединение
+      - ⚡️ Авто-выбор
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
 
   - name: 🎮 Игры
     icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Game.png
@@ -34,14 +54,17 @@ proxy-groups:
     proxies:
       - 🔓 Прямое соединение
       - 🛡️ Прокси-узел
+      - ⚡️ Авто-выбор
+    url: https://www.gstatic.com/generate_204
+    expected-status: 204
 
   - name: ⚡️ Авто-выбор
     type: url-test
-    tolerance: 150
+    tolerance: 50
     url: https://www.gstatic.com/generate_204
     expected-status: 204
-    interval: 300
-    lazy: true
+    interval: 180
+    lazy: false
     include-all: true
     hidden: true
 
@@ -382,9 +405,9 @@ rules:
   - RULE-SET,google-play,PROXY
   - RULE-SET,twitch-ads,PROXY
   - RULE-SET,youtube,📺 Youtube
-  - RULE-SET,telegram,PROXY
-  - RULE-SET,telegram-ip,PROXY,no-resolve
-  - PROCESS-NAME-REGEX,(?i).*(ayugram|telegram|nekogram|nagram|nekox).*,PROXY
+  - RULE-SET,telegram,📨 Telegram
+  - RULE-SET,telegram-ip,📨 Telegram,no-resolve
+  - PROCESS-NAME-REGEX,(?i).*(ayugram|telegram|nekogram|nagram|nekox).*,📨 Telegram
   - RULE-SET,discord,💬 Discord
   - RULE-SET,discord-ip,💬 Discord,no-resolve
   - AND,((NETWORK,UDP),(DST-PORT,19294-19344)),💬 Discord

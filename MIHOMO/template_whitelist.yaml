@@ -140,14 +140,15 @@ proxy-groups:
       - ⚡️ Авто
     # LEAVE THIS LINE!
     url: https://www.gstatic.com/generate_204
+    expected-status: 204
 
   - name: ⚡️ Авто
     type: url-test
-    tolerance: 150
+    tolerance: 50
     url: https://www.gstatic.com/generate_204
     expected-status: 204
-    interval: 300
-    lazy: true
+    interval: 180
+    lazy: false
     remnawave:
       include-proxies: false
     include-all: true
