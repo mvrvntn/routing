@@ -1,5 +1,5 @@
 # NAME: ai.list
-# TOTAL RULES: 119
+# TOTAL RULES: 120
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,openai.com
@@ -117,6 +117,7 @@ DOMAIN-SUFFIX,apis.google.com
 DOMAIN-SUFFIX,assistant-s3-pa.googleapis.com
 DOMAIN-SUFFIX,waa-pa.googleapis.com
 DOMAIN-SUFFIX,speechs3-pa.googleapis.com
+DOMAIN-SUFFIX,speechs3proto2-pa.googleapis.com
 DOMAIN-SUFFIX,developerprofiles-pa.googleapis.com
 DOMAIN-SUFFIX,lookerstudio.google.com
 DOMAIN-SUFFIX,o.pki.goog

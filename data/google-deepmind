@@ -80,6 +80,7 @@ domain:apis.google.com
 domain:assistant-s3-pa.googleapis.com
 domain:waa-pa.googleapis.com
 domain:speechs3-pa.googleapis.com
+domain:speechs3proto2-pa.googleapis.com
 domain:developerprofiles-pa.googleapis.com
 domain:lookerstudio.google.com
 domain:o.pki.goog

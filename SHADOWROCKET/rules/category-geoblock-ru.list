@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1690
+# TOTAL RULES: 1696
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -598,6 +598,7 @@ DOMAIN-SUFFIX,gtagarage.com
 DOMAIN-SUFFIX,guilded.gg
 DOMAIN-SUFFIX,gulagu.net
 DOMAIN-SUFFIX,gvt1.com
+DOMAIN-SUFFIX,hangouts.googleapis.com
 DOMAIN-SUFFIX,hanime-cdn.com
 DOMAIN-SUFFIX,happ-proxy.com
 DOMAIN-SUFFIX,happycolorapp.com
@@ -806,6 +807,8 @@ DOMAIN-SUFFIX,medicalnewstoday.com
 DOMAIN-SUFFIX,medium.com
 DOMAIN-SUFFIX,meduza.io
 DOMAIN-SUFFIX,meest-shop.com
+DOMAIN-SUFFIX,meet.google.com
+DOMAIN-SUFFIX,meetings.googleapis.com
 DOMAIN-SUFFIX,meetup.com
 DOMAIN-SUFFIX,megogo.net
 DOMAIN-SUFFIX,melord.net
@@ -1076,6 +1079,7 @@ DOMAIN-SUFFIX,pingdom.com
 DOMAIN-SUFFIX,pixabay.com
 DOMAIN-SUFFIX,pixiv.net
 DOMAIN-SUFFIX,plab.site
+DOMAIN-SUFFIX,platform.dash.cloudflare.com
 DOMAIN-SUFFIX,playnintendo.com
 DOMAIN-SUFFIX,plugin-alliance.com
 DOMAIN-SUFFIX,plugshare.com
@@ -1337,6 +1341,7 @@ DOMAIN-SUFFIX,soundcloud.com
 DOMAIN-SUFFIX,sovanews.tv
 DOMAIN-SUFFIX,spacelift.io
 DOMAIN-SUFFIX,spaceship.com
+DOMAIN-SUFFIX,sparrow.cloudflare.com
 DOMAIN-SUFFIX,spiceworks.com
 DOMAIN-SUFFIX,spiceworksstatic.com
 DOMAIN-SUFFIX,spitfireaudio.com
@@ -1571,6 +1576,7 @@ DOMAIN-SUFFIX,vod-fy.crunchyrollcdn.com
 DOMAIN-SUFFIX,volkswagen-classic-parts.com
 DOMAIN-SUFFIX,vot-tak.tv
 DOMAIN-SUFFIX,vpnunlimited.com
+DOMAIN-SUFFIX,vrchat.com
 DOMAIN-SUFFIX,vrv.co
 DOMAIN-SUFFIX,vts.visa.com
 DOMAIN-SUFFIX,vyos.io

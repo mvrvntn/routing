@@ -594,6 +594,7 @@ domain:gtagarage.com
 domain:guilded.gg
 domain:gulagu.net
 domain:gvt1.com
+domain:hangouts.googleapis.com
 domain:hanime-cdn.com
 domain:happ-proxy.com
 domain:happycolorapp.com
@@ -802,6 +803,8 @@ domain:medicalnewstoday.com
 domain:medium.com
 domain:meduza.io
 domain:meest-shop.com
+domain:meet.google.com
+domain:meetings.googleapis.com
 domain:meetup.com
 domain:megogo.net
 domain:melord.net
@@ -1072,6 +1075,7 @@ domain:pingdom.com
 domain:pixabay.com
 domain:pixiv.net
 domain:plab.site
+domain:platform.dash.cloudflare.com
 domain:playnintendo.com
 domain:plugin-alliance.com
 domain:plugshare.com
@@ -1333,6 +1337,7 @@ domain:soundcloud.com
 domain:sovanews.tv
 domain:spacelift.io
 domain:spaceship.com
+domain:sparrow.cloudflare.com
 domain:spiceworks.com
 domain:spiceworksstatic.com
 domain:spitfireaudio.com
@@ -1567,6 +1572,7 @@ domain:vod-fy.crunchyrollcdn.com
 domain:volkswagen-classic-parts.com
 domain:vot-tak.tv
 domain:vpnunlimited.com
+domain:vrchat.com
 domain:vrv.co
 domain:vts.visa.com
 domain:vyos.io
