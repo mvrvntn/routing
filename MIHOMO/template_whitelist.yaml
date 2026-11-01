@@ -4,7 +4,7 @@
 # Адаптировано для сетей с жесткими белыми списками (ТСПУ / Direct Bypass)
 #
 # Принцип работы:
-# 1. Сайты и IP из российских белых списков (госуслуги, банки, сервисы РФ, CIDR РФ)
+# 1. ТОЛЬКО утвержденные белые списки РФ (whitelist домены и IP: госуслуги, банки, СБП, РЖД)
 #    идут НАПРЯМУЮ (DIRECT) на максимальной скорости провайдера.
 # 2. Реклама, спай, торренты и нестабильный QUIC (UDP 443) блокируются (REJECT).
 # 3. Весь остальной заблокированный трафик направляется через группу
@@ -82,7 +82,7 @@ dns:
   nameserver:
     - https://8.8.8.8/dns-query#❯ белый коридор
   nameserver-policy:
-    'rule-set:private-domains,category-ru,whitelist':
+    'rule-set:private-domains,whitelist':
       - 77.88.8.8
       - 77.88.8.1
   hosts:
@@ -218,24 +218,6 @@ rule-providers:
     proxy: 🇫🇲❯ АВТО
     interval: 86400
 
-  category-ru:
-    type: http
-    behavior: domain
-    format: mrs
-    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ru.mrs
-    path: ./ruleset/category-ru.mrs
-    proxy: 🇫🇲❯ АВТО
-    interval: 86400
-
-  direct-ips:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/direct.mrs
-    path: ./ruleset/direct-ips.mrs
-    proxy: 🇫🇲❯ АВТО
-    interval: 86400
-
 rules:
   # --- Системные и приватные адреса ---
   - RULE-SET,private-ips,DIRECT,no-resolve
@@ -249,11 +231,9 @@ rules:
   - RULE-SET,win-spy,REJECT-DROP
   - RULE-SET,torrent,REJECT-DROP
 
-  # --- Белые списки и ресурсы РФ (DIRECT без прокси) ---
+  # --- Белый список критической инфраструктуры РФ (DIRECT без прокси) ---
   - RULE-SET,whitelist,DIRECT
   - RULE-SET,whitelist-ips,DIRECT,no-resolve
-  - RULE-SET,category-ru,DIRECT
-  - RULE-SET,direct-ips,DIRECT,no-resolve
 
-  # --- Всё остальное (заблокированные зарубежные ресурсы) -> через Белый коридор ---
+  # --- Всё остальное (не-белосписочные .ru ресурсы и весь зарубежный интернет) -> через Белый коридор ---
   - MATCH,❯ белый коридор
