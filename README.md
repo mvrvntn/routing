@@ -25,7 +25,7 @@
   - [Основные профили (Split Tunneling)](#-основные-профили-раздельное-туннелирование--split-tunneling)
   - [Специфические профили (Белый список и Релокант)](#-специфические-профили-специальные-сценарии)
   - [Инструкция по импорту](#-как-импортировать)
-- [💬 100% Работа Discord (WebRTC, Voice, Video)](#-100-работа-discord-webrtc-voice-video)
+- [💬 Отказоустойчивая маршрутизация Discord (WebRTC, Voice, Video)](#-отказоустойчивая-маршрутизация-discord-webrtc-voice-video)
 - [🔌 Интеграция с серверными панелями (Remnawave, Marzban, 3x-ui)](#-интеграция-с-серверными-панелями)
 - [💻 Ссылки на скомпилированные базы и Rule-Sets (.dat, .srs, .mrs)](#-ссылки-на-скомпилированные-базы-и-rule-sets)
 - [📂 Структура репозитория](#-структура-репозитория)
@@ -47,7 +47,7 @@
 * 🌍 **Через удалённый прокси-узел (Proxy):** Зарубежные медиаплатформы, YouTube, Discord (**включая прямые UDP голосовые серверы**), Telegram, а также исследовательские AI-инструменты (ChatGPT, Claude, Gemini, Perplexity) и внешние сервисы.
 * 🍏 **Энергоэффективно (~1.8 МБ RAM):** База сжата алгоритмом агрегации поддоменов (`geosite.dat` ~77 КБ). Снижает нагрузку на CPU смартфона, предотвращает нагрев аккумулятора и системные сбросы сетевого расширения на iOS.
 * 🎮 **Оптимизация для гейминга (Low Latency & CDN Bypass):** Игровой голосовой движок Vivox (`vivox.com`), платформы Steam, Battle.net, Epic Games, Riot, Tarkov, Roblox, Call of Duty (Ricochet). Скачивание обновлений и дистрибутивов игр принудительно направляется напрямую (`DIRECT`) на скорости 1 Гбит/с даже при активации VPN для игр, а замер пинга в матчах защищен от задержек Fake-IP (SDR / STUN bypass).
-* 🛡 **Аппаратный Safety Gate:** Домены национальных зон `.ru`, `.рф`, `.su` аппаратно изолированы от проксирования.
+* 🛡 **Автоматический Safety Gate:** Домены национальных зон `.ru`, `.рф`, `.su` и критическая инфраструктура строго изолированы от проксирования на уровне проверок репозитория и фильтрации CI/CD.
 
 ---
 
@@ -63,7 +63,7 @@
 | :--- | :--- | :--- |
 | **Happ** (iOS, Android, macOS, Windows) | JSON / DeepLink | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK) · [📄 JSON](HAPP/DEFAULT.JSON) |
 | **INCY** (iOS, Android, macOS, Windows) | Autorouting / DeepLink | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING) · [⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
-| **Mihomo / Clash Verge / FlClash** | YAML / MRS | [📄 Конфиг](MIHOMO/default.yaml) · [📖 Документация](MIHOMO/README.md) |
+| **Mihomo / Rabbit Hole / UXWAY / FlClash** | YAML / MRS | [📄 Конфиг](MIHOMO/default.yaml) · [📖 Документация](MIHOMO/README.md) |
 | **Sing-box / Throne / NekoRay** | JSON / SRS | [📄 Шаблон подписки](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json) |
 | **Shadowrocket** (iOS) | .CONF / .list | [☁️ jsDelivr CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF) · [📄 Профиль](SHADOWROCKET/DEFAULT.CONF) |
 | **Streisand** (iOS) | `streisand://` | [🛠️ Генератор ссылки](tools/streisand/generate_streisand_link.py) |
@@ -90,7 +90,7 @@
 
 | Профиль | Назначение | Happ | INCY | Документация |
 | :--- | :--- | :--- | :--- | :--- |
-| **коридор роутинг • БС**<br>*(WHITELIST)* | 🛡 **Режим высокой сетевой автономии.** Профиль максимальной отказоустойчивости. Пропускает напрямую **исключительно** критическую инфраструктуру РФ (белые списки: Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для гарантированной доступности ключевых сервисов. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) | [📄 Манифест](HAPP/WHITELIST.JSON) |
+| **коридор роутинг • БС**<br>*(WHITELIST)* | 🛡 **Белый список (Whitelist).** Аварийный профиль прямого доступа: направляет напрямую **исключительно** критическую инфраструктуру РФ (белые списки: Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для работы в условиях жестких сетевых сбоев и ограничений. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) | [📄 Манифест](HAPP/WHITELIST.JSON) |
 | **коридор роутинг • релокант**<br>*(RELOCANT)* | 🌍 **Обратный роутинг (Reverse Split).** Для тех, кто находится **за пределами РФ** (Сербия, Грузия, ЕС, Турция, СНГ). Весь мировой интернет идёт напрямую на скорости 1 Гбит/с, и **только** сервисы РФ (Госуслуги, Банки РФ, Кинопоиск, Faceit RU) идут через российский прокси-сервер. | [⚡ В 1 клик](RELOCANT/HAPP.DEEPLINK)<br>[📄 JSON](RELOCANT/HAPP.JSON) | [☁️ Autorouting](RELOCANT/INCY.AUTOROUTING)<br>[⚡ В 1 клик](RELOCANT/INCY.DEEPLINK) | [📖 Инструкция для релокантов и роутеров](RELOCANT/README.md) |
 
 ### 🚀 Как импортировать
@@ -116,11 +116,11 @@
 
 ---
 
-## 💬 100% Работа Discord (WebRTC, Voice, Video)
+## 💬 Отказоустойчивая маршрутизация Discord (WebRTC, Voice, Video)
 
-Если у вас или ваших пользователей возникают проблемы с Discord (вечный статус `RTC Connecting` / `Подключение к RTC`, «Маршрут не найден», заикания звука, дропы демонстрации экрана):
+Решение проблем с голосовыми каналами Discord (статус `RTC Connecting`, «Маршрут не найден», заикания звука, прерывания трансляций экрана):
 
-👉 **[Ознакомьтесь с полным руководством по Discord (100% Bulletproof Guide)](docs/DISCORD_FIX.md)**
+👉 **[Подробное руководство по настройке Discord (Failsafe Routing Guide)](docs/DISCORD_FIX.md)**
 
 В репозитории реализовано 4-уровневое отказоустойчивое решение:
 1. **Доменные списки (`geosite:discord`)**: 55+ доменов, STUN-серверы, Krisp AI, Quests, Activities.
@@ -212,6 +212,14 @@
 | **escapefromtarkov** | Battlestate Games, Escape from Tarkov | [escapefromtarkov.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/escapefromtarkov.mrs) | [escapefromtarkov.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/escapefromtarkov.srs) |
 | **faceit** | FACEIT платформа, античит, матчинг | [faceit.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/faceit.mrs) | [faceit.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/faceit.srs) |
 | **category-ads** | Рекламные сети, аналитические трекеры | [category-ads.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ads.mrs) | [category-ads.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/category-ads.srs) |
+| **direct-ip** | Прямые IP-диапазоны провайдеров РФ и Беларуси | [direct-ip.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/direct-ip.mrs) | [direct-ip.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/direct-ip.srs) |
+| **google-deepmind** | Google Gemini, AI Studio, DeepMind API | [google-deepmind.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/google-deepmind.mrs) | [google-deepmind.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/google-deepmind.srs) |
+| **google-play** | Google Play Маркет и сопутствующие CDN | [google-play.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/google-play.mrs) | [google-play.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/google-play.srs) |
+| **apple** | Сервисы Apple, App Store, iCloud | [apple.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/apple.mrs) | [apple.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/apple.srs) |
+| **microsoft** | Сервисы Microsoft, Windows Update, Office 365 | [microsoft.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/microsoft.mrs) | [microsoft.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/microsoft.srs) |
+| **twitch** | Twitch трансляции и медиасерверы | [twitch.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/twitch.mrs) | [twitch.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/twitch.srs) |
+| **twitch-ads** | Блокировка рекламы Twitch | [twitch-ads.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/twitch-ads.mrs) | [twitch-ads.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/twitch-ads.srs) |
+| **torrent** | Торрент-трекеры и P2P-анонсеры | [torrent.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/torrent.mrs) | [torrent.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/torrent.srs) |
 | **win-spy** | Телеметрия и сбор данных Windows | [win-spy.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/win-spy.mrs) | [win-spy.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/win-spy.srs) |
 | **private** | Зарезервированные и приватные локальные домены | [private.mrs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private.mrs) | [private.srs](https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/private.srs) |
 
@@ -269,7 +277,7 @@ flowchart TD
     F --> G["jsDelivr CDN (Автоматическая очистка кэша)"]
 ```
 
-* **Safety Gate & Pruning:** Скрипт [`scripts/update_geoblock.py`](scripts/update_geoblock.py) аппаратно изолирует национальные TLD (`.ru`, `.рф`, `.su`), домены критической инфраструктуры и банков от попадания в списки проксирования, а также сворачивает избыточные дочерние поддомены.
+* **Safety Gate & Pruning:** Скрипт [`scripts/update_geoblock.py`](scripts/update_geoblock.py) в CI/CD валидирует и изолирует национальные TLD (`.ru`, `.рф`, `.su`), домены критической инфраструктуры и банков от попадания в списки проксирования, а также сворачивает избыточные дочерние поддомены.
 * **Сборка бинарных артефактов:** Автоматически компилируются базы `geosite.dat` (Protobuf), `geoip.dat`, `.srs` (бинарные деревья sing-box) и `.mrs` (бинарные деревья Mihomo).
 * **Smoke Tests:** Проверяется валидность структуры, целостность синтаксиса и допустимые диапазоны размеров файлов.
 * **Публикация и CDN:** Артефакты отправляются в ветку `release`, создается релиз GitHub, а для CDN jsDelivr вызывается `purge` для мгновенной отдачи клиентам.
@@ -283,7 +291,7 @@ cd routing
 python -m pip install -r requirements.txt
 ```
 
-**Запуск регрессионных и интеграционных тестов (47 тестов):**
+**Запуск регрессионных и интеграционных тестов (49 тестов):**
 ```bash
 python -m unittest discover tests -v
 ```
@@ -297,7 +305,9 @@ python scripts/update_geoblock.py
 ```bash
 mihomo -t -f MIHOMO/default.yaml
 mihomo -t -f MIHOMO/template_remnawave.yaml
+mihomo -t -f MIHOMO/template_3x-ui.yaml
 mihomo -t -f MIHOMO/template_whitelist.yaml
+mihomo -t -f RELOCANT/mihomo.yaml
 ```
 
 ---
