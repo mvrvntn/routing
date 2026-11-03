@@ -1,5 +1,5 @@
 # NAME: category-ru.list
-# TOTAL RULES: 164
+# TOTAL RULES: 165
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,2ip.io
@@ -99,6 +99,7 @@ DOMAIN-SUFFIX,rustore.cc
 DOMAIN-SUFFIX,oneme.app
 DOMAIN-SUFFIX,avito.st
 DOMAIN-SUFFIX,vkusvill.net
+DOMAIN-SUFFIX,taxsee.com
 DOMAIN-SUFFIX,tinkoff.com
 DOMAIN-SUFFIX,sberbank.com
 DOMAIN-SUFFIX,sber.world

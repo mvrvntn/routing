@@ -127,6 +127,7 @@ domain:oneme.app
 # Russian Retail & Marketplaces CDN (non-.RU domains)
 domain:avito.st
 domain:vkusvill.net
+domain:taxsee.com
 
 # Russian Banks & Financial Services on non-.RU domains
 domain:tinkoff.com

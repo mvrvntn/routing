@@ -1,5 +1,5 @@
 # NAME: whitelist.list
-# TOTAL RULES: 629
+# TOTAL RULES: 630
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ipify.org
@@ -316,6 +316,7 @@ DOMAIN-SUFFIX,t2.ru
 DOMAIN-SUFFIX,tamtam.chat
 DOMAIN-SUFFIX,taximaxim.ru
 DOMAIN-SUFFIX,taxsee.com
+DOMAIN-SUFFIX,taxsee.ru
 DOMAIN-SUFFIX,tbank-online.com
 DOMAIN-SUFFIX,tele2.ru
 DOMAIN-SUFFIX,timeweb.cloud

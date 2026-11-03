@@ -11,6 +11,7 @@ payload:
   - PROCESS-NAME,com.carshering
   - PROCESS-NAME,com.citymobil
   - PROCESS-NAME,com.taxsee.taxsee
+  - PROCESS-NAME,com.taxsee.taxseedriver
   - PROCESS-NAME,ru.yandex.uber
   - PROCESS-NAME,ru.taxovichkof.android
   - PROCESS-NAME,ru.rolf.rolf
