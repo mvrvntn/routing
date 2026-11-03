@@ -127,6 +127,9 @@ payload:
   - PROCESS-NAME,MarvelRivals_Launcher.exe
   - PROCESS-NAME,Marvel-Win64-Shipping.exe
 
+  # Mimesis
+  - PROCESS-NAME,MIMESIS.exe
+
   # Overwatch 2 & Blizzard
   - PROCESS-NAME,Overwatch.exe
   - PROCESS-NAME,Battle.net.exe
