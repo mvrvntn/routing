@@ -80,8 +80,8 @@ dns:
     - 77.88.8.8
     - 77.88.8.1
   nameserver:
-    - https://8.8.8.8/dns-query#❯ белый коридор
-    - https://1.1.1.1/dns-query#❯ белый коридор
+    - https://8.8.8.8/dns-query  # ❯ белый коридор
+    - https://1.1.1.1/dns-query  # ❯ белый коридор
   nameserver-policy:
     'rule-set:private-domains,whitelist':
       - 77.88.8.8

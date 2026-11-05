@@ -118,8 +118,8 @@ dns:
     - 77.88.8.8
     - 77.88.8.1
   nameserver:
-    - https://8.8.8.8/dns-query#PROXY
-    - https://1.1.1.1/dns-query#PROXY
+    - https://8.8.8.8/dns-query  # PROXY
+    - https://1.1.1.1/dns-query  # PROXY
   nameserver-policy:
     'rule-set:private-domains,category-ru,whitelist':
       - 77.88.8.8
