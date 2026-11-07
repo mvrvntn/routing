@@ -1,5 +1,5 @@
 # NAME: category-ru.list
-# TOTAL RULES: 169
+# TOTAL RULES: 170
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,2ip.io
@@ -171,3 +171,4 @@ DOMAIN-SUFFIX,aqara.com
 DOMAIN-SUFFIX,aqara.cn
 DOMAIN-SUFFIX,lumiunited.com
 DOMAIN-SUFFIX,lumiunited.cn
+DOMAIN-SUFFIX,ankasa.cn
