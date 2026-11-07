@@ -702,7 +702,7 @@ jobs:
                       HAPP/DEFAULT.JSON HAPP/WHITELIST.JSON HAPP/JSONSUB.JSON RELOCANT/HAPP.JSON \
                       HAPP/DEFAULT.DEEPLINK HAPP/WHITELIST.DEEPLINK HAPP/JSONSUB.DEEPLINK RELOCANT/HAPP.DEEPLINK \
                       RELOCANT/mihomo.yaml MIHOMO/default.yaml MIHOMO/template_remnawave.yaml MIHOMO/template_whitelist.yaml MIHOMO/template_3x-ui.yaml \
-                      ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json ADDON_AUTOROUTING/Remnawave/xray_location_template.json \
+                      ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json \
                       SHADOWROCKET/DEFAULT.CONF SHADOWROCKET/WHITELIST.CONF RELOCANT/SHADOWROCKET.CONF; do
             ${{ env.CURL }} -i "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/${json}" || true
           done

@@ -81,17 +81,7 @@
 
 ---
 
-## 5. Основной шаблон XRAY для каждой локации
-В Remnawave при настройке шаблона Xray для локаций используется файл [`xray_location_template.json`](./xray_location_template.json):
-* Маршрутизация доменов `geosite:discord`, `geosite:ai`, `geosite:category-geoblock-ru` через тег `proxy`.
-* Прямое проксирование IP-подсетей `geoip:telegram` и `geoip:discord`.
-* Выделенное правило для голосовых UDP-портов Discord (`19294-19344`).
-* Защита Apple Pay, Wallet, Google Pay, банковских токенов и AI-сервисов (`copilot`, `chatgpt`, `claude`).
-* Опция `"routeOnly": true` в секции `sniffing` для предотвращения утечек на iOS.
-
----
-
-## 6. Рекомендация для профиля ноды Remnawave
+## 5. Рекомендация для профиля ноды Remnawave
 В конфигурации ноды (`Профиль remnawave ноды.txt`) в секцию чекеров `warp-out` рекомендуется добавить:
 ```json
 "ipwho.is"

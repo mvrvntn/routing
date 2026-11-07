@@ -168,7 +168,6 @@
   routing: happ://routing/onadd/...
   ```
   *(Актуальную строку берите из [`HAPP/DEFAULT.DEEPLINK`](HAPP/DEFAULT.DEEPLINK) либо настройте автообновление через микросервис [`remnawave-routing-update`](ADDON_AUTOROUTING/Remnawave/README.md#2-автороутинг-для-happ))*.
-* **Xray Location (ноды):** [`xray_location_template.json`](ADDON_AUTOROUTING/Remnawave/xray_location_template.json) с защитой `routeOnly: true`.
 * **Sing-box:** [`singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json).
 * **Mihomo / Clash:** [`MIHOMO/`](MIHOMO/README.md):
   * Основной шаблон: [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml)
