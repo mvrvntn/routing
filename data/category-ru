@@ -213,3 +213,9 @@ domain:alt5-mtalk.google.com
 domain:alt6-mtalk.google.com
 domain:alt7-mtalk.google.com
 domain:alt8-mtalk.google.com
+
+# Smart Home & IoT (Aqara / Lumi United)
+domain:aqara.com
+domain:aqara.cn
+domain:lumiunited.com
+domain:lumiunited.cn
