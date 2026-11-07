@@ -2,12 +2,13 @@
 
 # 🚀 коридор роутинг
 
-**Наборы правил маршрутизации и конфигурации раздельного туннелирования (Split Tunneling) для [«коридор»](https://mvrvntn.github.io/koridor/), [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box) и [Remnawave](https://docs.rw).**
+**Наборы правил маршрутизации и конфигурации раздельного туннелирования (Split Tunneling) для [«коридор»](https://tinyurl.com/koridor-start), [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box) и [Remnawave](https://docs.rw).**
 
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
 [![jsDelivr CDN](https://img.shields.io/badge/jsDelivr-CDN-orange.svg)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
 [![Tests](https://img.shields.io/badge/Tests-49%20Passed-brightgreen.svg)](tests/)
+[![Проект «коридор»](https://img.shields.io/badge/Проект-«коридор»-1088ff?logo=telegram)](https://tinyurl.com/koridor-start)
 [![Предложить домен](https://img.shields.io/badge/Добавить%20домен-Форма%20заявки-2ea44f?logo=github)](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -31,7 +32,7 @@
 - [Локальная разработка и CI/CD](#локальная-разработка-архитектура-и-cicd)
 - [Предложить домен или маршрут](#предложить-домен-или-маршрут)
 - [FAQ](#faq)
-- [Благодарности и поддержка](#благодарности-и-поддержка)
+- [Поддержка проекта](#поддержка-проекта)
 - [Лицензия и дисклеймер](#лицензия-и-дисклеймер)
 
 </details>
@@ -322,15 +323,21 @@ git diff origin/release~1 origin/release -- text/direct.txt
 
 ---
 
-## Благодарности и поддержка
+## Поддержка проекта
 
-Проект базируется на наработках сообщества:
+Наборы правил и конфигурации развиваются бесплатно и на открытых началах.
+
+Если репозиторий экономит вам время и трафик, лучшая поддержка разработки — использование нашего основного сервиса:
+
+* 🚀 **[Проект «коридор»](https://tinyurl.com/koridor-start)** — готовый сервис сетевой оптимизации, стабильной связности и раздельного туннелирования.
+
+---
+
+### Благодарности авторам оригинальных наработок
 * **Разработка:** [ristavor](https://github.com/ristavor)
 * **Благодарности:** [hydraponique](https://github.com/hydraponique) & [fatyzzz](https://github.com/fatyzzz)
 * **Telegram-сообщество проекта:** [t.me/vpnrouting](https://t.me/vpnrouting)
-
-**Поддержать авторов оригинала (USDT TRC20):**
-`TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
+* **USDT TRC20 авторам оригинала:** `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
 
 ---
 
@@ -352,11 +359,13 @@ git diff origin/release~1 origin/release -- text/direct.txt
 
 <div align="center">
 
-**[🌐 Официальный сайт «коридор»](https://mvrvntn.github.io/koridor/)**  
-*Оптимизация сетевых маршрутов и раздельного туннелирования*
+### 🌐 Проект «коридор»
+*Оптимизация сетевых маршрутов, приватность и раздельное туннелирование*
 
-<br>
+[![Подключить «коридор»](https://img.shields.io/badge/🚀%20Подключить%20«коридор»-tinyurl.com%2Fkoridor--start-1088ff?style=for-the-badge)](https://tinyurl.com/koridor-start)
 
-[⭐ Поставьте Star](https://github.com/mvrvntn/routing), если проект вам помог!
+<br><br>
+
+[⭐ Поставьте Star](https://github.com/mvrvntn/routing), если репозиторий вам помог!
 
 </div>
