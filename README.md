@@ -2,7 +2,7 @@
 
 # 🚀 коридор роутинг
 
-**Автономный сервис умной маршрутизации и раздельного туннелирования (Split Tunneling) для проекта [«коридор»](https://mvrvntn.github.io/koridor/), [Happ](https://happ.su), [INCY](https://incy.cc), [Remnawave](https://docs.rw), [Sing-box](https://github.com/SagerNet/sing-box) и [Mihomo](https://github.com/MetaCubeX/mihomo).**
+**Наборы правил маршрутизации и конфигурации раздельного туннелирования (Split Tunneling) для [«коридор»](https://mvrvntn.github.io/koridor/), [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box) и [Remnawave](https://docs.rw).**
 
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
@@ -17,175 +17,124 @@
 ---
 
 <details>
-<summary><b>📑 Оглавление (быстрая навигация по документу)</b></summary>
+<summary><b>📑 Оглавление</b></summary>
 
-- [⚡ Как это работает](#-как-это-работает)
-- [📱 Поддерживаемые клиенты и быстрое подключение](#-поддерживаемые-клиенты-и-быстрое-подключение)
-  - [Матрица клиентских профилей](#-матрица-клиентских-профилей)
-  - [Основные профили (Split Tunneling)](#-основные-профили-раздельное-туннелирование--split-tunneling)
-  - [Специфические профили (Белый список и Релокант)](#-специфические-профили-специальные-сценарии)
-  - [Инструкция по импорту](#-как-импортировать)
-- [💬 Отказоустойчивая маршрутизация Discord (WebRTC, Voice, Video)](#-отказоустойчивая-маршрутизация-discord-webrtc-voice-video)
-- [🔌 Интеграция с серверными панелями (Remnawave, Marzban, 3x-ui)](#-интеграция-с-серверными-панелями)
-- [💻 Ссылки на скомпилированные базы и Rule-Sets (.dat, .srs, .mrs)](#-ссылки-на-скомпилированные-базы-и-rule-sets)
-- [📂 Структура репозитория](#-структура-репозитория)
-- [🛠️ Утилиты генерации правил (Streisand, v2RayNG, sing-box)](#️-утилиты-генерации-правил-ios--android--desktop)
-- [🛠️ Локальная разработка, архитектура и CI/CD](#️-локальная-разработка-архитектура-и-cicd)
-- [💡 Предложить домен или маршрут](#-предложить-домен-или-маршрут)
-- [❓ FAQ](#-faq)
-- [🙏 Благодарности и поддержка](#-благодарности-и-поддержка-разработчиков-оригинала)
-- [📄 Лицензия](#-лицензия-license)
-- [⚖️ Дисклеймер](#️-дисклеймер-legal-disclaimer)
+- [Как это работает](#как-это-работает)
+- [Профили маршрутизации](#профили-маршрутизации)
+- [Быстрый импорт в клиенты](#быстрый-импорт-в-клиенты)
+- [Маршрутизация Discord](#маршрутизация-discord-webrtc-voice-video)
+- [Интеграция с серверными панелями](#интеграция-с-серверными-панелями)
+- [Ссылки на скомпилированные базы и Rule-Sets](#ссылки-на-скомпилированные-базы-и-rule-sets)
+- [Структура репозитория](#структура-репозитория)
+- [Утилиты генерации правил](#утилиты-генерации-правил)
+- [Локальная разработка и CI/CD](#локальная-разработка-архитектура-и-cicd)
+- [Предложить домен или маршрут](#предложить-домен-или-маршрут)
+- [FAQ](#faq)
+- [Благодарности и поддержка](#благодарности-и-поддержка)
+- [Лицензия и дисклеймер](#лицензия-и-дисклеймер)
 
 </details>
 
 ---
 
-## ⚡ Как это работает
+## Как это работает
 
-* 🇷🇺 **Напрямую через локального провайдера (Direct):** Государственные порталы, банки (Сбер, Т-Банк, ВТБ), Налоговая служба, СБП, маркетплейсы (Ozon, WB), сервисы Яндекса, VK, Кинопоиск, сетевые игры (Steam, Epic, Riot) и диагностические чекеры сетевых параметров. Работают с минимальным пингом (RTT) на максимальной скорости домашнего/мобильного провайдера без лишних капч и проверок.
-* 🌍 **Через удалённый прокси-узел (Proxy):** Зарубежные медиаплатформы, YouTube, Discord (**включая прямые UDP голосовые серверы**), Telegram, а также исследовательские AI-инструменты (ChatGPT, Claude, Gemini, Perplexity) и внешние сервисы.
-* 🍏 **Энергоэффективно (~1.8 МБ RAM):** База сжата алгоритмом агрегации поддоменов (`geosite.dat` ~77 КБ). Снижает нагрузку на CPU смартфона, предотвращает нагрев аккумулятора и системные сбросы сетевого расширения на iOS.
-* 🎮 **Оптимизация для гейминга (Low Latency & CDN Bypass):** Игровой голосовой движок Vivox (`vivox.com`), платформы Steam, Battle.net, Epic Games, Riot, Tarkov, Roblox, Call of Duty (Ricochet). Скачивание обновлений и дистрибутивов игр принудительно направляется напрямую (`DIRECT`) на скорости 1 Гбит/с даже при активации VPN для игр, а замер пинга в матчах защищен от задержек Fake-IP (SDR / STUN bypass).
-* 🛡 **Автоматический Safety Gate:** Домены национальных зон `.ru`, `.рф`, `.su` и критическая инфраструктура строго изолированы от проксирования на уровне проверок репозитория и фильтрации CI/CD.
-
----
-
-## 📱 Поддерживаемые клиенты и быстрое подключение
-
-> [!IMPORTANT]
-> **Основа проекта — умное раздельное туннелирование (Split Tunneling) и оптимизация сетевых маршрутов.**  
-> Для повседневного использования на смартфонах и ПК используйте основной профиль **DEFAULT** (или **JSONSUB**).
-
-### 📱 Матрица клиентских профилей
-
-| Клиент / Платформа | Поддерживаемый формат | Готовая ссылка / Профиль |
-| :--- | :--- | :--- |
-| **Happ** (iOS, Android, macOS, Windows) | JSON / DeepLink | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK) · [📄 JSON](HAPP/DEFAULT.JSON) |
-| **INCY** (iOS, Android, macOS, Windows) | Autorouting / DeepLink | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING) · [⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
-| **Mihomo / Rabbit Hole / UXWAY / FlClash** | YAML / MRS | [📄 Конфиг](MIHOMO/default.yaml) · [📖 Документация](MIHOMO/README.md) |
-| **Sing-box / Throne / NekoRay** | JSON / SRS | [📄 Шаблон подписки](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json) |
-| **Shadowrocket** (iOS) | .CONF / .list | [☁️ jsDelivr CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF) · [📄 Профиль](SHADOWROCKET/DEFAULT.CONF) |
-| **Streisand** (iOS) | `streisand://` | [🛠️ Генератор ссылки](tools/streisand/generate_streisand_link.py) |
-| **v2RayNG** (Android) | Routing QR / JSON | [🛠️ Генератор QR](tools/v2rayNG/generate_v2rayng_routing_qr.py) |
+* 🇷🇺 **Прямое соединение (Direct):** Государственные порталы, банки (Сбер, Т-Банк, ВТБ), Налоговая служба, СБП, маркетплейсы (Ozon, WB), сервисы Яндекса, VK, Кинопоиск, сетевые игры (Steam, Epic, Riot) и диагностические чекеры (`ipwho.is`, `2ip.ru`). Трафик идет через локального провайдера с минимальной задержкой (RTT) на полной скорости тарифа.
+* 🌍 **Через прокси-узел (Proxy):** YouTube, Discord (включая прямые UDP-диапазоны голосовых серверов), Telegram, AI-платформы (ChatGPT, Claude, Gemini, Perplexity), а также сервисы с геоблокировкой РФ и реестровые ограничения.
+* ⚡ **Оптимизированная база (~96 КБ):** База сжата алгоритмом агрегации поддоменов (`geosite.dat` ~96.5 КБ, потребление памяти ~1.8 МБ RAM). Снижает нагрузку на CPU мобильных устройств и предотвращает сбросы сетевого расширения на iOS.
+* 🎮 **Игровой трафик (CDN & Matchmaking Bypass):** Поддерживаются голосовой движок Vivox (`vivox.com`), платформы Steam, Battle.net, Epic Games, Riot, Tarkov, Roblox, Call of Duty (Ricochet). Скачивание обновлений и дистрибутивов игр принудительно направляется напрямую (`DIRECT`), а замер пинга в матчах защищен от задержек Fake-IP (SDR / STUN bypass).
+* 🛡 **Safety Gate:** Домены национальных зон `.ru`, `.рф`, `.su` и критическая инфраструктура защищены от случайного проксирования на уровне линтеров репозитория и фильтрации CI/CD.
 
 ---
 
-### 🌟 Основные профили (Раздельное туннелирование / Split Tunneling)
+## Профили маршрутизации
 
-*Оптимизируют сетевой маршрут: локальные сервисы и национальная инфраструктура направляются напрямую через вашего провайдера с минимальным RTT, а международные платформы, AI-инструменты и удаленные медиасервисы (YouTube, Discord) — через выделенный внешний узел.*
+| Профиль | Назначение | Happ (iOS / Android / Desktop) | INCY (iOS / Android / Desktop) | Mihomo / Clash | Shadowrocket (iOS) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **DEFAULT**<br>*(Основной)* | **Рекомендуемый для повседневного использования.** Раздельное туннелирование: РФ-сервисы, банки, доставка и игры — напрямую; YouTube, Discord, AI и внешние ресурсы — через прокси. | [⚡ DeepLink](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ DeepLink](INCY/DEFAULT.DEEPLINK) | [📄 Конфиг](MIHOMO/default.yaml) | [☁️ CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF)<br>[📄 CONF](SHADOWROCKET/DEFAULT.CONF) |
+| **JSONSUB**<br>*(Для подписок)* | **Базовый профиль для серверов и панелей.** Содержит изолированные DoH DNS и ссылки на геобазы; правила маршрутизации считываются из JSON-конфигурации подписки. | [⚡ DeepLink](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ DeepLink](INCY/JSONSUB.DEEPLINK) | — | — |
+| **WHITELIST**<br>*(Белый список)* | **Аварийный профиль прямого доступа.** Направляет напрямую **исключительно** критическую инфраструктуру РФ (Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для работы в условиях жестких сетевых сбоев. | [⚡ DeepLink](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ DeepLink](INCY/WHITELIST.DEEPLINK) | [📄 Шаблон](MIHOMO/template_whitelist.yaml) | [☁️ CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/WHITELIST.CONF)<br>[📄 CONF](SHADOWROCKET/WHITELIST.CONF) |
+| **RELOCANT**<br>*(Релокант)* | **Обратный сплит-туннель (Reverse Split).** Для тех, кто находится **за пределами РФ**. Весь мировой интернет идёт напрямую, и только сервисы РФ (Госуслуги, банки РФ, Кинопоиск, Faceit RU) идут через российский прокси-сервер. | [⚡ DeepLink](RELOCANT/HAPP.DEEPLINK)<br>[📄 JSON](RELOCANT/HAPP.JSON) | [☁️ Autorouting](RELOCANT/INCY.AUTOROUTING)<br>[⚡ DeepLink](RELOCANT/INCY.DEEPLINK) | [📄 Конфиг](RELOCANT/mihomo.yaml) | [☁️ CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/RELOCANT.CONF)<br>[📄 CONF](RELOCANT/SHADOWROCKET.CONF) |
 
-| Профиль | Назначение | Happ (iOS/Android/ПК) | INCY (iOS/Android/ПК) |
-| :--- | :--- | :--- | :--- |
-| **коридор роутинг**<br>*(DEFAULT)* | ⭐️ **Основной / Рекомендуемый.** Умное раздельное туннелирование: банки, маркетплейсы, Госуслуги и игры — напрямую; YouTube, Discord (вкл. голосовые), AI и внешние платформы — через прокси-узел. | [⚡ В 1 клик](HAPP/DEFAULT.DEEPLINK)<br>[📄 JSON URL](HAPP/DEFAULT.JSON) | [☁️ Autorouting](INCY/DEFAULT.AUTOROUTING)<br>[⚡ В 1 клик](INCY/DEFAULT.DEEPLINK) |
-| **коридор роутинг • JSONSUB** | 🧩 **Для панелей подписок.** Базовый профиль с изолированными DoH DNS и базами geodata; правила маршрутизации считываются из JSON-конфигурации подписки. | [⚡ В 1 клик](HAPP/JSONSUB.DEEPLINK)<br>[📄 JSON URL](HAPP/JSONSUB.JSON) | [☁️ Autorouting](INCY/JSONSUB.AUTOROUTING)<br>[⚡ В 1 клик](INCY/JSONSUB.DEEPLINK) |
-
----
-
-### ⚠️ Специфические профили (Специальные сценарии)
-
-> [!WARNING]
-> **Внимание! Эти профили являются узкоспециализированными и предназначены для нестандартных условий подключения.**  
-> Не включайте их без прямой необходимости.
-
-| Профиль | Назначение | Happ | INCY | Документация |
-| :--- | :--- | :--- | :--- | :--- |
-| **коридор роутинг • БС**<br>*(WHITELIST)* | 🛡 **Белый список (Whitelist).** Аварийный профиль прямого доступа: направляет напрямую **исключительно** критическую инфраструктуру РФ (белые списки: Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для работы в условиях жестких сетевых сбоев и ограничений. | [⚡ В 1 клик](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ В 1 клик](INCY/WHITELIST.DEEPLINK) | [📄 Манифест](HAPP/WHITELIST.JSON) |
-| **коридор роутинг • релокант**<br>*(RELOCANT)* | 🌍 **Обратный роутинг (Reverse Split).** Для тех, кто находится **за пределами РФ** (Сербия, Грузия, ЕС, Турция, СНГ). Весь мировой интернет идёт напрямую на скорости 1 Гбит/с, и **только** сервисы РФ (Госуслуги, Банки РФ, Кинопоиск, Faceit RU) идут через российский прокси-сервер. | [⚡ В 1 клик](RELOCANT/HAPP.DEEPLINK)<br>[📄 JSON](RELOCANT/HAPP.JSON) | [☁️ Autorouting](RELOCANT/INCY.AUTOROUTING)<br>[⚡ В 1 клик](RELOCANT/INCY.DEEPLINK) | [📖 Инструкция для релокантов и роутеров](RELOCANT/README.md) |
-
-### 🚀 Как импортировать
-
-* **Happ:** Скопируйте строку из файла `.DEEPLINK` (начинается на `happ://...`) и откройте её на смартфоне или вставьте в Happ: **Настройки** ➔ **Маршрутизация** ➔ **+** ➔ **Импортировать из буфера**.  
-  *Либо укажите прямой URL на JSON:*  
-  * Основной: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/DEFAULT.JSON`  
-  * Релокант: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/HAPP.JSON`
-* **INCY (Рекомендуется):** В приложении INCY выберите **Маршрутизация** ➔ **+** ➔ **Добавить по ссылке (Autorouting)** и вставьте URL:  
-  * Основной:
-    ```text
-    https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
-    ```
-  * Релокант:
-    ```text
-    https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/INCY.JSON
-    ```
-  *(Профиль будет обновляться автоматически раз в сутки)*.
-* **Shadowrocket (iOS):** В приложении Shadowrocket перейдите в **Конфигурация** ➔ **+** ➔ вставьте URL профиля:
-  * Основной: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/DEFAULT.CONF))*
-  * Белый список (БС): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/WHITELIST.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/SHADOWROCKET/WHITELIST.CONF))*
-  * Релокант: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/RELOCANT/SHADOWROCKET.CONF` *(зеркало: [GitHub Raw](https://raw.githubusercontent.com/mvrvntn/routing/main/RELOCANT/SHADOWROCKET.CONF))*
+> [!NOTE]
+> Подробное руководство по настройке обратного роутинга для роутеров и клиентов вынесено в отдельный документ: **[RELOCANT/README.md](RELOCANT/README.md)**.
 
 ---
 
-## 💬 Отказоустойчивая маршрутизация Discord (WebRTC, Voice, Video)
+## Быстрый импорт в клиенты
 
-Решение проблем с голосовыми каналами Discord (статус `RTC Connecting`, «Маршрут не найден», заикания звука, прерывания трансляций экрана):
+### Happ (iOS, Android, macOS, Windows)
+* **Способ 1 (DeepLink):** Скопируйте строку из файла [`HAPP/DEFAULT.DEEPLINK`](HAPP/DEFAULT.DEEPLINK) (начинается на `happ://...`) и откройте её в браузере устройства либо в приложении: **Настройки** ➔ **Маршрутизация** ➔ **+** ➔ **Импортировать из буфера**.
+* **Способ 2 (Прямой JSON URL):** В приложении добавьте ссылку на конфигурацию:
+  ```text
+  https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/HAPP/DEFAULT.JSON
+  ```
 
-👉 **[Подробное руководство по настройке Discord (Failsafe Routing Guide)](docs/DISCORD_FIX.md)**
+### INCY (iOS, Android, macOS, Windows)
+В приложении перейдите в **Маршрутизация** ➔ **+** ➔ **Добавить по ссылке (Autorouting)** и вставьте URL:
+```text
+https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
+```
+*(Профиль обновляется автоматически раз в сутки)*.
 
-В репозитории реализовано 4-уровневое отказоустойчивое решение:
-1. **Доменные списки (`geosite:discord`)**: 55+ доменов, STUN-серверы, Krisp AI, Quests, Activities.
-2. **IP CIDR-диапазоны (`geoip:discord`)**: Cloudflare Anycast (`162.159.128.0/19`), i3D.net (`66.22.192.0/18`), GCP.
-3. **Failsafe по порту (UDP `19294–19344`)**: Официальный IANA-диапазон Discord Media перехватывается безусловно во всех клиентах.
-4. **Процессный перехват**: Поддержка официального клиента и альтернатив (`Vesktop`, `WebCord`, `ArmCord`, `Legcord`, `Ripcord`, `Dorion`).
-5. **Инструкция по настройкам клиента**: Отключение конфликтующего QoS, переключение аудиоподсистемы, защита от утечек IPv6.
+### Mihomo / Clash (Desktop, Android, iOS)
+* Готовый клиентский конфиг: [`MIHOMO/default.yaml`](MIHOMO/default.yaml).
+* Подробная инструкция по селекторам и подключению `.mrs` наборов правил: [**MIHOMO/README.md**](MIHOMO/README.md).
 
-<details>
-<summary><b>🔧 Быстрые рекомендации по настройке Discord (FAQ / Решение проблем)</b></summary>
+### Sing-box (iOS, Android, Desktop)
+Для автономных клиентов используйте скомпилированные бинарные Rule-Sets (`.srs`) из раздела релизов (см. ниже) либо шаблон подписки [`ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json).
 
-* **1. Отключите Quality of Service (QoS) — ОБЯЗАТЕЛЬНО:**  
-  *Настройки пользователя ➔ Голос и видео ➔ Дополнительно ➔ «Включить приоритет пакетов (Quality of Service)»* — **Выключить (OFF)**.  
-  *(При включенном QoS драйверы виртуальных адаптеров Wintun и домашние роутеры сбрасывают DSCP-метку, из-за чего голос спонтанно падает через 3–5 минут разговора).*
-
-* **2. При «роботизированном» звуке или прерываниях:**  
-  *Настройки пользователя ➔ Голос и видео ➔ «Аудиоподсистема»* — переключите со *Standard* на **«Legacy» (Устаревшая)**.
-
-* **3. Если зависает демонстрация экрана (стриминг видео):**  
-  *Настройки пользователя ➔ Голос и видео ➔ Экран* — отключите *«Использовать новейший метод захвата экрана»* или отключите *«Аппаратное ускорение H.264»*.
-
-* **4. Не запускайте Zapret / GoodbyeDPI одновременно с VPN:**  
-  Одновременная работа драйверов WinDivert (Zapret) и Wintun (VPN-клиенты) вызывает десинхронизацию UDP-пакетов и сброс соединения. Наш роутинг полностью обеспечивает доступ к Discord без сторонних утилит.
-
-* **5. Для администраторов серверов (при задержках подключения к каналу):**  
-  В настройках голосового канала укажите регион сервера вручную: **Rotterdam**, **Frankfurt** или **Central Europe** вместо «Автоматически».
-
-Подробный разбор архитектуры и всех опций: [**docs/DISCORD_FIX.md**](docs/DISCORD_FIX.md).
-</details>
+### Shadowrocket (iOS)
+В приложении перейдите в **Конфигурация** ➔ **+** ➔ вставьте URL профиля:
+* Основной (DEFAULT): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/DEFAULT.CONF`
+* Белый список (WHITELIST): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/WHITELIST.CONF`
+* Релокант (RELOCANT): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/RELOCANT.CONF`
 
 ---
 
-## 🔌 Интеграция с серверными панелями
+## Маршрутизация Discord (WebRTC, Voice, Video)
 
-Готовые проверенные решения и шаблоны конфигураций:
+Решение проблем с голосовыми каналами Discord (статус `RTC Connecting`, «Маршрут не найден», заикания звука, прерывания видеотрансляций):
+
+1. **Доменные списки (`geosite:discord`):** 55+ доменов, веб-сигнализация, сетевые шлюзы, модель шумоподавления Krisp AI, Quests и Activities.
+2. **IP CIDR-диапазоны (`geoip:discord`):** Cloudflare Anycast (`162.159.128.0/19`), i3D.net (`66.22.192.0/18`), GCP.
+3. **Фильтрация по портам (UDP `19294–19344`):** Официальный диапазон портов IANA для Discord Media перехватывается безусловно.
+4. **Процессы:** Правила перехвата для официального приложения и сторонних клиентов (`Vesktop`, `WebCord`, `ArmCord`, `Legcord`, `Ripcord`, `Dorion`).
+
+> [!TIP]
+> **Обязательная настройка клиента Discord:** в *Настройки пользователя ➔ Голос и видео ➔ Дополнительно* отключите пункт **«Включить приоритет пакетов (Quality of Service)»**. При активном QoS драйверы виртуальных сетевых адаптеров Wintun сбрасывают DSCP-метку, из-за чего голосовое соединение спонтанно падает через 3–5 минут разговора.  
+> 
+> Полное руководство по настройке аудиоподсистемы, видеокодеков и маршрутизации: **[docs/DISCORD_FIX.md](docs/DISCORD_FIX.md)**.
+
+---
+
+## Интеграция с серверными панелями
 
 ### 1. [Remnawave](ADDON_AUTOROUTING/Remnawave/)
 * **Автовыдача для INCY:** В **Subscription ➔ Response Rules** (правило `incy`):
   ```http
   autorouting: incy://autorouting/onadd/https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
   ```
-  *(Дополнительные заголовки: `routing-geo-update-interval: 86400` — независимое расписание обновления геофайлов; `routing: off` — принудительный полный туннель без сплита).*
+  *(Дополнительные заголовки: `routing-geo-update-interval: 86400` — интервал обновления геофайлов; `routing: off` — отключение сплита при необходимости).*
 * **Автовыдача для Happ:** В **Subscription ➔ Response Rules** (правило `happ`):
   ```http
   routing: happ://routing/onadd/...
   ```
-  *(Актуальную строку берите из [`HAPP/DEFAULT.DEEPLINK`](HAPP/DEFAULT.DEEPLINK) либо настройте автообновление через микросервис [`remnawave-routing-update`](ADDON_AUTOROUTING/Remnawave/README.md#2-автороутинг-для-happ))*.
-* **Sing-box:** [`singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json).
-* **Mihomo / Clash:** [`MIHOMO/`](MIHOMO/README.md):
-  * Основной шаблон: [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml)
-  * Режим высокой автономии (Белый список): [`template_whitelist.yaml`](MIHOMO/template_whitelist.yaml)
-  * Шаблон для 3x-ui: [`template_3x-ui.yaml`](MIHOMO/template_3x-ui.yaml)
-  * Готовый конфиг для клиентов (ПК/смартфоны): [`default.yaml`](MIHOMO/default.yaml)
+  *(Актуальную base64-строку берите из [`HAPP/DEFAULT.DEEPLINK`](HAPP/DEFAULT.DEEPLINK) либо настройте автообновление через микросервис [`remnawave-routing-update`](ADDON_AUTOROUTING/Remnawave/README.md#2-автороутинг-для-happ))*.
+* **Sing-box:** шаблон подписки [`singbox_subscription_template.json`](ADDON_AUTOROUTING/Remnawave/singbox_subscription_template.json).
+* **Mihomo / Clash:** шаблоны [`template_remnawave.yaml`](MIHOMO/template_remnawave.yaml) и [`template_whitelist.yaml`](MIHOMO/template_whitelist.yaml).
 
 ### 2. [Marzban](ADDON_AUTOROUTING/Marzban/) и [Marzneshin](ADDON_AUTOROUTING/Marzneshin/)
-* Единый модуль [`subscription.py`](ADDON_AUTOROUTING/Marzban/subscription.py) для любых типов подписок (JSON и Non-JSON) с переключением профиля через переменную `KORIDOR_ROUTING_SOURCE` (`default`, `whitelist`, `jsonsub`).
+Единый модуль [`subscription.py`](ADDON_AUTOROUTING/Marzban/subscription.py) для всех типов подписок с переключением профиля через переменную `KORIDOR_ROUTING_SOURCE` (`default`, `whitelist`, `jsonsub`).
 
 ### 3. [3x-ui](ADDON_AUTOROUTING/3x-ui/)
-* Поддержка кастомных заголовков маршрутизации при отдаче клиентских подписок и готовый шаблон для Mihomo: [`MIHOMO/template_3x-ui.yaml`](MIHOMO/template_3x-ui.yaml).
+Поддержка кастомных заголовков маршрутизации в клиентских подписках и шаблон для Mihomo: [`MIHOMO/template_3x-ui.yaml`](MIHOMO/template_3x-ui.yaml).
 
 ---
 
-## 💻 Ссылки на скомпилированные базы и Rule-Sets
+## Ссылки на скомпилированные базы и Rule-Sets
 
-* **Geodata бинарники (V2Ray/Xray/Happ):**
+* **Geodata бинарники (V2Ray / Xray / Happ / INCY):**
   * `geosite.dat`: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geosite.dat`
   * `geoip.dat`: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat`
 * **Sing-box (`.srs`):** `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/<category>.srs`
@@ -226,40 +175,39 @@
 
 ---
 
-## 📂 Структура репозитория
+## Структура репозитория
 
 ```text
 ├── data/                    # Исходные списки доменов для geosite.dat (category-ru, whitelist, discord...)
 ├── geoip/                   # Исходные списки CIDR IP для geoip.dat (Discord, Telegram, вайтлисты хостинга)
-├── HAPP/                    # Готовые JSON-манифесты и .DEEPLINK для клиента Happ
-├── INCY/                    # Готовые JSON-манифесты, .DEEPLINK и .AUTOROUTING для клиента INCY
-├── RELOCANT/                # Специфический профиль для релокантов (обратный сплит, роутеры, INCY, Happ)
+├── HAPP/                    # JSON-манифесты и .DEEPLINK для клиента Happ
+├── INCY/                    # JSON-манифесты, .DEEPLINK и .AUTOROUTING для клиента INCY
+├── RELOCANT/                # Профиль обратного сплит-туннеля для релокантов (роутеры, INCY, Happ, Mihomo)
 ├── MIHOMO/                  # Шаблоны конфигураций для ядра Mihomo / Clash
-├── ADDON_AUTOROUTING/       # Модули интеграции для панелей Remnawave, Marzban, Marzneshin, 3x-ui
-├── SHADOWROCKET/            # Готовые профили .CONF и наборы правил .list для iOS
+├── ADDON_AUTOROUTING/       # Модули автовыдачи для панелей Remnawave, Marzban, Marzneshin, 3x-ui
+├── SHADOWROCKET/            # Профили .CONF и наборы правил .list для iOS
 ├── tools/                   # Утилиты генерации клиентских правил (Streisand, v2RayNG, sing-box)
 ├── scripts/                 # Скрипты нормализации и проверки доменных списков (update_geoblock.py)
-├── tests/                   # Набор регрессионных и юнит-тестов (Safety Gate, инструменты генерации)
-├── docs/                    # Дополнительные руководства (DISCORD_FIX.md)
-├── LICENSE                  # Открытая разрешительная лицензия MIT
-└── .github/workflows/       # CI/CD пайплайн компиляции геобаз и публикации релизов
+├── tests/                   # Набор регрессионных и интеграционных тестов (Safety Gate, шаблоны)
+├── docs/                    # Дополнительные технические руководства (DISCORD_FIX.md)
+├── LICENSE                  # Лицензия MIT
+└── .github/workflows/       # CI/CD пайплайн сборки геобаз и публикации релизов
 ```
 
 ---
 
-## 🛠️ Утилиты генерации правил (iOS / Android / Desktop)
+## Утилиты генерации правил
 
 Для клиентов, требующих импорта правил вручную или через QR:
 * **Streisand (iOS):** [`tools/streisand/generate_streisand_link.py`](tools/streisand/generate_streisand_link.py) — генерация ссылки `streisand://`
 * **v2RayNG (Android):** [`tools/v2rayNG/generate_v2rayng_routing_qr.py`](tools/v2rayNG/generate_v2rayng_routing_qr.py) — QR-код и JSON для импорта правил
 * **sing-box (Desktop/Mobile):** [`tools/singbox/generate_singbox_rules.py`](tools/singbox/generate_singbox_rules.py) — генерация правил маршрутизации со `.srs` бинарниками
 
-Подробная инструкция по запуску: [**Документация tools/**](tools/README.md).
-
+Инструкция по запуску: [**Документация tools/**](tools/README.md).
 
 ---
 
-## 🛠️ Локальная разработка, архитектура и CI/CD
+## Локальная разработка, архитектура и CI/CD
 
 ### 1. Архитектура и поток данных (Data Flow)
 
@@ -271,17 +219,17 @@ flowchart TD
     B --> C3["sing-box compile → sing-box/*.srs"]
     B --> C4["mihomo convert-ruleset → mihomo/*.mrs"]
     C1 & C2 & C3 & C4 --> D["Smoke Tests & Verifiers"]
-    D --> E["GitHub Actions (00:23 UTC)"]
+    D --> E["GitHub Actions (00:23 UTC / 03:23 MSK)"]
     E --> F["Ветка release & GitHub Releases"]
     F --> G["jsDelivr CDN (Автоматическая очистка кэша)"]
 ```
 
-* **Safety Gate & Pruning:** Скрипт [`scripts/update_geoblock.py`](scripts/update_geoblock.py) в CI/CD валидирует и изолирует национальные TLD (`.ru`, `.рф`, `.su`), домены критической инфраструктуры и банков от попадания в списки проксирования, а также сворачивает избыточные дочерние поддомены.
-* **Сборка бинарных артефактов:** Автоматически компилируются базы `geosite.dat` (Protobuf), `geoip.dat`, `.srs` (бинарные деревья sing-box) и `.mrs` (бинарные деревья Mihomo).
+* **Safety Gate & Pruning:** Скрипт [`scripts/update_geoblock.py`](scripts/update_geoblock.py) валидирует и изолирует национальные TLD (`.ru`, `.рф`, `.su`), домены критической инфраструктуры и банков от попадания в списки проксирования, а также сворачивает избыточные дочерние поддомены.
+* **Сборка бинарных артефактов:** Автоматически компилируются базы `geosite.dat` (Protobuf), `geoip.dat`, `.srs` (деревья sing-box) и `.mrs` (деревья Mihomo).
 * **Smoke Tests:** Проверяется валидность структуры, целостность синтаксиса и допустимые диапазоны размеров файлов.
-* **Публикация и CDN:** Артефакты отправляются в ветку `release`, создается релиз GitHub, а для CDN jsDelivr вызывается `purge` для мгновенной отдачи клиентам.
+* **Публикация и CDN:** Артефакты отправляются в ветку `release`, создается релиз GitHub, а для CDN jsDelivr отправляется запрос на сброс кэша.
 
-### 2. Локальная разработка и тестирование
+### 2. Локальная разработка и запуск тестов
 
 **Установка зависимостей:**
 ```bash
@@ -290,7 +238,7 @@ cd routing
 python -m pip install -r requirements.txt
 ```
 
-**Запуск регрессионных и интеграционных тестов (49 тестов):**
+**Запуск полного набора тестов (49 тестов):**
 ```bash
 python -m unittest discover tests -v
 ```
@@ -300,7 +248,7 @@ python -m unittest discover tests -v
 python scripts/update_geoblock.py
 ```
 
-**Проверка синтаксиса конфигураций ядра Mihomo:**
+**Проверка синтаксиса конфигураций Mihomo:**
 ```bash
 mihomo -t -f MIHOMO/default.yaml
 mihomo -t -f MIHOMO/template_remnawave.yaml
@@ -311,109 +259,81 @@ mihomo -t -f RELOCANT/mihomo.yaml
 
 ---
 
-## 💡 Предложить домен или маршрут
+## Предложить домен или маршрут
 
 Если вы обнаружили, что сервис работает некорректно, блокирует зарубежные IP-адреса или должен направляться напрямую:
 
-* [**📋 Заполнить анкету на добавление/изменение домена**](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)
+* [**📋 Создать заявку на добавление/изменение домена**](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)
 
-> [!TIP]
-> В анкете можно указать домен, выбрать желаемый маршрут (*Direct*, *Proxy*, *Whitelist*, *Relocant*) и описать симптом проблемы. Заявка будет обработана и включена в ближайшую ночную сборку.
+В заявке укажите домен, выберите желаемый маршрут (*Direct*, *Proxy*, *Whitelist*, *Relocant*) и опишите симптом проблемы. Заявка будет обработана и включена в ночную сборку.
 
 ---
 
-## ❓ FAQ
+## FAQ
 
 <details>
-<summary><b>1. Почему голосовые каналы Discord работают без задержек («RTC Connecting»)?</b></summary>
+<summary><b>1. Как убедиться, что локальный трафик идёт напрямую?</b></summary>
 
-Большинство маршрутизаторов перехватывают только веб-домен `discord.com`. Голосовой трафик Discord передаётся по протоколу UDP напрямую на динамические IP-адреса медиа-серверов. 
-В нашем репозитории реализовано 4-уровневое решение:
-* **IP-подсети (`geoip:discord`):** полные диапазоны Cloudflare Anycast (`162.159.128.0/19`) и i3D.net (`66.22.192.0/18`).
-* **Failsafe по портам UDP `19294–19344`:** диапазон IANA для Discord Media перехватывается безусловно во всех клиентах.
-* **Доменные списки (`geosite:discord`):** веб-интерфейс, сигнализация, шлюзы, STUN/TURN и модели Krisp AI.
-* **Рекомендация по клиенту:** обязательно отключите пункт *«Приоритет пакетов (QoS)»* в настройках Discord (*Голос и видео ➔ Дополнительно*), чтобы исключить конфликт с сетевыми Wintun-драйверами.
-
-Подробное руководство по настройке клиентов: [**docs/DISCORD_FIX.md**](docs/DISCORD_FIX.md).
+Откройте [2ip.ru](https://2ip.ru) или банковское приложение (Сбер, Т-Банк) — там должен отображаться реальный IP-адрес вашего интернет-провайдера.
 </details>
 
 <details>
-<summary><b>2. Как убедиться, что локальный трафик идёт напрямую?</b></summary>
+<summary><b>2. Не перегружаются ли удаленные прокси-узлы?</b></summary>
 
-Откройте [2ip.ru](https://2ip.ru) или банковское приложение (Сбер, Т-Банк) — там отображается ваш реальный домашний IP-адрес интернет-провайдера.
+Нет. Через удаленные узлы проходит исключительно внешний трафик (~10–15%). Весь локальный тяжелый контент (видеосервисы РФ, CDN, скачивание игр в Steam, P2P/торренты) направляется напрямую через локального провайдера на максимальной скорости тарифа.
 </details>
 
 <details>
-<summary><b>3. Не будут ли перегружаться удаленные шлюзы и серверы?</b></summary>
+<summary><b>3. Как устроена работа банковских приложений и чекеров?</b></summary>
 
-Нет. Через удаленные узлы проходит исключительно внешний трафик (~10–15%). Весь локальный тяжелый контент (видеосервисы, CDN, скачивание игр в Steam, P2P/торренты) направляется напрямую через домашнего провайдера на максимальной скорости тарифа.
+Сервисы определения сетевых параметров (более 30 чекеров, включая `browserleaks.com`, `whoer.net`, `ipinfo.io`, `ipwho.is`, `2ip.ru`) принудительно направляются напрямую (`direct`). Приложения банков и сервисы аутентификации обращаются напрямую к оператору связи, исключая капчи и задержки входа.
 </details>
 
 <details>
-<summary><b>4. Чем отличаются профили DEFAULT, JSONSUB, WHITELIST (БС) и RELOCANT?</b></summary>
+<summary><b>4. Как узнать, какие IP и домены изменились после ночной сборки?</b></summary>
 
-* **DEFAULT (Основной):** Повседневное раздельное туннелирование: локальные сервисы и диагностические чекеры идут напрямую с минимальным RTT, а международные платформы (YouTube, Discord) и AI-инструменты — через внешний прокси-узел.
-* **JSONSUB (Базовый):** Для интеграции с панелями подписок: содержит только DoH DNS и ссылки на скомпилированные базы данных; правила маршрутизации считываются из внешнего JSON-конфига подписки.
-* **WHITELIST (БС, Специфический):** Режим максимальной сетевой устойчивости и автономии: прямой приоритетный доступ только к белым спискам критической инфраструктуры РФ.
-* **RELOCANT (Релокант, Специфический):** Обратный сплит-туннель для тех, кто находится **за границей**. Весь мировой интернет идёт напрямую, а государственные сервисы РФ, банки, Кинопоиск и серверы Faceit RU идут через российский прокси-сервер. Подробнее: [RELOCANT/README.md](RELOCANT/README.md).
-</details>
-
-<details>
-<summary><b>5. Как устроена корректная работа банковских приложений, мессенджеров и Госуслуг?</b></summary>
-
-Сервисы определения параметров соединения (более 30 чекеров, включая `browserleaks.com`, `whoer.net`, `ipinfo.io`, `ipwho.is`, `2ip.ru`) принудительно направляются в прямое соединение (`direct`). Приложения банков и сервисы аутентификации обращаются напрямую к оператору связи, что обеспечивает мгновенный вход без задержек и капч.
-</details>
-
-<details>
-<summary><b>6. Как узнать, какие IP и домены изменились после ночной сборки?</b></summary>
-
-Вся дельта между релизами сохраняется в ветке `release`. Список добавленных и скорректированных подсетей можно увидеть командой:
+Дельта между релизами сохраняется в ветке `release`. Список добавленных и скорректированных подсетей можно посмотреть командой:
 ```bash
 git diff origin/release~1 origin/release -- text/direct.txt
 ```
 </details>
 
 <details>
-<summary><b>7. Как настроить автообновление geosite.dat и geoip.dat на сервере/ноде (Remnanode / Xray)?</b></summary>
+<summary><b>5. Как настроить автообновление geosite.dat и geoip.dat на сервере/ноде (Remnanode / Xray)?</b></summary>
 
-Для автоматического обновления геобаз на удаленном Linux-сервере добавьте задачу в cron (`crontab -e`). Рекомендуется выполнять ежедневно в 04:00 по МСК (после завершения ночной сборки релизов в 03:23 МСК):
+Для обновления геобаз на Linux-сервере добавьте задачу в cron (`crontab -e`). Рекомендуется выполнять ежедневно в 04:00 по МСК (после завершения ночной сборки релизов в 03:23 МСК):
 ```bash
 0 1 * * * curl -fsSL --retry 3 -o /opt/remnanode/geoip.dat https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat && curl -fsSL --retry 3 -o /opt/remnanode/geosite.dat https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geosite.dat && (cd /opt/remnanode && docker compose restart)
 ```
-*(Для классического Xray замените директорию на `/usr/local/share/xray/` и перезапустите службу: `systemctl restart xray`)*.
+*(Для классического Xray укажите путь к каталогу `/usr/local/share/xray/` и перезапустите службу: `systemctl restart xray`)*.
 </details>
 
 ---
 
-## 🙏 Благодарности и поддержка разработчиков оригинала
+## Благодарности и поддержка
 
-Проект базируется на наработках сообщества и выражает благодарность авторам оригинальных решений:
+Проект базируется на наработках сообщества:
 * **Разработка:** [ristavor](https://github.com/ristavor)
 * **Благодарности:** [hydraponique](https://github.com/hydraponique) & [fatyzzz](https://github.com/fatyzzz)
 * **Telegram-сообщество проекта:** [t.me/vpnrouting](https://t.me/vpnrouting)
 
-**Поддержать авторов оригинала (донат):**
-* `USDT TRC20`: `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
+**Поддержать авторов оригинала (USDT TRC20):**
+`TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
 
 ---
 
-## 📄 Лицензия (License)
+## Лицензия и дисклеймер
 
-Проект и созданные базы данных правил распространяются под разрешительной свободной лицензией **[MIT](LICENSE)**.
+### Лицензия (MIT)
+Проект и наборы правил распространяются под свободной лицензией **[MIT](LICENSE)**. Вы можете свободно использовать, модифицировать и распространять наборы правил (geoip.dat, geosite.dat, .mrs, .srs, .json, .conf) при условии сохранения ссылки на исходный репозиторий ([mvrvntn/routing](https://github.com/mvrvntn/routing)). Проект предоставляется «как есть» (AS IS), без каких-либо гарантий.
 
-* Вы можете свободно использовать, копировать, модифицировать, объединять, публиковать, распространять и интегрировать наборы правил (geoip.dat, geosite.dat, .mrs, .srs, .json, .conf) в любые сторонние проекты, приложения и сервисы (включая коммерческие VPN-сервисы).
-* Единственное условие лицензии: сохранение уведомления об авторских правах и ссылки на исходный репозиторий проекта ([mvrvntn/routing](https://github.com/mvrvntn/routing)).
-* Проект предоставляется «как есть» (AS IS), без каких-либо прямых или косвенных гарантий.
-
----
-
-## ⚖️ Дисклеймер (Legal Disclaimer)
+### Дисклеймер (Legal Disclaimer)
 
 > [!NOTE]
-> Настоящий репозиторий представляет собой независимый исследовательский open-source проект для системного администрирования, анализа сетевых протоколов и оптимизации маршрутизации трафика (Traffic Engineering & Split Tunneling).
+> Настоящий репозиторий представляет собой независимый исследовательский open-source проект для сетевого администрирования, анализа протоколов и оптимизации маршрутизации трафика (Traffic Engineering & Split Tunneling).
 >
-> 1. Проект **не предназначен для преодоления технических мер защиты или ограничений доступа к информации**, не содержит встроенных серверов или прокси-узлов, не оказывает телематических услуг связи и не осуществляет распространение сведений о способах получения доступа к ресурсам с ограниченным доступом.
-> 2. Файлы конфигураций содержат технические списки маршрутизации доменных имен и IP-адресов, предназначенные исключительно для снижения сетевых задержек (RTT), распределения нагрузки на каналы связи и обеспечения стабильного прямого доступа к локальным информационным системам (включая государственные порталы, финансовые сервисы и национальную цифровую инфраструктуру).
+> 1. Проект **не предназначен для преодоления технических мер защиты или ограничений доступа к информации**, не содержит встроенных серверов или прокси-узлов, не оказывает услуг связи и не распространяет сведения о способах получения доступа к ресурсам с ограниченным доступом.
+> 2. Файлы конфигураций содержат технические списки маршрутизации доменных имен и IP-адресов, предназначенные для снижения сетевых задержек (RTT), балансировки нагрузки на каналы связи и обеспечения прямого доступа к локальным информационным системам.
 > 3. Использование представленных материалов регулируется законодательством страны пользователя. Пользователь самостоятельно несет ответственность за соблюдение применимых законов и правил связи.
 
 ---
@@ -421,7 +341,7 @@ git diff origin/release~1 origin/release -- text/direct.txt
 <div align="center">
 
 **[🌐 Официальный сайт «коридор»](https://mvrvntn.github.io/koridor/)**  
-*Надежная оптимизация сетевых маршрутов и раздельного туннелирования*
+*Оптимизация сетевых маршрутов и раздельного туннелирования*
 
 <br>
 
