@@ -8,6 +8,7 @@
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
 [![jsDelivr CDN](https://img.shields.io/badge/jsDelivr-CDN-orange.svg)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
 [![Tests](https://img.shields.io/badge/Tests-49%20Passed-brightgreen.svg)](tests/)
+[![Предложить домен](https://img.shields.io/badge/Добавить%20домен-Форма%20заявки-2ea44f?logo=github)](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **Регион:** 🇷🇺 Россия + 🇧🇾 Беларусь
@@ -56,8 +57,12 @@
 | **WHITELIST**<br>*(Белый список)* | **Аварийный профиль прямого доступа.** Направляет напрямую **исключительно** критическую инфраструктуру РФ (Госуслуги, Банки, СБП, связь, маркетплейсы, РЖД). Предназначен для работы в условиях жестких сетевых сбоев. | [⚡ DeepLink](HAPP/WHITELIST.DEEPLINK)<br>[📄 JSON](HAPP/WHITELIST.JSON) | [☁️ Autorouting](INCY/WHITELIST.AUTOROUTING)<br>[⚡ DeepLink](INCY/WHITELIST.DEEPLINK) | [📄 Шаблон](MIHOMO/template_whitelist.yaml) | [☁️ CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/WHITELIST.CONF)<br>[📄 CONF](SHADOWROCKET/WHITELIST.CONF) |
 | **RELOCANT**<br>*(Релокант)* | **Обратный сплит-туннель (Reverse Split).** Для тех, кто находится **за пределами РФ**. Весь мировой интернет идёт напрямую, и только сервисы РФ (Госуслуги, банки РФ, Кинопоиск, Faceit RU) идут через российский прокси-сервер. | [⚡ DeepLink](RELOCANT/HAPP.DEEPLINK)<br>[📄 JSON](RELOCANT/HAPP.JSON) | [☁️ Autorouting](RELOCANT/INCY.AUTOROUTING)<br>[⚡ DeepLink](RELOCANT/INCY.DEEPLINK) | [📄 Конфиг](RELOCANT/mihomo.yaml) | [☁️ CDN](https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/RELOCANT.CONF)<br>[📄 CONF](RELOCANT/SHADOWROCKET.CONF) |
 
+> [!TIP]
+> **Не работает сайт или приложение?**  
+> Если сервис выдает ошибку сети, разлогинивает или требует прямого подключения — отправьте заявку через **[📋 Форму добавления / изменения домена](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)**. Новые правила включаются в ежедневную ночную сборку.
+
 > [!NOTE]
-> Подробное руководство по настройке обратного роутинга для роутеров и клиентов вынесено в отдельный документ: **[RELOCANT/README.md](RELOCANT/README.md)**.
+> Руководство по настройке обратного роутинга для роутеров и зарубежных клиентов вынесено в отдельный документ: **[RELOCANT/README.md](RELOCANT/README.md)**.
 
 ---
 
@@ -261,11 +266,18 @@ mihomo -t -f RELOCANT/mihomo.yaml
 
 ## Предложить домен или маршрут
 
-Если вы обнаружили, что сервис работает некорректно, блокирует зарубежные IP-адреса или должен направляться напрямую:
+Если вы обнаружили, что сервис блокирует зарубежные IP-адреса, выдает сетевую ошибку (например, `-1001`) или должен идти напрямую:
 
-* [**📋 Создать заявку на добавление/изменение домена**](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)
+<div align="center">
 
-В заявке укажите домен, выберите желаемый маршрут (*Direct*, *Proxy*, *Whitelist*, *Relocant*) и опишите симптом проблемы. Заявка будет обработана и включена в ночную сборку.
+[![Заполнить заявку на домен](https://img.shields.io/badge/📋%20Заполнить%20заявку%20на%20домен-GitHub%20Issues-2ea44f?style=for-the-badge&logo=github)](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)
+
+</div>
+
+### Что указать в заявке:
+* **Домен или FQDN:** без протокола (`https://`) и без путей (например: `aqara.ru`, `api.service.com`).
+* **Желаемый маршрут:** `DIRECT` (напрямую в РФ), `PROXY` (через прокси), `WHITELIST` (белый список) или `RELOCANT`.
+* **Симптом проблемы:** код ошибки (403 Forbidden, таймаут, разлогин в приложении).
 
 ---
 
