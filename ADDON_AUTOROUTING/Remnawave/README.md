@@ -1,3 +1,5 @@
+[⬅️ В основной репозиторий](../../README.md)
+
 # 🔄 Интеграция автороутинга «коридор роутинг» с Remnawave
 
 Полное руководство по интеграции «коридор роутинг» с панелью **Remnawave** для всех типов клиентов (INCY, Happ, Sing-Box, Mihomo / Clash, Xray).
@@ -96,4 +98,4 @@
 * Telegram-сообщество проекта: [t.me/vpnrouting](https://t.me/vpnrouting)
 * Донаты авторам оригинала (`USDT TRC20`): `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
 
-Проект «коридор»: [https://mvrvntn.github.io/koridor/](https://mvrvntn.github.io/koridor/)
+* 🚀 **[Проект «коридор»](https://tinyurl.com/koridor-start)** — сервис защищенного соединения, сетевой оптимизации и раздельного туннелирования.

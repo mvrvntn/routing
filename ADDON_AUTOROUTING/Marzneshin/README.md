@@ -1,3 +1,5 @@
+[⬅️ В основной репозиторий](../../README.md)
+
 # 🚀 коридор роутинг для Marzneshin
 
 Один `subscription.py` для **любых** подписок (JSON и Non-JSON). Тип роутинга выбирается через переменную окружения.
@@ -66,4 +68,4 @@ marzneshin restart
 ## 🙏 Благодарности
 Оригинальная разработка: ristavor. Благодарности: hydraponique & fatyzzz. Telegram-сообщество: https://t.me/vpnrouting. Донаты авторам оригинала (`USDT TRC20`): `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`.
 
-Проект «коридор»: [https://mvrvntn.github.io/koridor/](https://mvrvntn.github.io/koridor/)
+* 🚀 **[Проект «коридор»](https://tinyurl.com/koridor-start)** — сервис защищенного соединения, сетевой оптимизации и раздельного туннелирования.

@@ -1,3 +1,5 @@
+[⬅️ В основной репозиторий](../README.md)
+
 # 🚀 Mihomo (Clash Meta) — Маршрутизация и Rule-Sets
 
 Набор правил и готовых конфигураций для ядра [Mihomo](https://github.com/MetaCubeX/mihomo) (Clash.Meta), оптимизированный для пользователей из РФ и Беларуси.
@@ -22,7 +24,7 @@
 
 ## ⚡ Модульная вставка (в существующий конфиг)
 
-Если у вас уже настроен Mihomo (есть рабочие ноды или подписка) и вы хотите просто подключить умную маршрутизацию без раздувания конфига:
+Если у вас уже настроен Mihomo (есть рабочие ноды или подписка) и вы хотите просто подключить правила маршрутизации без усложнения конфигурации:
 
 ### 1. Добавьте `rule-providers`
 
@@ -215,13 +217,15 @@ rules:
 
 ---
 
-## 🤝 Благодарности и поддержка
+## 💡 Предложить домен
+Если сервис работает некорректно или требует изменения маршрута — отправьте заявку через **[📋 Форму запроса домена](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)**.
 
+---
+
+## 🤝 Поддержка проекта
+
+* 🚀 **[Проект «коридор»](https://tinyurl.com/koridor-start)** — сервис защищенного соединения, сетевой оптимизации и раздельного туннелирования.
 * **Разработка:** [ristavor](https://github.com/ristavor)
 * **Благодарности:** [hydraponique](https://github.com/hydraponique) & [fatyzzz](https://github.com/fatyzzz)
 * **Сообщество проекта в Telegram:** [t.me/vpnrouting](https://t.me/vpnrouting)
-
-**Будем благодарны любой поддержке (донат авторам оригинала):**
-* `USDT TRC20`: `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
-
-*Проект «коридор»: [https://mvrvntn.github.io/koridor/](https://mvrvntn.github.io/koridor/)*
+* **USDT TRC20 авторам оригинала:** `TMu3N2ZjK5omJ7n3WAj5MNCSM5querBXsR`
