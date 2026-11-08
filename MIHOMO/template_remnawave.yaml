@@ -545,6 +545,10 @@ rules:
   # --- Торренты ---
   - RULE-SET,torrent-domains,DIRECT                # торрент-трекеры — напрямую
   - RULE-SET,torrent-clients,DIRECT                # торрент-клиенты по процессу
+  - AND,((NETWORK,TCP),(DST-PORT,6881-6889)),DIRECT
+  - AND,((NETWORK,UDP),(DST-PORT,6881-6889)),DIRECT
+  - AND,((NETWORK,TCP),(DST-PORT,51413)),DIRECT
+  - AND,((NETWORK,UDP),(DST-PORT,51413)),DIRECT
 
   # --- Сервисы через PROXY ---
   - RULE-SET,youtube,📺 Youtube
@@ -564,6 +568,11 @@ rules:
   - RULE-SET,category-geoblock-ru,PROXY
 
   # --- Игровые загрузки (CDN дистрибутивов) — напрямую на максимальной скорости провайдера ---
+  # Замеры скорости (Speedtest / Fast.com)
+  - DOMAIN-KEYWORD,speedtest,DIRECT
+  - DOMAIN-SUFFIX,fast.com,DIRECT
+  - DOMAIN-SUFFIX,ooklaserver.net,DIRECT
+  # Steam, Epic, Origin CDN
   - DOMAIN-SUFFIX,steamcontent.com,DIRECT
   - DOMAIN-SUFFIX,steamstatic.com,DIRECT
   - DOMAIN-SUFFIX,steampipe.akamaized.net,DIRECT
@@ -572,6 +581,12 @@ rules:
   - DOMAIN-SUFFIX,epicgames.download.akamaized.net,DIRECT
   - DOMAIN-SUFFIX,origin-a.akamaihd.net,DIRECT
   - DOMAIN-SUFFIX,lvlt.origin.com,DIRECT
+  # Blizzard / Battle.net CDN
+  - DOMAIN-SUFFIX,blzddist1-a.akamaihd.net,DIRECT
+  - DOMAIN-SUFFIX,blzddist.akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,blizzard.gcdn.cloud,DIRECT
+  # Riot Games CDN
+  - DOMAIN-SUFFIX,riotgamespatcher-a.akamaihd.net,DIRECT
 
   # --- Игровые платформы и сервисы → 🎮 Игры (по умолчанию DIRECT, можно переключить) ---
   - RULE-SET,epicgames,🎮 Игры
