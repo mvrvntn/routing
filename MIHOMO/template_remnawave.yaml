@@ -604,7 +604,7 @@ rules:
   - DST-PORT,5228-5230,DIRECT
   - DOMAIN-KEYWORD,mtalk,DIRECT
   - DOMAIN-SUFFIX,fcm.googleapis.com,DIRECT
-  - DOMAIN-SUFFIX,kick.com,DIRECT
+  - DOMAIN-SUFFIX,stream.kick.com,DIRECT
   - RULE-SET,twitch,DIRECT
   - RULE-SET,microsoft,DIRECT
   # Apple Wallet, Apple Pay, Apple Cash & Apple Intelligence (Обход региональной блокировки)

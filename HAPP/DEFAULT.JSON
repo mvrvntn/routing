@@ -23,7 +23,7 @@
   "DirectSites": [
     "domain:yandex",
     "domain:sber",
-    "domain:kick.com",
+    "domain:stream.kick.com",
     "geosite:private",
     "geosite:category-ru",
     "geosite:whitelist",
