@@ -6,8 +6,8 @@
 # Принцип работы:
 # 1. ТОЛЬКО утвержденные белые списки РФ (whitelist домены и IP: госуслуги, банки, СБП, РЖД)
 #    идут НАПРЯМУЮ (DIRECT) на максимальной скорости провайдера.
-# 2. Реклама, спай, торренты и нестабильный QUIC (UDP 443) блокируются (REJECT).
-# 3. Весь остальной заблокированный трафик направляется через группу
+# 2. Реклама, спай, торренты, нестабильный QUIC (UDP 443) и DoQ (UDP 853) блокируются (REJECT-DROP).
+# 3. Весь остальной трафик (включая не-белосписочные .ru) направляется через
 #    «❯ белый коридор» (автоматический выбор самого быстрого живого узла).
 # ============================================================
 
@@ -21,7 +21,7 @@ tcp-concurrent: true
 
 tun:
   enable: true
-  stack: system
+  stack: mixed
   auto-route: true
   auto-detect-interface: true
   dns-hijack:
@@ -80,8 +80,8 @@ dns:
     - 77.88.8.8
     - 77.88.8.1
   nameserver:
-    - https://8.8.8.8/dns-query  # ❯ белый коридор
-    - https://1.1.1.1/dns-query  # ❯ белый коридор
+    - https://8.8.8.8/dns-query
+    - https://1.1.1.1/dns-query
   nameserver-policy:
     'rule-set:private-domains,whitelist':
       - 77.88.8.8
@@ -140,18 +140,18 @@ proxy-groups:
     proxies:
       - 🇫🇲❯ АВТО
     # LEAVE THIS LINE!
-    url: https://www.gstatic.com/generate_204
+    url: http://cp.cloudflare.com/generate_204
     expected-status: 204
 
   - name: 🇫🇲❯ АВТО
     type: url-test
     tolerance: 50
-    url: https://www.gstatic.com/generate_204
+    url: http://cp.cloudflare.com/generate_204
     expected-status: 204
-    interval: 60
-    timeout: 2000
+    interval: 180
+    timeout: 3000
     max-failed-times: 2
-    lazy: false
+    lazy: true
     remnawave:
       include-proxies: false
     include-all: true
@@ -165,7 +165,7 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/category-ads.mrs
     path: ./ruleset/category-ads.mrs
     proxy: 🇫🇲❯ АВТО
-    interval: 86400
+    interval: 604800
 
   win-spy:
     type: http
@@ -174,7 +174,7 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/win-spy.mrs
     path: ./ruleset/win-spy.mrs
     proxy: 🇫🇲❯ АВТО
-    interval: 86400
+    interval: 604800
 
   torrent:
     type: http
@@ -183,7 +183,7 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/torrent.mrs
     path: ./ruleset/torrent.mrs
     proxy: 🇫🇲❯ АВТО
-    interval: 86400
+    interval: 604800
 
   private-domains:
     type: http
@@ -192,7 +192,7 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/private.mrs
     path: ./ruleset/private.mrs
     proxy: 🇫🇲❯ АВТО
-    interval: 86400
+    interval: 2592000
 
   private-ips:
     type: http
@@ -210,7 +210,7 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist.mrs
     path: ./ruleset/whitelist.mrs
     proxy: 🇫🇲❯ АВТО
-    interval: 86400
+    interval: 259200
 
   whitelist-ips:
     type: http
@@ -219,7 +219,7 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist-ip.mrs
     path: ./ruleset/geoip-whitelist.mrs
     proxy: 🇫🇲❯ АВТО
-    interval: 86400
+    interval: 259200
 
 rules:
   # --- Системные и приватные адреса ---
@@ -233,10 +233,14 @@ rules:
   - RULE-SET,category-ads,REJECT-DROP
   - RULE-SET,win-spy,REJECT-DROP
   - RULE-SET,torrent,REJECT-DROP
+  - AND,((NETWORK,TCP),(DST-PORT,6881-6889)),REJECT-DROP
+  - AND,((NETWORK,UDP),(DST-PORT,6881-6889)),REJECT-DROP
+  - AND,((NETWORK,TCP),(DST-PORT,51413)),REJECT-DROP
+  - AND,((NETWORK,UDP),(DST-PORT,51413)),REJECT-DROP
 
   # --- Белый список критической инфраструктуры РФ (DIRECT без прокси) ---
   - RULE-SET,whitelist,DIRECT
   - RULE-SET,whitelist-ips,DIRECT,no-resolve
 
-  # --- Всё остальное (не-белосписочные .ru ресурсы и весь зарубежный интернет) -> через Белый коридор ---
+  # --- Всё остальное -> через Белый коридор ---
   - MATCH,❯ белый коридор
