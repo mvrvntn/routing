@@ -91,6 +91,7 @@ dns:
     lknpd.nalog.ru: 213.24.64.181
     dns.google: 8.8.8.8
     cloudflare-dns.com: 1.1.1.1
+    one.one.one.one: 1.1.1.1
 
 sniffer:
   enable: true
