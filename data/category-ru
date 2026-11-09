@@ -219,4 +219,7 @@ domain:aqara.com
 domain:aqara.cn
 domain:lumiunited.com
 domain:lumiunited.cn
-domain:ankasa.cn
+domain:ankasa.cn
+
+# Streaming Platforms (Direct)
+domain:kick.com
