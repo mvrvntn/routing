@@ -110,6 +110,7 @@ def _parse_entries(site_entries: list, ip_entries: list) -> dict:
         else:
             domain.append(entry)
 
+    ip_cidr = []
     for entry in ip_entries:
         if entry.startswith("geoip:"):
             url = _geoip_to_srs(entry[len("geoip:"):])
@@ -117,10 +118,14 @@ def _parse_entries(site_entries: list, ip_entries: list) -> dict:
                 rule_sets.append(url)
             else:
                 print(f"[!] Notice: no standalone .srs mapped for {entry}.")
+        else:
+            ip_cidr.append(entry)
 
     fields = {}
     if rule_sets:
         fields["rule_set"] = list(dict.fromkeys(rule_sets))
+    if ip_cidr:
+        fields["ip_cidr"] = ip_cidr
     if domain:
         fields["domain"] = domain
     if domain_suffix:
