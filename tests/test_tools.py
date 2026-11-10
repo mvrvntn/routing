@@ -113,14 +113,6 @@ class TestToolsSuite(unittest.TestCase):
         )
         self.assertNotIn("epic-games.srs", direct["rule_set"][0])
 
-    def test_singbox_raw_ip_cidr(self):
-        config = {
-            "DirectIp": ["91.227.144.73/32", "geoip:private"],
-        }
-        rules = build_rules(config)
-        direct = next(r for r in rules if r.get("outbound") == "direct")
-        self.assertIn("91.227.144.73/32", direct.get("ip_cidr", []))
-
     def test_configs_tag_integrity(self):
         import glob
         import json

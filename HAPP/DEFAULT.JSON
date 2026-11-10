@@ -39,7 +39,6 @@
     "geosite:faceit"
   ],
   "DirectIp": [
-    "91.227.144.73/32",
     "geoip:private",
     "geoip:direct"
   ],
