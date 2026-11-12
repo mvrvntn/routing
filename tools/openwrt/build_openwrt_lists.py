@@ -15,6 +15,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 DATA_DIR = REPO_ROOT / "data"
+EXTRA_DOMAINS_DIR = Path(__file__).resolve().parent / "extra_domains"
 GEOIP_DIR = REPO_ROOT / "geoip"
 OPENWRT_DIR = REPO_ROOT / "OPENWRT"
 DOMAINS_OUT_DIR = OPENWRT_DIR / "domains"
@@ -147,20 +148,41 @@ def clean_ip_file(file_path: Path) -> list[str]:
     return sorted(cidrs, key=ip_sort_key)
 
 
-def build_domains(data_dir: Path = DATA_DIR, out_dir: Path = DOMAINS_OUT_DIR) -> list[Path]:
-    """Build domain lists for OpenWrt."""
+def _write_domain_list(source_file: Path, data_dir: Path, out_dir: Path) -> Path:
+    """Resolve a domain rule file and write its sorted .lst output."""
+    domains = sorted(resolve_domain_file(source_file, data_dir))
+    out_file = out_dir / f"koridor_{source_file.name}.lst"
+    content = HEADER + "\n".join(domains) + ("\n" if domains else "")
+    with open(out_file, "w", encoding="utf-8", newline="\n") as f:
+        f.write(content)
+    return out_file
+
+
+def build_domains(
+    data_dir: Path = DATA_DIR,
+    out_dir: Path = DOMAINS_OUT_DIR,
+    extra_dir: Path | None = None,
+) -> list[Path]:
+    """Build domain lists for OpenWrt from data/ and OpenWrt-only extra_domains/."""
     out_dir.mkdir(parents=True, exist_ok=True)
-    generated = []
-    for file_path in sorted(data_dir.iterdir()):
-        if not file_path.is_file():
-            continue
-        base_name = file_path.name
-        domains = sorted(resolve_domain_file(file_path, data_dir))
-        out_file = out_dir / f"koridor_{base_name}.lst"
-        content = HEADER + "\n".join(domains) + ("\n" if domains else "")
-        with open(out_file, "w", encoding="utf-8", newline="\n") as f:
-            f.write(content)
-        generated.append(out_file)
+    generated: list[Path] = []
+    seen_names: set[str] = set()
+
+    source_dirs = [data_dir]
+    effective_extra = extra_dir
+    if effective_extra is None and data_dir.resolve() == DATA_DIR.resolve():
+        effective_extra = EXTRA_DOMAINS_DIR
+    if effective_extra is not None and effective_extra.is_dir():
+        source_dirs.append(effective_extra)
+
+    for src_dir in source_dirs:
+        for file_path in sorted(src_dir.iterdir()):
+            if not file_path.is_file() or file_path.name.startswith("."):
+                continue
+            if file_path.name in seen_names:
+                raise ValueError(f"Duplicate OpenWrt list name {file_path.name!r} in {src_dir}")
+            seen_names.add(file_path.name)
+            generated.append(_write_domain_list(file_path, data_dir, out_dir))
     return generated
 
 
@@ -184,13 +206,14 @@ def build_ips(geoip_dir: Path = GEOIP_DIR, out_dir: Path = IPS_OUT_DIR) -> list[
 def main() -> None:
     parser = argparse.ArgumentParser(description="Export routing rules to .lst format for OpenWrt.")
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR, help="Path to data directory")
+    parser.add_argument("--extra-domains-dir", type=Path, default=None, help="Path to OpenWrt-only domain lists directory")
     parser.add_argument("--geoip-dir", type=Path, default=GEOIP_DIR, help="Path to geoip directory")
     parser.add_argument("--domains-out", type=Path, default=DOMAINS_OUT_DIR, help="Output directory for domain lists")
     parser.add_argument("--ips-out", type=Path, default=IPS_OUT_DIR, help="Output directory for IP lists")
     args = parser.parse_args()
 
     print("[*] Generating OpenWrt domain lists...")
-    domain_files = build_domains(args.data_dir, args.domains_out)
+    domain_files = build_domains(args.data_dir, args.domains_out, args.extra_domains_dir)
     print(f"[+] Generated {len(domain_files)} domain lists in {args.domains_out}")
 
     print("[*] Generating OpenWrt IP lists...")

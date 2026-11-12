@@ -851,26 +851,144 @@ class TestToolsSuite(unittest.TestCase):
             self.assertEqual(lines[2], "# Сервис «коридор»: https://tinyurl.com/koridor-start")
 
     def test_openwrt_ai_domains_complete(self):
-        """Verify OpenAI auth and captcha domains are present in data/ai and koridor_ai.lst."""
+        """Verify AI domains in koridor_ai.lst + koridor_ai_extra.lst without data/ pollution or conflicts."""
         from pathlib import Path
         ai_lst_path = Path(BASE_DIR) / "OPENWRT" / "domains" / "koridor_ai.lst"
+        ai_extra_lst_path = Path(BASE_DIR) / "OPENWRT" / "domains" / "koridor_ai_extra.lst"
+        extra_src_path = Path(BASE_DIR) / "tools" / "openwrt" / "extra_domains" / "ai_extra"
+
         self.assertTrue(ai_lst_path.is_file(), "Missing koridor_ai.lst")
+        self.assertTrue(ai_extra_lst_path.is_file(), "Missing koridor_ai_extra.lst")
+        self.assertTrue(extra_src_path.is_file(), "Missing tools/openwrt/extra_domains/ai_extra")
+        self.assertFalse((Path(BASE_DIR) / "data" / "ai_extra").exists(), "ai_extra must not live in data/")
 
         with open(ai_lst_path, "r", encoding="utf-8") as f:
-            domains = set(f.read().splitlines())
+            ai_domains = set(line for line in f.read().splitlines() if line and not line.startswith("#"))
 
-        required_openai_domains = [
+        with open(ai_extra_lst_path, "r", encoding="utf-8") as f:
+            extra_lines = f.read().splitlines()
+        self.assertGreaterEqual(len(extra_lines), 4)
+        self.assertEqual(extra_lines[0], "# Project: «коридор роутинг»")
+        self.assertEqual(extra_lines[1], "# Source: https://github.com/mvrvntn/routing")
+        self.assertEqual(extra_lines[2], "# Сервис «коридор»: https://tinyurl.com/koridor-start")
+        ai_extra_domains = set(line for line in extra_lines if line and not line.startswith("#"))
+
+        self.assertTrue(
+            ai_domains.isdisjoint(ai_extra_domains),
+            f"koridor_ai.lst and koridor_ai_extra.lst must not overlap: {ai_domains & ai_extra_domains}",
+        )
+
+        required_koridor_ai = [
             "challenges.cloudflare.com",
             "arkoselabs.com",
             "tcr9i.chat.openai.com",
             "webpubsub.azure.com",
             "chatgpt.livekit.cloud",
             "chat.com",
+            "chatgpt.site",
+            "openai.org",
+            "openai.fm",
+            "oaistatsig.com",
+            "openai.com.cdn.cloudflare.net",
+            "openaiapi-site.azureedge.net",
+            "openaicom.azureedge.net",
+            "openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net",
+            "openaicomproductionae4b.blob.core.windows.net",
+            "oaidalleapiprodscus.blob.core.windows.net",
+            "openaicom.imgix.net",
+            "turn.livekit.cloud",
+            "funcaptcha.com",
             "claude.com",
             "clau.de",
+            "claude.dev",
+            "claudeusercontent.com",
+            "claudemcpclient.com",
+            "claudemcpcontent.com",
+            "perplexity.com",
+            "pplx-res.cloudinary.com",
+            "ppl-ai-file-upload.s3.amazonaws.com",
+            "cursor.so",
+            "cursorapi.com",
+            "cursor-cdn.com",
+            "cursorvm.com",
+            "anysphere.co",
+            "anysphere.com",
+            "featuregates.org",
+            "prodregistryv2.org",
+            "statsigapi.net",
+            "antigravity-unleash.goog",
+            "antigravity.google",
+            "antigravity.googleapis.com",
+            "apis.google.com",
+            "clients6.google.com",
+            "colab.google",
+            "colab.research.google.com",
+            "gemini.gstatic.com",
+            "generativeai.google",
+            "generativeai.google.com",
+            "generativelanguage.googleapis.com",
+            "makersuite.google.com",
+            "myaccount.google.com",
+            "notebooklm.googleapis.com",
+            "o.pki.goog",
+            "ogs.google.com",
         ]
-        for req_dom in required_openai_domains:
-            self.assertIn(req_dom, domains, f"Missing required OpenAI domain {req_dom} in koridor_ai.lst")
+        for req_dom in required_koridor_ai:
+            self.assertIn(req_dom, ai_domains, f"Missing required AI domain {req_dom} in koridor_ai.lst")
+
+        required_extra_ai = [
+            "assetsconfigcdn.org",
+            "featureassets.org",
+            "livekit.cloud",
+            "stripe.com",
+            "stripe.network",
+            "stripecdn.com",
+            "workos.com",
+        ]
+        self.assertEqual(ai_extra_domains, set(required_extra_ai))
+
+        combined_ai = ai_domains | ai_extra_domains
+        forbidden_domains = [
+            "stun.l.google.com",
+            "stun.cloudflare.com",
+            "x.com",
+            "twitter.com",
+            "twimg.com",
+            "datadoghq.com",
+            "launchdarkly.com",
+            "segment.io",
+            "segment.com",
+            "intercom.io",
+            "auth0.com",
+            "cloudflareinsights.com",
+            "cloudflare-ech.com",
+            "youtube.com",
+            "discord.com",
+            "t.me",
+        ]
+        for bad_dom in forbidden_domains:
+            self.assertNotIn(bad_dom, combined_ai, f"Conflicting domain {bad_dom} must not be in AI lists")
+
+    def test_openwrt_extra_domains_collision_guard(self):
+        """Verify build_domains accepts extra_dir and rejects colliding filenames."""
+        import tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            d_dir = root / "data"
+            e_dir = root / "extra"
+            o_dir = root / "out"
+            d_dir.mkdir()
+            e_dir.mkdir()
+            (d_dir / "ai").write_text("domain:openai.com\n", encoding="utf-8")
+            (e_dir / "ai_extra").write_text("domain:workos.com\n", encoding="utf-8")
+
+            built = build_domains(d_dir, o_dir, e_dir)
+            self.assertEqual([p.name for p in built], ["koridor_ai.lst", "koridor_ai_extra.lst"])
+
+            (e_dir / "ai").write_text("domain:conflict.example\n", encoding="utf-8")
+            with self.assertRaises(ValueError):
+                build_domains(d_dir, o_dir, e_dir)
 
 
 if __name__ == "__main__":

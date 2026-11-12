@@ -99,7 +99,7 @@ https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
 
 ### OpenWrt (dnsmasq, nftables, passwall, openclash, sing-box)
 Для роутеров под управлением OpenWrt подготовлены очищенные текстовые `.lst` списки (строго 1 FQDN или CIDR на строку, unix line-endings `\n`, отсортированы и дедуплицированы, без комментариев и тегов):
-* **Каталог доменов:** [`OPENWRT/domains/`](OPENWRT/domains/) (26 файлов с префиксом `koridor_*.lst`)
+* **Каталог доменов:** [`OPENWRT/domains/`](OPENWRT/domains/) (27 файлов с префиксом `koridor_*.lst`)
 * **Каталог IP/CIDR:** [`OPENWRT/ips/`](OPENWRT/ips/) (5 файлов с префиксом `koridor_*.lst`)
 
 **Прямые ссылки на ключевые списки (Raw GitHub):**
@@ -109,6 +109,7 @@ https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
 * `koridor_telegram.lst` (домены): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_telegram.lst`
 * `koridor_telegram.lst` (IP-подсети DC1–DC5): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/ips/koridor_telegram.lst`
 * `koridor_ai.lst` (ChatGPT, Claude, Gemini + капчи Turnstile/Arkose): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_ai.lst`
+* `koridor_ai_extra.lst` (дополнительные зависимости AI-экосистем для OpenWrt: WorkOS, Stripe, LiveKit, Statsig CDN): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_ai_extra.lst`
 * `koridor_category-geoblock-ru.lst` (зарубежные сервисы с геоблоком РФ): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_category-geoblock-ru.lst`
 * `koridor_category-ru.lst` (национальные зоны `.ru`, `.рф`, `.by`, `.kz` и прямые сервисы): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_category-ru.lst`
 

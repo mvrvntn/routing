@@ -1,0 +1,8 @@
+# OpenWrt-only AI ecosystem dependencies (intentionally excluded from data/ai and geosite.dat)
+assetsconfigcdn.org
+featureassets.org
+livekit.cloud
+stripe.com
+stripe.network
+stripecdn.com
+workos.com

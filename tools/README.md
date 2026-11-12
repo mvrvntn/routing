@@ -103,7 +103,7 @@ python tools/singbox/generate_singbox_rules.py -o singbox_rules.json
 python tools/openwrt/build_openwrt_lists.py
 ```
 
-Результаты сохраняются в `OPENWRT/domains/` (26 списков) и `OPENWRT/ips/` (5 списков). Скрипт рекурсивно раскрывает директивы `include:`, исключает дубликаты, убирает синтаксические теги и бесполезные одиночные слова (например, `youtube`), сохраняя корневые зоны РФ (`ru`, `su`, `by`, `kz`, `xn--p1ai`) в `koridor_category-ru.lst`.
+Результаты сохраняются в `OPENWRT/domains/` (27 списков: 26 из `data/` + `koridor_ai_extra.lst` из `tools/openwrt/extra_domains/`) и `OPENWRT/ips/` (5 списков). Скрипт рекурсивно раскрывает директивы `include:`, исключает дубликаты, убирает синтаксические теги и бесполезные одиночные слова (например, `youtube`), сохраняя корневые зоны РФ (`ru`, `su`, `by`, `kz`, `xn--p1ai`) в `koridor_category-ru.lst`.
 
 ---
 
