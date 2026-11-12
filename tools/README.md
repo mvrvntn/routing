@@ -10,6 +10,8 @@ Python-утилиты для генерации клиентских конфи�
 
 ```
 tools/
+├── openwrt/
+│   └── build_openwrt_lists.py          # Экспорт нормализованных .lst списков для OpenWrt (domains/ и ips/)
 ├── shadowrocket/
 │   └── generate_shadowrocket.py        # Генерация профилей .CONF и списков .list для Shadowrocket (iOS)
 ├── streisand/
@@ -90,6 +92,18 @@ python tools/singbox/generate_singbox_rules.py -o singbox_rules.json
 ```
 
 Импорт: **Настройки маршрутизации → Расширенные → Импорт JSON**.
+
+---
+
+### OpenWrt (.lst списки доменов и IP)
+
+Экспорт списков доменов и IP-подсетей в текстовый формат `.lst` с префиксом `koridor_`:
+
+```bash
+python tools/openwrt/build_openwrt_lists.py
+```
+
+Результаты сохраняются в `OPENWRT/domains/` (26 списков) и `OPENWRT/ips/` (5 списков). Скрипт рекурсивно раскрывает директивы `include:`, исключает дубликаты, убирает синтаксические теги и бесполезные одиночные слова (например, `youtube`), сохраняя корневые зоны РФ (`ru`, `su`, `by`, `kz`, `xn--p1ai`) в `koridor_category-ru.lst`.
 
 ---
 

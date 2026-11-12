@@ -2,12 +2,12 @@
 
 # 🚀 коридор роутинг
 
-**Наборы правил маршрутизации и конфигурации раздельного туннелирования (Split Tunneling) для [«коридор»](https://tinyurl.com/koridor-start), [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box) и [Remnawave](https://docs.rw).**
+**Наборы правил маршрутизации и конфигурации раздельного туннелирования (Split Tunneling) для [«коридор»](https://tinyurl.com/koridor-start), [Happ](https://happ.su), [INCY](https://incy.cc), [Mihomo](https://github.com/MetaCubeX/mihomo), [Sing-box](https://github.com/SagerNet/sing-box), [OpenWrt](https://openwrt.org) и [Remnawave](https://docs.rw).**
 
 [![Build & Update Routing](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml/badge.svg)](https://github.com/mvrvntn/routing/actions/workflows/update-configs.yml)
 [![Release](https://img.shields.io/github/v/release/mvrvntn/routing?color=blue&label=Release)](https://github.com/mvrvntn/routing/releases/latest)
 [![jsDelivr CDN](https://img.shields.io/badge/jsDelivr-CDN-orange.svg)](https://www.jsdelivr.com/package/gh/mvrvntn/routing)
-[![Tests](https://img.shields.io/badge/Tests-49%20Passed-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-52%20Passed-brightgreen.svg)](tests/)
 [![Проект «коридор»](https://img.shields.io/badge/Проект-«коридор»-1088ff?logo=telegram)](https://tinyurl.com/koridor-start)
 [![Предложить домен](https://img.shields.io/badge/Добавить%20домен-Форма%20заявки-2ea44f?logo=github)](https://github.com/mvrvntn/routing/issues/new?template=domain_request.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -24,6 +24,7 @@
 - [Как это работает](#как-это-работает)
 - [Профили маршрутизации](#профили-маршрутизации)
 - [Быстрый импорт в клиенты](#быстрый-импорт-в-клиенты)
+- [Списки для роутеров OpenWrt (.lst)](#openwrt-dnsmasq-nftables-passwall-openclash-sing-box)
 - [Маршрутизация Discord](#маршрутизация-discord-webrtc-voice-video)
 - [Интеграция с серверными панелями](#интеграция-с-серверными-панелями)
 - [Ссылки на скомпилированные базы и Rule-Sets](#ссылки-на-скомпилированные-базы-и-rule-sets)
@@ -96,6 +97,24 @@ https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
 * Белый список (WHITELIST): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/WHITELIST.CONF`
 * Релокант (RELOCANT): `https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/SHADOWROCKET/RELOCANT.CONF`
 
+### OpenWrt (dnsmasq, nftables, passwall, openclash, sing-box)
+Для роутеров под управлением OpenWrt подготовлены очищенные текстовые `.lst` списки (строго 1 FQDN или CIDR на строку, unix line-endings `\n`, отсортированы и дедуплицированы, без комментариев и тегов):
+* **Каталог доменов:** [`OPENWRT/domains/`](OPENWRT/domains/) (26 файлов с префиксом `koridor_*.lst`)
+* **Каталог IP/CIDR:** [`OPENWRT/ips/`](OPENWRT/ips/) (5 файлов с префиксом `koridor_*.lst`)
+
+**Прямые ссылки на ключевые списки (Raw GitHub):**
+* `koridor_youtube.lst`: `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_youtube.lst`
+* `koridor_discord.lst` (домены): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_discord.lst`
+* `koridor_discord.lst` (IP CIDR): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/ips/koridor_discord.lst`
+* `koridor_telegram.lst` (домены): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_telegram.lst`
+* `koridor_telegram.lst` (IP-подсети DC1–DC5): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/ips/koridor_telegram.lst`
+* `koridor_ai.lst` (ChatGPT, Claude, Gemini + капчи Turnstile/Arkose): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_ai.lst`
+* `koridor_category-geoblock-ru.lst` (зарубежные сервисы с геоблоком РФ): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_category-geoblock-ru.lst`
+* `koridor_category-ru.lst` (национальные зоны `.ru`, `.рф`, `.by`, `.kz` и прямые сервисы): `https://raw.githubusercontent.com/mvrvntn/routing/main/OPENWRT/domains/koridor_category-ru.lst`
+
+> [!NOTE]
+> Префикс `koridor_` исключает коллизии с системными каталогами LuCI и сторонними пакетами (например, Splify2). Одиночные слова без точки (`youtube`, `xbox`) отфильтрованы, а корневые зоны национальных доменов сохранены в `koridor_category-ru.lst`. Списки пересобираются автоматически каждую ночь в CI/CD.
+
 ---
 
 ## Маршрутизация Discord (WebRTC, Voice, Video)
@@ -145,6 +164,9 @@ https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
   * `geoip.dat`: `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/geoip.dat`
 * **Sing-box (`.srs`):** `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/<category>.srs`
 * **Mihomo (`.mrs`):** `https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/<category>.mrs`
+* **OpenWrt списки (.lst):**
+  * Каталог доменов: [`OPENWRT/domains/`](OPENWRT/domains/) (`koridor_<category>.lst`)
+  * Каталог IP/CIDR: [`OPENWRT/ips/`](OPENWRT/ips/) (`koridor_<category>.lst`)
 
 <details>
 <summary><b>📋 Доступные категории правил .mrs (Mihomo) и .srs (Sing-box) — нажмите, чтобы развернуть</b></summary>
@@ -186,13 +208,14 @@ https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
 ```text
 ├── data/                    # Исходные списки доменов для geosite.dat (category-ru, whitelist, discord...)
 ├── geoip/                   # Исходные списки CIDR IP для geoip.dat (Discord, Telegram, вайтлисты хостинга)
+├── OPENWRT/                 # Текстовые .lst списки для роутеров OpenWrt (domains/ и ips/ с префиксом koridor_)
 ├── HAPP/                    # JSON-манифесты и .DEEPLINK для клиента Happ
 ├── INCY/                    # JSON-манифесты, .DEEPLINK и .AUTOROUTING для клиента INCY
 ├── RELOCANT/                # Профиль обратного сплит-туннеля для релокантов (роутеры, INCY, Happ, Mihomo)
 ├── MIHOMO/                  # Шаблоны конфигураций для ядра Mihomo / Clash
 ├── ADDON_AUTOROUTING/       # Модули автовыдачи для панелей Remnawave, Marzban, Marzneshin, 3x-ui
 ├── SHADOWROCKET/            # Профили .CONF и наборы правил .list для iOS
-├── tools/                   # Утилиты генерации клиентских правил (Streisand, v2RayNG, sing-box)
+├── tools/                   # Утилиты генерации клиентских правил (OpenWrt, Streisand, v2RayNG, sing-box)
 ├── scripts/                 # Скрипты нормализации и проверки доменных списков (update_geoblock.py)
 ├── tests/                   # Набор регрессионных и интеграционных тестов (Safety Gate, шаблоны)
 ├── docs/                    # Дополнительные технические руководства (DISCORD_FIX.md)
@@ -205,6 +228,7 @@ https://cdn.jsdelivr.net/gh/mvrvntn/routing@main/INCY/DEFAULT.JSON
 ## Утилиты генерации правил
 
 Для клиентов, требующих импорта правил вручную или через QR:
+* **OpenWrt (.lst списки):** [`tools/openwrt/build_openwrt_lists.py`](tools/openwrt/build_openwrt_lists.py) — сборка нормализованных списков доменов и IP для dnsmasq/nftables с префиксом `koridor_`
 * **Streisand (iOS):** [`tools/streisand/generate_streisand_link.py`](tools/streisand/generate_streisand_link.py) — генерация ссылки `streisand://`
 * **v2RayNG (Android):** [`tools/v2rayNG/generate_v2rayng_routing_qr.py`](tools/v2rayNG/generate_v2rayng_routing_qr.py) — QR-код и JSON для импорта правил
 * **sing-box (Desktop/Mobile):** [`tools/singbox/generate_singbox_rules.py`](tools/singbox/generate_singbox_rules.py) — генерация правил маршрутизации со `.srs` бинарниками
@@ -224,14 +248,15 @@ flowchart TD
     B --> C2["Loyalsoldier compiler → geoip.dat"]
     B --> C3["sing-box compile → sing-box/*.srs"]
     B --> C4["mihomo convert-ruleset → mihomo/*.mrs"]
-    C1 & C2 & C3 & C4 --> D["Smoke Tests & Verifiers"]
+    B --> C5["build_openwrt_lists.py → OPENWRT/*/*.lst"]
+    C1 & C2 & C3 & C4 & C5 --> D["Smoke Tests & Verifiers"]
     D --> E["GitHub Actions (00:23 UTC / 03:23 MSK)"]
     E --> F["Ветка release & GitHub Releases"]
     F --> G["jsDelivr CDN (Автоматическая очистка кэша)"]
 ```
 
 * **Safety Gate & Pruning:** Скрипт [`scripts/update_geoblock.py`](scripts/update_geoblock.py) валидирует и изолирует национальные TLD (`.ru`, `.рф`, `.su`), домены критической инфраструктуры и банков от попадания в списки проксирования, а также сворачивает избыточные дочерние поддомены.
-* **Сборка бинарных артефактов:** Автоматически компилируются базы `geosite.dat` (Protobuf), `geoip.dat`, `.srs` (деревья sing-box) и `.mrs` (деревья Mihomo).
+* **Сборка бинарных артефактов и списков:** Автоматически компилируются базы `geosite.dat` (Protobuf), `geoip.dat`, `.srs` (деревья sing-box), `.mrs` (деревья Mihomo), а также генерируются `.lst` списки для роутеров OpenWrt ([`tools/openwrt/build_openwrt_lists.py`](tools/openwrt/build_openwrt_lists.py)).
 * **Smoke Tests:** Проверяется валидность структуры, целостность синтаксиса и допустимые диапазоны размеров файлов.
 * **Публикация и CDN:** Артефакты отправляются в ветку `release`, создается релиз GitHub, а для CDN jsDelivr отправляется запрос на сброс кэша.
 
@@ -244,9 +269,14 @@ cd routing
 python -m pip install -r requirements.txt
 ```
 
-**Запуск полного набора тестов (49 тестов):**
+**Запуск полного набора тестов (52 теста):**
 ```bash
 python -m unittest discover tests -v
+```
+
+**Сборка списков для OpenWrt:**
+```bash
+python tools/openwrt/build_openwrt_lists.py
 ```
 
 **Нормализация и санитация списков доменов:**
