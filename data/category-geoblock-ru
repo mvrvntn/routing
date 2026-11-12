@@ -88,8 +88,11 @@ domain:anilibria.tv
 domain:animestars.org
 domain:annimon.com
 domain:ansys.com
+domain:ant.dev
 domain:anthropic.com
+domain:anthropic.team
 domain:antizapret.prostovpn.org
+domain:antspace.dev
 domain:anysphere.co
 domain:anysphere.com
 domain:anythingllm.com
@@ -170,7 +173,6 @@ domain:autodesk360.com
 domain:av-connection.com
 domain:avcdn.net
 domain:bacch.com
-domain:backend-v2.crixet.com
 domain:bard.google.com
 domain:basecamp.com
 domain:basecampapi.com
@@ -307,11 +309,17 @@ domain:clashofclans.com
 domain:clashroyaleapp.com
 domain:clau.de
 domain:claude.ai
+domain:claude.app
 domain:claude.com
 domain:claude.dev
+domain:claude.new
+domain:claude.site
 domain:claude.usercontent.com
+domain:claudeacademy.com
 domain:claudemcpclient.com
 domain:claudemcpcontent.com
+domain:claudepages.dev
+domain:claudestudio.com
 domain:claudeusercontent.com
 domain:clevelandclinic.org
 domain:clickup.com
@@ -348,6 +356,7 @@ domain:coze.com
 domain:cpu-monkey.com
 domain:crashlytics.com
 domain:credly.com
+domain:crixet.com
 domain:crowdstrike.com
 domain:crunchbase.com
 domain:crunchyroll.com
@@ -1018,6 +1027,7 @@ domain:openai.com.cdn.cloudflare.net
 domain:openai.fm
 domain:openai.org
 domain:openaiapi-site.azureedge.net
+domain:openaiassets.blob.core.windows.net
 domain:openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
 domain:openaicom.azureedge.net
 domain:openaicom.imgix.net

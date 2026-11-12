@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1717
+# TOTAL RULES: 1727
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -92,8 +92,11 @@ DOMAIN-SUFFIX,anilibria.tv
 DOMAIN-SUFFIX,animestars.org
 DOMAIN-SUFFIX,annimon.com
 DOMAIN-SUFFIX,ansys.com
+DOMAIN-SUFFIX,ant.dev
 DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,anthropic.team
 DOMAIN-SUFFIX,antizapret.prostovpn.org
+DOMAIN-SUFFIX,antspace.dev
 DOMAIN-SUFFIX,anysphere.co
 DOMAIN-SUFFIX,anysphere.com
 DOMAIN-SUFFIX,anythingllm.com
@@ -174,7 +177,6 @@ DOMAIN-SUFFIX,autodesk360.com
 DOMAIN-SUFFIX,av-connection.com
 DOMAIN-SUFFIX,avcdn.net
 DOMAIN-SUFFIX,bacch.com
-DOMAIN-SUFFIX,backend-v2.crixet.com
 DOMAIN-SUFFIX,bard.google.com
 DOMAIN-SUFFIX,basecamp.com
 DOMAIN-SUFFIX,basecampapi.com
@@ -311,11 +313,17 @@ DOMAIN-SUFFIX,clashofclans.com
 DOMAIN-SUFFIX,clashroyaleapp.com
 DOMAIN-SUFFIX,clau.de
 DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,claude.app
 DOMAIN-SUFFIX,claude.com
 DOMAIN-SUFFIX,claude.dev
+DOMAIN-SUFFIX,claude.new
+DOMAIN-SUFFIX,claude.site
 DOMAIN-SUFFIX,claude.usercontent.com
+DOMAIN-SUFFIX,claudeacademy.com
 DOMAIN-SUFFIX,claudemcpclient.com
 DOMAIN-SUFFIX,claudemcpcontent.com
+DOMAIN-SUFFIX,claudepages.dev
+DOMAIN-SUFFIX,claudestudio.com
 DOMAIN-SUFFIX,claudeusercontent.com
 DOMAIN-SUFFIX,clevelandclinic.org
 DOMAIN-SUFFIX,clickup.com
@@ -352,6 +360,7 @@ DOMAIN-SUFFIX,coze.com
 DOMAIN-SUFFIX,cpu-monkey.com
 DOMAIN-SUFFIX,crashlytics.com
 DOMAIN-SUFFIX,credly.com
+DOMAIN-SUFFIX,crixet.com
 DOMAIN-SUFFIX,crowdstrike.com
 DOMAIN-SUFFIX,crunchbase.com
 DOMAIN-SUFFIX,crunchyroll.com
@@ -1022,6 +1031,7 @@ DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net
 DOMAIN-SUFFIX,openai.fm
 DOMAIN-SUFFIX,openai.org
 DOMAIN-SUFFIX,openaiapi-site.azureedge.net
+DOMAIN-SUFFIX,openaiassets.blob.core.windows.net
 DOMAIN-SUFFIX,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
 DOMAIN-SUFFIX,openaicom.azureedge.net
 DOMAIN-SUFFIX,openaicom.imgix.net
