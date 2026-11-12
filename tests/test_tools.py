@@ -559,7 +559,8 @@ class TestToolsSuite(unittest.TestCase):
         self.assertTrue(os.path.exists(sr_default), "SHADOWROCKET/DEFAULT.CONF missing")
         with open(sr_default, "r", encoding="utf-8") as f:
             content = f.read()
-        self.assertIn("dns.quad9.net", content)
+        self.assertIn("dns.google", content)
+        self.assertIn("8.8.8.8", content)
         self.assertIn("dns.yandex.ru", content)
         self.assertNotIn("common.dot.dns.yandex.net", content)
         self.assertIn("lkfl2.nalog.ru = 213.24.64.175", content)

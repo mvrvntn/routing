@@ -169,8 +169,8 @@ dns-direct-system = false
 dns-fallback-system = false
 dns-direct-fallback-proxy = true
 
-# Удаленный DoH (Quad9) и отечественный DoH (Yandex)
-dns-server = https://dns.quad9.net/dns-query, 9.9.9.9
+# Удаленный DoH (Google) и отечественный DoH (Yandex)
+dns-server = https://dns.google/dns-query, 8.8.8.8
 fallback-dns-server = https://dns.yandex.ru/dns-query, 77.88.8.8, system
 
 # Перехват стандартных DNS запросов
@@ -196,6 +196,7 @@ update-url = {REPO_URL}/SHADOWROCKET/DEFAULT.CONF
 # Статические DNS-записи для государственных налоговых сервисов
 lkfl2.nalog.ru = 213.24.64.175
 lknpd.nalog.ru = 213.24.64.181
+dns.google = 8.8.8.8
 
 [Rule]
 # --- Блокировка рекламы и трекеров (Block) ---
@@ -264,7 +265,7 @@ dns-direct-system = false
 dns-fallback-system = false
 dns-direct-fallback-proxy = true
 
-dns-server = https://dns.quad9.net/dns-query, 9.9.9.9
+dns-server = https://dns.google/dns-query, 8.8.8.8
 fallback-dns-server = https://dns.yandex.ru/dns-query, 77.88.8.8, system
 hijack-dns = :53
 always-real-ip = *
@@ -280,6 +281,7 @@ update-url = {REPO_URL}/SHADOWROCKET/WHITELIST.CONF
 [Host]
 lkfl2.nalog.ru = 213.24.64.175
 lknpd.nalog.ru = 213.24.64.181
+dns.google = 8.8.8.8
 
 [Rule]
 # Блокировка рекламы и торрентов
