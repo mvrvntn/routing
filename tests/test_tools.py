@@ -787,7 +787,8 @@ class TestToolsSuite(unittest.TestCase):
         self.assertEqual(clean_domain("domain:ad.tracker.com @ads"), "ad.tracker.com")
         self.assertEqual(clean_domain("domain:sentry.io # inline comment"), "sentry.io")
         self.assertTrue(is_valid_domain("example.com"))
-        self.assertTrue(is_valid_domain("ru"))
+        self.assertFalse(is_valid_domain("ru"))
+        self.assertTrue(is_valid_domain("ru", allow_bare_tld=True))
         self.assertTrue(is_valid_domain("chatgpt.com"))
         self.assertFalse(is_valid_domain("192.168.1.1"))
         self.assertFalse(is_valid_domain("^chatgpt-async-webps-prod-\\S+-\\d+\\.webpubsub\\.azure\\.com$"))
@@ -818,6 +819,26 @@ class TestToolsSuite(unittest.TestCase):
             self.assertEqual(lines[1], "# Source: https://github.com/mvrvntn/routing")
             self.assertEqual(lines[2], "# Telegram: https://t.me/vpnrouting")
 
+        # Verify bare non-FQDN labels like 'youtube' and 'xbox' are stripped
+        yt_lst = dom_out / "koridor_youtube.lst"
+        with open(yt_lst, "r", encoding="utf-8") as f:
+            yt_domains = set(f.read().splitlines())
+        self.assertNotIn("youtube", yt_domains)
+        self.assertIn("youtube.com", yt_domains)
+
+        ms_lst = dom_out / "koridor_microsoft.lst"
+        with open(ms_lst, "r", encoding="utf-8") as f:
+            ms_domains = set(f.read().splitlines())
+        self.assertNotIn("xbox", ms_domains)
+        self.assertIn("microsoft.com", ms_domains)
+
+        # Verify category-ru still preserves ccTLDs
+        ru_lst = dom_out / "koridor_category-ru.lst"
+        with open(ru_lst, "r", encoding="utf-8") as f:
+            ru_domains = set(f.read().splitlines())
+        self.assertIn("ru", ru_domains)
+        self.assertIn("by", ru_domains)
+
         for ipf in ip_files:
             self.assertTrue(ipf.name.startswith("koridor_"), f"{ipf.name} must start with koridor_")
             self.assertTrue(ipf.name.endswith(".lst"), f"{ipf.name} must end with .lst")
@@ -843,6 +864,9 @@ class TestToolsSuite(unittest.TestCase):
             "tcr9i.chat.openai.com",
             "webpubsub.azure.com",
             "chatgpt.livekit.cloud",
+            "chat.com",
+            "claude.com",
+            "clau.de",
         ]
         for req_dom in required_openai_domains:
             self.assertIn(req_dom, domains, f"Missing required OpenAI domain {req_dom} in koridor_ai.lst")

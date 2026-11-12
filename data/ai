@@ -1,6 +1,7 @@
 # OpenAI & ChatGPT
 domain:openai.com
 domain:chatgpt.com
+domain:chat.com
 domain:sora.com
 domain:oaistatic.com
 domain:oaiusercontent.com
@@ -15,6 +16,8 @@ domain:sentry.io
 # Anthropic & Claude
 domain:anthropic.com
 domain:claude.ai
+domain:claude.com
+domain:clau.de
 domain:claude.usercontent.com
 domain:servd-anthropic-website.b-cdn.net
 

@@ -26,6 +26,7 @@ HEADER = """# Project: «коридор»
 """
 
 DOMAIN_LABEL_RE = re.compile(r"^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$")
+ALLOW_BARE_TLD_FILES = {"category-ru", "private"}
 
 
 def clean_domain(raw_line: str) -> str:
@@ -49,8 +50,14 @@ def clean_domain(raw_line: str) -> str:
     return line.strip(".").lower()
 
 
-def is_valid_domain(domain: str) -> bool:
-    """Validate that domain is a valid FQDN / domain label."""
+def is_valid_domain(domain: str, allow_bare_tld: bool = False) -> bool:
+    """Validate that domain is a valid FQDN / domain label.
+    
+    If allow_bare_tld is False, domain must contain at least one dot (e.g. example.com).
+    Bare single labels (like 'youtube', 'xbox') are rejected for router lists,
+    except in category-ru and private lists where national ccTLDs (ru, su, by, kz)
+    and internal zones (lan, local) are required.
+    """
     if not domain or len(domain) > 253:
         return False
     # Reject IPv4 address
@@ -60,6 +67,9 @@ def is_valid_domain(domain: str) -> bool:
     if any(c in domain for c in "^$*+?()[]{}|\\"):
         return False
     labels = domain.split(".")
+    # Unless explicitly allowed, bare single labels without dot are rejected
+    if not allow_bare_tld and len(labels) < 2:
+        return False
     # Single label cannot be numeric
     if len(labels) == 1 and labels[0].isdigit():
         return False
@@ -72,7 +82,12 @@ def is_valid_domain(domain: str) -> bool:
     return True
 
 
-def resolve_domain_file(file_path: Path, data_dir: Path = DATA_DIR, visited: set[Path] | None = None) -> set[str]:
+def resolve_domain_file(
+    file_path: Path,
+    data_dir: Path = DATA_DIR,
+    visited: set[Path] | None = None,
+    allow_bare_tld: bool | None = None,
+) -> set[str]:
     """Recursively parse domain file expanding all include: references."""
     if visited is None:
         visited = set()
@@ -81,6 +96,9 @@ def resolve_domain_file(file_path: Path, data_dir: Path = DATA_DIR, visited: set
     if file_path in visited:
         return set()
     visited.add(file_path)
+
+    if allow_bare_tld is None:
+        allow_bare_tld = file_path.name in ALLOW_BARE_TLD_FILES
 
     domains: set[str] = set()
     if not file_path.exists():
@@ -95,10 +113,10 @@ def resolve_domain_file(file_path: Path, data_dir: Path = DATA_DIR, visited: set
             if line_str.startswith("include:"):
                 inc_target = line_str[len("include:"):].strip()
                 inc_path = data_dir / inc_target
-                domains.update(resolve_domain_file(inc_path, data_dir, visited.copy()))
+                domains.update(resolve_domain_file(inc_path, data_dir, visited.copy(), allow_bare_tld))
             else:
                 cleaned = clean_domain(line_str)
-                if cleaned and is_valid_domain(cleaned):
+                if cleaned and is_valid_domain(cleaned, allow_bare_tld=allow_bare_tld):
                     domains.add(cleaned)
 
     return domains

@@ -1,9 +1,10 @@
 # NAME: ai.list
-# TOTAL RULES: 127
+# TOTAL RULES: 130
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,sora.com
 DOMAIN-SUFFIX,oaistatic.com
 DOMAIN-SUFFIX,oaiusercontent.com
@@ -16,6 +17,8 @@ DOMAIN-SUFFIX,chatgpt.livekit.cloud
 DOMAIN-SUFFIX,sentry.io
 DOMAIN-SUFFIX,anthropic.com
 DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,clau.de
 DOMAIN-SUFFIX,claude.usercontent.com
 DOMAIN-SUFFIX,servd-anthropic-website.b-cdn.net
 DOMAIN-SUFFIX,perplexity.ai
