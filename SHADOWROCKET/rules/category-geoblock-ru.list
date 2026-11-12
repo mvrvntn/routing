@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1699
+# TOTAL RULES: 1717
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -294,6 +294,7 @@ DOMAIN-SUFFIX,chaos.com
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatfuel.com
 DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,chatgpt.site
 DOMAIN-SUFFIX,chaturbate.com
 DOMAIN-SUFFIX,checkout.buckaroo.nl
 DOMAIN-SUFFIX,cherta.media
@@ -311,7 +312,10 @@ DOMAIN-SUFFIX,clashroyaleapp.com
 DOMAIN-SUFFIX,clau.de
 DOMAIN-SUFFIX,claude.ai
 DOMAIN-SUFFIX,claude.com
+DOMAIN-SUFFIX,claude.dev
 DOMAIN-SUFFIX,claude.usercontent.com
+DOMAIN-SUFFIX,claudemcpclient.com
+DOMAIN-SUFFIX,claudemcpcontent.com
 DOMAIN-SUFFIX,claudeusercontent.com
 DOMAIN-SUFFIX,clevelandclinic.org
 DOMAIN-SUFFIX,clickup.com
@@ -356,7 +360,9 @@ DOMAIN-SUFFIX,curseforge.com
 DOMAIN-SUFFIX,cursor-cdn.com
 DOMAIN-SUFFIX,cursor.com
 DOMAIN-SUFFIX,cursor.sh
+DOMAIN-SUFFIX,cursor.so
 DOMAIN-SUFFIX,cursorapi.com
+DOMAIN-SUFFIX,cursorvm.com
 DOMAIN-SUFFIX,cvedetails.com
 DOMAIN-SUFFIX,cybersecurity-help.cz
 DOMAIN-SUFFIX,czx.to
@@ -492,6 +498,7 @@ DOMAIN-SUFFIX,fastspring.com
 DOMAIN-SUFFIX,fb.com
 DOMAIN-SUFFIX,fbcdn.net
 DOMAIN-SUFFIX,fbsbx.com
+DOMAIN-SUFFIX,featuregates.org
 DOMAIN-SUFFIX,feed.rutracker.cc
 DOMAIN-SUFFIX,fex.net
 DOMAIN-SUFFIX,figma.com
@@ -544,6 +551,7 @@ DOMAIN-SUFFIX,freemyip.com
 DOMAIN-SUFFIX,fsn1.your-objectstorage.com
 DOMAIN-SUFFIX,ftcdn.net
 DOMAIN-SUFFIX,fujitsu.com
+DOMAIN-SUFFIX,funcaptcha.com
 DOMAIN-SUFFIX,futurelearn.com
 DOMAIN-SUFFIX,fxnetworks.com
 DOMAIN-SUFFIX,g2a.com
@@ -983,7 +991,9 @@ DOMAIN-SUFFIX,ntp.msn.com
 DOMAIN-SUFFIX,nvidia.com
 DOMAIN-SUFFIX,nxp.com
 DOMAIN-SUFFIX,nyaa.si
+DOMAIN-SUFFIX,oaidalleapiprodscus.blob.core.windows.net
 DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,oaiusercontent.com
 DOMAIN-SUFFIX,oasis.app
 DOMAIN-SUFFIX,oclc.org
@@ -1009,8 +1019,11 @@ DOMAIN-SUFFIX,opal.google
 DOMAIN-SUFFIX,opal.google.com
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,openai.com.cdn.cloudflare.net
+DOMAIN-SUFFIX,openai.fm
+DOMAIN-SUFFIX,openai.org
 DOMAIN-SUFFIX,openaiapi-site.azureedge.net
 DOMAIN-SUFFIX,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+DOMAIN-SUFFIX,openaicom.azureedge.net
 DOMAIN-SUFFIX,openaicom.imgix.net
 DOMAIN-SUFFIX,openaicomproductionae4b.blob.core.windows.net
 DOMAIN-SUFFIX,openculture.com
@@ -1062,6 +1075,7 @@ DOMAIN-SUFFIX,penpot.app
 DOMAIN-SUFFIX,pepperl-fuchs.com
 DOMAIN-SUFFIX,perforce.com
 DOMAIN-SUFFIX,perplexity.ai
+DOMAIN-SUFFIX,perplexity.com
 DOMAIN-SUFFIX,personaltrainermath.com
 DOMAIN-SUFFIX,peter-tanner.com
 DOMAIN-SUFFIX,pexels.com
@@ -1119,6 +1133,8 @@ DOMAIN-SUFFIX,pos-device.apple.com
 DOMAIN-SUFFIX,posthog.com
 DOMAIN-SUFFIX,postman.co
 DOMAIN-SUFFIX,postman.com
+DOMAIN-SUFFIX,ppl-ai-file-upload.s3.amazonaws.com
+DOMAIN-SUFFIX,pplx-res.cloudinary.com
 DOMAIN-SUFFIX,pplx.ai
 DOMAIN-SUFFIX,ppy.sh
 DOMAIN-SUFFIX,pr-pod1-smp-device.apple.com
@@ -1140,6 +1156,7 @@ DOMAIN-SUFFIX,premierleague.com
 DOMAIN-SUFFIX,primark.com
 DOMAIN-SUFFIX,primevideo.com
 DOMAIN-SUFFIX,prnt.sc
+DOMAIN-SUFFIX,prodregistryv2.org
 DOMAIN-SUFFIX,production-openaicom-storage.azureedge.net
 DOMAIN-SUFFIX,proekt.media
 DOMAIN-SUFFIX,profitwell.com
@@ -1371,6 +1388,7 @@ DOMAIN-SUFFIX,stalker2.com
 DOMAIN-SUFFIX,starfox.com
 DOMAIN-SUFFIX,static-ss.xvideos-cdn.com
 DOMAIN-SUFFIX,static.rutracker.cc
+DOMAIN-SUFFIX,statsigapi.net
 DOMAIN-SUFFIX,steamidfinder.com
 DOMAIN-SUFFIX,steganos.com
 DOMAIN-SUFFIX,stereophile.com
