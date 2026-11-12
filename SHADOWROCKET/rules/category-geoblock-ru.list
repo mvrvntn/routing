@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1696
+# TOTAL RULES: 1698
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -289,6 +289,7 @@ DOMAIN-SUFFIX,census.gov
 DOMAIN-SUFFIX,certifytheweb.com
 DOMAIN-SUFFIX,cesium.com
 DOMAIN-SUFFIX,chainreactioncycles.com
+DOMAIN-SUFFIX,challenges.cloudflare.com
 DOMAIN-SUFFIX,chaos.com
 DOMAIN-SUFFIX,chat.com
 DOMAIN-SUFFIX,chatfuel.com
@@ -1601,6 +1602,7 @@ DOMAIN-SUFFIX,web-platform.io
 DOMAIN-SUFFIX,webex.com
 DOMAIN-SUFFIX,webnames.ca
 DOMAIN-SUFFIX,weborama.nl
+DOMAIN-SUFFIX,webpubsub.azure.com
 DOMAIN-SUFFIX,webscraper.io
 DOMAIN-SUFFIX,webwhiteboard.com
 DOMAIN-SUFFIX,weebly.com
