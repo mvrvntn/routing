@@ -2,6 +2,7 @@
 # Source: https://github.com/mvrvntn/routing
 # Сервис «коридор»: https://tinyurl.com/koridor-start
 accounts.google.com
+ai.com
 ai.google
 ai.google.dev
 ai.studio
@@ -13,11 +14,14 @@ aitestkitchen.withgoogle.com
 alkalicontent-pa.googleapis.com
 alkalimining-pa.googleapis.com
 alkalipa-pa.googleapis.com
+ant.dev
 anthropic.com
+anthropic.team
 antigravity-pa.googleapis.com
 antigravity-unleash.goog
 antigravity.google
 antigravity.googleapis.com
+antspace.dev
 anysphere.co
 anysphere.com
 apis.google.com
@@ -33,11 +37,17 @@ chatgpt.livekit.cloud
 chatgpt.site
 clau.de
 claude.ai
+claude.app
 claude.com
 claude.dev
+claude.new
+claude.site
 claude.usercontent.com
+claudeacademy.com
 claudemcpclient.com
 claudemcpcontent.com
+claudepages.dev
+claudestudio.com
 claudeusercontent.com
 clients6.google.com
 clipdrop.co
@@ -49,6 +59,7 @@ colab.google
 colab.research.google.com
 copilot.microsoft.com
 coze.com
+crixet.com
 cursor-cdn.com
 cursor.com
 cursor.sh
@@ -83,6 +94,7 @@ grok.com
 groq.com
 hf.co
 hf.space
+host.livekit.cloud
 huggingface.co
 hyperbolic.xyz
 jules.google
@@ -116,6 +128,7 @@ openai.com.cdn.cloudflare.net
 openai.fm
 openai.org
 openaiapi-site.azureedge.net
+openaiassets.blob.core.windows.net
 openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
 openaicom.azureedge.net
 openaicom.imgix.net
