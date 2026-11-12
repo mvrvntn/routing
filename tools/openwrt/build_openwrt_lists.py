@@ -20,9 +20,9 @@ OPENWRT_DIR = REPO_ROOT / "OPENWRT"
 DOMAINS_OUT_DIR = OPENWRT_DIR / "domains"
 IPS_OUT_DIR = OPENWRT_DIR / "ips"
 
-HEADER = """# Project: «коридор»
+HEADER = """# Project: «коридор роутинг»
 # Source: https://github.com/mvrvntn/routing
-# Telegram: https://t.me/vpnrouting
+# Сервис «коридор»: https://tinyurl.com/koridor-start
 """
 
 DOMAIN_LABEL_RE = re.compile(r"^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$")

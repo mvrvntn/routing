@@ -815,9 +815,9 @@ class TestToolsSuite(unittest.TestCase):
             with open(df, "r", encoding="utf-8") as f:
                 lines = [l.rstrip("\r\n") for l in f]
             self.assertGreaterEqual(len(lines), 3)
-            self.assertEqual(lines[0], "# Project: «коридор»")
+            self.assertEqual(lines[0], "# Project: «коридор роутинг»")
             self.assertEqual(lines[1], "# Source: https://github.com/mvrvntn/routing")
-            self.assertEqual(lines[2], "# Telegram: https://t.me/vpnrouting")
+            self.assertEqual(lines[2], "# Сервис «коридор»: https://tinyurl.com/koridor-start")
 
         # Verify bare non-FQDN labels like 'youtube' and 'xbox' are stripped
         yt_lst = dom_out / "koridor_youtube.lst"
@@ -845,9 +845,9 @@ class TestToolsSuite(unittest.TestCase):
             with open(ipf, "r", encoding="utf-8") as f:
                 lines = [l.rstrip("\r\n") for l in f]
             self.assertGreaterEqual(len(lines), 3)
-            self.assertEqual(lines[0], "# Project: «коридор»")
+            self.assertEqual(lines[0], "# Project: «коридор роутинг»")
             self.assertEqual(lines[1], "# Source: https://github.com/mvrvntn/routing")
-            self.assertEqual(lines[2], "# Telegram: https://t.me/vpnrouting")
+            self.assertEqual(lines[2], "# Сервис «коридор»: https://tinyurl.com/koridor-start")
 
     def test_openwrt_ai_domains_complete(self):
         """Verify OpenAI auth and captcha domains are present in data/ai and koridor_ai.lst."""
