@@ -5,6 +5,11 @@ domain:sora.com
 domain:oaistatic.com
 domain:oaiusercontent.com
 domain:production-openaicom-storage.azureedge.net
+domain:challenges.cloudflare.com
+domain:arkoselabs.com
+full:tcr9i.chat.openai.com
+domain:webpubsub.azure.com
+domain:chatgpt.livekit.cloud
 domain:sentry.io
 
 # Anthropic & Claude

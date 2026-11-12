@@ -11,6 +11,14 @@ from tools.streisand.generate_streisand_link import convert_to_v2, generate_link
 from tools.v2rayNG.generate_v2rayng_routing_qr import convert_to_v2rayng_rules
 from tools.v2rayNG.generate_geoasset_qr import get_urls
 from tools.singbox.generate_singbox_rules import build_rules
+from tools.openwrt.build_openwrt_lists import (
+    clean_domain,
+    is_valid_domain,
+    resolve_domain_file,
+    clean_ip_file,
+    build_domains,
+    build_ips,
+)
 
 mock_config = {
     "Name": "TestVPN",
@@ -771,6 +779,73 @@ class TestToolsSuite(unittest.TestCase):
                 xray = json.load(f)
             for i, r in enumerate(xray.get("routing", {}).get("rules", [])):
                 self.assertEqual(r.get("type"), "field", f"Rule #{i} in xray_location_template.json missing type='field'")
+
+    def test_openwrt_domain_cleaning_and_validation(self):
+        """Test domain cleaning and FQDN validation logic."""
+        self.assertEqual(clean_domain("domain:example.com"), "example.com")
+        self.assertEqual(clean_domain("full:sub.domain.org"), "sub.domain.org")
+        self.assertEqual(clean_domain("domain:ad.tracker.com @ads"), "ad.tracker.com")
+        self.assertEqual(clean_domain("domain:sentry.io # inline comment"), "sentry.io")
+        self.assertTrue(is_valid_domain("example.com"))
+        self.assertTrue(is_valid_domain("ru"))
+        self.assertTrue(is_valid_domain("chatgpt.com"))
+        self.assertFalse(is_valid_domain("192.168.1.1"))
+        self.assertFalse(is_valid_domain("^chatgpt-async-webps-prod-\\S+-\\d+\\.webpubsub\\.azure\\.com$"))
+        self.assertFalse(is_valid_domain("^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$"))
+
+    def test_openwrt_build_and_headers(self):
+        """Verify OpenWrt domain and IP list generation, naming, and headers."""
+        import glob
+        from pathlib import Path
+        data_dir = Path(BASE_DIR) / "data"
+        geoip_dir = Path(BASE_DIR) / "geoip"
+        dom_out = Path(BASE_DIR) / "OPENWRT" / "domains"
+        ip_out = Path(BASE_DIR) / "OPENWRT" / "ips"
+
+        dom_files = build_domains(data_dir, dom_out)
+        ip_files = build_ips(geoip_dir, ip_out)
+
+        self.assertGreaterEqual(len(dom_files), 25)
+        self.assertGreaterEqual(len(ip_files), 5)
+
+        for df in dom_files:
+            self.assertTrue(df.name.startswith("koridor_"), f"{df.name} must start with koridor_")
+            self.assertTrue(df.name.endswith(".lst"), f"{df.name} must end with .lst")
+            with open(df, "r", encoding="utf-8") as f:
+                lines = [l.rstrip("\r\n") for l in f]
+            self.assertGreaterEqual(len(lines), 3)
+            self.assertEqual(lines[0], "# Project: «коридор»")
+            self.assertEqual(lines[1], "# Source: https://github.com/mvrvntn/routing")
+            self.assertEqual(lines[2], "# Telegram: https://t.me/vpnrouting")
+
+        for ipf in ip_files:
+            self.assertTrue(ipf.name.startswith("koridor_"), f"{ipf.name} must start with koridor_")
+            self.assertTrue(ipf.name.endswith(".lst"), f"{ipf.name} must end with .lst")
+            with open(ipf, "r", encoding="utf-8") as f:
+                lines = [l.rstrip("\r\n") for l in f]
+            self.assertGreaterEqual(len(lines), 3)
+            self.assertEqual(lines[0], "# Project: «коридор»")
+            self.assertEqual(lines[1], "# Source: https://github.com/mvrvntn/routing")
+            self.assertEqual(lines[2], "# Telegram: https://t.me/vpnrouting")
+
+    def test_openwrt_ai_domains_complete(self):
+        """Verify OpenAI auth and captcha domains are present in data/ai and koridor_ai.lst."""
+        from pathlib import Path
+        ai_lst_path = Path(BASE_DIR) / "OPENWRT" / "domains" / "koridor_ai.lst"
+        self.assertTrue(ai_lst_path.is_file(), "Missing koridor_ai.lst")
+
+        with open(ai_lst_path, "r", encoding="utf-8") as f:
+            domains = set(f.read().splitlines())
+
+        required_openai_domains = [
+            "challenges.cloudflare.com",
+            "arkoselabs.com",
+            "tcr9i.chat.openai.com",
+            "webpubsub.azure.com",
+            "chatgpt.livekit.cloud",
+        ]
+        for req_dom in required_openai_domains:
+            self.assertIn(req_dom, domains, f"Missing required OpenAI domain {req_dom} in koridor_ai.lst")
 
 
 if __name__ == "__main__":

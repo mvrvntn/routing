@@ -15,6 +15,7 @@ on:
       - "MIHOMO/**"
       - "RELOCANT/**"
       - "SHADOWROCKET/**"
+      - "OPENWRT/**"
       - "ADDON_AUTOROUTING/**"
       - "scripts/**"
       - "tests/**"
@@ -619,6 +620,12 @@ jobs:
           set -euo pipefail
           python3 tools/shadowrocket/generate_shadowrocket.py
 
+      # --- 5.2 BUILD OPENWRT ROUTING LISTS ---
+      - name: Build OpenWrt routing lists (.lst)
+        run: |
+          set -euo pipefail
+          python3 tools/openwrt/build_openwrt_lists.py
+
       # --- 6. PUSH RELEASE BRANCH & PUBLISH GITHUB RELEASE ---
       - name: Push to release branch
         run: |
@@ -652,7 +659,7 @@ jobs:
           set -euo pipefail
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/category-geoblock-ru geosite.dat geoip.dat HAPP/ INCY/ RELOCANT/ SHADOWROCKET/ README.md
+          git add data/category-geoblock-ru geosite.dat geoip.dat HAPP/ INCY/ RELOCANT/ SHADOWROCKET/ OPENWRT/ README.md
           if ! git diff --cached --quiet; then
             git commit -m "chore: обновление конфигураций роутинга и диплинков ${{ env.DAILY_TAG }} [skip ci]"
             git push origin main
