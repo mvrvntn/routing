@@ -1,5 +1,5 @@
 # NAME: ai.list
-# TOTAL RULES: 170
+# TOTAL RULES: 172
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,openai.com
@@ -106,6 +106,8 @@ DOMAIN-SUFFIX,openrouter.ai
 DOMAIN-SUFFIX,stability.ai
 DOMAIN-SUFFIX,clipdrop.co
 DOMAIN-SUFFIX,coze.com
+DOMAIN-SUFFIX,oasis.ai
+DOMAIN-SUFFIX,oasis-ai.org
 DOMAIN-SUFFIX,deepmind.com
 DOMAIN-SUFFIX,deepmind.google
 DOMAIN-SUFFIX,gemini.google

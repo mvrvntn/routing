@@ -2,9 +2,7 @@ domain:10minutemail.com
 domain:1337x.to
 domain:2407.pl
 domain:37signals.com
-domain:4pda.ru
 domain:4pda.to
-domain:4pda.ws
 domain:6pm.com
 domain:7tv.app
 domain:8chan.moe
@@ -776,6 +774,8 @@ domain:livekit.cloud
 domain:llamameta.net
 domain:localbitcoins.com
 domain:logo.com
+domain:lolz.guru
+domain:lolz.live
 domain:lostfilm.run
 domain:lostfilm.today
 domain:lostfilm.tv
@@ -1000,6 +1000,8 @@ domain:oaidalleapiprodscus.blob.core.windows.net
 domain:oaistatic.com
 domain:oaistatsig.com
 domain:oaiusercontent.com
+domain:oasis-ai.org
+domain:oasis.ai
 domain:oasis.app
 domain:oclc.org
 domain:ocstore.com
@@ -1713,6 +1715,7 @@ domain:ytimg.com
 domain:zapier-deployment.com
 domain:zapier.com
 domain:zedge.net
+domain:zelenka.guru
 domain:zendesk.com
 domain:zendesk.de
 domain:zerossl.com

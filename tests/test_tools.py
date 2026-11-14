@@ -945,6 +945,8 @@ class TestToolsSuite(unittest.TestCase):
             "notebooklm.googleapis.com",
             "o.pki.goog",
             "ogs.google.com",
+            "oasis.ai",
+            "oasis-ai.org",
         ]
         for req_dom in required_koridor_ai:
             self.assertIn(req_dom, ai_domains, f"Missing required AI domain {req_dom} in koridor_ai.lst")
@@ -982,6 +984,15 @@ class TestToolsSuite(unittest.TestCase):
         ]
         for bad_dom in forbidden_domains:
             self.assertNotIn(bad_dom, combined_ai, f"Conflicting domain {bad_dom} must not be in AI lists")
+
+        geoblock_lst_path = Path(BASE_DIR) / "OPENWRT" / "domains" / "koridor_category-geoblock-ru.lst"
+        self.assertTrue(geoblock_lst_path.is_file(), "Missing koridor_category-geoblock-ru.lst")
+        with open(geoblock_lst_path, "r", encoding="utf-8") as f:
+            geoblock_domains = set(line for line in f.read().splitlines() if line and not line.startswith("#"))
+        for expected in ("deepl.com", "notion.site", "notion.so", "4pda.to", "lolz.live", "lolz.guru", "zelenka.guru", "oasis.ai", "oasis-ai.org"):
+            self.assertIn(expected, geoblock_domains, f"Missing {expected} in koridor_category-geoblock-ru.lst")
+        for dead in ("4pda.ru", "4pda.ws", "i.4pda.ws"):
+            self.assertNotIn(dead, geoblock_domains, f"Dead domain {dead} must not be in koridor_category-geoblock-ru.lst")
 
     def test_openwrt_extra_domains_collision_guard(self):
         """Verify build_domains accepts extra_dir and rejects colliding filenames."""

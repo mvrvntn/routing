@@ -1,14 +1,12 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1727
+# TOTAL RULES: 1730
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
 DOMAIN-SUFFIX,1337x.to
 DOMAIN-SUFFIX,2407.pl
 DOMAIN-SUFFIX,37signals.com
-DOMAIN-SUFFIX,4pda.ru
 DOMAIN-SUFFIX,4pda.to
-DOMAIN-SUFFIX,4pda.ws
 DOMAIN-SUFFIX,6pm.com
 DOMAIN-SUFFIX,7tv.app
 DOMAIN-SUFFIX,8chan.moe
@@ -780,6 +778,8 @@ DOMAIN-SUFFIX,livekit.cloud
 DOMAIN-SUFFIX,llamameta.net
 DOMAIN-SUFFIX,localbitcoins.com
 DOMAIN-SUFFIX,logo.com
+DOMAIN-SUFFIX,lolz.guru
+DOMAIN-SUFFIX,lolz.live
 DOMAIN-SUFFIX,lostfilm.run
 DOMAIN-SUFFIX,lostfilm.today
 DOMAIN-SUFFIX,lostfilm.tv
@@ -1004,6 +1004,8 @@ DOMAIN-SUFFIX,oaidalleapiprodscus.blob.core.windows.net
 DOMAIN-SUFFIX,oaistatic.com
 DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,oasis-ai.org
+DOMAIN-SUFFIX,oasis.ai
 DOMAIN-SUFFIX,oasis.app
 DOMAIN-SUFFIX,oclc.org
 DOMAIN-SUFFIX,ocstore.com
@@ -1717,6 +1719,7 @@ DOMAIN-SUFFIX,ytimg.com
 DOMAIN-SUFFIX,zapier-deployment.com
 DOMAIN-SUFFIX,zapier.com
 DOMAIN-SUFFIX,zedge.net
+DOMAIN-SUFFIX,zelenka.guru
 DOMAIN-SUFFIX,zendesk.com
 DOMAIN-SUFFIX,zendesk.de
 DOMAIN-SUFFIX,zerossl.com

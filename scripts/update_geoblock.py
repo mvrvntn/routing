@@ -65,8 +65,12 @@ EXPLICIT_PROXY_OVERRIDES = {
     "orda.kz",
     "colta.ru",
     "agentura.ru",
-    "4pda.ru",
     "vivox.com",
+}
+
+# Dead/parked domains present in external feeds that must stay excluded
+DEAD_COMMUNITY_DOMAINS = {
+    "4pda.ws",
 }
 
 # Baseline Apple Pay, Apple Wallet & Apple Cash endpoints (fixes regional lockouts on iOS)
@@ -257,7 +261,12 @@ async def fetch_all_community_domains(urls: list[str] | None = None) -> set[str]
 
 
 def is_protected_domain(domain: str, protected: set[str]) -> bool:
-    """Guard clause: returns True if domain belongs to protected TLD or protected RU lists."""
+    """Guard clause: returns True if domain is dead, protected TLD, or in protected RU lists."""
+    if domain in DEAD_COMMUNITY_DOMAINS or any(
+        domain.endswith(f".{dead}") for dead in DEAD_COMMUNITY_DOMAINS
+    ):
+        return True
+
     if domain in EXPLICIT_PROXY_OVERRIDES or domain in APPLE_WALLET_DOMAINS:
         return False
 

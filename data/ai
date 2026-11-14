@@ -121,6 +121,8 @@ domain:openrouter.ai
 domain:stability.ai
 domain:clipdrop.co
 domain:coze.com
+domain:oasis.ai
+domain:oasis-ai.org
 
 # Google DeepMind & Gemini
 include:google-deepmind

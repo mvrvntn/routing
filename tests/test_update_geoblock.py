@@ -124,6 +124,13 @@ class TestSafetyGate(unittest.TestCase):
         self.assertTrue(is_protected_domain("co.nz", real_protected))
         self.assertTrue(is_protected_domain("com.ua", real_protected))
         self.assertTrue(is_protected_domain("live.net", real_protected))
+        self.assertTrue(is_protected_domain("4pda.ru", real_protected))
+        self.assertTrue(is_protected_domain("4pda.ws", real_protected))
+        self.assertTrue(is_protected_domain("i.4pda.ws", real_protected))
+        self.assertFalse(is_protected_domain("4pda.to", real_protected))
+        self.assertFalse(is_protected_domain("lolz.live", real_protected))
+        self.assertFalse(is_protected_domain("lolz.guru", real_protected))
+        self.assertFalse(is_protected_domain("zelenka.guru", real_protected))
 
 
 class TestSubdomainPruning(unittest.TestCase):
