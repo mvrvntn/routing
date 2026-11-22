@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1730
+# TOTAL RULES: 1735
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -503,6 +503,7 @@ DOMAIN-SUFFIX,fastflux.ai
 DOMAIN-SUFFIX,fastpic.org
 DOMAIN-SUFFIX,fastspring.com
 DOMAIN-SUFFIX,fb.com
+DOMAIN-SUFFIX,fb.me
 DOMAIN-SUFFIX,fbcdn.net
 DOMAIN-SUFFIX,fbsbx.com
 DOMAIN-SUFFIX,featuregates.org
@@ -591,6 +592,7 @@ DOMAIN-SUFFIX,glpals.com
 DOMAIN-SUFFIX,gnome-look.org
 DOMAIN-SUFFIX,gofund.me
 DOMAIN-SUFFIX,gofundme.com
+DOMAIN-SUFFIX,gog.com
 DOMAIN-SUFFIX,golosameriki.com
 DOMAIN-SUFFIX,gonift.com
 DOMAIN-SUFFIX,googletagmanager.com
@@ -788,6 +790,7 @@ DOMAIN-SUFFIX,lowes.com
 DOMAIN-SUFFIX,luma.ai
 DOMAIN-SUFFIX,lumalabs.ai
 DOMAIN-SUFFIX,lyst.com
+DOMAIN-SUFFIX,m.me
 DOMAIN-SUFFIX,m3u.in
 DOMAIN-SUFFIX,macpaw.com
 DOMAIN-SUFFIX,macvendors.com
@@ -834,6 +837,7 @@ DOMAIN-SUFFIX,melord.net
 DOMAIN-SUFFIX,memohrc.org
 DOMAIN-SUFFIX,meraki.com
 DOMAIN-SUFFIX,meshcapade.com
+DOMAIN-SUFFIX,messenger.com
 DOMAIN-SUFFIX,meta.ai
 DOMAIN-SUFFIX,meta.com
 DOMAIN-SUFFIX,meta.net
@@ -1109,6 +1113,7 @@ DOMAIN-SUFFIX,pixiv.net
 DOMAIN-SUFFIX,plab.site
 DOMAIN-SUFFIX,platform.dash.cloudflare.com
 DOMAIN-SUFFIX,playnintendo.com
+DOMAIN-SUFFIX,playstation.com
 DOMAIN-SUFFIX,plugin-alliance.com
 DOMAIN-SUFFIX,plugshare.com
 DOMAIN-SUFFIX,pluralsight.com

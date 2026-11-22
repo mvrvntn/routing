@@ -419,8 +419,14 @@ rules:
   - PROCESS-NAME-REGEX,(?i)^(discord|vesktop|webcord|armcord|legcord|ripcord|dorion|equicord|vencord).*,💬 Discord
   - RULE-SET,ai,PROXY
   - RULE-SET,google-deepmind,PROXY
-  - RULE-SET,category-geoblock-ru,PROXY
   - RULE-SET,github,PROXY
+
+  # Push-уведомления (Apple APNs & Google FCM) — прямой канал для мгновенной доставки
+  - DST-PORT,5223,DIRECT
+  - DOMAIN-SUFFIX,push.apple.com,DIRECT
+  - DST-PORT,5228-5230,DIRECT
+  - DOMAIN-KEYWORD,mtalk,DIRECT
+  - DOMAIN-SUFFIX,fcm.googleapis.com,DIRECT
 
   # --- Игровые загрузки (CDN дистрибутивов) — напрямую на максимальной скорости провайдера ---
   # Замеры скорости (Speedtest / Fast.com)
@@ -452,13 +458,10 @@ rules:
   - RULE-SET,faceit,🎮 Игры
   - RULE-SET,games,🎮 Игры
 
+  # Остальные заблокированные сервисы
+  - RULE-SET,category-geoblock-ru,PROXY
+
   # Локальные сервисы и доверенная инфраструктура
-  # Push-уведомления (Apple APNs & Google FCM) — прямой канал для мгновенной доставки
-  - DST-PORT,5223,DIRECT
-  - DOMAIN-SUFFIX,push.apple.com,DIRECT
-  - DST-PORT,5228-5230,DIRECT
-  - DOMAIN-KEYWORD,mtalk,DIRECT
-  - DOMAIN-SUFFIX,fcm.googleapis.com,DIRECT
   - DOMAIN-SUFFIX,stream.kick.com,DIRECT
   - RULE-SET,twitch,DIRECT
   - RULE-SET,microsoft,DIRECT

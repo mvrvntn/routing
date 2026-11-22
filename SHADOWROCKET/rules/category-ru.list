@@ -1,5 +1,5 @@
 # NAME: category-ru.list
-# TOTAL RULES: 171
+# TOTAL RULES: 199
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,2ip.io
@@ -64,10 +64,15 @@ DOMAIN-SUFFIX,vk.com
 DOMAIN-SUFFIX,vk-cdn.net
 DOMAIN-SUFFIX,vkuserlive.com
 DOMAIN-SUFFIX,userapi.com
+DOMAIN-SUFFIX,vkontakte.com
+DOMAIN-SUFFIX,vkcdnservice.com
+DOMAIN-SUFFIX,vkpay.com
+DOMAIN-SUFFIX,vkpay.io
 DOMAIN-SUFFIX,yandex.net
 DOMAIN-SUFFIX,yastatic.net
 DOMAIN-SUFFIX,ozonusercontent.com
 DOMAIN-SUFFIX,wbstatic.net
+DOMAIN-SUFFIX,paywb.com
 DOMAIN-SUFFIX,magnit.com
 DOMAIN-SUFFIX,timeweb.com
 DOMAIN-SUFFIX,timeweb.cloud
@@ -92,6 +97,13 @@ DOMAIN-SUFFIX,championat.com
 DOMAIN-SUFFIX,tilda.cc
 DOMAIN-SUFFIX,stepik.org
 DOMAIN-SUFFIX,giga.chat
+DOMAIN-SUFFIX,ivicdn.com
+DOMAIN-SUFFIX,mir24.tv
+DOMAIN-SUFFIX,rt.com
+DOMAIN-SUFFIX,rt-english.com
+DOMAIN-SUFFIX,tvoyhod.online
+DOMAIN-SUFFIX,vmeste-rf.tv
+DOMAIN-SUFFIX,soloviev.live
 DOMAIN-SUFFIX,2gis.com
 DOMAIN-SUFFIX,2gis.net
 DOMAIN-SUFFIX,2gis.media
@@ -101,6 +113,17 @@ DOMAIN-SUFFIX,avito.st
 DOMAIN-SUFFIX,vkusvill.net
 DOMAIN-SUFFIX,taxsee.com
 DOMAIN-SUFFIX,tinkoff.com
+DOMAIN-SUFFIX,t-static-online.com
+DOMAIN-SUFFIX,t-tech.dev
+DOMAIN-SUFFIX,t.finance
+DOMAIN-SUFFIX,tinkoff-group.com
+DOMAIN-SUFFIX,f6.security
+DOMAIN-SUFFIX,cabinet-web-service.com
+DOMAIN-SUFFIX,online-service-account.com
+DOMAIN-SUFFIX,service-account-online.com
+DOMAIN-SUFFIX,web-cabinet-online.com
+DOMAIN-SUFFIX,web-cabinet-service.com
+DOMAIN-SUFFIX,whitebird.io
 DOMAIN-SUFFIX,sberbank.com
 DOMAIN-SUFFIX,sber.world
 DOMAIN-SUFFIX,sber.ws
@@ -149,6 +172,11 @@ DOMAIN-SUFFIX,yandexcdn.net
 DOMAIN-SUFFIX,vk.cloud
 DOMAIN-SUFFIX,tildaapi.com
 DOMAIN-SUFFIX,selectel.com
+DOMAIN-SUFFIX,selcdn.net
+DOMAIN-SUFFIX,sbercloud.tech
+DOMAIN-SUFFIX,servicepipe.tech
+DOMAIN-SUFFIX,cdnvideo.com
+DOMAIN-SUFFIX,mng.tl
 DOMAIN-SUFFIX,timeweb.net
 DOMAIN-SUFFIX,beget.com
 DOMAIN-SUFFIX,pobeda.aero

@@ -81,6 +81,10 @@ domain:vk.com
 domain:vk-cdn.net
 domain:vkuserlive.com
 domain:userapi.com
+domain:vkontakte.com
+domain:vkcdnservice.com
+domain:vkpay.com
+domain:vkpay.io
 
 # Yandex CDNs
 domain:yandex.net
@@ -89,6 +93,7 @@ domain:yastatic.net
 # Marketplaces & Retail
 domain:ozonusercontent.com
 domain:wbstatic.net
+domain:paywb.com
 domain:magnit.com
 domain:timeweb.com
 domain:timeweb.cloud
@@ -116,6 +121,13 @@ domain:championat.com
 domain:tilda.cc
 domain:stepik.org
 domain:giga.chat
+domain:ivicdn.com
+domain:mir24.tv
+domain:rt.com
+domain:rt-english.com
+domain:tvoyhod.online
+domain:vmeste-rf.tv
+domain:soloviev.live
 
 # 2GIS & RuStore (non-.ru domains)
 domain:2gis.com
@@ -131,6 +143,17 @@ domain:taxsee.com
 
 # Russian Banks & Financial Services on non-.RU domains
 domain:tinkoff.com
+domain:t-static-online.com
+domain:t-tech.dev
+domain:t.finance
+domain:tinkoff-group.com
+domain:f6.security
+domain:cabinet-web-service.com
+domain:online-service-account.com
+domain:service-account-online.com
+domain:web-cabinet-online.com
+domain:web-cabinet-service.com
+domain:whitebird.io
 domain:sberbank.com
 domain:sber.world
 domain:sber.ws
@@ -193,6 +216,11 @@ domain:yandexcdn.net
 domain:vk.cloud
 domain:tildaapi.com
 domain:selectel.com
+domain:selcdn.net
+domain:sbercloud.tech
+domain:servicepipe.tech
+domain:cdnvideo.com
+domain:mng.tl
 domain:timeweb.net
 domain:beget.com
 domain:pobeda.aero

@@ -1,5 +1,5 @@
 # NAME: apple.list
-# TOTAL RULES: 67
+# TOTAL RULES: 69
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,apple.com
@@ -69,3 +69,5 @@ DOMAIN-SUFFIX,certs-lb.apple.com.akadns.net
 DOMAIN-SUFFIX,crl-lb.apple.com.akadns.net
 DOMAIN-SUFFIX,ocsp-lb.apple.com.akadns.net
 DOMAIN-SUFFIX,ocsp2-lb.apple.com.akadns.net
+DOMAIN-SUFFIX,courier-push-apple.com.akadns.net
+DOMAIN-SUFFIX,push-apple.com.akadns.net

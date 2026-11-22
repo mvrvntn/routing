@@ -2,6 +2,7 @@
   "dns": {
     "rules": [
       {
+        "action": "route",
         "server": "ru-dns",
         "rule_set": [
           "private",
@@ -10,41 +11,36 @@
         ]
       },
       {
+        "action": "route",
         "server": "fakeip-dns",
         "query_type": [
           "A",
           "AAAA"
         ]
-      },
-      {
-        "server": "google-doh"
       }
     ],
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-    },
     "servers": [
       {
         "tag": "ru-dns",
-        "detour": "direct",
-        "address": "77.88.8.8",
-        "strategy": "ipv4_only",
-        "address_strategy": "prefer_ipv4"
+        "type": "udp",
+        "server": "77.88.8.8"
       },
       {
         "tag": "google-doh",
-        "detour": "→ Remnawave",
-        "address": "https://8.8.8.8/dns-query",
-        "strategy": "ipv4_only",
-        "address_strategy": "prefer_ipv4"
+        "type": "https",
+        "server": "8.8.8.8",
+        "path": "/dns-query",
+        "detour": "→ Remnawave"
       },
       {
         "tag": "fakeip-dns",
-        "address": "fakeip"
+        "type": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
+    "final": "google-doh",
+    "strategy": "ipv4_only",
     "independent_cache": true
   },
   "log": {
@@ -374,6 +370,7 @@
     ],
     "override_android_vpn": true,
     "auto_detect_interface": true,
+    "default_domain_resolver": "ru-dns",
     "final": "→ Remnawave"
   },
   "inbounds": [
@@ -391,8 +388,10 @@
       },
       "auto_route": true,
       "strict_route": true,
-      "inet4_address": "172.19.0.1/30",
-      "inet6_address": "fdfe:dcba:9876::1/126"
+      "address": [
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ]
     },
     {
       "tag": "mixed-in",
@@ -405,10 +404,6 @@
     {
       "tag": "direct",
       "type": "direct"
-    },
-    {
-      "tag": "dns-out",
-      "type": "dns"
     }
   ]
 }

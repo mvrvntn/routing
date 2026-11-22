@@ -1,5 +1,5 @@
 # NAME: whitelist.list
-# TOTAL RULES: 630
+# TOTAL RULES: 661
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ipify.org
@@ -472,15 +472,24 @@ DOMAIN-SUFFIX,t-bank.ru
 DOMAIN-SUFFIX,t-static.ru
 DOMAIN-SUFFIX,sber.ru
 DOMAIN-SUFFIX,sberbank.ru
+DOMAIN-SUFFIX,cdek.ru
 DOMAIN-SUFFIX,dobro.ru
 DOMAIN-SUFFIX,evotor.ru
+DOMAIN-SUFFIX,facct.ru
 DOMAIN-SUFFIX,hrlink.ru
+DOMAIN-SUFFIX,iitrust.ru
 DOMAIN-SUFFIX,lizaalert.org
 DOMAIN-SUFFIX,ofd.ru
 DOMAIN-SUFFIX,onf.ru
+DOMAIN-SUFFIX,raiffeisen.ru
+DOMAIN-SUFFIX,selectel.ru
+DOMAIN-SUFFIX,cloud.ru
+DOMAIN-SUFFIX,sbercloud.ru
+DOMAIN-SUFFIX,servicepipe.ru
 DOMAIN-SUFFIX,sirius.online
 DOMAIN-SUFFIX,sochisirius.ru
 DOMAIN-SUFFIX,sportmail.ru
+DOMAIN-SUFFIX,mavrtun.ru
 DOMAIN-SUFFIX,zoom.us
 DOMAIN-SUFFIX,zoom.com
 DOMAIN-SUFFIX,zoomgov.com
@@ -510,6 +519,17 @@ DOMAIN-SUFFIX,push.hicloud.com
 DOMAIN-SUFFIX,dbankcloud.com
 DOMAIN-SUFFIX,connectivitycheck.samsungcloud.com
 DOMAIN-SUFFIX,t-bank.com
+DOMAIN-SUFFIX,t-static-online.com
+DOMAIN-SUFFIX,tinkoff.com
+DOMAIN-SUFFIX,tinkoff-group.com
+DOMAIN-SUFFIX,t-tech.dev
+DOMAIN-SUFFIX,t.finance
+DOMAIN-SUFFIX,f6.security
+DOMAIN-SUFFIX,cabinet-web-service.com
+DOMAIN-SUFFIX,online-service-account.com
+DOMAIN-SUFFIX,service-account-online.com
+DOMAIN-SUFFIX,web-cabinet-online.com
+DOMAIN-SUFFIX,web-cabinet-service.com
 DOMAIN-SUFFIX,sberbank.com
 DOMAIN-SUFFIX,sber-zvuk.com
 DOMAIN-SUFFIX,alfa.me
@@ -550,6 +570,11 @@ DOMAIN-SUFFIX,ozon.dev
 DOMAIN-SUFFIX,ozon.app
 DOMAIN-SUFFIX,ozon.travel
 DOMAIN-SUFFIX,wbstatic.net
+DOMAIN-SUFFIX,paywb.com
+DOMAIN-SUFFIX,vkpay.com
+DOMAIN-SUFFIX,vkpay.io
+DOMAIN-SUFFIX,vkontakte.com
+DOMAIN-SUFFIX,vkcdnservice.com
 DOMAIN-SUFFIX,x5static.net
 DOMAIN-SUFFIX,avito.com
 DOMAIN-SUFFIX,cdek.shopping
@@ -562,6 +587,10 @@ DOMAIN-SUFFIX,alicdn.com
 DOMAIN-SUFFIX,ddos-guard.net
 DOMAIN-SUFFIX,qrator.net
 DOMAIN-SUFFIX,ngenix.net
+DOMAIN-SUFFIX,servicepipe.tech
+DOMAIN-SUFFIX,selcdn.net
+DOMAIN-SUFFIX,sbercloud.tech
+DOMAIN-SUFFIX,vk.cloud
 DOMAIN-SUFFIX,aviasales.com
 DOMAIN-SUFFIX,onetwotrip.com
 DOMAIN-SUFFIX,pobeda.aero
@@ -574,6 +603,7 @@ DOMAIN-SUFFIX,beget.com
 DOMAIN-SUFFIX,ruvds.com
 DOMAIN-SUFFIX,ispsystem.com
 DOMAIN-SUFFIX,ivi.tv
+DOMAIN-SUFFIX,ivicdn.com
 DOMAIN-SUFFIX,kion.tv
 DOMAIN-SUFFIX,wink.tv
 DOMAIN-SUFFIX,start.video
@@ -624,6 +654,7 @@ DOMAIN-SUFFIX,best2pay.net
 DOMAIN-SUFFIX,bitrix24.net
 DOMAIN-SUFFIX,bitrix24.tech
 DOMAIN-SUFFIX,carrotquest.io
+DOMAIN-SUFFIX,cdnvideo.com
 DOMAIN-SUFFIX,cdnvideo.net
 DOMAIN-SUFFIX,eaptechka.online
 DOMAIN-SUFFIX,envybox.io

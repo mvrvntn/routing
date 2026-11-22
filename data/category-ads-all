@@ -1,1 +1,5 @@
 include:category-ads
+
+# Strict Analytics & Telemetry (excluded from base category-ads to avoid breaking sites)
+domain:google-analytics.com
+domain:flurry.com

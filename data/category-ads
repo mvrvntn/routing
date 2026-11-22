@@ -21,12 +21,39 @@ domain:trace-flow.ru
 domain:apptracer.ru
 domain:webvisor.com
 domain:webvisor.org
+domain:betweendigital.com
+domain:adhigh.net
+domain:acint.net
+domain:otm-r.com
+domain:buzzoola.com
+domain:hybrid.ai
+domain:upravel.com
+domain:admon.pro
+domain:bidderstack.com
+domain:bidster.net
+domain:moe.video
+domain:ussp.io
+domain:utraff.com
+domain:voxexchange.io
+domain:al-adtech.com
+domain:digitalcaramel.com
+domain:dynotech.io
+domain:programmatica.com
+domain:ohmy.bid
+domain:bidvol.com
+domain:new-programmatic.com
+domain:adlook.online
+domain:targetads.io
+domain:skcrtxr.com
+domain:luxcdn.com
 
 # Major Mobile In-App Ad Networks (Games & Apps)
 domain:admob.com
 domain:doubleclick.net
 domain:googlesyndication.com
 domain:googleadservices.com
+domain:adservice.google.com
+domain:googletagservices.com
 domain:applovin.com
 domain:applvn.com
 domain:unityads.unity3d.com
@@ -38,6 +65,7 @@ domain:chartboost.com
 domain:adcolony.com
 domain:fyber.com
 domain:tapjoy.com
+domain:startapp.com
 
 # Web Banner & Native Ad Networks
 domain:criteo.com
@@ -79,6 +107,17 @@ domain:sharethrough.com
 domain:sovrn.com
 domain:media.net
 domain:mgid.com
+domain:adsrvr.org
+domain:amazon-adsystem.com
+domain:demdex.net
+domain:360yield.com
+domain:adkernel.com
+domain:silvermob.com
+domain:liftdsp.com
+domain:admatic.com.tr
+domain:weborama.fr
+domain:afp.ai
+domain:tds.bid
 
 # Session Replay & User Screen Recording
 domain:hotjar.com

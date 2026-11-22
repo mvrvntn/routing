@@ -354,6 +354,36 @@ class TestToolsSuite(unittest.TestCase):
             if srv:
                 self.assertIn(srv, declared_dns, f"DNS rule #{idx} references undeclared server '{srv}' in {sb_path}")
 
+        # Verify sing-box 1.13-1.14 compatibility (no legacy DNS/outbound/inbound schema)
+        dns_cfg = sb.get("dns", {})
+        self.assertNotIn("fakeip", dns_cfg, "Top-level dns.fakeip was removed in sing-box 1.14")
+        self.assertIn(dns_cfg.get("final"), declared_dns, "dns.final must reference a declared server")
+        for srv in dns_cfg.get("servers", []):
+            self.assertIn("type", srv, f"DNS server '{srv.get('tag')}' must use typed format (sing-box 1.12+)")
+            self.assertNotIn("address", srv, f"Legacy dns.servers[].address removed in sing-box 1.14: {srv}")
+            self.assertNotIn("address_strategy", srv, f"Legacy address_strategy on DNS server: {srv}")
+            self.assertNotEqual(srv.get("detour"), "direct", f"detour='direct' is invalid on DNS server in sing-box 1.12+: {srv}")
+
+        route_cfg = sb.get("route", {})
+        self.assertIn(route_cfg.get("default_domain_resolver"), declared_dns, "route.default_domain_resolver missing/undeclared")
+        rules = route_cfg.get("rules", [])
+        self.assertEqual(rules[0].get("action"), "sniff", "First route rule must be sniff action")
+        for idx, rule in enumerate(rules):
+            self.assertNotEqual(rule.get("outbound"), "block", f"Rule #{idx} uses removed outbound='block'")
+        lava_rule = next((r for r in rules if "lava.ru" in r.get("domain_suffix", [])), None)
+        self.assertIsNotNone(lava_rule, "lava.ru must remain explicitly routed")
+        self.assertEqual(lava_rule.get("outbound"), "→ Remnawave")
+
+        for ib in sb.get("inbounds", []):
+            self.assertNotIn("sniff", ib, f"Legacy inbound sniff field in {ib.get('tag')}")
+            self.assertNotIn("inet4_address", ib, f"Legacy inet4_address in {ib.get('tag')}")
+            self.assertNotIn("inet6_address", ib, f"Legacy inet6_address in {ib.get('tag')}")
+            if ib.get("type") == "tun":
+                self.assertIsInstance(ib.get("address"), list, "tun inbound must use address array")
+
+        for ob in sb.get("outbounds", []):
+            self.assertNotIn(ob.get("type"), ("dns", "block"), f"Removed legacy special outbound type={ob.get('type')}")
+
     def test_apple_wallet_routing_and_priority(self):
         import json
         import glob
@@ -745,7 +775,7 @@ class TestToolsSuite(unittest.TestCase):
             self.assertEqual(len(items), len(set(items)), f"Duplicate entries found in MIHOMO/{fname}")
 
     def test_mihomo_rule_precedence_no_shadowing(self):
-        """Ensure dedicated selector groups (Youtube, Discord) precede category-geoblock-ru in Mihomo configs."""
+        """Ensure dedicated selector groups (Youtube, Discord, Games), Push, and DNS respect-rules are valid."""
         import yaml
         for fname in ("default.yaml", "template_remnawave.yaml", "template_3x-ui.yaml"):
             fpath = os.path.join(BASE_DIR, "MIHOMO", fname)
@@ -754,9 +784,40 @@ class TestToolsSuite(unittest.TestCase):
             rules = data.get("rules", [])
             idx_yt = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,youtube,"))
             idx_dc = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,discord,"))
+            idx_steam = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,steam,"))
+            idx_games = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,games,"))
+            idx_fcm = next(i for i, r in enumerate(rules) if r == "DOMAIN-SUFFIX,fcm.googleapis.com,DIRECT")
             idx_geo = next(i for i, r in enumerate(rules) if r.startswith("RULE-SET,category-geoblock-ru,"))
             self.assertLess(idx_yt, idx_geo, f"youtube rule must precede category-geoblock-ru in {fname}")
             self.assertLess(idx_dc, idx_geo, f"discord rule must precede category-geoblock-ru in {fname}")
+            self.assertLess(idx_steam, idx_geo, f"steam rule must precede category-geoblock-ru in {fname}")
+            self.assertLess(idx_games, idx_geo, f"games rule must precede category-geoblock-ru in {fname}")
+            self.assertLess(idx_fcm, idx_geo, f"FCM push rule must precede category-geoblock-ru in {fname}")
+
+            if fname in ("default.yaml", "template_remnawave.yaml"):
+                dns_cfg = data.get("dns", {})
+                self.assertIs(dns_cfg.get("respect-rules"), True, f"dns.respect-rules must be True in {fname}")
+                self.assertEqual(
+                    dns_cfg.get("direct-nameserver"),
+                    ["77.88.8.8", "77.88.8.1"],
+                    f"dns.direct-nameserver mismatch in {fname}",
+                )
+                self.assertEqual(
+                    dns_cfg.get("nameserver"),
+                    ["https://8.8.8.8/dns-query", "https://8.8.4.4/dns-query"],
+                    f"dns.nameserver mismatch in {fname}",
+                )
+                fake_ip_filter = dns_cfg.get("fake-ip-filter", [])
+                self.assertIn("+.lan", fake_ip_filter, f"Missing +.lan in fake-ip-filter of {fname}")
+                self.assertIn("+.local", fake_ip_filter, f"Missing +.local in fake-ip-filter of {fname}")
+
+        wl_yaml_path = os.path.join(BASE_DIR, "MIHOMO", "template_whitelist.yaml")
+        with open(wl_yaml_path, "r", encoding="utf-8") as f:
+            wl_data = yaml.safe_load(f)
+        wl_dns = wl_data.get("dns", {})
+        self.assertIs(wl_dns.get("respect-rules"), True, "dns.respect-rules must be True in template_whitelist.yaml")
+        self.assertEqual(wl_dns.get("direct-nameserver"), ["77.88.8.8", "77.88.8.1"])
+        self.assertEqual(wl_dns.get("nameserver"), ["https://8.8.8.8/dns-query", "https://8.8.4.4/dns-query"])
 
         rel_path = os.path.join(BASE_DIR, "RELOCANT", "mihomo.yaml")
         with open(rel_path, "r", encoding="utf-8") as f:
@@ -1014,6 +1075,56 @@ class TestToolsSuite(unittest.TestCase):
             (e_dir / "ai").write_text("domain:conflict.example\n", encoding="utf-8")
             with self.assertRaises(ValueError):
                 build_domains(d_dir, o_dir, e_dir)
+
+    def test_curated_domain_additions_and_ads_split(self):
+        """Verify curated whitelist, category-ru, geoblock, Apple Push, and ads split additions."""
+        from pathlib import Path
+
+        def read_openwrt_set(name: str) -> set[str]:
+            p = Path(BASE_DIR) / "OPENWRT" / "domains" / f"koridor_{name}.lst"
+            return {line for line in p.read_text(encoding="utf-8").splitlines() if line and not line.startswith("#")}
+
+        critical_non_ru = {
+            "tinkoff.com", "tinkoff-group.com", "t-tech.dev", "t.finance",
+            "t-static-online.com", "f6.security", "selcdn.net", "servicepipe.tech",
+            "sbercloud.tech", "cdnvideo.com", "vk.cloud",
+            "cabinet-web-service.com", "online-service-account.com", "service-account-online.com",
+            "web-cabinet-online.com", "web-cabinet-service.com",
+            "paywb.com", "vkpay.com", "vkpay.io", "vkontakte.com", "vkcdnservice.com", "ivicdn.com",
+        }
+        wl_domains = read_openwrt_set("whitelist")
+        cat_ru_domains = read_openwrt_set("category-ru")
+        self.assertIn("mavrtun.ru", wl_domains, "Missing mavrtun.ru in koridor_whitelist.lst")
+        for dom in ("iitrust.ru", "selectel.ru", "cloud.ru", "sbercloud.ru", "servicepipe.ru", "facct.ru", "raiffeisen.ru", "cdek.ru"):
+            self.assertIn(dom, wl_domains, f"Missing {dom} in koridor_whitelist.lst")
+        self.assertIn("mng.tl", cat_ru_domains, "Missing mng.tl in koridor_category-ru.lst")
+        for dom in critical_non_ru:
+            self.assertIn(dom, wl_domains, f"Missing {dom} in koridor_whitelist.lst")
+            self.assertIn(dom, cat_ru_domains, f"Missing {dom} in koridor_category-ru.lst")
+
+        for dom in ("whitebird.io", "mir24.tv", "rt.com", "rt-english.com", "tvoyhod.online", "vmeste-rf.tv", "soloviev.live"):
+            self.assertIn(dom, cat_ru_domains, f"Missing {dom} in koridor_category-ru.lst")
+
+        geoblock_domains = read_openwrt_set("category-geoblock-ru")
+        for dom in ("messenger.com", "m.me", "fb.me", "gog.com", "playstation.com"):
+            self.assertIn(dom, geoblock_domains, f"Missing {dom} in koridor_category-geoblock-ru.lst")
+
+        apple_domains = read_openwrt_set("apple")
+        self.assertIn("courier-push-apple.com.akadns.net", apple_domains)
+        self.assertIn("push-apple.com.akadns.net", apple_domains)
+
+        ads_domains = read_openwrt_set("category-ads")
+        ads_all_domains = read_openwrt_set("category-ads-all")
+        for dom in (
+            "adservice.google.com", "adsrvr.org", "amazon-adsystem.com", "googletagservices.com", "startapp.com",
+            "demdex.net", "360yield.com", "betweendigital.com", "adhigh.net", "otm-r.com", "buzzoola.com",
+            "hybrid.ai", "targetads.io", "skcrtxr.com", "luxcdn.com",
+        ):
+            self.assertIn(dom, ads_domains, f"Missing {dom} in koridor_category-ads.lst")
+            self.assertIn(dom, ads_all_domains, f"Missing {dom} in koridor_category-ads-all.lst")
+        for strict_dom in ("google-analytics.com", "flurry.com"):
+            self.assertNotIn(strict_dom, ads_domains, f"{strict_dom} must stay out of base category-ads")
+            self.assertIn(strict_dom, ads_all_domains, f"Missing {strict_dom} in koridor_category-ads-all.lst")
 
 
 if __name__ == "__main__":

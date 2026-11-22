@@ -90,8 +90,8 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - rule-set:private-domains
-    - '*.lan'
-    - '*.local'
+    - '+.lan'
+    - '+.local'
     - '+.msftconnecttest.com'
     - '+.msftncsi.com'
     - 'captive.apple.com'
@@ -100,8 +100,8 @@ dns:
     - 'clients3.google.com'
     - '+.stun.playstation.net'
     - '+.xboxlive.com'
-    - '*.cm.steampowered.com'
-    - '*.steamserver.net'
+    - '+.cm.steampowered.com'
+    - '+.steamserver.net'
     - '+.battle.net'
     - 'stun.l.google.com'
     - 'time.windows.com'

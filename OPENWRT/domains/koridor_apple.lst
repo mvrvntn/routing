@@ -11,6 +11,7 @@ appleicloud.cn
 applemx-icloud.com
 cdn-apple.com
 certs-lb.apple.com.akadns.net
+courier-push-apple.com.akadns.net
 crl-lb.apple.com.akadns.net
 crl3.digicert.com
 crl4.digicert.com
@@ -65,6 +66,7 @@ ocsp-lb.apple.com.akadns.net
 ocsp.digicert.cn
 ocsp.digicert.com
 ocsp2-lb.apple.com.akadns.net
+push-apple.com.akadns.net
 qwapi.com
 www-cdn.icloud.com.akadns.net
 wwwicloud.com

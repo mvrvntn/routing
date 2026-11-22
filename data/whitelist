@@ -489,15 +489,24 @@ domain:sber.ru
 domain:sberbank.ru
 
 # Essential Services & Mobile Whitelist
+domain:cdek.ru
 domain:dobro.ru
 domain:evotor.ru
+domain:facct.ru
 domain:hrlink.ru
+domain:iitrust.ru
 domain:lizaalert.org
 domain:ofd.ru
 domain:onf.ru
+domain:raiffeisen.ru
+domain:selectel.ru
+domain:cloud.ru
+domain:sbercloud.ru
+domain:servicepipe.ru
 domain:sirius.online
 domain:sochisirius.ru
 domain:sportmail.ru
+domain:mavrtun.ru
 
 # Zoom (Direct)
 domain:zoom.us
@@ -539,6 +548,17 @@ domain:connectivitycheck.samsungcloud.com
 
 # --- Russian Banks & Financial Services (Non-.RU TLDs) ---
 domain:t-bank.com
+domain:t-static-online.com
+domain:tinkoff.com
+domain:tinkoff-group.com
+domain:t-tech.dev
+domain:t.finance
+domain:f6.security
+domain:cabinet-web-service.com
+domain:online-service-account.com
+domain:service-account-online.com
+domain:web-cabinet-online.com
+domain:web-cabinet-service.com
 domain:sberbank.com
 domain:sber-zvuk.com
 domain:alfa.me
@@ -581,6 +601,11 @@ domain:ozon.dev
 domain:ozon.app
 domain:ozon.travel
 domain:wbstatic.net
+domain:paywb.com
+domain:vkpay.com
+domain:vkpay.io
+domain:vkontakte.com
+domain:vkcdnservice.com
 domain:x5static.net
 domain:avito.com
 domain:cdek.shopping
@@ -593,6 +618,10 @@ domain:alicdn.com
 domain:ddos-guard.net
 domain:qrator.net
 domain:ngenix.net
+domain:servicepipe.tech
+domain:selcdn.net
+domain:sbercloud.tech
+domain:vk.cloud
 
 # --- Russian Travel & Airlines (Non-.RU TLDs) ---
 domain:aviasales.com
@@ -609,6 +638,7 @@ domain:beget.com
 domain:ruvds.com
 domain:ispsystem.com
 domain:ivi.tv
+domain:ivicdn.com
 domain:kion.tv
 domain:wink.tv
 domain:start.video
@@ -664,6 +694,7 @@ domain:best2pay.net
 domain:bitrix24.net
 domain:bitrix24.tech
 domain:carrotquest.io
+domain:cdnvideo.com
 domain:cdnvideo.net
 domain:eaptechka.online
 domain:envybox.io

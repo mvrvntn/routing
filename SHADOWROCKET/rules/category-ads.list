@@ -1,5 +1,5 @@
 # NAME: category-ads.list
-# TOTAL RULES: 72
+# TOTAL RULES: 111
 # REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
 
 DOMAIN-SUFFIX,ad.mail.ru
@@ -24,10 +24,37 @@ DOMAIN-SUFFIX,trace-flow.ru
 DOMAIN-SUFFIX,apptracer.ru
 DOMAIN-SUFFIX,webvisor.com
 DOMAIN-SUFFIX,webvisor.org
+DOMAIN-SUFFIX,betweendigital.com
+DOMAIN-SUFFIX,adhigh.net
+DOMAIN-SUFFIX,acint.net
+DOMAIN-SUFFIX,otm-r.com
+DOMAIN-SUFFIX,buzzoola.com
+DOMAIN-SUFFIX,hybrid.ai
+DOMAIN-SUFFIX,upravel.com
+DOMAIN-SUFFIX,admon.pro
+DOMAIN-SUFFIX,bidderstack.com
+DOMAIN-SUFFIX,bidster.net
+DOMAIN-SUFFIX,moe.video
+DOMAIN-SUFFIX,ussp.io
+DOMAIN-SUFFIX,utraff.com
+DOMAIN-SUFFIX,voxexchange.io
+DOMAIN-SUFFIX,al-adtech.com
+DOMAIN-SUFFIX,digitalcaramel.com
+DOMAIN-SUFFIX,dynotech.io
+DOMAIN-SUFFIX,programmatica.com
+DOMAIN-SUFFIX,ohmy.bid
+DOMAIN-SUFFIX,bidvol.com
+DOMAIN-SUFFIX,new-programmatic.com
+DOMAIN-SUFFIX,adlook.online
+DOMAIN-SUFFIX,targetads.io
+DOMAIN-SUFFIX,skcrtxr.com
+DOMAIN-SUFFIX,luxcdn.com
 DOMAIN-SUFFIX,admob.com
 DOMAIN-SUFFIX,doubleclick.net
 DOMAIN-SUFFIX,googlesyndication.com
 DOMAIN-SUFFIX,googleadservices.com
+DOMAIN-SUFFIX,adservice.google.com
+DOMAIN-SUFFIX,googletagservices.com
 DOMAIN-SUFFIX,applovin.com
 DOMAIN-SUFFIX,applvn.com
 DOMAIN-SUFFIX,unityads.unity3d.com
@@ -39,6 +66,7 @@ DOMAIN-SUFFIX,chartboost.com
 DOMAIN-SUFFIX,adcolony.com
 DOMAIN-SUFFIX,fyber.com
 DOMAIN-SUFFIX,tapjoy.com
+DOMAIN-SUFFIX,startapp.com
 DOMAIN-SUFFIX,criteo.com
 DOMAIN-SUFFIX,criteo.net
 DOMAIN-SUFFIX,taboola.com
@@ -72,5 +100,16 @@ DOMAIN-SUFFIX,sharethrough.com
 DOMAIN-SUFFIX,sovrn.com
 DOMAIN-SUFFIX,media.net
 DOMAIN-SUFFIX,mgid.com
+DOMAIN-SUFFIX,adsrvr.org
+DOMAIN-SUFFIX,amazon-adsystem.com
+DOMAIN-SUFFIX,demdex.net
+DOMAIN-SUFFIX,360yield.com
+DOMAIN-SUFFIX,adkernel.com
+DOMAIN-SUFFIX,silvermob.com
+DOMAIN-SUFFIX,liftdsp.com
+DOMAIN-SUFFIX,admatic.com.tr
+DOMAIN-SUFFIX,weborama.fr
+DOMAIN-SUFFIX,afp.ai
+DOMAIN-SUFFIX,tds.bid
 DOMAIN-SUFFIX,hotjar.com
 DOMAIN-SUFFIX,fullstory.com

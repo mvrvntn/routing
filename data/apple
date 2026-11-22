@@ -70,3 +70,7 @@ domain:certs-lb.apple.com.akadns.net
 domain:crl-lb.apple.com.akadns.net
 domain:ocsp-lb.apple.com.akadns.net
 domain:ocsp2-lb.apple.com.akadns.net
+
+# Apple Push Notifications (APNs CNAME delegation zones)
+domain:courier-push-apple.com.akadns.net
+domain:push-apple.com.akadns.net
