@@ -237,7 +237,7 @@ proxy-groups:
     url: https://www.gstatic.com/generate_204
     expected-status: 204
     interval: 180
-    lazy: false
+    lazy: true
     exclude-filter: "❯.+(⭐|🪞|⚡)"
     exclude-type: "shadowsocks|ss"
     remnawave:
@@ -386,14 +386,6 @@ rule-providers:
     path: ./ruleset/geoip-private.mrs
     proxy: 🇫🇲❯ АВТО
     interval: 2592000
-  whitelist-ips:
-    type: http
-    behavior: ipcidr
-    format: mrs
-    url: https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/mihomo/whitelist-ip.mrs
-    path: ./ruleset/geoip-whitelist.mrs
-    proxy: 🇫🇲❯ АВТО
-    interval: 86400
   direct-ips:
     type: http
     behavior: ipcidr
@@ -632,9 +624,8 @@ rules:
   # --- DIRECT ---
   - RULE-SET,category-ru,DIRECT                    # RU-сайты, жесткая зависимость от whitelist
   - RULE-SET,whitelist,DIRECT                      # RU-белосписочный (домены)
-  - RULE-SET,whitelist-ips,DIRECT,no-resolve       # RU-белосписочный (IP)
   - RULE-SET,ru-apps,DIRECT                        # RU-приложения Android
-  - RULE-SET,direct-ips,DIRECT,no-resolve
+  - RULE-SET,direct-ips,DIRECT
 
   # --- Всё остальное → PROXY ---
   - MATCH,PROXY

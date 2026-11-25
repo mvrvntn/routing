@@ -1,6 +1,6 @@
 # NAME: discord.list
 # TOTAL RULES: 51
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,discord.com
 DOMAIN-SUFFIX,discord.gg

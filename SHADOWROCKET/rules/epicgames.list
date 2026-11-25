@@ -1,6 +1,6 @@
 # NAME: epicgames.list
 # TOTAL RULES: 29
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,3lateral.com
 DOMAIN-SUFFIX,artstation.com

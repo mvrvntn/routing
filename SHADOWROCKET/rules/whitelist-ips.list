@@ -1,6 +1,6 @@
 # NAME: whitelist-ips.list
 # TOTAL IP RULES: 17861
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 IP-CIDR,5.8.43.1/32,no-resolve
 IP-CIDR,5.8.43.2/31,no-resolve

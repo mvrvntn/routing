@@ -1,6 +1,6 @@
 # NAME: google-deepmind.list
 # TOTAL RULES: 66
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,deepmind.com
 DOMAIN-SUFFIX,deepmind.google

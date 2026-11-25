@@ -12,6 +12,7 @@ Supports:
 from __future__ import annotations
 
 import argparse
+import ipaddress
 import os
 import re
 import sys
@@ -23,7 +24,8 @@ GEOIP_DIR = REPO_ROOT / "geoip"
 OUTPUT_DIR = REPO_ROOT / "SHADOWROCKET"
 RULES_DIR = OUTPUT_DIR / "rules"
 
-REPO_URL = "https://raw.githubusercontent.com/mvrvntn/routing/main"
+REPO_URL = "https://cdn.jsdelivr.net/gh/mvrvntn/routing@main"
+GITHUB_REPO_URL = "https://github.com/mvrvntn/routing"
 
 
 def parse_geosite_rule(line: str) -> str | None:
@@ -111,7 +113,7 @@ def convert_data_file_to_list(src_path: Path, dst_path: Path, name: str) -> int:
     with open(dst_path, "w", encoding="utf-8") as f:
         f.write(f"# NAME: {name}.list\n")
         f.write(f"# TOTAL RULES: {len(deduped)}\n")
-        f.write(f"# REPO: {REPO_URL}\n\n")
+        f.write(f"# REPO: {GITHUB_REPO_URL}\n\n")
         for r in deduped:
             f.write(f"{r}\n")
 
@@ -119,31 +121,38 @@ def convert_data_file_to_list(src_path: Path, dst_path: Path, name: str) -> int:
 
 
 def convert_ip_file_to_list(src_path: Path, dst_path: Path, name: str) -> int:
-    """Read an IP CIDR list and write a Shadowrocket IP-CIDR .list file."""
+    """Read an IP CIDR list, collapse overlapping CIDRs, and write Shadowrocket .list."""
     if not src_path.exists():
         return 0
 
-    out_rules: list[str] = []
+    v4_nets: list[ipaddress.IPv4Network] = []
+    v6_nets: list[ipaddress.IPv6Network] = []
     with open(src_path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
             cidr = line.split()[0].strip()
-            out_rules.append(f"IP-CIDR,{cidr},no-resolve")
+            try:
+                net = ipaddress.ip_network(cidr, strict=False)
+                if net.version == 4:
+                    v4_nets.append(net)
+                else:
+                    v6_nets.append(net)
+            except ValueError:
+                continue
 
-    seen = set()
-    deduped = []
-    for r in out_rules:
-        if r not in seen:
-            seen.add(r)
-            deduped.append(r)
+    collapsed_v4 = sorted(ipaddress.collapse_addresses(v4_nets), key=lambda n: (int(n.network_address), n.prefixlen))
+    collapsed_v6 = sorted(ipaddress.collapse_addresses(v6_nets), key=lambda n: (int(n.network_address), n.prefixlen))
+    deduped = [f"IP-CIDR,{net},no-resolve" for net in collapsed_v4] + [
+        f"IP-CIDR6,{net},no-resolve" for net in collapsed_v6
+    ]
 
     dst_path.parent.mkdir(parents=True, exist_ok=True)
     with open(dst_path, "w", encoding="utf-8") as f:
         f.write(f"# NAME: {name}.list\n")
         f.write(f"# TOTAL IP RULES: {len(deduped)}\n")
-        f.write(f"# REPO: {REPO_URL}\n\n")
+        f.write(f"# REPO: {GITHUB_REPO_URL}\n\n")
         for r in deduped:
             f.write(f"{r}\n")
 
@@ -154,7 +163,7 @@ def generate_default_conf() -> str:
     """Generate the full content for SHADOWROCKET/DEFAULT.CONF."""
     return f"""# @mvrvntn Routing for Shadowrocket
 # Profile: DEFAULT (Умный раздельный роутинг)
-# Repository: {REPO_URL}
+# Repository: {GITHUB_REPO_URL}
 
 [General]
 # Отключение IPv6 для предотвращения утечек и обхода антифрода
@@ -164,8 +173,8 @@ prefer-ipv6 = false
 # Разрешение приватных IP адресов локальной сети
 private-ip-answer = true
 
-# Управление DNS: защищенный DoH резолвер
-dns-direct-system = false
+# Управление DNS: локальный DNS для DIRECT-сайтов РФ, защищенный DoH для остальных
+dns-direct-system = true
 dns-fallback-system = false
 dns-direct-fallback-proxy = true
 
@@ -213,6 +222,23 @@ RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord-ips.list,PROXY
 DEST-PORT,19294-19344,PROXY
 
+# --- Push-уведомления (Apple APNs & Google FCM) — напрямую до geoblock-ru ---
+DEST-PORT,5223,DIRECT
+DOMAIN-SUFFIX,push.apple.com,DIRECT
+DEST-PORT,5228-5230,DIRECT
+DOMAIN-KEYWORD,mtalk,DIRECT
+DOMAIN-SUFFIX,fcm.googleapis.com,DIRECT
+
+# --- Прямой доступ: Игровые платформы и стриминг (до geoblock-ru) ---
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/steam.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/epicgames.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/riot.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/origin.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/escapefromtarkov.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/faceit.list,DIRECT
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch-ads.list,PROXY
+RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch.list,DIRECT
+
 # --- Проксируемые зарубежные ресурсы (Proxy) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/ai.list,PROXY
@@ -221,30 +247,20 @@ RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/youtube.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/telegram.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/github.list,PROXY
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch-ads.list,PROXY
 
 # --- Прямой доступ: Локальные сети и Системные сервисы (Direct) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/apple.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/microsoft.list,DIRECT
-
-# --- Прямой доступ: Игровые платформы и медиастриминг (Direct) ---
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/steam.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/epicgames.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/riot.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/origin.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/escapefromtarkov.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/faceit.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/twitch.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/pinterest.list,DIRECT
 
 # --- Прямой доступ: Российские сервисы и Белый список (Direct) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ru.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist-ips.list,DIRECT
 
-# Прямое подключение ко всем IP-адресам Российской Федерации
+# Прямое подключение ко всем IP-адресам Российской Федерации и Республики Беларусь
 GEOIP,RU,DIRECT
+GEOIP,BY,DIRECT
 
 # --- Финальное правило (Все незаблокированные зарубежные ресурсы — в Proxy) ---
 FINAL,PROXY
@@ -255,13 +271,13 @@ def generate_whitelist_conf() -> str:
     """Generate the full content for SHADOWROCKET/WHITELIST.CONF."""
     return f"""# @mvrvntn Routing for Shadowrocket
 # Profile: WHITELIST (Строгий белый список: только доверенные RU-сервисы напрямую)
-# Repository: {REPO_URL}
+# Repository: {GITHUB_REPO_URL}
 
 [General]
 ipv6 = false
 prefer-ipv6 = false
 private-ip-answer = true
-dns-direct-system = false
+dns-direct-system = true
 dns-fallback-system = false
 dns-direct-fallback-proxy = true
 
@@ -288,24 +304,13 @@ dns.google = 8.8.8.8
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ads.list,REJECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/torrent.list,REJECT
 
-# Принудительное проксирование гео-заблокированных ресурсов
-DOMAIN-KEYWORD,smp-,PROXY
-DOMAIN-KEYWORD,applepay,PROXY
-DOMAIN-SUFFIX,apple-pay.com,PROXY
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-geoblock-ru.list,PROXY
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/google-play.list,PROXY
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/youtube.list,PROXY
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord.list,PROXY
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/discord-ips.list,PROXY
-DEST-PORT,19294-19344,PROXY
-
-# Прямой доступ только для белого списка и локальной сети
+# Прямой доступ строго для локальной сети и мобильного белого списка
+# (apple.list намеренно не добавлен — при БПЛА Apple работает только через VPN)
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/private.list,DIRECT
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/apple.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist.list,DIRECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist-ips.list,DIRECT
 
-# Все остальное проксируется
+# Всё остальное (включая Apple/YouTube/Discord/AI) проксируется через обход БС
 FINAL,PROXY
 """
 
@@ -314,13 +319,13 @@ def generate_relocant_conf() -> str:
     """Generate the full content for RELOCANT/SHADOWROCKET.CONF."""
     return f"""# @mvrvntn Routing for Shadowrocket
 # Profile: RELOCANT (Обратный роутинг для релокантов и путешественников: РФ через прокси, мир напрямую)
-# Repository: {REPO_URL}
+# Repository: {GITHUB_REPO_URL}
 
 [General]
 ipv6 = false
 prefer-ipv6 = false
 private-ip-answer = true
-dns-direct-system = false
+dns-direct-system = true
 dns-fallback-system = false
 dns-direct-fallback-proxy = true
 
@@ -353,7 +358,6 @@ RULE-SET,{REPO_URL}/SHADOWROCKET/rules/faceit.list,PROXY
 
 # --- Государственные порталы, банки, СБП и домены РФ (Proxy) ---
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist.list,PROXY
-RULE-SET,{REPO_URL}/SHADOWROCKET/rules/whitelist-ips.list,PROXY
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ru.list,PROXY
 
 # --- Подсети Российской Федерации и Республики Беларусь (Proxy) ---

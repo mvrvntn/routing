@@ -371,8 +371,40 @@ class TestToolsSuite(unittest.TestCase):
         for idx, rule in enumerate(rules):
             self.assertNotEqual(rule.get("outbound"), "block", f"Rule #{idx} uses removed outbound='block'")
         lava_rule = next((r for r in rules if "lava.ru" in r.get("domain_suffix", [])), None)
-        self.assertIsNotNone(lava_rule, "lava.ru must remain explicitly routed")
-        self.assertEqual(lava_rule.get("outbound"), "→ Remnawave")
+        self.assertIsNone(lava_rule, "lava.ru must not be forced into proxy")
+
+        self.assertNotIn("whitelist-ip", declared_rule_sets, "Duplicate whitelist-ip must not bloat sing-box RAM")
+        self.assertTrue(dns_cfg.get("independent_cache"), "dns.independent_cache must be True for FakeIP isolation")
+        cache_file = sb.get("experimental", {}).get("cache_file", {})
+        self.assertTrue(cache_file.get("enabled"), "experimental.cache_file.enabled must be True")
+        self.assertTrue(cache_file.get("store_fakeip"), "experimental.cache_file.store_fakeip must be True")
+
+        idx_direct_ip = next(
+            (i for i, r in enumerate(rules) if "direct-ip" in r.get("rule_set", [])),
+            None,
+        )
+        self.assertIsNotNone(idx_direct_ip, "direct-ip rule missing in sing-box template")
+        self.assertGreater(idx_direct_ip, 0)
+        self.assertEqual(
+            rules[idx_direct_ip - 1].get("action"),
+            "resolve",
+            "resolve action must immediately precede direct-ip for FakeIP fallback",
+        )
+        idx_geoblock_sb = next(
+            (i for i, r in enumerate(rules) if "category-geoblock-ru" in r.get("rule_set", [])),
+            None,
+        )
+        idx_apns_sb = next(
+            (
+                i
+                for i, r in enumerate(rules)
+                if "push.apple.com" in r.get("domain", [])
+                or "push.apple.com" in r.get("domain_suffix", [])
+            ),
+            None,
+        )
+        self.assertIsNotNone(idx_apns_sb)
+        self.assertLess(idx_apns_sb, idx_geoblock_sb, "Apple APNs must precede category-geoblock-ru in sing-box")
 
         for ib in sb.get("inbounds", []):
             self.assertNotIn("sniff", ib, f"Legacy inbound sniff field in {ib.get('tag')}")
@@ -380,6 +412,7 @@ class TestToolsSuite(unittest.TestCase):
             self.assertNotIn("inet6_address", ib, f"Legacy inet6_address in {ib.get('tag')}")
             if ib.get("type") == "tun":
                 self.assertIsInstance(ib.get("address"), list, "tun inbound must use address array")
+                self.assertEqual(ib.get("stack"), "system", "tun stack must be system to fit iPhone 50MB RAM limit")
 
         for ob in sb.get("outbounds", []):
             self.assertNotIn(ob.get("type"), ("dns", "block"), f"Removed legacy special outbound type={ob.get('type')}")
@@ -569,8 +602,15 @@ class TestToolsSuite(unittest.TestCase):
                 idx_geoblock,
                 f"torrent-domains must precede category-geoblock-ru in {cfg_path} to prevent torrent proxy leaks",
             )
-            # Ensure direct-ips has no-resolve
-            self.assertIn("RULE-SET,direct-ips,DIRECT,no-resolve", content, f"direct-ips must use no-resolve in {cfg_path}")
+            # Ensure direct-ips resolves unknown FakeIP tail domains (no no-resolve) and no duplicate whitelist-ips
+            self.assertIn("RULE-SET,direct-ips,DIRECT", content, f"direct-ips missing in {cfg_path}")
+            self.assertNotIn("RULE-SET,direct-ips,DIRECT,no-resolve", content, f"direct-ips must NOT use no-resolve with fake-ip in {cfg_path}")
+            self.assertNotIn("whitelist-ips:", content, f"Duplicate whitelist-ips provider must be omitted in {cfg_path}")
+            idx_ru_apps = content.find("RULE-SET,ru-apps,DIRECT")
+            idx_direct_ips = content.find("RULE-SET,direct-ips,DIRECT")
+            self.assertNotEqual(idx_ru_apps, -1, f"Missing ru-apps in {cfg_path}")
+            self.assertLess(idx_geoblock, idx_ru_apps, f"ru-apps must stay below domain rules in {cfg_path}")
+            self.assertLess(idx_ru_apps, idx_direct_ips, f"ru-apps must precede direct-ips in {cfg_path}")
 
     def test_shadowrocket_generation_and_rules(self):
         from tools.shadowrocket.generate_shadowrocket import parse_geosite_rule, build_all_shadowrocket
@@ -592,13 +632,20 @@ class TestToolsSuite(unittest.TestCase):
         self.assertIn("dns.google", content)
         self.assertIn("8.8.8.8", content)
         self.assertIn("dns.yandex.ru", content)
+        self.assertIn("dns-direct-system = true", content)
+        self.assertIn("cdn.jsdelivr.net/gh/mvrvntn/routing@main", content)
+        self.assertNotIn("raw.githubusercontent.com", content)
         self.assertNotIn("common.dot.dns.yandex.net", content)
         self.assertIn("lkfl2.nalog.ru = 213.24.64.175", content)
         self.assertIn("rules/category-ads.list,REJECT", content)
         self.assertIn("rules/discord.list,PROXY", content)
         self.assertIn("rules/discord-ips.list,PROXY", content)
+        self.assertNotIn("whitelist-ips.list", content)
+        self.assertIn("GEOIP,BY,DIRECT", content)
         self.assertIn("GEOIP,RU,DIRECT", content)
         self.assertIn("FINAL,PROXY", content)
+        self.assertLess(content.find("push.apple.com"), content.find("category-geoblock-ru.list"))
+        self.assertLess(content.find("steam.list,DIRECT"), content.find("category-geoblock-ru.list"))
 
         # Verify include: directive expansion
         ads_all = os.path.join(BASE_DIR, "SHADOWROCKET", "rules", "category-ads-all.list")
@@ -712,15 +759,10 @@ class TestToolsSuite(unittest.TestCase):
             )
             self.assertTrue(has_xray_port, "Missing Discord UDP port 19294-19344 in Xray template")
 
-        # 4. Shadowrocket configs
-        sr_files = [
-            os.path.join(BASE_DIR, "SHADOWROCKET", "DEFAULT.CONF"),
-            os.path.join(BASE_DIR, "SHADOWROCKET", "WHITELIST.CONF"),
-        ]
-        for srf in sr_files:
-            with open(srf, "r", encoding="utf-8") as f:
-                sr_content = f.read()
-            self.assertIn("DEST-PORT,19294-19344,PROXY", sr_content, f"Missing DEST-PORT,19294-19344,PROXY in {srf}")
+        # 4. Shadowrocket DEFAULT.CONF has Discord UDP port range (WHITELIST.CONF intentionally omits redundant PROXY rules)
+        sr_default_path = os.path.join(BASE_DIR, "SHADOWROCKET", "DEFAULT.CONF")
+        with open(sr_default_path, "r", encoding="utf-8") as f:
+            self.assertIn("DEST-PORT,19294-19344,PROXY", f.read(), f"Missing DEST-PORT,19294-19344,PROXY in {sr_default_path}")
 
         # 5. GeoIP CIDR full Cloudflare Anycast edge
         with open(os.path.join(BASE_DIR, "geoip", "discord.txt"), "r", encoding="utf-8") as f:
@@ -1125,6 +1167,120 @@ class TestToolsSuite(unittest.TestCase):
         for strict_dom in ("google-analytics.com", "flurry.com"):
             self.assertNotIn(strict_dom, ads_domains, f"{strict_dom} must stay out of base category-ads")
             self.assertIn(strict_dom, ads_all_domains, f"Missing {strict_dom} in koridor_category-ads-all.lst")
+
+    def test_mihomo_fakeip_ram_and_ru_apps_guardrails(self):
+        """Ensure Mihomo configs avoid FakeIP no-resolve leaks, use iOS-safe RAM settings, and cover RU apps."""
+        import yaml
+
+        all_profiles = [
+            os.path.join(BASE_DIR, "MIHOMO", "default.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_remnawave.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_3x-ui.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_whitelist.yaml"),
+            os.path.join(BASE_DIR, "RELOCANT", "mihomo.yaml"),
+        ]
+        for path in all_profiles:
+            with open(path, "r", encoding="utf-8") as f:
+                raw = f.read()
+            data = yaml.safe_load(raw)
+            if "tcp-concurrent" in data:
+                self.assertTrue(data["tcp-concurrent"], f"tcp-concurrent must be True in {path}")
+            if "tun" in data:
+                self.assertEqual(data["tun"].get("stack"), "system", f"tun.stack must be system in {path}")
+            for grp in data.get("proxy-groups", []):
+                if grp.get("type") in ("url-test", "fallback"):
+                    self.assertTrue(grp.get("lazy"), f"Group '{grp.get('name')}' must set lazy: true in {path}")
+            self.assertNotIn("RULE-SET,direct-ips,DIRECT,no-resolve", raw, f"no-resolve breaks FakeIP in {path}")
+            self.assertNotIn("RULE-SET,whitelist-ips,DIRECT,no-resolve", raw, f"no-resolve breaks FakeIP in {path}")
+            self.assertNotIn("RULE-SET,direct-ips,🛡️ VPN,no-resolve", raw, f"no-resolve breaks FakeIP in {path}")
+
+        wl_path = os.path.join(BASE_DIR, "MIHOMO", "template_whitelist.yaml")
+        with open(wl_path, "r", encoding="utf-8") as f:
+            wl_data = yaml.safe_load(f)
+        fake_filter = wl_data.get("dns", {}).get("fake-ip-filter", [])
+        self.assertNotIn("*.lan", fake_filter)
+        self.assertNotIn("*.local", fake_filter)
+        self.assertIn("+.lan", fake_filter)
+        self.assertIn("+.local", fake_filter)
+        self.assertNotIn("apple", wl_data.get("rule-providers", {}), "WHITELIST mode must not send Apple DIRECT")
+
+        rel_path = os.path.join(BASE_DIR, "RELOCANT", "mihomo.yaml")
+        with open(rel_path, "r", encoding="utf-8") as f:
+            rel_data = yaml.safe_load(f)
+        self.assertNotIn("whitelist-ips", rel_data.get("rule-providers", {}), "RELOCANT mihomo must not duplicate whitelist-ips")
+
+        ru_apps_path = os.path.join(BASE_DIR, "MIHOMO", "ru-apps.yaml")
+        with open(ru_apps_path, "r", encoding="utf-8") as f:
+            ru_apps_raw = f.read()
+        for pkg in ("ru.nalog.lkfl", "ru.nalog.lknpd", "ru.yandex.market", "ru.samokat.app", "ru.mchs.app", "ru.sberbank.sberid", "ru.cryptopro.csp"):
+            self.assertIn(pkg, ru_apps_raw, f"Missing {pkg} in MIHOMO/ru-apps.yaml")
+
+    def test_iphone_ram_and_whitelist_jsonsub_guardrails(self):
+        """Ensure WHITELIST (UAV blackout bypass), JSONSUB, RELOCANT, and Shadowrocket stay iOS-safe."""
+        import json
+
+        for client in ("HAPP", "INCY"):
+            wl_path = os.path.join(BASE_DIR, client, "WHITELIST.JSON")
+            with open(wl_path, "r", encoding="utf-8") as f:
+                wl = json.load(f)
+            self.assertEqual(wl.get("UseChunkFiles"), "true")
+            self.assertEqual(wl.get("DirectSites"), ["geosite:private", "geosite:whitelist"])
+            self.assertEqual(wl.get("DirectIp"), ["geoip:private", "geoip:whitelist"])
+
+            js_path = os.path.join(BASE_DIR, client, "JSONSUB.JSON")
+            with open(js_path, "r", encoding="utf-8") as f:
+                js = json.load(f)
+            self.assertEqual(js.get("UseChunkFiles"), "false")
+            self.assertEqual(js.get("DirectSites"), [])
+            self.assertEqual(js.get("ProxySites"), [])
+            self.assertEqual(js.get("BlockSites"), [])
+
+            rel_path = os.path.join(BASE_DIR, "RELOCANT", f"{client}.JSON")
+            with open(rel_path, "r", encoding="utf-8") as f:
+                rel = json.load(f)
+            self.assertNotIn("geoip:whitelist", rel.get("ProxyIp", []), f"Duplicate geoip:whitelist in {rel_path}")
+            self.assertIn("geoip:direct", rel.get("ProxyIp", []), f"Missing geoip:direct in {rel_path}")
+
+        sr_wl_path = os.path.join(BASE_DIR, "SHADOWROCKET", "WHITELIST.CONF")
+        with open(sr_wl_path, "r", encoding="utf-8") as f:
+            sr_wl = f.read()
+        self.assertNotIn("apple.list,DIRECT", sr_wl, "WHITELIST.CONF must not route Apple DIRECT during UAV blackouts")
+        for redundant in ("category-geoblock-ru.list", "google-play.list", "youtube.list", "discord.list", "discord-ips.list"):
+            self.assertNotIn(redundant, sr_wl, f"Redundant PROXY rule-set {redundant} bloats iPhone RAM in WHITELIST.CONF")
+
+    def test_anti_vpn_and_domain_hygiene_guardrails(self):
+        """Ensure false positives are gone, vivox/lava are protected, and key non-.ru RU domains are covered."""
+        from scripts.update_geoblock import EXPLICIT_PROXY_OVERRIDES, PROTECTED_TLDS, BARE_PROTECTED_SUFFIXES
+
+        for suffix in (".by", ".kz", ".moscow", ".tatar", ".yandex", ".vk", ".sber"):
+            self.assertIn(suffix, PROTECTED_TLDS)
+        self.assertNotIn("lava.ru", EXPLICIT_PROXY_OVERRIDES)
+        self.assertNotIn("vivox.com", EXPLICIT_PROXY_OVERRIDES)
+        self.assertIn("vivox.com", BARE_PROTECTED_SUFFIXES)
+
+        with open(os.path.join(BASE_DIR, "data", "whitelist"), "r", encoding="utf-8") as f:
+            wl_lines = {line.strip() for line in f if line.strip() and not line.startswith("#")}
+        self.assertNotIn("domain:t2.com", wl_lines, "US Rackspace domain:t2.com must stay out of data/whitelist")
+
+        with open(os.path.join(BASE_DIR, "data", "category-geoblock-ru"), "r", encoding="utf-8") as f:
+            gb_lines = {line.strip() for line in f if line.strip() and not line.startswith("#")}
+        self.assertNotIn("domain:lava.ru", gb_lines)
+        self.assertNotIn("domain:vivox.com", gb_lines)
+
+        with open(os.path.join(BASE_DIR, "data", "category-ru"), "r", encoding="utf-8") as f:
+            ru_lines = {line.strip() for line in f if line.strip() and not line.startswith("#")}
+        for dom in (
+            "ya.cc", "ozon.tech", "wildberries.tech", "wb.tech", "cian.tech", "stormwall.pro",
+            "dzen.com", "rutube.tv", "mts.digital", "avito.io", "rzd.com", "cdek.com",
+            "bi.zone", "tpay.me", "sber.cloud", "rustore.app", "gosuslugi.app",
+            "yandex.cloud", "yandexcloud.net", "ddos-guard.net", "qrator.net", "ngenix.net",
+        ):
+            self.assertIn(f"domain:{dom}", ru_lines, f"Missing domain:{dom} in data/category-ru")
+
+        with open(os.path.join(BASE_DIR, "geoip", "CUSTOM-FIX-ADD.txt"), "r", encoding="utf-8") as f:
+            fix_lines = {line.strip() for line in f if line.strip() and not line.startswith("#")}
+        self.assertIn("109.238.90.239/32", fix_lines)
+        self.assertIn("185.178.208.73/32", fix_lines)
 
 
 if __name__ == "__main__":

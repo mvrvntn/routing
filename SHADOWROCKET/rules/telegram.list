@@ -1,6 +1,6 @@
 # NAME: telegram.list
 # TOTAL RULES: 29
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,cdn-telegram.org
 DOMAIN-SUFFIX,comments.app

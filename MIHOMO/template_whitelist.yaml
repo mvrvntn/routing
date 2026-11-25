@@ -21,7 +21,7 @@ tcp-concurrent: true
 
 tun:
   enable: true
-  stack: mixed
+  stack: system
   auto-route: true
   auto-detect-interface: true
   dns-hijack:
@@ -52,8 +52,8 @@ dns:
   fake-ip-range: 198.18.0.1/16
   fake-ip-filter:
     - rule-set:private-domains
-    - '*.lan'
-    - '*.local'
+    - '+.lan'
+    - '+.local'
     - '+.msftconnecttest.com'
     - '+.msftncsi.com'
     - 'captive.apple.com'
@@ -242,7 +242,7 @@ rules:
 
   # --- Белый список критической инфраструктуры РФ (DIRECT без прокси) ---
   - RULE-SET,whitelist,DIRECT
-  - RULE-SET,whitelist-ips,DIRECT,no-resolve
+  - RULE-SET,whitelist-ips,DIRECT
 
   # --- Всё остальное -> через Белый коридор ---
   - MATCH,❯ белый коридор

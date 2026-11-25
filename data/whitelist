@@ -526,7 +526,6 @@ domain:epc-data.com
 
 # --- Mobile Carrier IMS / VoWiFi / VoLTE ---
 domain:3gppnetwork.org
-domain:t2.com
 domain:mts.me
 
 # --- Android & Vendor Push Services ---

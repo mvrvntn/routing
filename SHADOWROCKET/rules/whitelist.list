@@ -1,6 +1,6 @@
 # NAME: whitelist.list
-# TOTAL RULES: 661
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# TOTAL RULES: 660
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,ipify.org
 DOMAIN-SUFFIX,checkip.amazonaws.com
@@ -501,7 +501,6 @@ DOMAIN-SUFFIX,etm.ru
 DOMAIN-SUFFIX,emex.ru
 DOMAIN-SUFFIX,epc-data.com
 DOMAIN-SUFFIX,3gppnetwork.org
-DOMAIN-SUFFIX,t2.com
 DOMAIN-SUFFIX,mts.me
 DOMAIN-SUFFIX,mtalk.google.com
 DOMAIN-SUFFIX,alt1-mtalk.google.com

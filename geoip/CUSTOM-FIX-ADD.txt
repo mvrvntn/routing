@@ -2,6 +2,12 @@
 
 213.180.193.247/32
 
+# Verified RU-owned service IPs missing after GeoIP remove stages
+# rutube.ru (AS201706 Servicepipe RU)
+109.238.90.239/32
+# garant.ru (AS57724 DDoS-Guard RU)
+185.178.208.73/32
+
 # Zoom (Direct)
 170.114.0.0/16
 134.224.0.0/16

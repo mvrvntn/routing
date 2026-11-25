@@ -1,6 +1,6 @@
 # NAME: ai.list
 # TOTAL RULES: 172
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,openai.com
 DOMAIN-SUFFIX,openai.org

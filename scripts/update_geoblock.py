@@ -46,14 +46,31 @@ DOMAIN_REGEX = re.compile(
 )
 
 # Protected Top-Level Domains (Strict Safety Gate)
-PROTECTED_TLDS = (".ru", ".рф", ".su", ".xn--p1ai")
+PROTECTED_TLDS = (
+    ".ru",
+    ".рф",
+    ".su",
+    ".xn--p1ai",
+    ".by",
+    ".kz",
+    ".moscow",
+    ".tatar",
+    ".xn--80adxhks",
+    ".yandex",
+    ".vk",
+    ".sber",
+    ".vtb",
+    ".alfabank",
+    ".gazprom",
+    ".kaspersky",
+    ".rzd",
+)
 
-# Bare public suffixes / direct Microsoft CDN domains that must never enter geoblock
-BARE_PROTECTED_SUFFIXES = {"co.nz", "com.ua", "live.net"}
+# Bare public suffixes / direct domains that must never enter geoblock
+BARE_PROTECTED_SUFFIXES = {"co.nz", "com.ua", "live.net", "vivox.com"}
 
 # Explicit overrides permitted through safety gate (e.g. services that geoblock RU)
 EXPLICIT_PROXY_OVERRIDES = {
-    "lava.ru",
     "airbnb.ru",
     "freedom-travel.kz",
     "freedom-travel.at",
@@ -65,7 +82,6 @@ EXPLICIT_PROXY_OVERRIDES = {
     "orda.kz",
     "colta.ru",
     "agentura.ru",
-    "vivox.com",
 }
 
 # Dead/parked domains present in external feeds that must stay excluded

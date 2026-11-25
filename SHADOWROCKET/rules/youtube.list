@@ -1,6 +1,6 @@
 # NAME: youtube.list
 # TOTAL RULES: 177
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,youtube
 DOMAIN-SUFFIX,ggpht.cn

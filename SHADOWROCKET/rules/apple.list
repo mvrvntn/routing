@@ -1,6 +1,6 @@
 # NAME: apple.list
 # TOTAL RULES: 69
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,apple.com
 DOMAIN-SUFFIX,cdn-apple.com

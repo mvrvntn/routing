@@ -1,6 +1,6 @@
 # NAME: origin.list
 # TOTAL RULES: 153
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,dawngate.com
 DOMAIN-SUFFIX,eastore.com

@@ -1,6 +1,6 @@
 # NAME: private.list
 # TOTAL RULES: 129
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,lan
 DOMAIN-SUFFIX,localdomain

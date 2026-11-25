@@ -38,7 +38,6 @@
     "geosite:faceit"
   ],
   "ProxyIp": [
-    "geoip:whitelist",
     "geoip:direct"
   ],
   "BlockSites": [

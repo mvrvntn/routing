@@ -1,6 +1,6 @@
 # NAME: category-ads-all.list
 # TOTAL RULES: 113
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,ad.mail.ru
 DOMAIN-SUFFIX,alt-ad.mail.ru

@@ -1,6 +1,6 @@
 # NAME: github.list
 # TOTAL RULES: 27
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,atom.io
 DOMAIN-SUFFIX,dependabot.com

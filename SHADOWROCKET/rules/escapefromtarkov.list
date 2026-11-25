@@ -1,6 +1,6 @@
 # NAME: escapefromtarkov.list
 # TOTAL RULES: 4
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,tarkov.com
 DOMAIN-SUFFIX,eft-store.com

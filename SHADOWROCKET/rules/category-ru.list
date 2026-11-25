@@ -1,6 +1,6 @@
 # NAME: category-ru.list
-# TOTAL RULES: 199
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# TOTAL RULES: 247
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,2ip.io
 DOMAIN-SUFFIX,ipwho.is
@@ -183,6 +183,54 @@ DOMAIN-SUFFIX,pobeda.aero
 DOMAIN-SUFFIX,cdek.market
 DOMAIN-SUFFIX,gismeteo.com
 DOMAIN-SUFFIX,my.games
+DOMAIN-SUFFIX,yandex.cloud
+DOMAIN-SUFFIX,yandexcloud.net
+DOMAIN-SUFFIX,ya.cc
+DOMAIN-SUFFIX,ddos-guard.net
+DOMAIN-SUFFIX,ddos-guard.com
+DOMAIN-SUFFIX,qrator.net
+DOMAIN-SUFFIX,ngenix.net
+DOMAIN-SUFFIX,stormwall.pro
+DOMAIN-SUFFIX,sber.me
+DOMAIN-SUFFIX,sber.cloud
+DOMAIN-SUFFIX,tbank.com
+DOMAIN-SUFFIX,tbank-online.com
+DOMAIN-SUFFIX,tpay.me
+DOMAIN-SUFFIX,yoomoney.com
+DOMAIN-SUFFIX,cloudpayments.com
+DOMAIN-SUFFIX,vtb.digital
+DOMAIN-SUFFIX,alfa.bank
+DOMAIN-SUFFIX,ozon.com
+DOMAIN-SUFFIX,ozon.tech
+DOMAIN-SUFFIX,wildberries.tech
+DOMAIN-SUFFIX,wb.tech
+DOMAIN-SUFFIX,mycdn.me
+DOMAIN-SUFFIX,vk-cdn.com
+DOMAIN-SUFFIX,vkplay.live
+DOMAIN-SUFFIX,avito.com
+DOMAIN-SUFFIX,avito.io
+DOMAIN-SUFFIX,avito.tech
+DOMAIN-SUFFIX,x5.tech
+DOMAIN-SUFFIX,lenta.com
+DOMAIN-SUFFIX,cian.tech
+DOMAIN-SUFFIX,amocrm.com
+DOMAIN-SUFFIX,dzen.com
+DOMAIN-SUFFIX,rutube.tv
+DOMAIN-SUFFIX,mts.digital
+DOMAIN-SUFFIX,rzd.com
+DOMAIN-SUFFIX,cdek.com
+DOMAIN-SUFFIX,etagi.com
+DOMAIN-SUFFIX,youdo.com
+DOMAIN-SUFFIX,otzovik.com
+DOMAIN-SUFFIX,vgtrk.com
+DOMAIN-SUFFIX,kaspersky.com
+DOMAIN-SUFFIX,kaspersky-labs.com
+DOMAIN-SUFFIX,drweb.net
+DOMAIN-SUFFIX,ptsecurity.com
+DOMAIN-SUFFIX,bi.zone
+DOMAIN-SUFFIX,selectel.org
+DOMAIN-SUFFIX,rustore.app
+DOMAIN-SUFFIX,gosuslugi.app
 DOMAIN-SUFFIX,push.hicloud.com
 DOMAIN-SUFFIX,dbankcloud.com
 DOMAIN-SUFFIX,mtalk.google.com

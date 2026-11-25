@@ -1,6 +1,6 @@
 # NAME: discord-ips.list
 # TOTAL IP RULES: 126
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 IP-CIDR,5.180.216.0/22,no-resolve
 IP-CIDR,5.200.0.0/19,no-resolve

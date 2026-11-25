@@ -1,6 +1,6 @@
 # NAME: win-spy.list
 # TOTAL RULES: 322
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,1oavsblobprodcus350.blob.core.windows.net
 DOMAIN-SUFFIX,37bvsblobprodcus311.blob.core.windows.net

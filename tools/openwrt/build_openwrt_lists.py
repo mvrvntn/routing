@@ -124,8 +124,9 @@ def resolve_domain_file(
 
 
 def clean_ip_file(file_path: Path) -> list[str]:
-    """Parse geoip .txt file and return sorted unique valid IPv4/IPv6 CIDRs."""
-    cidrs: set[str] = set()
+    """Parse geoip .txt file and return sorted, collapsed IPv4/IPv6 CIDRs."""
+    v4_nets: list[ipaddress.IPv4Network] = []
+    v6_nets: list[ipaddress.IPv6Network] = []
     if not file_path.exists():
         return []
 
@@ -137,15 +138,16 @@ def clean_ip_file(file_path: Path) -> list[str]:
             line_str = line_str.split("#", 1)[0].strip()
             try:
                 net = ipaddress.ip_network(line_str, strict=False)
-                cidrs.add(str(net))
+                if net.version == 4:
+                    v4_nets.append(net)
+                else:
+                    v6_nets.append(net)
             except ValueError:
                 continue
 
-    def ip_sort_key(net_str: str):
-        net = ipaddress.ip_network(net_str)
-        return (net.version, int(net.network_address), net.prefixlen)
-
-    return sorted(cidrs, key=ip_sort_key)
+    collapsed_v4 = sorted(ipaddress.collapse_addresses(v4_nets), key=lambda n: (int(n.network_address), n.prefixlen))
+    collapsed_v6 = sorted(ipaddress.collapse_addresses(v6_nets), key=lambda n: (int(n.network_address), n.prefixlen))
+    return [str(n) for n in (*collapsed_v4, *collapsed_v6)]
 
 
 def _write_domain_list(source_file: Path, data_dir: Path, out_dir: Path) -> Path:

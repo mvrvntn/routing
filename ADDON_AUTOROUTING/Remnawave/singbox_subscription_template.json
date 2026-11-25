@@ -43,6 +43,12 @@
     "strategy": "ipv4_only",
     "independent_cache": true
   },
+  "experimental": {
+    "cache_file": {
+      "enabled": true,
+      "store_fakeip": true
+    }
+  },
   "log": {
     "level": "warning",
     "disabled": false,
@@ -102,7 +108,6 @@
           "telegram-ip",
           "telegram",
           "youtube",
-          "category-geoblock-ru",
           "ai",
           "google-deepmind",
           "google-play",
@@ -136,6 +141,57 @@
         "outbound": "→ Remnawave"
       },
       {
+        "port": [
+          5223,
+          5228,
+          5229,
+          5230
+        ],
+        "outbound": "direct"
+      },
+      {
+        "domain_keyword": [
+          "mtalk",
+          "speedtest"
+        ],
+        "domain_suffix": [
+          "push.apple.com",
+          "fcm.googleapis.com",
+          "fast.com",
+          "ooklaserver.net",
+          "steamcontent.com",
+          "steamstatic.com",
+          "steampipe.akamaized.net",
+          "steamcdn-a.akamaihd.net",
+          "download.epicgames.com",
+          "epicgames.download.akamaized.net",
+          "origin-a.akamaihd.net",
+          "lvlt.origin.com",
+          "blzddist1-a.akamaihd.net",
+          "blzddist.akamaized.net",
+          "blizzard.gcdn.cloud",
+          "riotgamespatcher-a.akamaihd.net"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "outbound": "direct",
+        "rule_set": [
+          "steam",
+          "epicgames",
+          "riot",
+          "origin",
+          "escapefromtarkov",
+          "faceit"
+        ]
+      },
+      {
+        "outbound": "→ Remnawave",
+        "rule_set": [
+          "category-geoblock-ru"
+        ]
+      },
+      {
         "domain_suffix": [
           "apps.apple.com",
           "itunes.apple.com",
@@ -153,7 +209,6 @@
           "passbook.apple.com",
           "copilot.microsoft.com",
           "githubcopilot.com",
-          "lava.ru",
           "lava.top",
           "lava.link",
           "lava.money"
@@ -177,17 +232,19 @@
           "private",
           "category-ru",
           "whitelist",
-          "whitelist-ip",
           "microsoft",
           "apple",
-          "steam",
-          "epicgames",
-          "riot",
-          "origin",
-          "escapefromtarkov",
-          "faceit",
           "twitch",
-          "pinterest",
+          "pinterest"
+        ]
+      },
+      {
+        "action": "resolve",
+        "server": "google-doh"
+      },
+      {
+        "outbound": "direct",
+        "rule_set": [
           "direct-ip"
         ]
       }
@@ -296,12 +353,6 @@
         "format": "binary"
       },
       {
-        "tag": "whitelist-ip",
-        "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/whitelist-ip.srs",
-        "type": "remote",
-        "format": "binary"
-      },
-      {
         "tag": "microsoft",
         "url": "https://cdn.jsdelivr.net/gh/mvrvntn/routing@release/sing-box/microsoft.srs",
         "type": "remote",
@@ -378,7 +429,7 @@
       "mtu": 1400,
       "tag": "tun-in",
       "type": "tun",
-      "stack": "mixed",
+      "stack": "system",
       "platform": {
         "http_proxy": {
           "server": "127.0.0.1",

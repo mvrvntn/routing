@@ -1,6 +1,6 @@
 # NAME: google-play.list
 # TOTAL RULES: 27
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,googleplay.com
 DOMAIN-SUFFIX,play.google.com

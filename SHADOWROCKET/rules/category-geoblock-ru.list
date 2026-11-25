@@ -1,6 +1,6 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1735
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# TOTAL RULES: 1733
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,10minutemail.com
 DOMAIN-SUFFIX,1337x.to
@@ -749,7 +749,6 @@ DOMAIN-SUFFIX,langdock.com
 DOMAIN-SUFFIX,last.fm
 DOMAIN-SUFFIX,lava.link
 DOMAIN-SUFFIX,lava.money
-DOMAIN-SUFFIX,lava.ru
 DOMAIN-SUFFIX,lava.top
 DOMAIN-SUFFIX,ldoceonline.com
 DOMAIN-SUFFIX,leetcode.com
@@ -1605,7 +1604,6 @@ DOMAIN-SUFFIX,video.twimg.com.cdn.cloudflare.net
 DOMAIN-SUFFIX,vintagestory.at
 DOMAIN-SUFFIX,vipdrive.net
 DOMAIN-SUFFIX,viperatech.com
-DOMAIN-SUFFIX,vivox.com
 DOMAIN-SUFFIX,vlast.kz
 DOMAIN-SUFFIX,vmware.com
 DOMAIN-SUFFIX,vndb.org

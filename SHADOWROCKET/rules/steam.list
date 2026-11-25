@@ -1,6 +1,6 @@
 # NAME: steam.list
 # TOTAL RULES: 47
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,playartifact.com
 DOMAIN-SUFFIX,s.team

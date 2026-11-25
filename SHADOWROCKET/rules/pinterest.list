@@ -1,6 +1,6 @@
 # NAME: pinterest.list
 # TOTAL RULES: 50
-# REPO: https://raw.githubusercontent.com/mvrvntn/routing/main
+# REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,pin.it
 DOMAIN-SUFFIX,pinimg.com

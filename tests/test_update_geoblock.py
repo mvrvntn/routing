@@ -116,7 +116,12 @@ class TestSafetyGate(unittest.TestCase):
     def test_explicit_proxy_overrides_and_gaming_protection(self):
         real_protected = load_protected_domains()
         self.assertFalse(is_protected_domain("airbnb.ru", real_protected))
-        self.assertFalse(is_protected_domain("lava.ru", real_protected))
+        self.assertTrue(is_protected_domain("lava.ru", real_protected))
+        self.assertTrue(is_protected_domain("vivox.com", real_protected))
+        self.assertTrue(is_protected_domain("sub.vivox.com", real_protected))
+        self.assertTrue(is_protected_domain("bank.by", real_protected))
+        self.assertTrue(is_protected_domain("gov.kz", real_protected))
+        self.assertTrue(is_protected_domain("site.moscow", real_protected))
         self.assertFalse(is_protected_domain("auth.xboxlive.com", real_protected))
         self.assertFalse(is_protected_domain("gssv-play-prod.xboxlive.com", real_protected))
         self.assertTrue(is_protected_domain("xboxlive.com", real_protected))

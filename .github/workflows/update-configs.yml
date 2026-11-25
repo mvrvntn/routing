@@ -432,7 +432,7 @@ jobs:
                   if (s != "" && s !~ /^[a-z0-9_-]+:/) { sub(/^\./, "", s); print "+." s }
                 }
               ' "$f" > "$tmp"
-              mihomo convert-ruleset domain text "$tmp" "/tmp/mihomo_rules/${name}.mrs" 2>/dev/null || true
+              mihomo convert-ruleset domain text "$tmp" "/tmp/mihomo_rules/${name}.mrs"
               rm -f "$tmp"
             done
           fi
@@ -466,7 +466,7 @@ jobs:
                 | .rules[0] |= with_entries(select(.value | length > 0))
                 | if (.rules[0] | length) == 0 then .rules = [] else . end
               ' > "$tmp_json"
-              sing-box rule-set compile --output "/tmp/singbox_rules/${name}.srs" "$tmp_json" 2>/dev/null || true
+              sing-box rule-set compile --output "/tmp/singbox_rules/${name}.srs" "$tmp_json"
               rm -f "$tmp_json"
             done
           fi

@@ -536,3 +536,10 @@ payload:
   - PROCESS-NAME,com.perm.kate
   - PROCESS-NAME,com.vtosters.lite
   - PROCESS-NAME,ua.itaysonlab.vkx
+  - PROCESS-NAME,ru.nalog.lkfl
+  - PROCESS-NAME,ru.nalog.lknpd
+  - PROCESS-NAME,ru.yandex.market
+  - PROCESS-NAME,ru.samokat.app
+  - PROCESS-NAME,ru.mchs.app
+  - PROCESS-NAME,ru.sberbank.sberid
+  - PROCESS-NAME,ru.cryptopro.csp
