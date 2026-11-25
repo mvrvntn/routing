@@ -1,5 +1,5 @@
 # NAME: category-geoblock-ru.list
-# TOTAL RULES: 1733
+# TOTAL RULES: 1732
 # REPO: https://github.com/mvrvntn/routing
 
 DOMAIN-SUFFIX,10minutemail.com
@@ -1538,7 +1538,6 @@ DOMAIN-SUFFIX,tokenized.play.google.com
 DOMAIN-SUFFIX,tommy.com
 DOMAIN-SUFFIX,toolbox.app
 DOMAIN-SUFFIX,torproject.org
-DOMAIN-SUFFIX,torrent.by
 DOMAIN-SUFFIX,torrenteditor.com
 DOMAIN-SUFFIX,tospotify.com
 DOMAIN-SUFFIX,tr.anidub.com
