@@ -465,7 +465,7 @@ class TestToolsSuite(unittest.TestCase):
             with open(yf, "r", encoding="utf-8") as f:
                 content = f.read()
             self.assertIn("DOMAIN-KEYWORD,smp-device,PROXY", content, f"Missing smp-device keyword rule in {yf}")
-            self.assertIn("DOMAIN-KEYWORD,smp-,PROXY", content, f"Missing smp- keyword rule in {yf}")
+            self.assertIn("DOMAIN-KEYWORD,smp-payment,PROXY", content, f"Missing smp-payment keyword rule in {yf}")
             self.assertIn("DOMAIN-KEYWORD,applepay,PROXY", content, f"Missing applepay keyword rule in {yf}")
             self.assertIn("DOMAIN,wallet.apple.com,PROXY", content, f"Missing wallet.apple.com rule in {yf}")
             self.assertIn("DOMAIN,pos-device.apple.com,PROXY", content, f"Missing pos-device rule in {yf}")
@@ -483,6 +483,23 @@ class TestToolsSuite(unittest.TestCase):
             doh_server = next((s for s in dns_servers if isinstance(s, dict) and "geosite:category-geoblock-ru" in s.get("domains", [])), None)
             self.assertIsNotNone(doh_server, "Missing DoH DNS server for category-geoblock-ru in xray_location_template.json")
             self.assertTrue(doh_server.get("address", "").startswith("https://"), "category-geoblock-ru DNS must use secure DoH")
+
+    def test_mihomo_ipv6_direct_precedence(self):
+        for yf in [
+            os.path.join(BASE_DIR, "MIHOMO", "default.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_remnawave.yaml"),
+            os.path.join(BASE_DIR, "MIHOMO", "template_3x-ui.yaml"),
+        ]:
+            with open(yf, "r", encoding="utf-8") as f:
+                content = f.read()
+            idx_v6_vk1 = content.find("IP-CIDR,2a00:1148::/32,DIRECT,no-resolve")
+            idx_v6_vk2 = content.find("IP-CIDR,2a14:25c6::/32,DIRECT,no-resolve")
+            idx_drop = content.find("IP-CIDR,::/0,REJECT-DROP,no-resolve")
+            self.assertNotEqual(idx_v6_vk1, -1, f"Missing 2a00:1148::/32 direct rule in {yf}")
+            self.assertNotEqual(idx_v6_vk2, -1, f"Missing 2a14:25c6::/32 direct rule in {yf}")
+            self.assertNotEqual(idx_drop, -1, f"Missing ::/0 REJECT-DROP rule in {yf}")
+            self.assertLess(idx_v6_vk1, idx_drop, f"2a00:1148::/32 must precede ::/0 drop in {yf}")
+            self.assertLess(idx_v6_vk2, idx_drop, f"2a14:25c6::/32 must precede ::/0 drop in {yf}")
 
     def test_data_no_redundant_subdomains(self):
         import glob

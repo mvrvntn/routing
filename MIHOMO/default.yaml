@@ -498,6 +498,8 @@ rule-providers:
 rules:
   # Системные и приватные адреса
   - RULE-SET,private-ips,DIRECT,no-resolve
+  - IP-CIDR,2a00:1148::/32,DIRECT,no-resolve
+  - IP-CIDR,2a14:25c6::/32,DIRECT,no-resolve
   - IP-CIDR,::/0,REJECT-DROP,no-resolve
   - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT-DROP
   - AND,((NETWORK,UDP),(DST-PORT,853)),REJECT-DROP
@@ -578,7 +580,7 @@ rules:
   - RULE-SET,microsoft,DIRECT
   # Apple Wallet, Apple Pay, Apple Cash & Apple Intelligence (Обход региональной блокировки)
   - DOMAIN-KEYWORD,smp-device,PROXY
-  - DOMAIN-KEYWORD,smp-,PROXY
+  - DOMAIN-KEYWORD,smp-payment,PROXY
   - DOMAIN-KEYWORD,apple-pay,PROXY
   - DOMAIN-KEYWORD,applepay,PROXY
   - DOMAIN-KEYWORD,applewallet,PROXY

@@ -213,7 +213,7 @@ RULE-SET,{REPO_URL}/SHADOWROCKET/rules/category-ads.list,REJECT
 RULE-SET,{REPO_URL}/SHADOWROCKET/rules/torrent.list,REJECT
 
 # --- Apple Pay / Wallet / Apple Intelligence (PROXY для обхода гео-блокировок) ---
-DOMAIN-KEYWORD,smp-,PROXY
+DOMAIN-KEYWORD,smp-payment,PROXY
 DOMAIN-KEYWORD,applepay,PROXY
 DOMAIN-SUFFIX,apple-pay.com,PROXY
 
